@@ -1,15 +1,19 @@
 import { useState } from "react"
 import { GoAlertFill } from "react-icons/go";
+import { UseFormRegisterReturn } from "react-hook-form";
+import { FieldError } from "react-hook-form";
 // Animtaion Placeholder Input Props
 export interface AnimationPlaceholderInputProps {
     labelName:string,
     type:string,
     name:string,
-    value:string,
-    setValue:(name:string,value:string)=>void
+    maxLength?:number,
+    // react form hook props
+    register?:UseFormRegisterReturn
+    error?:FieldError
 }
 export function AnimationPlaceholderInput(
-        {labelName,type,name,value,setValue}:AnimationPlaceholderInputProps
+        {labelName,type,name,maxLength,register,error}:AnimationPlaceholderInputProps
     ){
         const [focus,setFocus] = useState(false)
         return (
@@ -20,15 +24,18 @@ export function AnimationPlaceholderInput(
                     {labelName.toUpperCase()}
                 </label>
                 <input 
-                    className="focus:outline-none focus:border-blue-200 h-10 w-full border-b-2 bg-transparent px-2"
+                    {...register}
+                    className="focus:outline-none focus:border-blue-200 h-10 w-full border-b-2 bg-transparent px-2 text-lg"
                     id={name}
                     type={type} 
                     name={name} 
-                    onChange={(event)=>setValue(name,event.target.value)}
+                    maxLength={maxLength}
                     onFocus={()=>setFocus(true)}
-                    onBlur={()=>setFocus(value == '' ? false : true)}  
+                    //onBlur={()=>setFocus(value == '' ? false : true)}  
                 />
-                <GoAlertFill size={22.5} color="#FF4500" className="absolute right-2 top-2  " />
-            </div>
+                {
+                    error && <GoAlertFill size={22.5} color="#FF4500" className="absolute right-2 top-2  " />
+                }
+                </div>
         )
 }

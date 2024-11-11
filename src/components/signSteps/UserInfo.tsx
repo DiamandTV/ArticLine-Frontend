@@ -1,70 +1,74 @@
+import { zodResolver } from "@hookform/resolvers/zod"
 import { AnimationPlaceholderInput,AnimationPlaceholderInputProps } from "../inputs/AnimationPlaceholderInput"
-import { memo, useState } from "react"
-/*
-    interface UserInfoProps{
-        username:string,
-        firstName:string,
-        lastNamse:string,
-        dateOfBirth:string
-    }
-*/
-export function UserInfo(){
-    const [userInfo,setUser] = useState({
-        username:'',
-        firstName:'',
-        lastName:'',
-        dateOfBirth:''
-    })
-    // Function triggered when a value of the input changess
-    const setValue = (name:string,value:string)=>{
-        setUser((oldUserInfo)=>{
-            return {...oldUserInfo,[name]:value}
-        })
+import { SubmitHandler, useForm } from "react-hook-form"
+import { z } from "zod"
 
-    }
+const schema = z.object({
+    firstName: z.string().max(150),
+    lastName: z.string().max(150),
+    username: z.string().max(150),
+    dateOfBirth: z.string()
+})
+type UseInfoFields = z.infer<typeof schema>
+export function UserInfo(){
+ 
+    const {
+        register,
+        handleSubmit,
+        formState:{errors,isSubmitted},
+        setError
+        }
+         = useForm<UseInfoFields>({resolver:zodResolver(schema)})
+    // All the user info form data 
     const userInfoForms:Array<AnimationPlaceholderInputProps> = [
         {
             labelName:'FIRST NAME',
             type:'text'   ,
             name:'firstName',
-            value:userInfo.firstName,
-            setValue:setValue
+            register:register("firstName"),
+            error:errors.firstName
         },
         {
             labelName:'LAST NAME',
             type:'text'   ,
             name:'lastName',
-            value:userInfo.lastName,
-            setValue:setValue
+            register:register("lastName"),
+            error:errors.lastName
+
         },
         {
             labelName:'USERNAME',
             type:'text'   ,
             name:'username',
-            value:userInfo.username,
-            setValue:setValue
+            register:register("username"),
+            error:errors.username
         },
         {
             labelName:'DATE OF BIRTH',
             type:'text'   ,
             name:'dateOfBirth',
-            value:userInfo.dateOfBirth,
-            setValue
-            :setValue
+            register:register("dateOfBirth"),
+            error:errors.dateOfBirth
         }
     ]
+    const onSubmit : SubmitHandler<UseInfoFields> = (userInfo)=>{
+        console.log(userInfo)
+    }
     return(
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-8 gap-x-4 ">
+        <form className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-8 gap-x-4 " onSubmit={handleSubmit(onSubmit)}>
             {userInfoForms.map((form)=>
                 <AnimationPlaceholderInput 
                     key={form.name}
                     labelName={form.labelName}
                     type={form.type}
                     name={form.name}
-                    value={form.value}
-                    setValue={form.setValue}
+
+                    register={form.register}
+                    error={form.error}
+                  
                 />
             )}  
-        </div>
+            <button>CLICK</button>
+        </form>
     )
 }
