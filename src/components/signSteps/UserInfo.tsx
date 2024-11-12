@@ -2,6 +2,12 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { AnimationPlaceholderInput,AnimationPlaceholderInputProps } from "../inputs/AnimationPlaceholderInput"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+
+import { DatePicker } from "@mui/x-date-pickers";
+
+
 
 const schema = z.object({
     firstName: z.string().max(150),
@@ -43,18 +49,13 @@ export function UserInfo(){
             register:register("username"),
             error:errors.username
         },
-        {
-            labelName:'DATE OF BIRTH',
-            type:'text'   ,
-            name:'dateOfBirth',
-            register:register("dateOfBirth"),
-            error:errors.dateOfBirth
-        }
+       
     ]
     const onSubmit : SubmitHandler<UseInfoFields> = (userInfo)=>{
         console.log(userInfo)
     }
     return(
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
         <form className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-8 gap-x-4 " onSubmit={handleSubmit(onSubmit)}>
             {userInfoForms.map((form)=>
                 <AnimationPlaceholderInput 
@@ -68,7 +69,8 @@ export function UserInfo(){
                   
                 />
             )}  
-            <button>CLICK</button>
+             <DatePicker />
         </form>
+        </LocalizationProvider>
     )
 }
