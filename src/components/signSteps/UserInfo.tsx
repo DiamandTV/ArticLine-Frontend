@@ -1,13 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AnimationPlaceholderInput,AnimationPlaceholderInputProps } from "../inputs/AnimationPlaceholderInput"
+import { DatePicker } from "@mui/x-date-pickers"
+import { MobileDatePicker } from "@mui/x-date-pickers"
+import { AnimationDatePickerInput } from "../inputs/DatePicker/AnimationDatePickerInput"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-
-import { DatePicker } from "@mui/x-date-pickers";
-
-
+import dayjs from "dayjs"
 
 const schema = z.object({
     firstName: z.string().max(150),
@@ -55,7 +53,7 @@ export function UserInfo(){
         console.log(userInfo)
     }
     return(
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        
         <form className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-8 gap-x-4 " onSubmit={handleSubmit(onSubmit)}>
             {userInfoForms.map((form)=>
                 <AnimationPlaceholderInput 
@@ -69,8 +67,17 @@ export function UserInfo(){
                   
                 />
             )}  
-             <DatePicker />
+           <DatePicker
+                defaultValue={dayjs(new Date())}
+                slots={{
+                textField:(params)=><AnimationDatePickerInput
+                    labelName="DATE OF BIRTH"
+                    type="text"
+                    name="dateOfBirth"
+                    maxLength={200}
+                    params={params}
+                    />
+            }}/>
         </form>
-        </LocalizationProvider>
     )
 }
