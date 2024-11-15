@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { GoAlertFill } from "react-icons/go";
+import { InputError } from "./InputError/InputError";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { FieldError } from "react-hook-form";
 // Animtaion Placeholder Input Props
@@ -19,7 +19,7 @@ export function AnimationPlaceholderInput(
         return (
             <div className="flex flex-col relative w-full">
                 <label
-                    className= {`transition-all duration-100 ease-in-out absolute z-10 bottom-0 px-0 py-2 text-neutral-400 ${focus ? 'translate-y-[-80%] translate-x-2 text-sm ' : 'translate-y-0 translate-x-0 text-lg'}`} 
+                    className= {`transition-all duration-100 ease-in-out absolute z-10 bottom-0 px-0 py-2 text-neutral-400 hover:cursor-pointer ${focus ? 'translate-y-[-80%] translate-x-2 text-sm ' : 'translate-y-0 translate-x-0 text-lg'}`} 
                     htmlFor={name}>
                     {labelName.toUpperCase()}
                 </label>
@@ -33,9 +33,7 @@ export function AnimationPlaceholderInput(
                     onFocus={()=>setFocus(true)}
                     //onBlur={()=>setFocus(value == '' ? false : true)}  
                 />
-                {
-                    error && <GoAlertFill size={22.5} color="#FF4500" className="absolute right-2 top-2  " />
-                }
-                </div>
+                <InputError error={error}/>
+        </div>
         )
 }

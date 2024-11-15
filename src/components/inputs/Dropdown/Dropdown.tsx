@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { UseFormRegisterReturn } from "react-hook-form";
+import { FieldError } from "react-hook-form";
 
 interface DropdownProps {
     labelName:string,
     name:string,
-    value:string,
-    setValue:(name:string,value:string)=>void
-    children:React.ReactNode
+    children:React.ReactNode,
+    register?:UseFormRegisterReturn,
+    error?:FieldError
 }
-export function Dropdown({labelName,name,value,setValue,children}:DropdownProps){
+export function Dropdown({labelName,name,register,children}:DropdownProps){
     // the state of the dropdown. true => if it's open , false => if it's closed 
     const [open,setOpen] = useState(false)
     const [focus,setFocus] = useState(false)
@@ -19,7 +21,7 @@ export function Dropdown({labelName,name,value,setValue,children}:DropdownProps)
                 onClick={()=>setOpen(!open)}
                 >
               <label
-                    className= {`transition-all duration-100 ease-in-out absolute z-10 bottom-0 px-0 py-2 text-neutral-400 ${focus ? 'translate-y-[-80%] translate-x-2 text-sm ' : 'translate-y-0 translate-x-0 text-lg'}`} 
+                    className= {`transition-all duration-100 ease-in-out absolute z-10 bottom-0 px-0 py-2 text-neutral-400 hover:cursor-pointer ${focus ? 'translate-y-[-80%] translate-x-2 text-sm ' : 'translate-y-0 translate-x-0 text-lg'}`} 
                     htmlFor={name}>
                     {labelName.toUpperCase()}
                 </label>
@@ -28,13 +30,13 @@ export function Dropdown({labelName,name,value,setValue,children}:DropdownProps)
                     id={name}
                     type={"text"} 
                     name={name} 
-                    value={value}
-                    onChange={(event)=>setValue(name,event.target.value)}
+                   
                     onFocus={()=>setFocus(true)}
                     onBlur={()=>{
-                        setFocus(value == '' ? false : true)
+                        
                         setOpen(false)
-                    }}  
+                    }}
+                    {...register}  
                 />
                 <IoMdArrowDropdown 
                     size={25} 

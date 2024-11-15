@@ -1,61 +1,72 @@
 import { AnimationPlaceholderInput,AnimationPlaceholderInputProps } from "../inputs/AnimationPlaceholderInput"
-import {  useState } from "react"
+import { SubmitHandler, useForm } from "react-hook-form"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 
+const schema = z.object({
+    phone_number: z.string().min(9).max(9),
+    email: z.string().email(),
+    password: z.string().min(8).max(40),
+    conferm_password: z.string().min(8).max(40)
+})
+
+type UserAccountFields =  z.infer<typeof schema>
 export function UserAccount(){
-    const [userAccount,setUser] = useState({
-        'email':'',
-        'password':'',
-        'conferm_password':'',
-        'phone_number':''
-    })
-    // Function triggered when a value of the input changess
-    const setValue = (name:string,value:string)=>{
-        setUser((oldUserInfo)=>{
-            return {...oldUserInfo,[name]:value}
+    const { 
+            register,
+            handleSubmit,
+            formState:{ errors},
+        } = useForm<UserAccountFields>({
+        resolver: zodResolver(schema),
         })
-    }
     const userInfoForms:Array<AnimationPlaceholderInputProps> = [
         {
             labelName:'PHONE NUMBER',
             type:'text'   ,
             name:'phone_number',
-            value:userAccount.phone_number,
-            setValue:setValue
+            register:register('phone_number'),
+            error:errors.phone_number
         },
         {
             labelName:'EMAIL',
             type:'text'   ,
             name:'email',
-            value:userAccount.email,
-            setValue:setValue
+            register:register('email'),
+            error:errors.email
         },
         {
             labelName:'PASSWORD',
             type:'text'   ,
             name:'password',
-            value:userAccount.password,
-            setValue:setValue
+            register:register('password'),
+            error:errors.password
         },
         {
             labelName:'CONFERM PASSWORD',
             type:'text'   ,
             name:'conferm_password',
-            value:userAccount.conferm_password,
-            setValue:setValue
+            register:register('conferm_password'),
+            error:errors.conferm_password
         }
     ]
+
+    const onSubmit : SubmitHandler<UserAccountFields> = (userAccount)=>{
+        console.log(userAccount)
+    }
+    console.log(errors)
     return (
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-8 gap-x-4 ">
+        <form className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-8 gap-x-4 " onSubmit={handleSubmit(onSubmit)}>
             {userInfoForms.map((form)=>
                 <AnimationPlaceholderInput 
                     key={form.name}
                     labelName={form.labelName}
                     type={form.type}
                     name={form.name}
-                    value={form.value}
-                    setValue={form.setValue}
+                    register={form.register}
+                    error={form.error}
                 />
             )}  
-        </div>
+            <button>CLICK</button>
+        </form>
     )        
 }
