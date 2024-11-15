@@ -1,85 +1,79 @@
-import { useState } from "react"
 import { AnimationPlaceholderInput } from "../inputs/AnimationPlaceholderInput"
 import { Dropdown } from "../inputs/Dropdown/Dropdown"
 import { DropdownItem } from "../inputs/Dropdown/DropdownItems"
 import cityJson from "../../assets/gi_db_comuni/json/gi_comuni_cap.json"
 import provinceJson from "../../assets/gi_db_comuni/json/gi_province.json"
 import countryJson from "../../assets/gi_db_comuni/json/gi_country.json"
+import { FixedSizeDropdown } from "../inputs/Dropdown/FixedSizeDropDown"
 import { v4 as uuidv4 } from 'uuid';
 import { FixedSizeList } from "react-window"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+
+const schema = z.object({
+    'recipient_name':z.string(),
+    'street':z.string(),
+    'city':z.string(),
+    'zip':z.string(),
+    'province':z.string(),
+    'country':z.string(),
+})
+
+type UserAddressFields = z.infer<typeof schema>
+
 export function UserAddress(){
-    const [city,setCity] = useState(cityJson)
-    const [province,setProvince] = useState(provinceJson)
-    const [country,setCountry] = useState(countryJson)
-    const [userAddress,setUser] = useState({
-        'recipient_name':'',
-        'street':'',
-        'city':'',
-        'province':'',
-        'postal_code':'',
-        'country':''
+    const { register } = useForm<UserAddressFields>({
+        resolver:zodResolver(schema)
     })
-    // Function triggered when a value of the input changess
-    const setValue = (name:string,value:string)=>{
-   
-        const regex = new RegExp(value,'i')
-        switch (name){
-            case 'city':
-                // filter only the city names with has the value string in them
-                if(value.replace(/\s\s+/g, ' ') == '') setCity(cityJson)
-                    else {
-                        setCity(cityJson.filter((city)=>{
-                            const title = `${city.denominazione_ita} - (${city.sigla_provincia})`   
-                            return title.match(regex) 
-                        })) 
-                    }
-                break;
-            case 'province':
-                if(value.replace(/\s\s+/g, ' ') == '') setProvince(provinceJson)
-                else {
-                    setProvince(provinceJson.filter((province)=>{
-                        const title = `${province.denominazione_provincia} - (${province.sigla_provincia})`
-                        return title.match(regex)
-                }))
-            }
-                break;
-            case 'country':
-                if (value.replace(/\s\s+/g, ' ') == '') setCountry(countryJson)
-                else {
-                    setCountry(countryJson.filter((country)=>{
-                        const title = `${country.name}`
-                        return title.match(regex)
-                    }))
-                }
-                break;
-            
-        }
-
-
-        setUser((oldUserInfo)=>{
-            return {...oldUserInfo,[name]:value}
-        })
-    }
-    
-
     return(
         <div className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-8 gap-x-4 ">
             <AnimationPlaceholderInput
                 labelName="RECIPIENT NAME"
                 type="text"
                 name="recipient_name"
-                value={userAddress.recipient_name}
-                setValue={setValue}
+                register={register('recipient_name')}
             />
             {/* Street with number*/}  
             <AnimationPlaceholderInput
                 labelName="ADDRESS"
                 type="text"
                 name="street"
-                value={userAddress.street}
-                setValue={setValue}
+                register={register('street')}
             />
-            
+            <FixedSizeDropdown
+                labelName="CITY"
+                name="city"
+                list={cityJson}
+                showFunction={(item)=>{
+
+                }}
+                filterFunction={()=>{}}
+                register={register('city')}
+            />
+
+            <FixedSizeDropdown
+                labelName="PROVINCE"
+                name="province"
+                list={provinceJson}
+                showFunction={(item:typeof cityJson)=>{
+
+                }}
+                filterFunction={()=>{}}
+                register={register('province')}
+            />
+            <FixedSizeDropdown
+                labelName="COUNTRY"
+                name="country"
+                list={countryJson}
+                showFunction={(item:typeof cityJson)=>{
+
+                }}
+                filterFunction={()=>{}}
+                register={register('province')}
+            />            
+            {
+                /*
             <Dropdown
                 labelName="CITY"
                 name="city"
@@ -112,15 +106,15 @@ export function UserAddress(){
                 }
             </Dropdown>
                 
-            
+    */}
             <AnimationPlaceholderInput
                 labelName="ZIP"
                 type="text"
                 name="street"
                 maxLength={5}
-                value={userAddress.street}
-                setValue={setValue}
-            />  
+                register={register('zip')}
+            /> 
+            {/*
             <Dropdown
                     labelName="PROVINCE"
                     name="province"
@@ -164,6 +158,7 @@ export function UserAddress(){
                 </FixedSizeList> : <div></div>
                 }
             </Dropdown>
+            */}
         </div>
     )
 }

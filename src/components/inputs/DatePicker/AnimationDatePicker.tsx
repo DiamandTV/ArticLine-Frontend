@@ -15,7 +15,6 @@ export function AnimationDatePicker({labelName,type,name,maxLength,readonly=true
     return (
         <Controller name={name} control={control} render={({field})=> <MobileDatePicker
             //defaultValue={dayjs(new Date())}
-            
             slots={{
             textField:(params)=><AnimationDatePickerInput
                 labelName={labelName}
