@@ -4,15 +4,16 @@ import { BlurCard } from '../components/cards/BlurCard'
 import { UserInfo } from '../components/signSteps/UserInfo'
 import { UserAddress } from '../components/signSteps/UserAddress'
 import { UserAccount } from '../components/signSteps/UserAccount'
+import { RefObject } from 'react'
 export function SignIn(){
-    const getStep = (state:number)=>{
+    const getStep = (state:number,formRef: RefObject<HTMLFormElement>)=>{
         switch(state){
             case 0:
-                return <UserInfo/>
+                return <UserInfo formRef={formRef}/>
             case 1:
-                return <UserAddress/>
+                return <UserAddress formRef={formRef}/>
             case 2:
-                return <UserAccount/>
+                return <UserAccount formRef={formRef}/>
             default:
                 // this is not used but i put this only for to be sure
                 return <div></div>

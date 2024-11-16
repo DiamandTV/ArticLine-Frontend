@@ -6,6 +6,7 @@ import { FixedSizeDropdown } from "../inputs/Dropdown/FixedSizeDropdown";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { RefObject } from "react";
 
 const schema = z.object({
   recipient_name: z.string(),
@@ -18,7 +19,7 @@ const schema = z.object({
 
 type UserAddressFields = z.infer<typeof schema>;
 
-export function UserAddress() {
+export function UserAddress({formRef}:{formRef:RefObject<HTMLFormElement>}) {
   const { register, getValues, setValue,formState:{errors},handleSubmit } = useForm<UserAddressFields>({
     resolver: zodResolver(schema),
   });
@@ -39,7 +40,9 @@ export function UserAddress() {
 }
 
   return (
-    <form className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-8 gap-x-4" onSubmit={handleSubmit(onSubmit)}>
+    <form 
+      ref={formRef}
+      className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-8 gap-x-4" onSubmit={handleSubmit(onSubmit)}>
       <AnimationPlaceholderInput
         labelName="RECIPIENT NAME"
         type="text"
@@ -97,8 +100,6 @@ export function UserAddress() {
         register={register("country")}
         error={errors.country}
       />
-
-        <button>click</button>
     </form>
   );
 }

@@ -4,6 +4,7 @@ import { AnimationDatePicker } from "../inputs/DatePicker/AnimationDatePicker"
 import { SubmitHandler, useForm,FormProvider } from "react-hook-form"
 import dayjs, { Dayjs } from 'dayjs';
 import { z } from "zod"
+import { RefObject } from "react";
 
 function isAdult(date:Dayjs,adultAge:number):boolean{
     const now:Dayjs = dayjs()
@@ -20,7 +21,8 @@ const schema = z.object({
     date_of_birth: z.custom<Dayjs>((val) => val instanceof dayjs, 'Invalid date').refine((val)=>isAdult(val,18),"You aren't adult")
 })
 type UseInfoFields = z.infer<typeof schema>
-export function UserInfo(){
+
+export function UserInfo({formRef}:{formRef:RefObject<HTMLFormElement>}){
  
     const methods = useForm<UseInfoFields>({
         resolver: zodResolver(schema),
@@ -63,7 +65,9 @@ export function UserInfo(){
     }
     return(
         <FormProvider {...methods}>
-            <form className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-8 gap-x-4 " onSubmit={handleSubmit(onSubmit)}>   
+            <form
+                ref={formRef} 
+                className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-8 gap-x-4 " onSubmit={handleSubmit(onSubmit)}>   
                 {userInfoForms.map((form)=>
                     <AnimationPlaceholderInput 
                         key={form.name}
@@ -79,7 +83,6 @@ export function UserInfo(){
                 labelName="DATE OF BIRTH" 
                 name="date_of_birth" 
                 type="text" maxLength={10} />          
-            <button >click</button>
             </form>
         </FormProvider>
     )

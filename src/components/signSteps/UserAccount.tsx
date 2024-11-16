@@ -2,6 +2,7 @@ import { AnimationPlaceholderInput,AnimationPlaceholderInputProps } from "../inp
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { RefObject } from "react"
 
 const schema = z.object({
     phone_number: z.string().min(9).max(9),
@@ -11,7 +12,7 @@ const schema = z.object({
 })
 
 type UserAccountFields =  z.infer<typeof schema>
-export function UserAccount(){
+export function UserAccount({formRef}:{formRef:RefObject<HTMLFormElement>}){
     const { 
             register,
             handleSubmit,
@@ -55,7 +56,9 @@ export function UserAccount(){
     }
     
     return (
-        <form className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-8 gap-x-4 " onSubmit={handleSubmit(onSubmit)}>
+        <form 
+            ref={formRef}
+            className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-8 gap-x-4 " onSubmit={handleSubmit(onSubmit)}>
             {userInfoForms.map((form)=>
                 <AnimationPlaceholderInput 
                     key={form.name}
@@ -66,7 +69,6 @@ export function UserAccount(){
                     error={form.error}
                 />
             )}  
-            <button>CLICK</button>
         </form>
     )        
 }
