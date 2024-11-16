@@ -70,10 +70,8 @@ export function UserInfo(){
                         labelName={form.labelName}
                         type={form.type}
                         name={form.name}
-
                         register={form.register}
                         error={form.error}
-                    
                     />
                 )}  
             

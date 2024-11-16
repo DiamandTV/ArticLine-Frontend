@@ -31,7 +31,9 @@ export function AnimationPlaceholderInput(
                     name={name} 
                     maxLength={maxLength}
                     onFocus={()=>setFocus(true)}
-                    //onBlur={()=>setFocus(value == '' ? false : true)}  
+                    onBlur={(e)=>{
+                        setFocus(e.target.value == '' ? false : true)}
+                    }  
                 />
                 <InputError error={error}/>
         </div>

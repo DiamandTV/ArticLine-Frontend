@@ -2,17 +2,19 @@ import { useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { FieldError } from "react-hook-form";
-
+import { InputError } from "../InputError/InputError";
 interface DropdownProps {
     labelName:string,
     name:string,
+    open:boolean,
+    setOpen:(value:boolean)=>void,
+    onChange:()=>void,
     children:React.ReactNode,
     register?:UseFormRegisterReturn,
     error?:FieldError
 }
-export function Dropdown({labelName,name,register,children}:DropdownProps){
-    // the state of the dropdown. true => if it's open , false => if it's closed 
-    const [open,setOpen] = useState(false)
+export function Dropdown({labelName,name,onChange,register,error,open,setOpen,children}:DropdownProps){
+
     const [focus,setFocus] = useState(false)
     return(
         <div className="relative flex flex-col w-full">
@@ -26,17 +28,20 @@ export function Dropdown({labelName,name,register,children}:DropdownProps){
                     {labelName.toUpperCase()}
                 </label>
                 <input 
+                    {...register}  
                     className="focus:outline-none focus:border-blue-200 h-10 w-full bg-transparent px-2 text-lg"
                     id={name}
                     type={"text"} 
                     name={name} 
-                   
                     onFocus={()=>setFocus(true)}
-                    onBlur={()=>{
-                        
+                    onBlur={(e)=>{
+                        setFocus(e.target.value == '' ? false : true)
                         setOpen(false)
+                    }} 
+                    onChange={(event)=>{
+                        onChange()
+                        register?.onChange(event)
                     }}
-                    {...register}  
                 />
                 <IoMdArrowDropdown 
                     size={25} 
@@ -46,6 +51,7 @@ export function Dropdown({labelName,name,register,children}:DropdownProps){
             {
                 // Dropdown items
             }
+            <InputError error={error}/>
             <div 
                 className={`w-full max-h-32 absolute z-20 top-10 bg-slate-900 bg-opacity-85 backdrop-blur-lg rounded-b-lg pb-0.5 overflow-y-auto scrollbar-hide ${open ? 'visible' : 'invisible'}`}>
                 {children}
