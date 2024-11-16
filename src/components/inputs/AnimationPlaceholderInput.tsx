@@ -10,7 +10,7 @@ export interface AnimationPlaceholderInputProps {
     maxLength?:number,
     // react form hook props
     register?:UseFormRegisterReturn
-    error?:FieldError
+    error?:FieldError | undefined
 }
 export function AnimationPlaceholderInput(
         {labelName,type,name,maxLength,register,error}:AnimationPlaceholderInputProps

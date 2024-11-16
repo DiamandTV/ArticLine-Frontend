@@ -32,7 +32,6 @@ export function SignIn(){
                     />
                 </div>
             </BlurCard>
-       
     </div>
     )
 }
