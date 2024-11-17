@@ -19,6 +19,7 @@ export function UserSignIn(){
     }
     return (   
         <StartView>
+            
              <StepperForm 
                 maxStep={3}
                 stepLabels={['USER INFO','USER ADDRESS','USER DETAILS']}

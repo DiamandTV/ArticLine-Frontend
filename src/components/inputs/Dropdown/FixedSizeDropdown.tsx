@@ -9,16 +9,16 @@ export interface FixedSizeDropdownProps{
     labelName:string,
     name:string,
     list:Array<Record<string,string>>,
-    showFunction:(item:unknown,index:number)=>string,
-    setValue:(value:string)=>void,
-    filterFunction:()=>Record<string,string>[],
+    showFunction:(item:unknown,index:number)=>string, // the function which will return the label of the list item
+    setValue:(value:string)=>void,                    
+    filterFunction:()=>Record<string,string>[],       // the filter function which will be used for filtering the list
     register:UseFormRegisterReturn,
     error:FieldError|undefined
 
 }
 export function FixedSizeDropdown({labelName,name,list,filterFunction,showFunction,setValue,register,error}:FixedSizeDropdownProps){
     const [filteredList,setFilteredList] = useState(list)  
-// the state of the dropdown. true => if it's open , false => if it's closed 
+    // the state of the dropdown. true => if it's open , false => if it's closed 
     const [open,setOpen] = useState(false)  
     return (
         <Dropdown
