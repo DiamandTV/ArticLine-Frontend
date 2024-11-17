@@ -5,7 +5,7 @@ import { AnimationPlaceholderInput } from "../inputs/AnimationPlaceholderInput"
 
 const schema = z.object({
     email:z.string().email(),
-    password:z.string()
+    password:z.string().min(8).max(40)
 })
 
 type UserLoginFields = z.infer<typeof schema>
@@ -44,7 +44,8 @@ export function UserLogin(){
                         register={form.register}
                         error={form.error}
                     />
-                )}         
+                )}     
+            <button>clik</button>    
         </form>
     )
 }

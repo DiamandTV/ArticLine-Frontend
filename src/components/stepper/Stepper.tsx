@@ -1,0 +1,79 @@
+import {  useState } from "react"
+import { StepperContext } from "./StepperContext"
+import { Stepper, Step, StepLabel } from '@mui/material';
+import StepContent from '@mui/material/StepContent';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { SxProps } from "@mui/material";
+interface StepperProps{
+    maxStep:number ,
+    stepLabels : Array<string>,
+    getStep: (state:number)=>React.ReactNode
+}
+
+
+function getStepperStyle(index:number,state:number):SxProps{
+    console.log(index,state)
+    return  {
+
+        "& .Mui-active":{
+            "&.MuiStepIcon-root":{
+                color:"rgb(14 165 233)",
+            },
+            "&.MuiStepLabel-label":{
+                color:"white"
+            }
+        },
+        "& .Mui-completed":{
+            "&.MuiStepIcon-root":{
+                color:"rgb(14 165 233)"
+            },
+            //{ Questo si applica al componente attivo }
+            "&.MuiStepLabel-label":{
+                color: "white"
+            }
+        },        
+        //{  Questo cerca un figlio con la classe Mui-active },
+        "& .MuiStepLabel-label":{
+            color:"rgb(163 163 163)",
+        }
+    } 
+}
+
+export function StepperForm({maxStep,getStep,stepLabels}:StepperProps){
+    const [state,setState] = useState(0)
+    //const sm = useMediaQuery("(max-width: 640px)")
+    const md = useMediaQuery("(max-width: 768px)")
+    return(
+        <StepperContext.Provider value={{state,setState,maxStep,stepLabels}}>
+            <div className="w-full">
+                {md ? 
+                <Stepper activeStep={state} orientation="vertical">
+                    {stepLabels.map((label,index)=>(
+                        <Step key={index} sx={getStepperStyle(index,state)} >
+                            <StepLabel sx={{}}>{label}</StepLabel>
+                            <StepContent className="pt-6">
+                                {getStep(index)}
+                            </StepContent>
+                            
+                        </Step>
+                    ))}
+                </Stepper> 
+                :
+                <>
+                    <Stepper activeStep={state}>
+                        {stepLabels.map((label,index)=>(
+                            <Step key={index}  sx={getStepperStyle(index,state)}>
+                                <StepLabel >{label}</StepLabel>
+                            </Step>
+                        ))}
+                        
+                    </Stepper>
+                    <div className="pt-10">
+                        {getStep(state)}
+                    </div>
+                </>
+                }
+            </div>
+        </StepperContext.Provider>
+    ) 
+}

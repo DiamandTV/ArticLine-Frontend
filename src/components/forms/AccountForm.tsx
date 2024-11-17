@@ -2,22 +2,26 @@ import { AnimationPlaceholderInput,AnimationPlaceholderInputProps } from "../inp
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { RefObject } from "react"
+import { StepperButtons } from "../stepper/StepperButtons"
+import { useContext, useRef } from "react"
+import { StepperContext } from "../stepper/StepperContext"
 
 const schema = z.object({
-    phone_number: z.string().min(9).max(9),
+    phone_number: z.string().length(5),
     email: z.string().email(),
     password: z.string().min(8).max(40),
     conferm_password: z.string().min(8).max(40)
 })
 
-type UserAccountFields =  z.infer<typeof schema>
-export function UserAccount({formRef}:{formRef:RefObject<HTMLFormElement>}){
+type AccountFields =  z.infer<typeof schema>
+export function AccountForm(){
+    const formRef = useRef(null)
+    const {state,setState,maxStep} = useContext(StepperContext)
     const { 
             register,
             handleSubmit,
             formState:{ errors},
-        } = useForm<UserAccountFields>({
+        } = useForm<AccountFields>({
         resolver: zodResolver(schema),
         })
     const userInfoForms:Array<AnimationPlaceholderInputProps> = [
@@ -51,24 +55,32 @@ export function UserAccount({formRef}:{formRef:RefObject<HTMLFormElement>}){
         }
     ]
 
-    const onSubmit : SubmitHandler<UserAccountFields> = (userAccount)=>{
-        console.log(userAccount)
+    const onSubmit : SubmitHandler<AccountFields> = (account)=>{
+        console.log(account)
+        // the form has been validated, so go to the next step
+        if(state < maxStep - 1) setState(state+1)
     }
     
     return (
         <form 
             ref={formRef}
-            className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-8 gap-x-4 " onSubmit={handleSubmit(onSubmit)}>
-            {userInfoForms.map((form)=>
-                <AnimationPlaceholderInput 
-                    key={form.name}
-                    labelName={form.labelName}
-                    type={form.type}
-                    name={form.name}
-                    register={form.register}
-                    error={form.error}
-                />
-            )}  
+            className="w-full"
+            onSubmit={handleSubmit(onSubmit)}>
+            <div className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-8 gap-x-4  pb-8" >
+                {userInfoForms.map((form)=>
+                    <AnimationPlaceholderInput 
+                        key={form.name}
+                        labelName={form.labelName}
+                        type={form.type}
+                        name={form.name}
+                        register={form.register}
+                        error={form.error}
+                    />
+                )} 
+            </div> 
+        <StepperButtons
+            onPreviousClick={()=>state > 0 ? setState(state-1) : null}
+        /> 
         </form>
     )        
 }
