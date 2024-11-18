@@ -26,9 +26,8 @@ export function Dropdown({labelName,name,onChange,register,error,open,setOpen,ch
                     className= {`transition-all duration-100 ease-in-out absolute z-10 bottom-0 px-0 py-2 text-neutral-400 hover:cursor-pointer ${focus ? 'translate-y-[-80%] translate-x-2 text-sm ' : 'translate-y-0 translate-x-0 text-lg'}`} 
                     htmlFor={name}>
                     {labelName.toUpperCase()}
-                    
                 </label>
-                <div className="w-full grid grid-cols-[1fr,60px] justify-between items-center border-b-2 border-blue-200">
+                <div className="w-full flex flex-row justify-between items-center border-b-2 border-blue-200">
                 <input 
                     {...register}  
                     className="focus:outline-none focus:border-transparent border-transparent h-10 w-full bg-transparent px-2 text-lg"

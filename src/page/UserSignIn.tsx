@@ -7,7 +7,7 @@ export function UserSignIn(){
     const getStep = (state:number)=>{
         switch(state){
             case 0:
-                return <AccountForm/>
+               return <AccountForm/>
             //return <InfoForm/>
             case 1:
                 return <AddressForm/>

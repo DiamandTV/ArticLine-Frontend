@@ -15,7 +15,7 @@ const schema = z.object({
 
 type AccountFields =  z.infer<typeof schema>
 export function AccountForm(){
-    const formRef = useRef(null)
+    const formRef = useRef<HTMLFormElement | null>(null)
     const {state,setState,maxStep} = useContext(StepperContext)
     const { 
             register,
@@ -79,6 +79,7 @@ export function AccountForm(){
                 )} 
             </div> 
         <StepperButtons
+            onNextClick={()=>formRef.current?.requestSubmit()}
             onPreviousClick={()=>state > 0 ? setState(state-1) : null}
         /> 
         </form>

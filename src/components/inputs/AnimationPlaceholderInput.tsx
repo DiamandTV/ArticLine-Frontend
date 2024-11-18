@@ -23,7 +23,7 @@ export function AnimationPlaceholderInput(
                     htmlFor={name}>
                     {labelName.toUpperCase()}
                 </label>
-                <div className="w-full grid grid-cols-[1fr,30px] justify-between items-center border-b-2 border-blue-200">
+                <div className="w-full flex flex-row justify-between items-center border-b-2 border-blue-200">
                     <input 
                         {...register}
                         className="change-icon-to-white focus:outline-none focus:border-transparent border-transparent h-10 w-full border-b-2 bg-transparent px-2 text-lg"
