@@ -26,6 +26,12 @@ export default {
             display: 'none'
           }
         },
+        '.change-icon-to-white':{
+          '&::-ms-reveal ': {
+            'filter': 'invert(100%)'
+          },
+          
+        }
       }
       )
     })

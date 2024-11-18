@@ -20,20 +20,25 @@ export function Dropdown({labelName,name,onChange,register,error,open,setOpen,ch
         <div className="relative flex flex-col w-full">
             <div 
                 className="relative flex justify-between items-center h-10 w-full border-b-2 bg-transparent px-2 hover:cursor-pointer" 
-                onClick={()=>setOpen(!open)}
+                
                 >
               <label
                     className= {`transition-all duration-100 ease-in-out absolute z-10 bottom-0 px-0 py-2 text-neutral-400 hover:cursor-pointer ${focus ? 'translate-y-[-80%] translate-x-2 text-sm ' : 'translate-y-0 translate-x-0 text-lg'}`} 
                     htmlFor={name}>
                     {labelName.toUpperCase()}
+                    
                 </label>
+                <div className="w-full grid grid-cols-[1fr,60px] justify-between items-center border-b-2 border-blue-200">
                 <input 
                     {...register}  
-                    className="focus:outline-none focus:border-blue-200 h-10 w-full bg-transparent px-2 text-lg"
+                    className="focus:outline-none focus:border-transparent border-transparent h-10 w-full bg-transparent px-2 text-lg"
                     id={name}
                     type={"text"} 
                     name={name} 
-                    onFocus={()=>setFocus(true)}
+                    onFocus={()=>{
+                        setOpen(!open)
+                        setFocus(true)
+                    }}
                     onBlur={(e)=>{
                         setFocus(e.target.value == '' ? false : true)
                         setOpen(false)
@@ -43,15 +48,18 @@ export function Dropdown({labelName,name,onChange,register,error,open,setOpen,ch
                         register?.onChange(event)
                     }}
                 />
-                <IoMdArrowDropdown 
-                    size={25} 
-                    className={`transitio-all duration-100 ease-in-out ${(open && focus) ? 'rotate-180' : 'rotate-0'}`}
-                    />
+                <div className="flex flex-row items-start justify-end gap-2">
+                    <IoMdArrowDropdown 
+                        size={25} 
+                        className={`transitio-all duration-100 ease-in-out ${(open && focus) ? 'rotate-180' : 'rotate-0'}`}
+                        />
+                    <InputError error={error}/>
+                </div>
+            </div>
             </div>
             {
                 // Dropdown items
             }
-            <InputError error={error}/>
             <div 
                 className={`w-full max-h-32 absolute z-20 top-10 bg-slate-900 bg-opacity-85 backdrop-blur-lg rounded-b-lg pb-0.5 overflow-y-auto scrollbar-hide ${open ? 'visible' : 'invisible'}`}>
                 {children}

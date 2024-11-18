@@ -41,14 +41,14 @@ export function AccountForm(){
         },
         {
             labelName:'PASSWORD',
-            type:'text'   ,
+            type:'password'   ,
             name:'password',
             register:register('password'),
             error:errors.password
         },
         {
             labelName:'CONFERM PASSWORD',
-            type:'text'   ,
+            type:'password'   ,
             name:'conferm_password',
             register:register('conferm_password'),
             error:errors.conferm_password

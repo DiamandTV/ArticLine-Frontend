@@ -22,7 +22,7 @@ const schema = z.object({
 type AddressFields = z.infer<typeof schema>;
 
 export function AddressForm() {
-  const formRef = useRef(null)
+  const formRef = useRef<HTMLFormElement | null>(null)
   const {state,setState,maxStep} = useContext(StepperContext)
   const { register, getValues, setValue,formState:{errors},handleSubmit } = useForm<AddressFields>({
     resolver: zodResolver(schema),
@@ -44,7 +44,7 @@ export function AddressForm() {
     // the form has been validated, so go to the next step
     if(state < maxStep - 1) setState(state+1)
   }
-
+  console.log(errors)
   return (
     <form 
       ref={formRef}
@@ -110,6 +110,7 @@ export function AddressForm() {
         />
       </div>
       <StepperButtons
+        onNextClick={()=>formRef.current!.requestSubmit()}
         onPreviousClick={()=>state > 0 ? setState(state-1) : null}
       />
     </form>

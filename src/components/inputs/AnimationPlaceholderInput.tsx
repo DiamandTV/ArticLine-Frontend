@@ -23,19 +23,21 @@ export function AnimationPlaceholderInput(
                     htmlFor={name}>
                     {labelName.toUpperCase()}
                 </label>
-                <input 
-                    {...register}
-                    className="focus:outline-none focus:border-blue-200 h-10 w-full border-b-2 bg-transparent px-2 text-lg"
-                    id={name}
-                    type={type} 
-                    name={name} 
-                    maxLength={maxLength}
-                    onFocus={()=>setFocus(true)}
-                    onBlur={(e)=>{
-                        setFocus(e.target.value == '' ? false : true)}
-                    }  
-                />
-                <InputError error={error}/>
+                <div className="w-full grid grid-cols-[1fr,30px] justify-between items-center border-b-2 border-blue-200">
+                    <input 
+                        {...register}
+                        className="change-icon-to-white focus:outline-none focus:border-transparent border-transparent h-10 w-full border-b-2 bg-transparent px-2 text-lg"
+                        id={name}
+                        type={type} 
+                        name={name} 
+                        maxLength={maxLength}
+                        onFocus={()=>setFocus(true)}
+                        onBlur={(e)=>{
+                            setFocus(e.target.value == '' ? false : true)}
+                        }  
+                    />
+                    <InputError error={error}/>
+                </div>
         </div>
         )
 }

@@ -24,12 +24,12 @@ const schema = z.object({
     username: z.string().min(1).max(150),
     date_of_birth: z.custom<Dayjs>((val) => val instanceof dayjs, 'Invalid date').refine((val)=>isAdult(val,18),"You aren't adult")
 })
-type UserInfoFields = z.infer<typeof schema>
+type InfoFields = z.infer<typeof schema>
 
-export function UserInfo(){
+export function InfoForm(){
     const formRef = useRef<HTMLFormElement | null>(null)
     const {state,setState,maxStep} = useContext(StepperContext)
-    const methods = useForm<UserInfoFields>({
+    const methods = useForm<InfoFields>({
         resolver: zodResolver(schema),
       });
     
@@ -62,10 +62,10 @@ export function UserInfo(){
             name:'username',
             register:register("username"),
             error:errors.username
-        },
-       
+        },  
     ]
-    const onSubmit : SubmitHandler<UserInfoFields> = (userInfo)=>{
+    
+    const onSubmit : SubmitHandler<InfoFields> = (userInfo)=>{
         console.log(userInfo)
         // the form has been validated, so go to the next step
         if(state < maxStep - 1) setState(state+1)

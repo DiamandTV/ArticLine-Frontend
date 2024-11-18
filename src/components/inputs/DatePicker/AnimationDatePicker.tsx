@@ -13,7 +13,7 @@ export interface AnimationDatePickerProps{
 export function AnimationDatePicker({labelName,type,name,maxLength,readonly=true/*register,error*/}:AnimationDatePickerProps){
     const { control } = useFormContext()
     return (
-        <Controller name={name} control={control} render={({field})=> <MobileDatePicker
+        <Controller name={name} control={control} render={({field,fieldState:{error}})=> <MobileDatePicker
             //defaultValue={dayjs(new Date())}
             slots={{
             textField:(params)=><AnimationDatePickerInput
@@ -23,7 +23,7 @@ export function AnimationDatePicker({labelName,type,name,maxLength,readonly=true
                 readonly={readonly}
                 maxLength={maxLength}
                 params={params}
-                
+                error={error}
                 />
         }}
         {...field}
