@@ -1,9 +1,14 @@
 // ArticLine Company model
-import {BaseUserModel} from "./baseUser"
+import {AuthModel} from "./auth"
 
-export interface CompanyModel{
-    user:BaseUserModel,
-    categories:Array<string>,
-    description:string,
-    is_certificated:boolean
+export interface CompanyProfileModel{
+    auth:AuthModel,
+    image:string,
+    first_name:string,
+    last_name:string,
+    company_name:string,
+    date_of_foundation:string,
+    phone_number:string,
+    address:string,
+    is_certificated:boolean,
 }
