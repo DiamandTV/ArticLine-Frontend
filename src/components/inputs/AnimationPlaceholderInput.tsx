@@ -1,4 +1,4 @@
-import { useState } from "react"
+import {  useState } from "react"
 import { InputError } from "./InputError/InputError";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { FieldError } from "react-hook-form";
@@ -9,13 +9,14 @@ export interface AnimationPlaceholderInputProps {
     name:string,
     maxLength?:number,
     // react form hook props
+    defaultValue?:string,
     register?:UseFormRegisterReturn
     error?:FieldError | undefined
 }
 export function AnimationPlaceholderInput(
-        {labelName,type,name,maxLength,register,error}:AnimationPlaceholderInputProps
+        {labelName,type,name,maxLength,defaultValue,register,error}:AnimationPlaceholderInputProps
     ){
-        const [focus,setFocus] = useState(false)
+        const [focus,setFocus] = useState(defaultValue ? true : false );
         return (
             <div className="flex flex-col relative w-full">
                 <label

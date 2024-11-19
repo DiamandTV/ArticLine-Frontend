@@ -1,15 +1,28 @@
 import { createContext } from "react";
 export interface StepperContextProps{
-    state:number,
-    setState:(stateIndex:number)=>void,
-    stepLabels: Array<string>,
-    maxStep:number,
+    stepper:{
+        state:number,
+        setState:(stateIndex:number)=>void,
+        stepLabels: Array<string>,
+        maxStep:number,
+    },
+    record:{
+        record:Record<string,Record<string,string>>,
+        setRecord:(newRecord:Record<string,Record<string,string>>)=>void,
+    }
+
 }
 export const StepperContext = createContext<StepperContextProps>({
-    state:0,
-    setState:()=>{},
-    stepLabels:[],
-    maxStep:3,
+    stepper:{
+        state:0,
+        setState:()=>{},
+        stepLabels: [],
+        maxStep:0,    
+    },
+    record:{
+        record:{},
+        setRecord:()=>{},
+    }
 })
 
 

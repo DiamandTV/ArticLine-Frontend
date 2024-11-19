@@ -21,15 +21,17 @@ function isAdult(date:Dayjs,adultAge:number):boolean{
 const schema = z.object({
     firstName: z.string().min(1).max(150),
     lastName: z.string().min(1).max(150),
-    username: z.string().min(1).max(150),
+    //username: z.string().min(1).max(150),
+    username: z.string(),
     date_of_birth: z.custom<Dayjs>((val) => val instanceof dayjs, 'Invalid date').refine((val)=>isAdult(val,18),"You aren't adult")
 })
 type InfoFields = z.infer<typeof schema>
 
 export function InfoForm(){
     const formRef = useRef<HTMLFormElement | null>(null)
-    const {state,setState,maxStep} = useContext(StepperContext)
+    const {stepper:{state,setState,maxStep},record:{record,setRecord}} = useContext(StepperContext)
     const methods = useForm<InfoFields>({
+        defaultValues:record[state],
         resolver: zodResolver(schema),
       });
     
@@ -37,6 +39,7 @@ export function InfoForm(){
         register,
         handleSubmit,
         formState: { errors },
+        getValues
       } = methods;
 
     // All the user info form data 
@@ -45,6 +48,7 @@ export function InfoForm(){
             labelName:'FIRST NAME',
             type:'text'   ,
             name:'firstName',
+            defaultValue:getValues('firstName'),
             register:register("firstName"),
             error:errors.firstName
         },
@@ -52,6 +56,7 @@ export function InfoForm(){
             labelName:'LAST NAME',
             type:'text'   ,
             name:'lastName',
+            defaultValue:getValues('lastName'),
             register:register("lastName"),
             error:errors.lastName
 
@@ -60,15 +65,21 @@ export function InfoForm(){
             labelName:'USERNAME',
             type:'text'   ,
             name:'username',
+            defaultValue:getValues('username'),
             register:register("username"),
             error:errors.username
         },  
     ]
     
-    const onSubmit : SubmitHandler<InfoFields> = (userInfo)=>{
-        console.log(userInfo)
+    const onSubmit : SubmitHandler<InfoFields> = (info)=>{
+        console.log(info)
         // the form has been validated, so go to the next step
-        if(state < maxStep - 1) setState(state+1)
+        if(state < maxStep - 1){ 
+            setState(state+1)
+            setRecord((oldInfo)=>(
+                {...oldInfo,[state]:info}
+            ))
+        }
     }
     return(
         <FormProvider {...methods}>
@@ -83,6 +94,7 @@ export function InfoForm(){
                             labelName={form.labelName}
                             type={form.type}
                             name={form.name}
+                            defaultValue={form.defaultValue}
                             register={form.register}
                             error={form.error}
                         />
@@ -90,7 +102,8 @@ export function InfoForm(){
                 <AnimationDatePicker 
                     labelName="DATE OF BIRTH" 
                     name="date_of_birth" 
-                    type="text" maxLength={10} />   
+                    type="text" maxLength={10} 
+                    />   
                 </div> 
                 <StepperButtons
                     onNextClick={()=>formRef.current!.requestSubmit()}

@@ -10,12 +10,13 @@ interface DropdownProps {
     setOpen:(value:boolean)=>void,
     onChange:()=>void,
     children:React.ReactNode,
+    defaultValue?:string,
     register?:UseFormRegisterReturn,
     error?:FieldError
 }
-export function Dropdown({labelName,name,onChange,register,error,open,setOpen,children}:DropdownProps){
+export function Dropdown({labelName,name,onChange,defaultValue,register,error,open,setOpen,children}:DropdownProps){
 
-    const [focus,setFocus] = useState(false)
+    const [focus,setFocus] = useState(defaultValue ? true : false)
     return(
         <div className="relative flex flex-col w-full">
             <div 

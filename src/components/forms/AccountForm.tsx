@@ -16,14 +16,15 @@ const schema = z.object({
 type AccountFields =  z.infer<typeof schema>
 export function AccountForm(){
     const formRef = useRef<HTMLFormElement | null>(null)
-    const {state,setState,maxStep} = useContext(StepperContext)
+    const {stepper:{state,setState,maxStep},record:{record,setRecord}} = useContext(StepperContext)
     const { 
             register,
             handleSubmit,
             formState:{ errors},
         } = useForm<AccountFields>({
-        resolver: zodResolver(schema),
-        })
+            defaultValues:record[state],
+            resolver: zodResolver(schema),
+            })
     const userInfoForms:Array<AnimationPlaceholderInputProps> = [
         {
             labelName:'PHONE NUMBER',
@@ -58,7 +59,12 @@ export function AccountForm(){
     const onSubmit : SubmitHandler<AccountFields> = (account)=>{
         console.log(account)
         // the form has been validated, so go to the next step
-        if(state < maxStep - 1) setState(state+1)
+        if(state < maxStep - 1){
+            setState(state+1)
+            setRecord((oldAccount)=>(
+                setRecord({...oldAccount,[state]:account})
+            ))
+        }
     }
     
     return (

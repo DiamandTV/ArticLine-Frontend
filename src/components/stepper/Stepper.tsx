@@ -11,8 +11,9 @@ interface StepperProps{
 }
 
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getStepperStyle(index:number,state:number):SxProps{
-    console.log(index,state)
+
     return  {
 
         "& .Mui-active":{
@@ -41,10 +42,11 @@ function getStepperStyle(index:number,state:number):SxProps{
 
 export function StepperForm({maxStep,getStep,stepLabels}:StepperProps){
     const [state,setState] = useState(0)
+    const [record,setRecord] = useState<Record<string,Record<string,string>>>({})
     //const sm = useMediaQuery("(max-width: 640px)")
     const md = useMediaQuery("(max-width: 768px)")
     return(
-        <StepperContext.Provider value={{state,setState,maxStep,stepLabels}}>
+        <StepperContext.Provider value={{stepper:{state,setState,maxStep,stepLabels},record:{record,setRecord}}}>
             <div className="w-full">
                 {md ? 
                 <Stepper activeStep={state} orientation="vertical">

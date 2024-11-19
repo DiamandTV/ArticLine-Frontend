@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { StepperButtons } from "../stepper/StepperButtons";
 import { useContext, useRef } from "react";
 import { StepperContext } from "../stepper/StepperContext";
+import { MdOutlineDirectionsRailwayFilled } from "react-icons/md";
 
 const schema = z.object({
   recipient_name: z.string().min(1).max(255),
@@ -23,11 +24,12 @@ type AddressFields = z.infer<typeof schema>;
 
 export function AddressForm() {
   const formRef = useRef<HTMLFormElement | null>(null)
-  const {state,setState,maxStep} = useContext(StepperContext)
+  const {stepper:{state,setState,maxStep},record:{record,setRecord}} = useContext(StepperContext)
   const { register, getValues, setValue,formState:{errors},handleSubmit } = useForm<AddressFields>({
+    defaultValues:record[state],
     resolver: zodResolver(schema),
   });
-
+  console.log(record)
   const handleFilter = (
     value: string,
     data: Array<Record<string, string>>,
@@ -41,8 +43,12 @@ export function AddressForm() {
 
   const onSubmit : SubmitHandler<AddressFields> = (address)=>{
     console.log(address)
+    setRecord((oldRecord)=>(
+        {...oldRecord,[state]:address}
+      ))
     // the form has been validated, so go to the next step
     if(state < maxStep - 1) setState(state+1)
+
   }
   console.log(errors)
   return (
@@ -55,6 +61,7 @@ export function AddressForm() {
           labelName="RECIPIENT NAME"
           type="text"
           name="recipient_name"
+          defaultValue={getValues('recipient_name')}
           register={register("recipient_name")}
           error={errors.recipient_name}
         />
@@ -63,6 +70,7 @@ export function AddressForm() {
           labelName="ADDRESS"
           type="text"
           name="street"
+          defaultValue={getValues('street')}
           register={register("street")}
           error={errors.street}
         />
@@ -71,6 +79,7 @@ export function AddressForm() {
           labelName="CITY"
           name="city"
           list={cityJson}
+          defaultValue={getValues('city')}
           showFunction={(item) => (item as typeof cityJson[0]).denominazione_ita}
           setValue={(value) => setValue("city", value)}
           filterFunction={() => handleFilter(getValues("city"), cityJson, "denominazione_ita")}
@@ -82,6 +91,7 @@ export function AddressForm() {
         type="text"
         name="zip"
         maxLength={5}
+        defaultValue={getValues('zip')}
         register={register("zip")}
         error={errors.zip}
       />  
@@ -89,6 +99,7 @@ export function AddressForm() {
           labelName="PROVINCE"
           name="province"
           list={provinceJson}
+          defaultValue={getValues('province')}
           showFunction={(item) => (item as typeof provinceJson[0]).denominazione_provincia}
           setValue={(value) => setValue("province", value)}
           filterFunction={() =>
@@ -102,6 +113,7 @@ export function AddressForm() {
           labelName="COUNTRY"
           name="country"
           list={countryJson}
+          defaultValue={getValues('country')}
           showFunction={(item) => (item as typeof countryJson[0]).name}
           setValue={(value) => setValue("country", value)}
           filterFunction={() => handleFilter(getValues("country"), countryJson, "name")}
