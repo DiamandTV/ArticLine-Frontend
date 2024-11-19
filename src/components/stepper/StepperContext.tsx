@@ -5,6 +5,7 @@ export interface StepperContextProps{
         setState:(stateIndex:number)=>void,
         stepLabels: Array<string>,
         maxStep:number,
+        onFinish:()=>void,
     },
     record:{
         record:Record<string,Record<string,string>>,
@@ -18,6 +19,7 @@ export const StepperContext = createContext<StepperContextProps>({
         setState:()=>{},
         stepLabels: [],
         maxStep:0,    
+        onFinish:()=>{}
     },
     record:{
         record:{},

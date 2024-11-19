@@ -9,7 +9,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { StepperButtons } from "../stepper/StepperButtons";
 import { useContext, useRef } from "react";
 import { StepperContext } from "../stepper/StepperContext";
-import { MdOutlineDirectionsRailwayFilled } from "react-icons/md";
 
 const schema = z.object({
   recipient_name: z.string().min(1).max(255),
@@ -43,12 +42,15 @@ export function AddressForm() {
 
   const onSubmit : SubmitHandler<AddressFields> = (address)=>{
     console.log(address)
-    setRecord((oldRecord)=>(
-        {...oldRecord,[state]:address}
-      ))
+    
     // the form has been validated, so go to the next step
-    if(state < maxStep - 1) setState(state+1)
-
+    if(state == maxStep){
+      // to the onFinish function
+    } else if(state < maxStep - 1){
+      setState(state+1)
+      const newRecord = {...record,[state]:address}
+      setRecord(newRecord)
+    }
   }
   console.log(errors)
   return (

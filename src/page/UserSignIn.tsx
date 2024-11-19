@@ -25,6 +25,9 @@ export function UserSignIn(){
                 maxStep={3}
                 stepLabels={['USER INFO','USER ADDRESS','USER DETAILS']}
                 getStep={getStep}
+                onFinish={()=>{
+
+                }}
             />
         </StartView>
     )

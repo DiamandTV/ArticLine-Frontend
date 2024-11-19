@@ -1,3 +1,4 @@
+/*
 import ReactImagePickerEditor, { ImagePickerConf } from 'react-image-picker-editor';
 import 'react-image-picker-editor/dist/index.css'
 
@@ -24,3 +25,4 @@ export function ImagePicker(){
         </div>
  )
 }
+ */

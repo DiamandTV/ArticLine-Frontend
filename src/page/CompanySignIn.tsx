@@ -7,7 +7,7 @@ export function CompanySignIn(){
     const getStep = (state:number)=>{
         switch(state){
             case 0:
-                return <InfoForm/>
+                return <InfoForm isCompany={true}/>
             case 1:
                 return <AddressForm/>
             case 2:
@@ -23,6 +23,9 @@ export function CompanySignIn(){
                 maxStep={3}
                 stepLabels={['COMPANY INFO','COMPANY ADDRESS','COMPANY DETAILS']}
                 getStep={getStep}
+                onFinish={()=>{
+                    
+                }}
             />
         </StartView>
     )

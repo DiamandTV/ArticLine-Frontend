@@ -59,12 +59,14 @@ export function AccountForm(){
     const onSubmit : SubmitHandler<AccountFields> = (account)=>{
         console.log(account)
         // the form has been validated, so go to the next step
-        if(state < maxStep - 1){
+        if(state == maxStep){
+            // do the onFinish function   
+        }else if(state < maxStep - 1){
             setState(state+1)
-            setRecord((oldAccount)=>(
-                setRecord({...oldAccount,[state]:account})
-            ))
+            const newRecord = {...record,[state]:account}
+            setRecord(newRecord)
         }
+        
     }
     
     return (

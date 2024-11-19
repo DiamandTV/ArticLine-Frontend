@@ -18,16 +18,21 @@ function isAdult(date:Dayjs,adultAge:number):boolean{
 }
 
 
-const schema = z.object({
-    firstName: z.string().min(1).max(150),
-    lastName: z.string().min(1).max(150),
-    //username: z.string().min(1).max(150),
-    username: z.string(),
-    date_of_birth: z.custom<Dayjs>((val) => val instanceof dayjs, 'Invalid date').refine((val)=>isAdult(val,18),"You aren't adult")
-})
-type InfoFields = z.infer<typeof schema>
+function getSchema(isCompany:boolean){
+    return z.object({
+        first_name: z.string().min(1).max(150),
+        last_name: z.string().min(1).max(150),
+        //username: z.string().min(1).max(150),
+        username: z.string(),
+        date: z.custom<Dayjs>((val) => val instanceof dayjs, 'Invalid date').refine((val)=>isCompany ? true : isAdult(val,18),"You aren't adult")
+    })
+}
 
-export function InfoForm(){
+
+export function InfoForm({isCompany=false}:{isCompany?:boolean}){
+    // todo : use Memo for this
+    const schema = getSchema(isCompany)
+    type InfoFields = z.infer<typeof schema>
     const formRef = useRef<HTMLFormElement | null>(null)
     const {stepper:{state,setState,maxStep},record:{record,setRecord}} = useContext(StepperContext)
     const methods = useForm<InfoFields>({
@@ -45,24 +50,24 @@ export function InfoForm(){
     // All the user info form data 
     const userInfoForms:Array<AnimationPlaceholderInputProps> = [
         {
-            labelName:'FIRST NAME',
+            labelName:isCompany ? 'OWNER FIRST NAME' : 'FIRST NAME',
             type:'text'   ,
-            name:'firstName',
-            defaultValue:getValues('firstName'),
-            register:register("firstName"),
-            error:errors.firstName
+            name:'first_name',
+            defaultValue:getValues('first_name'),
+            register:register("first_name"),
+            error:errors.first_name
         },
         {
-            labelName:'LAST NAME',
+            labelName:isCompany ?  'OWNER LAST NAME' : 'LAST NAME',
             type:'text'   ,
-            name:'lastName',
-            defaultValue:getValues('lastName'),
-            register:register("lastName"),
-            error:errors.lastName
+            name:'last_name',
+            defaultValue:getValues('last_name'),
+            register:register("last_name"),
+            error:errors.last_name
 
         },
         {
-            labelName:'USERNAME',
+            labelName:isCompany ? 'COMPANY NAME' : 'USERNAME',
             type:'text'   ,
             name:'username',
             defaultValue:getValues('username'),
@@ -74,11 +79,12 @@ export function InfoForm(){
     const onSubmit : SubmitHandler<InfoFields> = (info)=>{
         console.log(info)
         // the form has been validated, so go to the next step
-        if(state < maxStep - 1){ 
+        if(state == maxStep){
+            // do the onFInish function
+        }else if(state < maxStep - 1){ 
             setState(state+1)
-            setRecord((oldInfo)=>(
-                {...oldInfo,[state]:info}
-            ))
+            const newRecord = {...record,[state]:info}
+            setRecord(newRecord)
         }
     }
     return(
@@ -100,8 +106,8 @@ export function InfoForm(){
                         />
                     )}  
                 <AnimationDatePicker 
-                    labelName="DATE OF BIRTH" 
-                    name="date_of_birth" 
+                    labelName={isCompany ? "FOUNDATION DATE" : "DATE OF BIRTH"} 
+                    name="date" 
                     type="text" maxLength={10} 
                     />   
                 </div> 
