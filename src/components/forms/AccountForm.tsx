@@ -7,7 +7,7 @@ import { useContext, useRef } from "react"
 import { StepperContext } from "../stepper/StepperContext"
 
 const schema = z.object({
-    phone_number: z.string().length(5),
+   
     email: z.string().email(),
     password: z.string().min(8).max(40),
     conferm_password: z.string().min(8).max(40)
@@ -26,13 +26,7 @@ export function AccountForm(){
             resolver: zodResolver(schema),
             })
     const userInfoForms:Array<AnimationPlaceholderInputProps> = [
-        {
-            labelName:'PHONE NUMBER',
-            type:'text'   ,
-            name:'phone_number',
-            register:register('phone_number'),
-            error:errors.phone_number
-        },
+        
         {
             labelName:'EMAIL',
             type:'text'   ,
