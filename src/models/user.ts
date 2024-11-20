@@ -5,6 +5,7 @@ export interface UserProfileModel{
     image:string,
     first_name:string,
     last_name:string,
+    username:string,
     date_of_birth:string,
     phone_number:string,
     address:AddressModel

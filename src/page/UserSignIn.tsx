@@ -1,4 +1,4 @@
-import { InfoForm } from '../components/forms/InfoForm'
+import { UserInfoForm } from '../components/forms/UserInfoForm'
 import { AccountForm } from '../components/forms/AccountForm'
 import { AddressForm } from '../components/forms/AddressForm'
 import { StartView } from '../components/views/StartView'
@@ -7,7 +7,7 @@ export function UserSignIn(){
     const getStep = (state:number)=>{
         switch(state){
             case 0:
-               return <InfoForm/>
+               return <UserInfoForm/>
             //return <InfoForm/>
             case 1:
                 return <AddressForm/>

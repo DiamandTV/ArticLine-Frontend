@@ -18,21 +18,17 @@ function isAdult(date:Dayjs,adultAge:number):boolean{
 }
 
 
-function getSchema(isCompany:boolean){
-    return z.object({
+const schema = z.object({
         first_name: z.string().min(1).max(150),
         last_name: z.string().min(1).max(150),
-        //username: z.string().min(1).max(150),
-        username: z.string(),
-        date: z.custom<Dayjs>((val) => val instanceof dayjs, 'Invalid date').refine((val)=>isCompany ? true : isAdult(val,18),"You aren't adult")
+        username: z.string().min(1).max(150),
+        //username: z.string(),
+        date: z.custom<Dayjs>((val) => val instanceof dayjs, 'Invalid date').refine((val)=>isAdult(val,18),"You aren't adult")
     })
-}
 
+type InfoFields = z.infer<typeof schema>
 
-export function InfoForm({isCompany=false}:{isCompany?:boolean}){
-    // todo : use Memo for this
-    const schema = getSchema(isCompany)
-    type InfoFields = z.infer<typeof schema>
+export function UserInfoForm(){    
     const formRef = useRef<HTMLFormElement | null>(null)
     const {stepper:{state,setState,maxStep},record:{record,setRecord}} = useContext(StepperContext)
     const methods = useForm<InfoFields>({
@@ -50,7 +46,7 @@ export function InfoForm({isCompany=false}:{isCompany?:boolean}){
     // All the user info form data 
     const userInfoForms:Array<AnimationPlaceholderInputProps> = [
         {
-            labelName:isCompany ? 'OWNER FIRST NAME' : 'FIRST NAME',
+            labelName:'FIRST NAME',
             type:'text'   ,
             name:'first_name',
             defaultValue:getValues('first_name'),
@@ -58,7 +54,7 @@ export function InfoForm({isCompany=false}:{isCompany?:boolean}){
             error:errors.first_name
         },
         {
-            labelName:isCompany ?  'OWNER LAST NAME' : 'LAST NAME',
+            labelName:'LAST NAME',
             type:'text'   ,
             name:'last_name',
             defaultValue:getValues('last_name'),
@@ -67,7 +63,7 @@ export function InfoForm({isCompany=false}:{isCompany?:boolean}){
 
         },
         {
-            labelName:isCompany ? 'COMPANY NAME' : 'USERNAME',
+            labelName:'USERNAME',
             type:'text'   ,
             name:'username',
             defaultValue:getValues('username'),
@@ -106,8 +102,8 @@ export function InfoForm({isCompany=false}:{isCompany?:boolean}){
                         />
                     )}  
                 <AnimationDatePicker 
-                    labelName={isCompany ? "FOUNDATION DATE" : "DATE OF BIRTH"} 
-                    name="date" 
+                    labelName={"DATE OF BIRTH"} 
+                    name="date_of_birth" 
                     type="text" maxLength={10} 
                     />   
                 </div> 
