@@ -1,22 +1,39 @@
 // ArticLine authentication slice
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AuthModel } from "../models/auth";
+import { UserService } from "../services/userService";
 import { UserProfileModel } from "../models/user";
 import { CompanyProfileModel } from "../models/company";
 
 export interface AuthSliceIntialValueProps {
-    auth:AuthModel
+    auth:AuthModel | null,
+    service:ReturnType<typeof UserService>,
+    profile:UserProfileModel | null
+
+}
+
+const authSliceInitialValue:AuthSliceIntialValueProps = {
+    auth:null,
+    service:UserService(),
+    profile:null
 }
 
 const authSlice = createSlice({
-    name:"Auth Slice",
-    initialState:{
-        profile:UserP
-    },
+    name:"authSlice",
+    initialState:authSliceInitialValue,
     reducers:{
 
-    }
+    },
+    extraReducers(builder){
+        builder.addCase(userSignIn.fulfilled,(state,action)=>{
+            
+        })
+    },
+})
+
+export const userSignIn = createAsyncThunk("authSlice/login",async(userProfile:UserProfileModel)=>{
+
 })
 
 

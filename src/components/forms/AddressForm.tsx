@@ -19,7 +19,7 @@ const schema = z.object({
   country: z.string().min(1).max(255),
 });
 
-type AddressFields = z.infer<typeof schema>;
+export type AddressFields = z.infer<typeof schema>;
 
 export function AddressForm() {
   const formRef = useRef<HTMLFormElement | null>(null)
@@ -48,7 +48,9 @@ export function AddressForm() {
       // to the onFinish function
     } else if(state < maxStep - 1){
       setState(state+1)
-      const newRecord = {...record,[state]:address}
+      const newRecord = record
+      newRecord[state] = address
+
       setRecord(newRecord)
     }
   }

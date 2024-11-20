@@ -5,11 +5,11 @@ export interface StepperContextProps{
         setState:(stateIndex:number)=>void,
         stepLabels: Array<string>,
         maxStep:number,
-        onFinish:()=>void,
+        onFinish:(record:Array<Record<string,string>>)=>void,
     },
     record:{
-        record:Record<string,Record<string,string>>,
-        setRecord:(newRecord:Record<string,Record<string,string>>)=>void,
+        record:Array<Record<string,unknown>>,
+        setRecord:(newRecord:Array<Record<string,unknown>>)=>void,
     }
 
 }
@@ -22,7 +22,7 @@ export const StepperContext = createContext<StepperContextProps>({
         onFinish:()=>{}
     },
     record:{
-        record:{},
+        record:[],
         setRecord:()=>{},
     }
 })

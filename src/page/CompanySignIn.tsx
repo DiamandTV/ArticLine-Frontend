@@ -3,7 +3,16 @@ import { CompanyInfoForm } from '../components/forms/CompanyInfoForm'
 import { AccountForm } from '../components/forms/AccountForm'
 import { AddressForm } from '../components/forms/AddressForm'
 import { StartView } from '../components/views/StartView'
+import { AccountFields } from '../components/forms/AccountForm'
+import { AddressFields } from '../components/forms/AddressForm'
+import { CompanyInfoFields } from '../components/forms/CompanyInfoForm'
+import { CompanyService } from '../services/companyService'
+
+// interface of the company sign in record (the record of the stepper form)
+export type CompanySigninStepperType = Array<CompanyInfoFields | AddressFields | AccountFields>
+
 export function CompanySignIn(){
+    const companyService = CompanyService()
     const getStep = (state:number)=>{
         switch(state){
             case 0:
@@ -23,8 +32,8 @@ export function CompanySignIn(){
                 maxStep={3}
                 stepLabels={['COMPANY INFO','COMPANY ADDRESS','COMPANY DETAILS']}
                 getStep={getStep}
-                onFinish={()=>{
-                    
+                onFinish={(record)=>{
+                    login(companyService.stepperToProfileData(record))
                 }}
             />
         </StartView>

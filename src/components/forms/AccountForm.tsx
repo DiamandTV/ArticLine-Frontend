@@ -13,7 +13,7 @@ const schema = z.object({
     conferm_password: z.string().min(8).max(40)
 })
 
-type AccountFields =  z.infer<typeof schema>
+export type AccountFields =  z.infer<typeof schema>
 export function AccountForm(){
     const formRef = useRef<HTMLFormElement | null>(null)
     const {stepper:{state,setState,maxStep},record:{record,setRecord}} = useContext(StepperContext)
@@ -63,7 +63,8 @@ export function AccountForm(){
             // do the onFinish function   
         }else if(state < maxStep - 1){
             setState(state+1)
-            const newRecord = {...record,[state]:account}
+            const newRecord = record
+            newRecord[state] = account
             setRecord(newRecord)
         }
         

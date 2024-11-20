@@ -12,16 +12,17 @@ const schema = z.object({
         first_name: z.string().min(1).max(150),
         last_name: z.string().min(1).max(150),
         company_name: z.string().min(1).max(150),
+        phone_number: z.string().length(5),
         //username: z.string(),
         date_of_foundation: z.custom<Dayjs>((val) => val instanceof dayjs, 'Invalid date')
     })
 
-type InfoFields = z.infer<typeof schema>
+export type CompanyInfoFields = z.infer<typeof schema>
 
 export function CompanyInfoForm(){    
     const formRef = useRef<HTMLFormElement | null>(null)
     const {stepper:{state,setState,maxStep},record:{record,setRecord}} = useContext(StepperContext)
-    const methods = useForm<InfoFields>({
+    const methods = useForm<CompanyInfoFields>({
         defaultValues:record[state],
         resolver: zodResolver(schema),
       });
@@ -60,16 +61,24 @@ export function CompanyInfoForm(){
             register:register("company_name"),
             error:errors.company_name
         },  
+        {
+            labelName:'PHONE NUMBER',
+            type:'text'   ,
+            name:'phone_number',
+            register:register('phone_number'),
+            error:errors.phone_number
+        },
     ]
     
-    const onSubmit : SubmitHandler<InfoFields> = (info)=>{
+    const onSubmit : SubmitHandler<CompanyInfoFields> = (info)=>{
         console.log(info)
         // the form has been validated, so go to the next step
         if(state == maxStep){
             // do the onFInish function
         }else if(state < maxStep - 1){ 
             setState(state+1)
-            const newRecord = {...record,[state]:info}
+            const newRecord = record
+            newRecord[state] = info
             setRecord(newRecord)
         }
     }
