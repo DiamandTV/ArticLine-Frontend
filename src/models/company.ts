@@ -8,7 +8,6 @@ export interface CompanyProfileModel{
     last_name:string,
     company_name:string,
     date_of_foundation:string,
-    phone_number:string,
     address:string,
     is_certificated:boolean,
 }

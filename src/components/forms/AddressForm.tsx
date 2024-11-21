@@ -14,7 +14,7 @@ const schema = z.object({
   recipient_name: z.string().min(1).max(255),
   street: z.string().min(1).max(255),
   city: z.string().min(1).max(255),
-  postal_code: z.string().length(5),
+  postal_code: z.string(),
   province: z.string().min(1).max(255),
   country: z.string().min(1).max(255),
 });
@@ -22,13 +22,15 @@ const schema = z.object({
 export type AddressFields = z.infer<typeof schema>;
 
 export function AddressForm() {
+  
   const formRef = useRef<HTMLFormElement | null>(null)
-  const {stepper:{state,setState,maxStep},record:{record,setRecord}} = useContext(StepperContext)
+  const {stepper:{state,setState,maxStep,onFinish},record:{record,setRecord},error:{errorStepper,setErrorStepper}} = useContext(StepperContext)
   const { register, getValues, setValue,formState:{errors},handleSubmit } = useForm<AddressFields>({
     defaultValues:record[state],
     resolver: zodResolver(schema),
+    errors:errorStepper
   });
-  console.log(record)
+
   const handleFilter = (
     value: string,
     data: Array<Record<string, string>>,
@@ -40,12 +42,14 @@ export function AddressForm() {
   };
   
 
-  const onSubmit : SubmitHandler<AddressFields> = (address)=>{
+  const onSubmit : SubmitHandler<AddressFields> = async (address)=>{
     console.log(address)
     
     // the form has been validated, so go to the next step
     if(state == maxStep){
       // to the onFinish function
+      
+      setErrorStepper(await onFinish(record))
     } else if(state < maxStep - 1){
       setState(state+1)
       const newRecord = record
@@ -93,8 +97,8 @@ export function AddressForm() {
         <AnimationPlaceholderInput
         labelName="ZIP"
         type="text"
-        name="zip"
-        maxLength={5}
+        name="postal_code"
+        
         defaultValue={getValues('postal_code')}
         register={register("postal_code")}
         error={errors.postal_code}

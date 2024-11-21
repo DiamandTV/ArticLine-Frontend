@@ -8,7 +8,7 @@ interface StepperProps{
     maxStep:number ,
     stepLabels : Array<string>,
     getStep: (state:number)=>React.ReactNode,
-    onFinish:(record:Array<Record<string,unknown>>)=>void
+    onFinish:(record:Array<Record<string,unknown>>)=>Promise<Record<string,string>> | Record<string,string>
 }
 
 
@@ -44,10 +44,11 @@ function getStepperStyle(index:number,state:number):SxProps{
 export function StepperForm({maxStep,getStep,stepLabels,onFinish}:StepperProps){
     const [state,setState] = useState(0)
     const [record,setRecord] = useState<Array<Record<string,unknown>>>([])
+    const [errorStepper,setErrorStepper] = useState<Record<string,unknown>>({})
     //const sm = useMediaQuery("(max-width: 640px)")
     const md = useMediaQuery("(max-width: 768px)")
     return(
-        <StepperContext.Provider  value={{stepper:{state,setState,maxStep,stepLabels,onFinish},record:{record,setRecord}}}>
+        <StepperContext.Provider  value={{stepper:{state,setState,maxStep,stepLabels,onFinish},record:{record,setRecord},error:{errorStepper,setErrorStepper}}}>
             <div className="w-full">
                 {md ? 
                 <Stepper activeStep={state} orientation="vertical">

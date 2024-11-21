@@ -19,10 +19,10 @@ function isAdult(date:Dayjs,adultAge:number):boolean{
 
 
 const schema = z.object({
-        first_name: z.string().min(1).max(150),
-        last_name: z.string().min(1).max(150),
-        phone_number: z.string().length(5),
-        //username: z.string().min(1).max(150),
+        first_name: z.string(),//.min(1).max(150),
+        last_name: z.string(),//.min(1).max(150),
+        //phone_number: z.string().length(10),
+        username: z.string(),//.min(1).max(150),
         //username: z.string(),
         date_of_birth: z.custom<Dayjs>((val) => val instanceof dayjs, 'Invalid date').refine((val)=>isAdult(val,18),"You aren't adult")
     })
@@ -31,10 +31,11 @@ export type UserInfoFields = z.infer<typeof schema>
 
 export function UserInfoForm(){    
     const formRef = useRef<HTMLFormElement | null>(null)
-    const {stepper:{state,setState,maxStep},record:{record,setRecord}} = useContext(StepperContext)
+    const {stepper:{state,setState,maxStep,onFinish},record:{record,setRecord},error:{errorStepper,setErrorStepper}} = useContext(StepperContext)
     const methods = useForm<UserInfoFields>({
         defaultValues:record[state],
         resolver: zodResolver(schema),
+        errors:errorStepper
       });
     
       const {
@@ -64,14 +65,6 @@ export function UserInfoForm(){
 
         },
         {
-            labelName:'PHONE NUMBER',
-            type:'text'   ,
-            name:'phone_number',
-            register:register('phone_number'),
-            error:errors.phone_number
-        },
-        /*
-        {
             labelName:'USERNAME',
             type:'text'   ,
             name:'username',
@@ -79,14 +72,15 @@ export function UserInfoForm(){
             register:register("username"),
             error:errors.username
         },
-        */  
+        
     ]
-    
-    const onSubmit : SubmitHandler<UserInfoFields> = (info)=>{
+
+    const onSubmit : SubmitHandler<UserInfoFields> = async (info)=>{
         console.log(info)
         // the form has been validated, so go to the next step
         if(state == maxStep){
             // do the onFInish function
+            setErrorStepper(await onFinish(record))
         }else if(state < maxStep - 1){ 
             setState(state+1)
             const newRecord = record
@@ -94,6 +88,7 @@ export function UserInfoForm(){
             setRecord(newRecord)
         }
     }
+    console.log(errors)
     return(
         <FormProvider {...methods}>
             <form

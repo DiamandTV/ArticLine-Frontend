@@ -5,14 +5,13 @@ import { SubmitHandler, useForm,FormProvider } from "react-hook-form"
 import { StepperButtons } from "../stepper/StepperButtons"
 import dayjs, { Dayjs } from 'dayjs';
 import { z } from "zod"
-import { useContext, useRef } from "react"
+import { useContext, useEffect, useRef } from "react"
 import { StepperContext } from "../stepper/StepperContext"
 
 const schema = z.object({
         first_name: z.string().min(1).max(150),
         last_name: z.string().min(1).max(150),
         company_name: z.string().min(1).max(150),
-        phone_number: z.string().length(5),
         //username: z.string(),
         date_of_foundation: z.custom<Dayjs>((val) => val instanceof dayjs, 'Invalid date')
     })
@@ -21,7 +20,7 @@ export type CompanyInfoFields = z.infer<typeof schema>
 
 export function CompanyInfoForm(){    
     const formRef = useRef<HTMLFormElement | null>(null)
-    const {stepper:{state,setState,maxStep},record:{record,setRecord}} = useContext(StepperContext)
+    const {stepper:{state,setState,maxStep,onFinish},record:{record,setRecord},error:{errorStepper,setErrorStepper}} = useContext(StepperContext)
     const methods = useForm<CompanyInfoFields>({
         defaultValues:record[state],
         resolver: zodResolver(schema),
@@ -31,7 +30,8 @@ export function CompanyInfoForm(){
         register,
         handleSubmit,
         formState: { errors },
-        getValues
+        getValues,
+        setError
       } = methods;
 
     // All the user info form data 
@@ -61,20 +61,17 @@ export function CompanyInfoForm(){
             register:register("company_name"),
             error:errors.company_name
         },  
-        {
-            labelName:'PHONE NUMBER',
-            type:'text'   ,
-            name:'phone_number',
-            register:register('phone_number'),
-            error:errors.phone_number
-        },
     ]
+    useEffect(()=>{
+        Object.entries(errorStepper).forEach(([key,value])=>setError(key,value,{shouldFocus:true}))
+      },[errorStepper])
     
-    const onSubmit : SubmitHandler<CompanyInfoFields> = (info)=>{
+    const onSubmit : SubmitHandler<CompanyInfoFields> = async (info)=>{
         console.log(info)
         // the form has been validated, so go to the next step
         if(state == maxStep){
             // do the onFInish function
+            setError(await onFinish(record))
         }else if(state < maxStep - 1){ 
             setState(state+1)
             const newRecord = record
