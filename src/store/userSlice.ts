@@ -2,7 +2,7 @@
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AuthModel } from "../models/auth";
-import { UserService } from "../services/userService";
+import { useUserService } from "../services/userService";
 import { UserProfileModel } from "../models/user";
 import { CompanyProfileModel } from "../models/company";
 
@@ -32,8 +32,10 @@ const authSlice = createSlice({
     },
 })
 
-export const userSignIn = createAsyncThunk("authSlice/login",async(userProfile:UserProfileModel)=>{
-
+export const userSignIn = createAsyncThunk("authSlice/signin",async(userProfile:UserProfileModel)=>{
+    return await useUserService.userSignin(userProfile)
 })
+
+
 
 

@@ -14,7 +14,7 @@ const schema = z.object({
   recipient_name: z.string().min(1).max(255),
   street: z.string().min(1).max(255),
   city: z.string().min(1).max(255),
-  zip: z.string().length(5),
+  postal_code: z.string().length(5),
   province: z.string().min(1).max(255),
   country: z.string().min(1).max(255),
 });
@@ -95,9 +95,9 @@ export function AddressForm() {
         type="text"
         name="zip"
         maxLength={5}
-        defaultValue={getValues('zip')}
-        register={register("zip")}
-        error={errors.zip}
+        defaultValue={getValues('postal_code')}
+        register={register("postal_code")}
+        error={errors.postal_code}
       />  
         <FixedSizeDropdown
           labelName="PROVINCE"
