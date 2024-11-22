@@ -3,11 +3,17 @@ import { useEffect, useState } from "react";
 import { FieldError } from "react-hook-form"
 import { GoAlertFill } from "react-icons/go";
 interface InputErrorProps{
-    error:FieldError | undefined
+    error:FieldError | undefined | Array<string>
 }
 export function InputError({error}:InputErrorProps){
     const OPEN_POPUP_TIME = 5000 // 5000 ms
     const [openPopUp,setOpenPopUp] = useState(false)
+    let errorMessage = null
+    if(error && (error as FieldError).message){
+        errorMessage = (error as FieldError).message
+    } else if(error && !(error as FieldError).message && (error as Array<string>).length > 0 ){
+        errorMessage = (error as Array<string>)[0]
+    }
     useEffect(()=>{
         
         if(openPopUp){
@@ -24,7 +30,7 @@ export function InputError({error}:InputErrorProps){
                     className={`bg-orange-600
                         aboslute
                         rounded-xl overflow-hidden 
-                        ${openPopUp ? 'p-2' : 'p-0'}` } >{openPopUp ? error.message : null}</p>
+                        ${openPopUp ? 'p-2' : 'p-0'}` } >{openPopUp ? errorMessage : null}</p>
                 { openPopUp && <div className="border-solid border-8 border-t-orange-600 border-b-transparent border-r-transparent border-l-transparent relative left-1/2 translate-x-[-50%] w-0"></div>}
             </div>
             }

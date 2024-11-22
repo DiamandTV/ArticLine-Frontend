@@ -11,10 +11,12 @@ export interface AnimationPlaceholderInputProps {
     // react form hook props
     defaultValue?:string,
     register?:UseFormRegisterReturn
-    error?:FieldError | undefined
+    error?:FieldError | undefined,
+    onFocus?:()=>void,
+    onBlur?:()=>void
 }
 export function AnimationPlaceholderInput(
-        {labelName,type,name,maxLength,defaultValue,register,error}:AnimationPlaceholderInputProps
+        {labelName,type,name,maxLength,defaultValue,register,error,onBlur,onFocus}:AnimationPlaceholderInputProps
     ){
         const [focus,setFocus] = useState(defaultValue ? true : false );
         return (
@@ -32,9 +34,14 @@ export function AnimationPlaceholderInput(
                         type={type} 
                         name={name} 
                         maxLength={maxLength}
-                        onFocus={()=>setFocus(true)}
+                        onFocus={()=>{
+                            setFocus(true)
+                            if(onFocus != null) onFocus()
+                        }}
                         onBlur={(e)=>{
-                            setFocus(e.target.value == '' ? false : true)}
+                            setFocus(e.target.value == '' ? false : true)
+                            if(onBlur != null) onBlur()
+                            }
                         }  
                     />
                     <InputError error={error}/>

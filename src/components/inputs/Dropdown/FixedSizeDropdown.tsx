@@ -14,10 +14,10 @@ export interface FixedSizeDropdownProps{
     filterFunction:()=>Record<string,string>[],       // the filter function which will be used for filtering the list
     defaultValue?:string,
     register:UseFormRegisterReturn,
-    error:FieldError|undefined
-
+    error:FieldError|undefined,
+    onItemClick?:(item:string)=>void
 }
-export function FixedSizeDropdown({labelName,name,list,filterFunction,showFunction,setValue,defaultValue,register,error}:FixedSizeDropdownProps){
+export function FixedSizeDropdown({labelName,name,list,filterFunction,showFunction,setValue,onItemClick,defaultValue,register,error}:FixedSizeDropdownProps){
     const [filteredList,setFilteredList] = useState(list)  
     // the state of the dropdown. true => if it's open , false => if it's closed 
     const [open,setOpen] = useState(false)  
@@ -53,6 +53,7 @@ export function FixedSizeDropdown({labelName,name,list,filterFunction,showFuncti
                             onClick={()=>{
                                 setOpen(false)
                                 setValue(showFunction(filteredList[index],index))
+                                if(onItemClick != null) onItemClick(showFunction(filteredList[index],index))
                             }}
                         />
                     )

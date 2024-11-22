@@ -8,7 +8,7 @@ interface StepperProps{
     maxStep:number ,
     stepLabels : Array<string>,
     getStep: (state:number)=>React.ReactNode,
-    onFinish:(record:Array<Record<string,unknown>>)=>Promise<Record<string,string>> | Record<string,string>
+    onFinish:(record:Array<Record<string,unknown >>)=>Promise<Record<string,string>> | Record<string,string>
 }
 
 

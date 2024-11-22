@@ -1,10 +1,12 @@
 import api from "./api"
 import { UserProfileModel } from "../models/user"
+
 import { UserSigninStepperType  } from "../page/UserSignIn"
 import { UserInfoFields } from "../components/forms/UserInfoForm"
 import { AddressFields } from "../components/forms/AddressForm"
 import { AccountFields } from "../components/forms/AccountForm"
 import dayjs from "dayjs"
+
 export const useUserService = 
      {
         async userSignin(userProfile:UserProfileModel){
@@ -22,40 +24,22 @@ export const useUserService =
             }
             return {data,error}
         },
+        
         serializeFromStepperData(record:[UserInfoFields, AddressFields, AccountFields]):UserProfileModel{
-            let object:Partial<UserInfoFields & AddressFields & AccountFields> = {};
+            let object:Partial<UserProfileModel> = {};
             console.log("RECORD");
             console.log(record);
             (record as UserSigninStepperType).forEach((stepForm)=>{
                 object = {...object,...stepForm}
             });         
             //const address = record[1]
-            const date_of_birth = dayjs((object as (UserInfoFields & AddressFields & AccountFields)).date_of_birth).format("YYYY-MM-DD")
-            
-            return {
-                auth:{
-                    email: object.email,
-                    password:object.password,
-                    phone_number:object.phone_number
-                },
-                address:{
-                    recipient_name:object.recipient_name,
-                    street:object.street,
-                    city:object.city,
-                    province:object.province,
-                    postal_code:object.postal_code,
-                    country:object.country
-                },
-                first_name:object.first_name,
-                last_name:object.last_name,
-                username:object.username,
-                date_of_birth:date_of_birth,
-                
-            } as UserProfileModel
-        },
+            return {...object,date_of_birth:dayjs(object.date_of_birth).format("YYYY-MM-DD")} as UserProfileModel
+        }
+        ,
+        /*
         decodeToStepperData(error:Record<string,string>):Record<string,string>{
             const playError:Record<string,unknown> = {};
-            const recursive = (_key:string,_value:unknown)=>{
+            const recursive = (_key:string,_value: Array<string> | string)=>{
                 if(_value && typeof _value === "object" && _value.constructor === Object){
                     Object.entries(_value).forEach(([_keyRecur,_valueRecur])=>recursive(_keyRecur,_valueRecur))
 
@@ -66,7 +50,8 @@ export const useUserService =
             Object.entries(error).forEach(([key,value])=>{
                 recursive(key,value)
             })            
-            console.log(playError)
+            
             return playError as Record<string,string>
-        }
-    }
+        
+        }*/
+}

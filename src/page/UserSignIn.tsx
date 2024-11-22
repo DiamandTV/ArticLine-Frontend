@@ -8,6 +8,7 @@ import { AddressFields } from '../components/forms/AddressForm'
 import { UserInfoFields } from '../components/forms/UserInfoForm'
 import { useUserService } from '../services/userService'
 import { AxiosError } from 'axios'
+import dayjs from 'dayjs'
 
 export type UserSigninStepperType = Array<UserInfoFields | AddressFields | AccountFields>
 export function UserSignIn(){ 
@@ -34,11 +35,10 @@ export function UserSignIn(){
                 getStep={getStep}
                 onFinish={async (record)=>{
                     console.log("ON FINISH")
-                    const formattedUserProfile = useUserService.serializeFromStepperData(record)
-                    console.log(formattedUserProfile)
-                    const {data,error} = await useUserService.userSignin(
-                            formattedUserProfile
-                        )
+                    console.log(useUserService.serializeFromStepperData(record))
+                    const {error} = await useUserService.userSignin(
+                        useUserService.serializeFromStepperData(record)
+                    )
                     if(error){
                         if(error instanceof AxiosError){
                             console.log(error.response?.data)

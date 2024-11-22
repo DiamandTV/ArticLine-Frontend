@@ -5,13 +5,19 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { StepperButtons } from "../stepper/StepperButtons"
 import { useContext, useRef } from "react"
 import { StepperContext } from "../stepper/StepperContext"
-import { useUserService } from "../../services/userService"
+//import { useUserService } from "../../services/userService"
 
 const schema = z.object({
-    phone_number: z.string().length(10),
-    email: z.string().email(),
-    password: z.string().min(8).max(40),
-    conferm_password: z.string().min(8).max(40)
+    auth:z.object({
+        //phone_number: z.string().length(10),
+        //email: z.string().email(),
+        //password: z.string().min(8).max(40),
+        //conferm_password: z.string().min(8).max(40)    
+        phone_number: z.string(),
+        email: z.string(),
+        password: z.string(),
+        conferm_password: z.string()    
+    })
 })
 
 export type AccountFields =  z.infer<typeof schema>
@@ -32,34 +38,34 @@ export function AccountForm(){
         {
             labelName:'PHONE NUMBER',
             type:'text'   ,
-            name:'phone_number',
-            defaultValue:getValues('phone_number'),
-            register:register('phone_number'),
-            error:errors.phone_number
+            name:'auth.phone_number',
+            defaultValue:getValues('auth.phone_number'),
+            register:register('auth.phone_number'),
+            error:errors.auth?.phone_number
         },
         {
             labelName:'EMAIL',
             type:'text'   ,
-            name:'email',
-            defaultValue:getValues('email'),
-            register:register('email'),
-            error:errors.email
+            name:'auth.email',
+            defaultValue:getValues('auth.email'),
+            register:register('auth.email'),
+            error:errors.auth?.email
         },
         {
             labelName:'PASSWORD',
             type:'password'   ,
-            name:'password',
-            defaultValue:getValues('password'),
-            register:register('password'),
-            error:errors.password
+            name:'auth.password',
+            defaultValue:getValues('auth.password'),
+            register:register('auth.password'),
+            error:errors.auth?.password
         },
         {
             labelName:'CONFERM PASSWORD',
             type:'password'   ,
-            name:'conferm_password',
-            defaultValue:getValues('conferm_password'),
-            register:register('conferm_password'),
-            error:errors.conferm_password
+            name:'auth.conferm_password',
+            defaultValue:getValues('auth.conferm_password'),
+            register:register('auth.conferm_password'),
+            error:errors.auth?.conferm_password
         }
     ]
 
@@ -72,7 +78,15 @@ export function AccountForm(){
             newRecord[state] = account
             setRecord(newRecord)
             // do the onFinish function   
-            setErrorStepper( useUserService.decodeToStepperData(await onFinish(record)))
+            const response = await onFinish(record)
+            if(response){
+                // if the response is not null , it's an error
+                console.log(response)
+                setErrorStepper(response)
+            } else {
+                // going to the last target
+                //setState(state+1)
+            }
         }else if(state < maxStep - 1){
             setState(state+1)
             const newRecord = record
