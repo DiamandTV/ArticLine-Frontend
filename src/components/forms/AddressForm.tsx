@@ -50,7 +50,6 @@ export function AddressForm() {
     if (value.trim() === "") return data;
     return data.filter((item) => `${item[key]}`.match(regex));
   };
-  
   // sincronize the province,city,postal code with one of the value
   const sinkAddress = (action:string,value:string)=>{
     let province:string = "";
