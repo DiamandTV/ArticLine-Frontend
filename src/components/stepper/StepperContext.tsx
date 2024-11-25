@@ -1,11 +1,12 @@
 import { createContext } from "react";
+import { AxiosResponse } from "axios";
 export interface StepperContextProps{
     stepper:{
         state:number,
         setState:(stateIndex:number)=>void,
-        stepLabels: Array<string>,
+        stepLabels: Array<string|null>,
         maxStep:number,
-        onFinish:(record:Array<Record<string,unknown>>)=>Promise<Record<string,string>> | Record<string,string>,
+        onFinish:(record:Array<Record<string,unknown>>)=>Promise<AxiosResponse> | Record<string,string>,
     },
     record:{
         record:Array<Record<string,unknown>>,
@@ -14,6 +15,10 @@ export interface StepperContextProps{
     error:{
         errorStepper:Record<string,unknown>,
         setErrorStepper:(newRecord:Record<string,unknown>)=>void,
+    },
+    beforeChangeMediaQuery:{
+        beforeChangeMediaQuery:(isMatched:boolean)=>void,
+        setBeforeChangeMediaQuery:(newOnChangedMediaQuery:()=>(isMatched:boolean)=>void)=>void,
     }
 }
 export const StepperContext = createContext<StepperContextProps>({
@@ -31,6 +36,10 @@ export const StepperContext = createContext<StepperContextProps>({
     error:{
         errorStepper:{},
         setErrorStepper:()=>{}
+    },
+    beforeChangeMediaQuery:{
+        beforeChangeMediaQuery:()=>{},
+        setBeforeChangeMediaQuery:()=>{}
     }
 })
 

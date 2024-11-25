@@ -7,7 +7,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { z } from "zod"
 import { useContext, useRef } from "react"
 import { StepperContext } from "../stepper/StepperContext"
-
+import {  useEffect } from "react"
 
 /*
 function isAdult(date:Dayjs,adultAge:number):boolean{
@@ -39,7 +39,17 @@ export type UserInfoFields = z.infer<typeof schema>
 
 export function UserInfoForm(){    
     const formRef = useRef<HTMLFormElement | null>(null)
-    const {stepper:{state,setState,maxStep,onFinish},record:{record,setRecord},error:{errorStepper,setErrorStepper}} = useContext(StepperContext)
+    const {stepper:{state,setState,maxStep},record:{record,setRecord},error:{errorStepper},beforeChangeMediaQuery:{setBeforeChangeMediaQuery}} = useContext(StepperContext)
+    useEffect(()=>{
+        setBeforeChangeMediaQuery(()=>(isMatched)=>{
+            if(isMatched){
+                 const newRecord = record
+                newRecord[state] = getValues()
+                setRecord(newRecord)
+            }
+        })
+    },[])
+    
     const methods = useForm<UserInfoFields>({
         defaultValues:record[state],
         resolver: zodResolver(schema),
@@ -85,18 +95,22 @@ export function UserInfoForm(){
 
     const onSubmit : SubmitHandler<UserInfoFields> = async (info)=>{
         console.log(info)
-        // the form has been validated, so go to the next step
-        if(state == maxStep){
-            // do the onFInish function
-            setErrorStepper(await onFinish(record))
-        }else if(state < maxStep - 1){ 
+        if(state < maxStep - 1){ 
             setState(state+1)
             const newRecord = record
             newRecord[state] = info
             setRecord(newRecord)
         }
     }
-    console.log(errors)
+
+    const onPreviousClick = ()=>{
+        if(state > 0){
+            const newRecord = record
+            newRecord[state] = getValues()
+            setRecord(newRecord)
+            setState(state-1)
+        }
+    }
     return(
         <FormProvider {...methods}>
             <form
@@ -123,7 +137,7 @@ export function UserInfoForm(){
                 </div> 
                 <StepperButtons
                     onNextClick={()=>formRef.current!.requestSubmit()}
-                    onPreviousClick={()=>state > 0 ? setState(state-1) : null}
+                    onPreviousClick={()=>onPreviousClick()}
                 />   
             </form>
         </FormProvider>

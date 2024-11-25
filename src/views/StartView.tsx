@@ -1,5 +1,5 @@
-import { BlurCard } from '../cards/BlurCard'
-import Logo from '../../assets/images/NoBG.png'
+import { BlurCard } from '../components/cards/BlurCard'
+import Logo from '../assets/images/NoBG.png'
 
 export function StartView({children}:{children:React.ReactNode}){
         return (   

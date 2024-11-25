@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { StepperButtons } from "../stepper/StepperButtons";
 import { useContext, useRef } from "react";
 import { StepperContext } from "../stepper/StepperContext";
-
+import {  useEffect,useState } from "react"
 const schema = z.object({
   address:z.object({
     /*
@@ -32,14 +32,26 @@ const schema = z.object({
 export type AddressFields = z.infer<typeof schema>;
 
 export function AddressForm() {
-  
   const formRef = useRef<HTMLFormElement | null>(null)
-  const {stepper:{state,setState,maxStep,onFinish},record:{record,setRecord},error:{errorStepper,setErrorStepper}} = useContext(StepperContext)
-  const { register, getValues, setValue,formState:{errors},handleSubmit } = useForm<AddressFields>({
+  const {stepper:{state,setState,maxStep},record:{record,setRecord},error:{errorStepper},beforeChangeMediaQuery:{setBeforeChangeMediaQuery}} = useContext(StepperContext)
+  const [lastFocus,setLastFocus] = useState(false)
+  const { register, getValues, setValue,formState:{errors},handleSubmit,setFocus} = useForm<AddressFields>({
     defaultValues:record[state],
     resolver: zodResolver(schema),
     errors:errorStepper
   });
+
+
+
+  useEffect(()=>setBeforeChangeMediaQuery(()=>(isMatched)=>{
+    if(isMatched){
+        const newRecord = record
+        newRecord[state] = getValues()
+        setRecord(newRecord)
+    }
+  }),[])
+  
+    
 
   const handleFilter = (
     value: string,
@@ -61,7 +73,7 @@ export function AddressForm() {
         city = value
         dataObj = cityJson.find((data)=>data.denominazione_ita === value)
         postal_code = dataObj?.cap as string
-        province = dataObj?.denominazione_provincia
+        province = dataObj?.denominazione_provincia as string
         break
       case "POSTAL CODE":
         dataObj = cityJson.find((data)=>data.cap === value)
@@ -73,29 +85,54 @@ export function AddressForm() {
       default:
         throw new Error("This action is not allowed")
     }
-    setValue('address.province',province)
-    setValue('address.city',city)
+    // also need to focus the input which i'm gonna put the value dinamically
+    const newRecord = [...record]
+    newRecord[state] = {
+      ...getValues(),
+      address:{
+        province:province,
+        city:city,
+        postal_code:postal_code
+      }
+    }
+    setFocus('address.postal_code')
     setValue('address.postal_code',postal_code)
+    //register('address.postal_code').onBlur?.({target:{value:postal_code,name:'address.postal_code'}})
+
+    setFocus('address.province')
+    setValue('address.province',province)
+    //register('address.province').onBlur?.({target:{value:province,name:'address.province'}})
+
+    setFocus('address.city')
+    setValue('address.city',city)
+    //register('address.city').onBlur?.({target:{value:city,namse:'address.city'}})
+
+
     return {province,city,postal_code}
   }
 
+  
+
   const onSubmit : SubmitHandler<AddressFields> = async (address)=>{
     console.log(address)
-    
-    // the form has been validated, so go to the next step
-    if(state == maxStep){
-      // to the onFinish function
-      
-      setErrorStepper(await onFinish(record))
-    } else if(state < maxStep - 1){
+    if(state < maxStep - 1){
       setState(state+1)
       const newRecord = record
       newRecord[state] = address
-
       setRecord(newRecord)
     }
   }
-  
+
+  const onPreviousClick = ()=>{
+    if(state > 0){
+      const newRecord = record
+      newRecord[state] = getValues()
+      setRecord(newRecord)
+      setRecord(newRecord)
+      setState(state-1)
+    }
+  }
+
   return (
     <form 
       ref={formRef}
@@ -140,7 +177,13 @@ export function AddressForm() {
         defaultValue={getValues('address.postal_code')}
         register={register("address.postal_code")}
         error={errors.address?.postal_code}
-        onBlur={()=>sinkAddress('POSTAL CODE',getValues('address.postal_code'))}
+        onFocus={()=>{setLastFocus(true)}}
+        onBlur={()=>{
+          if(lastFocus){
+            sinkAddress('POSTAL CODE',getValues('address.postal_code'))
+            setLastFocus(false)
+          }
+        }}
       />  
         <FixedSizeDropdown
           labelName="PROVINCE"
@@ -171,7 +214,7 @@ export function AddressForm() {
       </div>
       <StepperButtons
         onNextClick={()=>formRef.current!.requestSubmit()}
-        onPreviousClick={()=>state > 0 ? setState(state-1) : null}
+        onPreviousClick={()=>onPreviousClick()}
       />
     </form>
   );

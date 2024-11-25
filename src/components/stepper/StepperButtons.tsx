@@ -19,7 +19,7 @@ export function StepperButtons({onNextClick,onPreviousClick}:StepperButtonsProps
             : <div></div>
         }
         {
-            state < maxStep  ?
+            state < maxStep - 1  ?
             <GrLinkNext 
                     size={25} 
                     className="hover:cursor-pointer hover:bg-sky-300 box-content p-4 bg-sky-500 rounded-xl"

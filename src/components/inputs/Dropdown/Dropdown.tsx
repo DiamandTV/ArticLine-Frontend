@@ -24,7 +24,7 @@ export function Dropdown({labelName,name,onChange,defaultValue,register,error,op
                 
                 >
               <label
-                    className= {`transition-all duration-100 ease-in-out absolute z-10 bottom-0 px-0 py-2 text-neutral-400 hover:cursor-pointer ${focus ? 'translate-y-[-80%] translate-x-2 text-sm ' : 'translate-y-0 translate-x-0 text-lg'}`} 
+                    className= {`select-none transition-all duration-100 ease-in-out absolute z-10 bottom-0 px-0 py-2 text-neutral-400 hover:cursor-pointer ${focus ? 'translate-y-[-80%] translate-x-2 text-sm ' : 'translate-y-0 translate-x-0 text-lg'}`} 
                     htmlFor={name}>
                     {labelName.toUpperCase()}
                 </label>
@@ -36,7 +36,7 @@ export function Dropdown({labelName,name,onChange,defaultValue,register,error,op
                     type={"text"} 
                     name={name} 
                     onFocus={()=>{
-                        setOpen(!open)
+                        setOpen(true)
                         setFocus(true)
                     }}
                     onBlur={(e)=>{

@@ -23,22 +23,25 @@ export function InputError({error}:InputErrorProps){
     },[openPopUp])
     return ( 
         error ?
-        <div className="h-full flex flex-col items-center justify-center" >
+        <div className="h-full flex flex-col items-center justify-center " >
             {
             <div className="absolute bottom-7 w-40">
                 <p 
-                    className={`bg-orange-600
+                    className={`bg-orange-red
                         aboslute
                         rounded-xl overflow-hidden 
                         ${openPopUp ? 'p-2' : 'p-0'}` } >{openPopUp ? errorMessage : null}</p>
-                { openPopUp && <div className="border-solid border-8 border-t-orange-600 border-b-transparent border-r-transparent border-l-transparent relative left-1/2 translate-x-[-50%] w-0"></div>}
+                { openPopUp && <div className="border-solid border-8 border-t-orange-red border-b-transparent border-r-transparent border-l-transparent relative left-1/2 translate-x-[-50%] w-0"></div>}
             </div>
             }
             <GoAlertFill 
                 size={22.5} 
                 color="rgb(234 88 12)"
-                className="hover:cursor-pointer"
-                onClick={()=>setOpenPopUp(true)}
+                className="hover:cursor-pointer relative z-10"
+                onClick={(e)=>{
+                    e.stopPropagation()
+                    setOpenPopUp(true)
+                }}
             />
         </div> : null
     )

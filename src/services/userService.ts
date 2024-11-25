@@ -10,19 +10,8 @@ import dayjs from "dayjs"
 export const useUserService = 
      {
         async userSignin(userProfile:UserProfileModel){
-            let data,error;
-            console.log("USER SIGN IN SEND DATA")
-            console.log(userProfile)
-            try{
-                data = await api.post('/user/signin/',userProfile)
-                console.log("USER SIGN IN DATA")
-                console.log(data)
-            } catch(e){
-                console.log("USER SIGN IN ERROR")
-                console.log(e)
-                error = e
-            }
-            return {data,error}
+            const data = await api.post('/user/signin/',userProfile)
+            return data 
         },
         
         serializeFromStepperData(record:[UserInfoFields, AddressFields, AccountFields]):UserProfileModel{

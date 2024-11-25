@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { StepperButtons } from "../stepper/StepperButtons"
 import { useContext, useRef } from "react"
 import { StepperContext } from "../stepper/StepperContext"
+import {  useEffect } from "react"
 //import { useUserService } from "../../services/userService"
 
 const schema = z.object({
@@ -23,7 +24,18 @@ const schema = z.object({
 export type AccountFields =  z.infer<typeof schema>
 export function AccountForm(){
     const formRef = useRef<HTMLFormElement | null>(null)
-    const {stepper:{state,setState,maxStep,onFinish},record:{record,setRecord},error:{errorStepper,setErrorStepper}} = useContext(StepperContext)
+    const {stepper:{state,setState,maxStep},record:{record,setRecord},error:{errorStepper},beforeChangeMediaQuery:{setBeforeChangeMediaQuery}} = useContext(StepperContext)
+
+    useEffect(()=>
+        setBeforeChangeMediaQuery(()=>(isMatched)=>{
+            if(isMatched){
+                const newRecord = record
+                newRecord[state] = getValues()
+                setRecord(newRecord)
+            }
+        }),[])
+        
+
     const { 
             register,
             handleSubmit,
@@ -77,23 +89,21 @@ export function AccountForm(){
             const newRecord = record
             newRecord[state] = account
             setRecord(newRecord)
-            // do the onFinish function   
-            const response = await onFinish(record)
-            if(response){
-                // if the response is not null , it's an error
-                console.log(response)
-                setErrorStepper(response)
-            } else {
-                // going to the last target
-                //setState(state+1)
-            }
         }else if(state < maxStep - 1){
             setState(state+1)
             const newRecord = record
             newRecord[state] = account
             setRecord(newRecord)
         }
-        
+    }
+
+    const onPreviousClick = ()=>{
+        if(state > 0){
+            const newRecord = record
+            newRecord[state] = getValues()
+            setRecord(newRecord)
+            setState(state-1)
+        }
     }
     
     return (
@@ -116,7 +126,7 @@ export function AccountForm(){
             </div> 
         <StepperButtons
             onNextClick={()=>formRef.current?.requestSubmit()}
-            onPreviousClick={()=>state > 0 ? setState(state-1) : null}
+            onPreviousClick={()=>onPreviousClick()}
         /> 
         </form>
     )        

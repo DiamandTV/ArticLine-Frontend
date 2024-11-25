@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       colors:{
-        'dark-blue':'#071923'
+        'dark-blue':'#071923',
+        'orange-red': 'orangered'
       }
     },
   },
@@ -30,7 +31,7 @@ export default {
           '&::-ms-reveal ': {
             'filter': 'invert(100%)'
           },
-          
+
         }
       }
       )

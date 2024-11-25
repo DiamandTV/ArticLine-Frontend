@@ -5,7 +5,7 @@ import { SubmitHandler, useForm,FormProvider } from "react-hook-form"
 import { StepperButtons } from "../stepper/StepperButtons"
 import dayjs, { Dayjs } from 'dayjs';
 import { z } from "zod"
-import { useContext, useEffect, useRef } from "react"
+import { useContext, useRef } from "react"
 import { StepperContext } from "../stepper/StepperContext"
 
 const schema = z.object({
@@ -62,9 +62,7 @@ export function CompanyInfoForm(){
             error:errors.company_name
         },  
     ]
-    useEffect(()=>{
-        Object.entries(errorStepper).forEach(([key,value])=>setError(key,value,{shouldFocus:true}))
-      },[errorStepper])
+
     
     const onSubmit : SubmitHandler<CompanyInfoFields> = async (info)=>{
         console.log(info)
@@ -79,6 +77,16 @@ export function CompanyInfoForm(){
             setRecord(newRecord)
         }
     }
+
+    const onPreviousClick = ()=>{
+        if(state > 0){
+            const newRecord = record
+            newRecord[state] = getValues()
+            setRecord(newRecord)
+            setState(state-1)
+        }
+    }
+
     return(
         <FormProvider {...methods}>
             <form
@@ -105,7 +113,7 @@ export function CompanyInfoForm(){
                 </div> 
                 <StepperButtons
                     onNextClick={()=>formRef.current!.requestSubmit()}
-                    onPreviousClick={()=>state > 0 ? setState(state-1) : null}
+                    onPreviousClick={()=>onPreviousClick()}
                 />   
             </form>
         </FormProvider>

@@ -1,54 +1,61 @@
 import { UserInfoForm } from '../components/forms/UserInfoForm'
 import { AccountForm } from '../components/forms/AccountForm'
 import { AddressForm } from '../components/forms/AddressForm'
-import { StartView } from '../components/views/StartView'
-import { StepperForm } from '../components/stepper/Stepper'
+import { StartView } from '../views/StartView'
+import { StepperForm,StepperGetStepDataProps } from '../components/stepper/Stepper'
 import { AccountFields } from '../components/forms/AccountForm'
 import { AddressFields } from '../components/forms/AddressForm'
 import { UserInfoFields } from '../components/forms/UserInfoForm'
 import { useUserService } from '../services/userService'
-import { AxiosError } from 'axios'
-import dayjs from 'dayjs'
+import { SigninFinish } from '../views/SignInFinish'
 
 export type UserSigninStepperType = Array<UserInfoFields | AddressFields | AccountFields>
 export function UserSignIn(){ 
-    const getStep = (state:number)=>{
+    const getStepData = (state:number):StepperGetStepDataProps=>{
         switch(state){
             case 0:
-               return <UserInfoForm/>
+                return {
+                component:<UserInfoForm/>,
+                formsKeys:['first_name','last_name','username','date_of_birth']
+            }
             //return <InfoForm/>
             case 1:
-                return <AddressForm/>
+                return {
+                    component:<AddressForm/>,
+                    formsKeys:['address']
+                }
             case 2:
-                return <AccountForm/>
+                return {
+                    component:<AccountForm/>,
+                    formsKeys:['auth']
+                }
+            case 3:
+                return {
+                    component:<SigninFinish/>,
+                    formsKeys:[]
+                }
             default:
                 // this is not used but i put this only for to be sure
-                return <div></div>
+                return  {
+                    component:<div></div>,
+                    formsKeys:[]
+                }
         }
     }
+
     return (   
         <StartView>
             
              <StepperForm 
-                maxStep={3}
-                stepLabels={['USER INFO','USER ADDRESS','USER DETAILS']}
-                getStep={getStep}
+                maxStep={4}
+                stepLabels={['USER INFO','USER ADDRESS','USER DETAILS',null]}
+                getStepData={getStepData}
                 onFinish={async (record)=>{
                     console.log("ON FINISH")
-                    console.log(useUserService.serializeFromStepperData(record))
-                    const {error} = await useUserService.userSignin(
+                    console.log(useUserService.serializeFromStepperData(record as [UserInfoFields, AddressFields, AccountFields]))
+                    return await useUserService.userSignin(
                         useUserService.serializeFromStepperData(record)
-                    )
-                    if(error){
-                        if(error instanceof AxiosError){
-                            console.log(error.response?.data)
-                            return error.response?.data
-                        }
-                    }else {
-                        // redirect to login
-                        
-                    }
-                    return {}
+                    ) 
                 }}  
             />
         </StartView>
