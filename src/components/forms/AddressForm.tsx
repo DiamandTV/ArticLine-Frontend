@@ -12,20 +12,20 @@ import { StepperContext } from "../stepper/StepperContext";
 import {  useEffect,useState } from "react"
 const schema = z.object({
   address:z.object({
-    /*
+    
     recipient_name: z.string().min(1).max(255),
     street: z.string().min(1).max(255),
     city: z.string().min(1).max(255),
     postal_code: z.string(),
     province: z.string().min(1).max(255),
     country: z.string().min(1).max(255),
-    */
-    recipient_name: z.string(),
-    street: z.string(),
-    city: z.string(),
-    postal_code: z.string(),
-    province: z.string(),
-    country: z.string(),
+    
+    // recipient_name: z.string(),
+    // street: z.string(),
+    // city: z.string(),
+    // postal_code: z.string(),
+    // province: z.string(),
+    // country: z.string(),
   })
 });
 

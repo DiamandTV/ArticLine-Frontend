@@ -9,30 +9,24 @@ import { useContext, useRef } from "react"
 import { StepperContext } from "../stepper/StepperContext"
 import {  useEffect } from "react"
 
-/*
+
 function isAdult(date:Dayjs,adultAge:number):boolean{
     const now:Dayjs = dayjs()
     const difference = now.diff(date,'year',true)
     if(difference >= adultAge ) return true
     return false
 }
-*/
+
 
 const schema = z.object({
-    /*
-        first_name: z.string(),//.min(1).max(150),
-        last_name: z.string(),//.min(1).max(150),
-        //phone_number: z.string().length(10),
-        username: z.string(),//.min(1).max(150),
-        //username: z.string(),
+        first_name: z.string().min(1).max(150),
+        last_name: z.string().min(1).max(150),
+        username: z.string().min(1).max(150),
         date_of_birth: z.custom<Dayjs>((val) => val instanceof dayjs, 'Invalid date').refine((val)=>isAdult(val,18),"You aren't adult")
-    */
-        first_name: z.string(),//.min(1).max(150),
-        last_name: z.string(),//.min(1).max(150),
-        //phone_number: z.string().length(10),
-        username: z.string(),//.min(1).max(150),
-        //username: z.string(),
-        date_of_birth: z.custom<Dayjs>((val) => val instanceof dayjs, 'Invalid date'),
+        // first_name: z.string(),//.min(1).max(150),
+        // last_name: z.string(),//.min(1).max(150),
+        // username: z.string(),//.min(1).max(150),
+        // date_of_birth: z.custom<Dayjs>((val) => val instanceof dayjs, 'Invalid date'),
     })
 
 export type UserInfoFields = z.infer<typeof schema>

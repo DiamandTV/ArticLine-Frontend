@@ -10,6 +10,7 @@ import dayjs from "dayjs"
 export const useUserService = 
      {
         async userSignin(userProfile:UserProfileModel){
+            console.log(userProfile)
             const data = await api.post('/user/signin/',userProfile)
             return data 
         },
@@ -21,6 +22,7 @@ export const useUserService =
             (record as UserSigninStepperType).forEach((stepForm)=>{
                 object = {...object,...stepForm}
             });         
+            console.log(object)
             //const address = record[1]
             return {...object,date_of_birth:dayjs(object.date_of_birth).format("YYYY-MM-DD")} as UserProfileModel
         }

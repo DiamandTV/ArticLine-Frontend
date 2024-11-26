@@ -52,9 +52,8 @@ export function UserSignIn(){
                 getStepData={getStepData}
                 onFinish={async (record)=>{
                     console.log("ON FINISH")
-                    console.log(useUserService.serializeFromStepperData(record as [UserInfoFields, AddressFields, AccountFields]))
                     return await useUserService.userSignin(
-                        useUserService.serializeFromStepperData(record)
+                        useUserService.serializeFromStepperData(record as [UserInfoFields, AddressFields, AccountFields])
                     ) 
                 }}  
             />

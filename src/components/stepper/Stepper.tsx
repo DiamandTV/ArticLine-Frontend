@@ -80,20 +80,22 @@ export function StepperForm({maxStep,getStepData,stepLabels,onFinish}:StepperPro
                 {md ? 
                 <>
                     <Stepper activeStep={state} orientation="vertical">
-                        {stepLabels.map((label,index)=>(
-                            label &&
-                            <Step key={index} sx={getStepperStyle(index,state)} >
-                                <StepLabel  
-                                    icon={showError(index) ? <GoAlertFill size={27.5} color="orangeRed"/> : null}
-                                    >
-                                        {label}
-                                </StepLabel>
-                                <StepContent className="pt-6">
-                                    {component}
-                                </StepContent>
-                                
-                            </Step> 
-                        ))}
+                        {stepLabels.map((label,index)=>{
+                            const isShowError = showError(index)
+                            if(label)
+                                return (
+                                    <Step key={index} sx={getStepperStyle(index,state)} >
+                                        <StepLabel  
+                                            icon={isShowError ? <GoAlertFill size={27.5} color="orangeRed" opacity={state == index ? 1 : 0.5}/> : null}
+                                            >
+                                                {label}
+                                        </StepLabel>
+                                        <StepContent className="pt-6">
+                                            {component}
+                                        </StepContent>   
+                                    </Step> 
+                                )
+    })}
                     </Stepper>
                    {!stepLabels[state] && component}
                 </> 
@@ -101,11 +103,12 @@ export function StepperForm({maxStep,getStepData,stepLabels,onFinish}:StepperPro
                 <>
                     <Stepper activeStep={state}>
                         {stepLabels.map((label,index)=>{
+                            const isShowError = showError(index)
                             return ( 
                                 label && 
                                 <Step key={index}  sx={getStepperStyle(index,state)}>
                                     <StepLabel 
-                                        icon={showError(index) ? <GoAlertFill size={27.5} color="orangeRed"/> : null}
+                                        icon={isShowError ? <GoAlertFill size={27.5} color="orangeRed" opacity={state == index ? 1 : 0.5}/> : null}
                                     >{label}</StepLabel>
                                 </Step> 
                             )

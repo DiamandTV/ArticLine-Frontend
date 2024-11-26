@@ -10,14 +10,14 @@ import {  useEffect } from "react"
 
 const schema = z.object({
     auth:z.object({
-        //phone_number: z.string().length(10),
-        //email: z.string().email(),
-        //password: z.string().min(8).max(40),
-        //conferm_password: z.string().min(8).max(40)    
-        phone_number: z.string(),
-        email: z.string(),
-        password: z.string(),
-        conferm_password: z.string()    
+        phone_number: z.string().length(10),
+        email: z.string().email(),
+        password: z.string().min(8).max(40),
+        conferm_password: z.string().min(8).max(40)    
+        // phone_number: z.string(),
+        // email: z.string(),
+        // password: z.string(),
+        // conferm_password: z.string()    
     })
 })
 
