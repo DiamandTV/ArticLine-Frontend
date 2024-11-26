@@ -18,7 +18,6 @@ export function UserSignIn(){
                 component:<UserInfoForm/>,
                 formsKeys:['first_name','last_name','username','date_of_birth']
             }
-            //return <InfoForm/>
             case 1:
                 return {
                     component:<AddressForm/>,

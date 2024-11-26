@@ -10,8 +10,9 @@ export const useAuthService = {
     async resetPassword({password,conferm_password}:{password:string,conferm_password:string}){
 
     },
-    async verifyEmail({id,token}:{id:number,token:string}){
-
+    async verifyEmail({id,token}:{id:string,token:string}){
+        console.log("VERIFICATING THE ACCOUNT USER")
+       return api.get(`/email/verify/${id}/${token}`)
     },
     async sendVerifyEmail({email}:{email:string}){
 
