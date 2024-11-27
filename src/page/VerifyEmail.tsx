@@ -41,8 +41,12 @@ export function VerifyEmail({resendEmail}:{resendEmail:()=>void}){
 
     const getErrorMsg = ()=>{
         if(error instanceof AxiosError){
-            console.log(error)
-            return (error.response?.data.error as string).toUpperCase()
+            try{
+                console.log(error)
+                return (error.response?.data.error as string).toUpperCase()
+            }catch(e){
+                return "SOMETHING WENT WRONG"
+            }
         }
         return "SOMETHING WENT WRONG"
     }
@@ -61,6 +65,7 @@ export function VerifyEmail({resendEmail}:{resendEmail:()=>void}){
                         success:"ACCOUNT VERIFIED",
                         warning:"ACCOUNT ALREADY VERIFIED"
                     }}
+                    redirect={isSuccess || isWarning}
                 />
                  <TextButton
                     text="RESEND THE EMAIL"

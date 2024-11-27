@@ -5,6 +5,7 @@ import { LogIn } from "../page/Login";
 import { EmailAndResend } from "../page/EmailAndResend";
 import { PasswordForget } from "../page/PasswordForget";
 import { PasswordResetSend } from "../page/PasswordResetSend";
+import { PasswordReset } from "../page/PasswordReset";
 const router = createBrowserRouter([
     { 
         path: "/user/signin", 
@@ -32,8 +33,8 @@ const router = createBrowserRouter([
         element:<PasswordResetSend/>
     },
     {
-        path:"/password/reset/check/:token",
-        element:<div></div>
+        path:"/password/reset/:token",
+        element:<PasswordReset/>
     }
 ]);
 export default router

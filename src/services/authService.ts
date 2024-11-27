@@ -7,8 +7,11 @@ export const useAuthService = {
     async sendResetPasswordRequest(body:{email:string}){
         return await api.post('/password/reset',body)
     },
-    async resetPassword({password,conferm_password}:{password:string,conferm_password:string}){
-
+    async checkResetPasswordToken({token}:{token:string}){
+        return await api.post(`/password/reset/check/${token}`,{})
+    },
+    async resetPassword(passwords:{password:string,conferm_password:string},token:string){
+        return await api.post(`/password/reset/${token}`,passwords)
     },
     async verifyEmail({id,token}:{id:string,token:string}){
         console.log("VERIFICATING THE ACCOUNT USER")
