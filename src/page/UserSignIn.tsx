@@ -8,6 +8,7 @@ import { AddressFields } from '../components/forms/AddressForm'
 import { UserInfoFields } from '../components/forms/UserInfoForm'
 import { useUserService } from '../services/userService'
 import { SigninFinish } from '../views/SignInFinish'
+import { HighlightedTitle } from '../components/Texts/HighlightedTitle'
 
 export type UserSigninStepperType = Array<UserInfoFields | AddressFields | AccountFields>
 export function UserSignIn(){ 
@@ -44,8 +45,8 @@ export function UserSignIn(){
 
     return (   
         <StartView>
-            
-             <StepperForm 
+            {/*<HighlightedTitle title='USER SIGN IN'/>*/}
+            <StepperForm 
                 maxStep={4}
                 stepLabels={['USER INFO','USER ADDRESS','USER DETAILS',null]}
                 getStepData={getStepData}

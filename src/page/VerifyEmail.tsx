@@ -3,10 +3,11 @@ import { useQuery } from "@tanstack/react-query"
 import { LoaderResponse } from "../components/loader/LoaderResponse"
 import { useAuthService } from "../services/authService"
 import { useNavigate, useParams } from "react-router-dom"
-import {  AxiosError } from "axios"
+import { AxiosError } from "axios"
 import { useState } from "react"
 import { TextButton } from "../components/buttons/TextButtons"
-export function VerifyEmail(){
+import { HighlightedTitle } from "../components/Texts/HighlightedTitle"
+export function VerifyEmail({resendEmail}:{resendEmail:()=>void}){
     const {id,token} = useParams()
     const navigate = useNavigate()
     if(!id || !token){
@@ -41,13 +42,14 @@ export function VerifyEmail(){
     const getErrorMsg = ()=>{
         if(error instanceof AxiosError){
             console.log(error)
-            return error.response?.data
+            return (error.response?.data.error as string).toUpperCase()
         }
         return "SOMETHING WENT WRONG"
     }
     return (    
         <StartView>
             <div className="w-full flex flex-col justify-center items-center gap-y-8">
+                <HighlightedTitle title="VERIFICATION EMAIL"/>
                 <LoaderResponse
                     isLoading={isLoading}
                     isError={isError}
@@ -62,7 +64,10 @@ export function VerifyEmail(){
                 />
                  <TextButton
                     text="RESEND THE EMAIL"
-                    onClick={()=>{}}
+                    onClick={()=>{
+                        console.log("sdsdsds")
+                        resendEmail()
+                    }}
                 />
             </div>
         </StartView>

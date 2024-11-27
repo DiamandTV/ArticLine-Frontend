@@ -1,13 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import { UserSignIn } from "../page/UserSignIn";
 import { CompanySignIn } from "../page/CompanySignIn";
-import { LogIn } from "../page/login";
-import { VerifyEmail } from "../page/VerifyEmail";
+import { LogIn } from "../page/Login";
+import { EmailAndResend } from "../page/EmailAndResend";
+import { PasswordForget } from "../page/PasswordForget";
+import { PasswordResetSend } from "../page/PasswordResetSend";
 const router = createBrowserRouter([
-    {
-        path:"/email/verify/:id/:token",
-        element:<VerifyEmail/>,
-    },
     { 
         path: "/user/signin", 
         element: <UserSignIn/>,
@@ -21,6 +19,21 @@ const router = createBrowserRouter([
         path:"/login",
         element:<LogIn/>,
     },
-   
+    {
+        path:"/email/verify/:id/:token",
+        element:<EmailAndResend/>,
+    },
+    {
+        path:"/password/reset",
+        element:<PasswordForget/>
+    },
+    {
+        path:"/password/reset-send",
+        element:<PasswordResetSend/>
+    },
+    {
+        path:"/password/reset/check/:token",
+        element:<div></div>
+    }
 ]);
 export default router

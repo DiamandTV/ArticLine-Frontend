@@ -4,8 +4,8 @@ export const useAuthService = {
     async login(authInfo:{email:string,password:string}) {
 
     },
-    async sendResetPasswordRequest({email}:{email:string}){
-
+    async sendResetPasswordRequest(body:{email:string}){
+        return await api.post('/password/reset',body)
     },
     async resetPassword({password,conferm_password}:{password:string,conferm_password:string}){
 
@@ -14,7 +14,8 @@ export const useAuthService = {
         console.log("VERIFICATING THE ACCOUNT USER")
        return api.get(`/email/verify/${id}/${token}`)
     },
-    async sendVerifyEmail({email}:{email:string}){
+    async resendVerifyEmail({id}:{id:string}){
+        return api.post(`/email/resend/${id}`,{})
 
     }
 }

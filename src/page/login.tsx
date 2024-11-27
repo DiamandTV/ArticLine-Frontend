@@ -1,9 +1,10 @@
 import { StartView } from '../views/StartView';
-import { UserLogin } from '../components/loginSteps/UserLogin';
+import { LoginForm } from '../components/forms/LoginForm';
+import { HighlightedTitle } from '../components/Texts/HighlightedTitle';
 export function LogIn(){
     return (   
         <StartView>
-            <UserLogin/>
+            <LoginForm/>
         </StartView>
     )
 }

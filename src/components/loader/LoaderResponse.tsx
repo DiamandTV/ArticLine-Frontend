@@ -4,23 +4,23 @@ import { ScaleLoader } from 'react-spinners';
 import { useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
 export interface LoaderResponseProps{
-    isError:boolean,
+    isError?:boolean,
     isWarning?:boolean,
-    isSuccess:boolean,
+    isSuccess?:boolean,
     isLoading:boolean,
-    counterInitialValue:number,
+    counterInitialValue?:number,
     redirect?:boolean,
-    messages:{
+    messages?:{
         error:string,
         success:string,
         warning?:string
     }
 }
-export function LoaderResponse({isError,isSuccess,isWarning,isLoading,counterInitialValue,messages,redirect=true}:LoaderResponseProps){
+export function LoaderResponse({isError,isSuccess,isWarning,isLoading,messages,redirect=true,counterInitialValue=0}:LoaderResponseProps){
     const [counter,setCounter] = useState(counterInitialValue)
     const navigate = useNavigate()
     useEffect(()=>{
-        if(isSuccess && !isWarning && !isError  && redirect){
+        if(redirect){
             const intervalCounterTimer = setTimeout(()=>{
                 console.log(counter)
                 if(counter > 0){
@@ -44,14 +44,9 @@ export function LoaderResponse({isError,isSuccess,isWarning,isLoading,counterIni
     }
 
     const getLoaderResponseChildren = ()=>{
-        if(isWarning) return (<h1 className="pt-6 text-xl">{messages.warning}</h1>)
-        else if (isError) return (<h1 className="pt-6 text-xl">{messages.error}</h1>)
-        else if(isSuccess) return (
-            <div className="flex flex-col items-center justify-center">
-                <h1 className="pt-6 text-xl">{messages.success}</h1>
-                {redirect && <span className="text-sm">Your going to be redirected to the login page in {counter} seconds</span>}
-            </div>
-        )
+        if(isWarning) return (<h1 className="pt-6 text-xl">{messages && messages.warning}</h1>)
+        else if (isError) return (<h1 className="pt-6 text-xl">{messages && messages.error}</h1>)
+        else if(isSuccess) return (<h1 className="pt-6 text-xl">{messages && messages.success}</h1>)
     }
     return (
         <div className="w-full flex flex-col items-center justify-center py-2">
@@ -62,6 +57,7 @@ export function LoaderResponse({isError,isSuccess,isWarning,isLoading,counterIni
                     {getLoaderResponseIcon()}
                 </div>
                 {getLoaderResponseChildren()}
+                {redirect && <span className="text-sm">Your going to be redirected to the login page in {counter} seconds</span>}
             </>
         }
         </div>
