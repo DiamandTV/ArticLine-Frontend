@@ -7,32 +7,55 @@ import { AccountFields } from '../components/forms/AccountForm'
 import { AddressFields } from '../components/forms/AddressForm'
 import { CompanyInfoFields } from '../components/forms/CompanyInfoForm'
 import { useCompanyService } from '../services/companyService'
-
+import { CompanyProfileModel } from '../models/company'
+import { StepperGetStepDataProps } from '../components/stepper/Stepper'
+import { SigninFinish } from '../views/SignInFinish'
 // interface of the company sign in record (the record of the stepper form)
 export type CompanySigninStepperType = Array<CompanyInfoFields | AddressFields | AccountFields>
 
 export function CompanySignIn(){
-    const getStep = (state:number)=>{
+    const getStepData = (state:number):StepperGetStepDataProps=>{
         switch(state){
             case 0:
-                return <CompanyInfoForm/>
+                return {
+                    component:<CompanyInfoForm/>,
+                    formsKeys:['first_name','last_name','company_name','date_of_foundation']
+                } 
+                
             case 1:
-                return <AddressForm/>
+                return {
+                    component:<AddressForm/>,
+                    formsKeys:['address']
+                }
             case 2:
-                return <AccountForm/>
+                return {
+                    component:<AccountForm/>,
+                    formsKeys:['auth']
+                }
+            case 3:
+                return {
+                    component:<SigninFinish/>,
+                    formsKeys:[]
+                }
             default:
                 // this is not used but i put this only for to be sure
-                return <div></div>
+                return {
+                    component:<div></div>,
+                    formsKeys:[]
+                }
         }
     }
     return (       
         <StartView>
             <StepperForm 
-                maxStep={3}
+                maxStep={4}
                 stepLabels={['COMPANY INFO','COMPANY ADDRESS','COMPANY DETAILS']}
-                getStep={getStep}
-                onFinish={(record)=>{
-                    login(useCompanyService.stepperToProfileData(record))
+                getStepData={getStepData}
+                onFinish={async (record)=>{
+                   console.log(record)
+                   return await useCompanyService.companySignin(
+                    useCompanyService.serializeFromStepperData(record as [CompanyProfileModel, AddressFields, AccountFields])
+                   )
                 }}
             />
         </StartView>

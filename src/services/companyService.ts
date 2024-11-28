@@ -1,32 +1,25 @@
-import { CompanyProfileModel } from "../models/company"
 import api from "./api"
+import { CompanyProfileModel } from "../models/company"
 import { CompanySigninStepperType } from "../page/CompanySignIn"
-import { CompanyInfoFields } from "../components/forms/CompanyInfoForm"
+//import { CompanyInfoFields } from "../components/forms/CompanyInfoForm"
 import { AddressFields } from "../components/forms/AddressForm"
 import { AccountFields } from "../components/forms/AccountForm"
-import { AuthModel } from "../models/auth"
+//import { AuthModel } from "../models/auth"
+import dayjs from "dayjs"
 export const useCompanyService = {
     async companySignin(companyProfile:CompanyProfileModel){
-        
+        console.log(companyProfile)
+        return api.post('/company/signin/',companyProfile)
     },
-    stepperToProfileData(record:Array<Record<string,unknown>>){
-        let object = {};
+    serializeFromStepperData(record:[CompanyProfileModel, AddressFields, AccountFields]):CompanyProfileModel{
+        let object:Partial<CompanyProfileModel> = {};
+        console.log("RECORD");
+        console.log(record);
         (record as CompanySigninStepperType).forEach((stepForm)=>{
             object = {...object,...stepForm}
         });         
-        const auth:AuthModel = {
-            email:(object as (CompanyInfoFields & AddressFields & AccountFields)).email,
-            password:(object as (CompanyInfoFields & AddressFields & AccountFields)).password
-        }
-        const address = record[1]
-        const date_of_foundation = (object as (CompanyInfoFields & AddressFields & AccountFields)).date_of_foundation
-
-        return {
-            auth,
-            address,
-            ...record[0],
-            date_of_foundation,
-            
-        }
-    }
+        console.log(object)
+        //const address = record[1]
+        return {...object,date_of_foundation:dayjs(object.date_of_foundation).format("YYYY-MM-DD")} as CompanyProfileModel
+    },
 }

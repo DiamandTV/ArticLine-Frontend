@@ -4,7 +4,7 @@ import { LoaderResponse } from "../components/loader/LoaderResponse"
 import { useAuthService } from "../services/authService"
 import { useNavigate, useParams } from "react-router-dom"
 import { AxiosError } from "axios"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { TextButton } from "../components/buttons/TextButtons"
 import { HighlightedTitle } from "../components/Texts/HighlightedTitle"
 export function VerifyEmail({resendEmail}:{resendEmail:()=>void}){
@@ -15,8 +15,9 @@ export function VerifyEmail({resendEmail}:{resendEmail:()=>void}){
     }
 
     const [isWarning,setWarning] = useState(false)
-    const {isLoading,isError,isSuccess,error} = useQuery({
+    const {isLoading,isError,isSuccess,error,refetch} = useQuery({
         retry:2,
+        enabled:false,
         queryKey:["auth-verify-email"],
         queryFn:async()=> await useAuthService.verifyEmail({
             id:id as string,
@@ -26,6 +27,7 @@ export function VerifyEmail({resendEmail}:{resendEmail:()=>void}){
             console.log(data)
             // ALREADY REPORTED
             if(data.status === 208){
+                console.log(data.status)
                 console.log("IS WARNING")
                 const keysError = Object.keys(data.data)
                 if(keysError.includes('warning')){
@@ -50,6 +52,11 @@ export function VerifyEmail({resendEmail}:{resendEmail:()=>void}){
         }
         return "SOMETHING WENT WRONG"
     }
+
+    useEffect(()=>{
+        refetch()
+    },[])
+
     return (    
         <StartView>
             <div className="w-full flex flex-col justify-center items-center gap-y-8">
@@ -67,13 +74,15 @@ export function VerifyEmail({resendEmail}:{resendEmail:()=>void}){
                     }}
                     redirect={isSuccess || isWarning}
                 />
-                 <TextButton
-                    text="RESEND THE EMAIL"
-                    onClick={()=>{
-                        console.log("sdsdsds")
-                        resendEmail()
-                    }}
-                />
+                {isError &&
+                    <TextButton
+                        text="RESEND THE EMAIL"
+                        onClick={()=>{
+                            console.log("sdsdsds")
+                            resendEmail()
+                        }}
+                    />
+                }
             </div>
         </StartView>
     )
