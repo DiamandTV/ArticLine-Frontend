@@ -7,7 +7,7 @@ import { LoaderResponse } from "../components/loader/LoaderResponse"
 
 // last step on the finish of the sing in
 export function SigninFinish(){
-    const {stepper:{onFinish,state,setState},record:{record},error:{setErrorStepper}} = useContext(StepperContext)
+    const {stepper:{onFinish,state,setState,/*maxStep,getStepData*/},record:{record},error:{setErrorStepper}} = useContext(StepperContext)
     const [enable,setEnable] = useState(true)
     const {isLoading,isError,isSuccess,/*refetch*/} = useQuery({
         queryFn:async ()=> await onFinish(record),
@@ -18,8 +18,27 @@ export function SigninFinish(){
         enabled:enable, // remove this in the future , use this only for production
         onError:(err)=>{
             if( err instanceof AxiosError){
+                /*
+                const allKeys =  []
+                for(let ii=0;ii<maxStep;ii++){
+                    const {formsKeys} = getStepData(ii)
+                    allKeys.push(...formsKeys)
+                }
+                
+                */
+               // todo: before visualizing hte errore check if the errorr that is going to be shown is a part of the forms keys
+               try{
+                console.log("REPONSE")
                 console.log(err.response?.data)
-                setErrorStepper(err.response?.data)
+                    if(err.response?.data){
+                        console.log(err.response?.data)
+                        setErrorStepper(err.response?.data)
+                    }
+               }catch(e){
+                console.log(e)
+               }
+                   
+                
             }
         },
         onSuccess:()=>{
@@ -47,6 +66,7 @@ export function SigninFinish(){
                     error:"SOMETHING WENT WRONG",
                     success:"ACCOUNT CREATED"
                 }}
+                redirect={isSuccess}
            />
             { isError &&
                 <StepperButtons

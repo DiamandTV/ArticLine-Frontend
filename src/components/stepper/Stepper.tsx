@@ -72,7 +72,7 @@ export function StepperForm({maxStep,getStepData,stepLabels,onFinish}:StepperPro
 
     return(
         <StepperContext.Provider  
-        value={{stepper:{state,setState,maxStep,stepLabels,onFinish},
+        value={{stepper:{state,setState, getStepData,maxStep,stepLabels,onFinish},
             record:{record,setRecord},error:{errorStepper,setErrorStepper},
             beforeChangeMediaQuery:{beforeChangeMediaQuery,setBeforeChangeMediaQuery}
             }}>

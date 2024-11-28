@@ -8,7 +8,7 @@ export function StartView({children}:{children:React.ReactNode}){
                 <img src={Logo} alt="" />
             </div>
             <BlurCard className='max-w-3xl transition-all duration-300 bg-slate-300'>
-                <div className='w-full'>
+                <div className='w-full flex flex-col justify-center items-center gap-y-8'>
                     {children}
                 </div>
             </BlurCard>

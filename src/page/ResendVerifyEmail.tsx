@@ -36,8 +36,7 @@ export function ResendVerifyEmail(){
     const getErrorMsg = ()=>{
         if(error instanceof AxiosError){
             console.log(error)
-
-            return (error.response?.data.error as string).toUpperCase()
+            if(error.response?.data && error.response.data.error) return (error.response?.data.error as string).toUpperCase()
         }
         return "SOMETHING WENT WRONG"
     }
