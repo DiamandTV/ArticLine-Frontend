@@ -3,7 +3,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm,SubmitHandler } from "react-hook-form"
 import { AnimationPlaceholderInput } from "../inputs/AnimationPlaceholderInput"
 import { TextButton } from "../buttons/TextButtons"
-
+import { useMutation } from "@tanstack/react-query"
+import { useAuthService } from "../../services/authService"
+import { LoaderWithChildren } from "../loader/LoaderWithChildren"
+import { AxiosError } from "axios"
 const schema = z.object({
     email:z.string().email(),
     password:z.string().min(8).max(40)
@@ -12,48 +15,89 @@ const schema = z.object({
 type LoginFields = z.infer<typeof schema>
 
 export function LoginForm(){
-    const {register,handleSubmit,formState:{errors} } = useForm<LoginFields>({resolver:zodResolver(schema)})
+    const {isLoading,isError,isSuccess,mutateAsync,error} = useMutation({
+        retry:2,
+        mutationKey:['login'],
+        mutationFn:async (loginFields:LoginFields)=> await useAuthService.login(loginFields),
+        onSuccess:(data)=>{
+            console.log(data)
+        }
+    })
+
+    const {register,handleSubmit,formState:{errors},getValues} = useForm<LoginFields>({resolver:zodResolver(schema)})
     const userLogInForms = [
         {
             labelName:'EMAIL',
             type:'text'   ,
             name:'email',
             register:register("email"),
-            error:errors.email
+            error:errors.email,
+            defaultValue:getValues('email')
         },
         {
             labelName:'PASSWORD',
             type:'password'   ,
             name:'password',
             register:register("password"),
-            error:errors.password
-
+            error:errors.password,
+            defaultValue:getValues('password')
         },
     ]
     
-    const onSubmit : SubmitHandler<LoginFields> = (userLogIn)=>{
-        console.log(userLogIn)
+    const onSubmit : SubmitHandler<LoginFields> = async (loginFields)=>{
+        await mutateAsync(loginFields)
+    }
+
+    const getError = ()=>{
+       if(error instanceof AxiosError){
+            try{
+                return (error.response!.data.error[0] as string).toUpperCase()
+            }catch(e){
+                return "SOMETHING WENT WRONG"
+            }
+       }
+       return "SOMETHING WENT WRONG"
+    }
+
+
+    const showLoaderCondition = ()=>{
+        return isLoading || ( isError && !errors.password && !errors.email ) 
     }
     return(
-        <form className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-8 gap-x-4 " onSubmit={handleSubmit(onSubmit)}> 
-            {userLogInForms.map((form)=>
-                    <AnimationPlaceholderInput 
-                        key={form.name}
-                        labelName={form.labelName}
-                        type={form.type}
-                        name={form.name}
-                        register={form.register}
-                        error={form.error}
-                    />
-                )}     
-            <div className="col-span-2 w-full flex justify-center items-center">
-                <TextButton
-                    text="LOG IN"
-                    type="submit"
-                    onClick={()=>{}}
-
-                />  
-            </div>
-        </form>
+        <LoaderWithChildren
+            showLoaderCondition={showLoaderCondition}
+            showLoader={true}
+            loader={{
+                isLoading:isLoading,
+                isError:isError,
+                isSuccess:isSuccess,
+                messages:{
+                    error:getError(),
+                    success:"ACCOUNT LOGGED IN",
+                },       
+            }}
+        >
+            <form className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-8 gap-x-4 " onSubmit={handleSubmit(onSubmit)}> 
+                {userLogInForms.map((form)=>
+                        <AnimationPlaceholderInput 
+                            key={form.name}
+                            labelName={form.labelName}
+                            type={form.type}
+                            name={form.name}
+                            register={form.register}
+                            error={form.error}
+                            defaultValue={form.defaultValue}
+                        />
+                        )} 
+                <div className="flex col-span-2 w-full items-center justify-center">    
+                    <TextButton
+                            type="submit"
+                            text="LOGIN"
+                            onClick={()=>{
+                            }}
+                        />
+                </div> 
+            </form>
+        </LoaderWithChildren>
     )
 }
