@@ -28,8 +28,6 @@ export function SigninFinish(){
                 */
                // todo: before visualizing hte errore check if the errorr that is going to be shown is a part of the forms keys
                try{
-                console.log("REPONSE")
-                console.log(err.response?.data)
                     if(err.response?.data){
                         console.log(err.response?.data)
                         setErrorStepper(err.response?.data)

@@ -7,6 +7,8 @@ import { useMutation } from "@tanstack/react-query"
 import { useAuthService } from "../../services/authService"
 import { LoaderWithChildren } from "../loader/LoaderWithChildren"
 import { AxiosError } from "axios"
+import { setSession } from "../../store/authSlice"
+import { useDispatch } from "react-redux"
 const schema = z.object({
     email:z.string().email(),
     password:z.string().min(8).max(40)
@@ -15,12 +17,15 @@ const schema = z.object({
 type LoginFields = z.infer<typeof schema>
 
 export function LoginForm(){
+    const dispatch = useDispatch()
     const {isLoading,isError,isSuccess,mutateAsync,error} = useMutation({
         retry:2,
         mutationKey:['login'],
         mutationFn:async (loginFields:LoginFields)=> await useAuthService.login(loginFields),
         onSuccess:(data)=>{
             console.log(data)
+            // todo : check if the data is the response expected from django token serializer
+            dispatch(setSession(data.data))
         }
     })
 
@@ -53,6 +58,7 @@ export function LoginForm(){
             try{
                 return (error.response!.data.error[0] as string).toUpperCase()
             }catch(e){
+                console.log(e)
                 return "SOMETHING WENT WRONG"
             }
        }

@@ -1,5 +1,5 @@
+import { REFRESH_TOKEN } from "../constraints";
 import api from "./api";
-import { ACCESS_TOKEN } from "../constraints";
 import { jwtDecode } from "jwt-decode";
 
 export enum isAuthenticatedReturn {
@@ -31,15 +31,18 @@ export const useAuthService = {
     async refreshJWTToken(refresh:{refresh:string}){
         return api.post('/refresh',refresh)
     },
-    isAuthenticated():isAuthenticatedReturn{
-        const accessToken = localStorage.getItem(ACCESS_TOKEN)
+    isAuthenticated(accessToken:string | null):isAuthenticatedReturn{
+        console.log(accessToken)
+        if(!accessToken) return isAuthenticatedReturn.IS_NOT_AUTHENTICATED
         if(accessToken != null){
             const jwtExp = jwtDecode(accessToken).exp 
-            if(Date.now() / 1000 > jwtExp!){
+            if(Date.now() / 1000 < jwtExp!){
                 // the access token is still valid
                 return isAuthenticatedReturn.IS_AUTHENTICATED
             } else {
                 // refresh the token
+                console.log(REFRESH_TOKEN)
+                console.log(Date.now() / 1000,jwtDecode(accessToken).exp)
                 return isAuthenticatedReturn.ACCESS_TOKEN_EXPIRED
             }
         } 

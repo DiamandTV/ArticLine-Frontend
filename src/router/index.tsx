@@ -1,12 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
 import { UserSignIn } from "../page/UserSignIn";
 import { CompanySignIn } from "../page/CompanySignIn";
-import { LogIn } from "../page/Login";
+import { LogIn } from "../page/login";
 import { EmailAndResend } from "../page/EmailAndResend";
 import { PasswordForget } from "../page/PasswordForget";
 import { PasswordResetSend } from "../page/PasswordResetSend";
 import { PasswordReset } from "../page/PasswordReset";
+import { Main } from "../page/App/Main";
+import { ProtectedRoute } from "./ProtectedRoute";
 const router = createBrowserRouter([
+    // authenticated routes
     { 
         path: "/user/signin", 
         element: <UserSignIn/>,
@@ -35,6 +38,15 @@ const router = createBrowserRouter([
     {
         path:"/password/reset/:token",
         element:<PasswordReset/>
+    },
+    // main app routes
+    {
+        path:"/",
+        element:(
+            <ProtectedRoute>
+                <Main/>
+            </ProtectedRoute>
+        )
     }
 ]);
 export default router

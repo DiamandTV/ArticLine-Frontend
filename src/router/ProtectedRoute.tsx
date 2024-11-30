@@ -3,30 +3,35 @@ import { useMutation } from "@tanstack/react-query";
 import { useAuthService } from "../services/authService";
 import { isAuthenticatedReturn } from "../services/authService";
 import { LoaderResponse } from "../components/loader/LoaderResponse";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { setAuthenticated,saveTokensInStore } from "../store/authSlice";
+import { setAuthenticated, setSession } from "../store/authSlice";
 
 // Protected route for the main pages 
-export function ProtectedRoute({children,redirectTo}:{children:React.ReactNode,redirectTo:string}){
+export function ProtectedRoute({children,redirectTo='/login'}:{children:React.ReactNode,redirectTo?:string}){
     const isAuthenticated = useSelector((state:RootState)=>state.authReducer.isAuthenticated)
     const REFRESH_TOKEN = useSelector((state:RootState)=>state.authReducer.jwt?.refresh)
+    const ACCESS_TOKEN = useSelector((state:RootState)=>state.authReducer.jwt?.access)
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     const {isLoading,isSuccess,isError, mutate } = useMutation({
         mutationKey:['auth-refresh-jwt-token'],
         mutationFn:async(refresh:{refresh:string})=> await useAuthService.refreshJWTToken(refresh),
-        onError:(err)=>{
+        onError:()=>{
             dispatch(setAuthenticated(false))
         }, 
         onSuccess:(data)=>{
-            dispatch(saveTokensInStore(data))
+            console.log(data)
+            console.log(data.data)
+            // saving the JWT tokens in the store and setting the authenticated 
+            dispatch(setSession(data.data))
         }
     })
     useEffect(()=>{
+            
             // checking if the user has got the JWT Token
-            const isAuthenticatedReponse = useAuthService.isAuthenticated()
+            const isAuthenticatedReponse = useAuthService.isAuthenticated(ACCESS_TOKEN as string | null)
+            
             switch(isAuthenticatedReponse){
                 case isAuthenticatedReturn.IS_AUTHENTICATED:
                     dispatch(setAuthenticated(true))
@@ -36,7 +41,7 @@ export function ProtectedRoute({children,redirectTo}:{children:React.ReactNode,r
                     break;
                 case isAuthenticatedReturn.ACCESS_TOKEN_EXPIRED:
                     if(REFRESH_TOKEN) mutate({refresh:REFRESH_TOKEN})
-                    dispatch(setAuthenticated(false))
+                    else dispatch(setAuthenticated(false))
                     break;   
         }
     },[])
@@ -47,10 +52,13 @@ export function ProtectedRoute({children,redirectTo}:{children:React.ReactNode,r
         else if isSuccess : <>children</> 
         else : null
     */
+
+    
+    
     return (
-        isLoading ?
+        isLoading || isAuthenticated == null ?
             <LoaderResponse
-                isLoading={isLoading}
+                isLoading={isLoading || isAuthenticated == null}
                 isError={isError}
                 isSuccess={isSuccess}
                 messages={{
@@ -62,10 +70,10 @@ export function ProtectedRoute({children,redirectTo}:{children:React.ReactNode,r
             />
             :
             !isAuthenticated ? 
-            navigate(redirectTo)
+            <Navigate to={redirectTo}/>
             :
             isAuthenticated ?
-            <>{children}</>
+            (<>{children}</>)
             : null
         
     )
