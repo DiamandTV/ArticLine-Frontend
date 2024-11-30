@@ -8,6 +8,7 @@ import { PasswordResetSend } from "../page/PasswordResetSend";
 import { PasswordReset } from "../page/PasswordReset";
 import { Main } from "../page/App/Main";
 import { ProtectedRoute } from "./ProtectedRoute";
+import { StoreForm } from "../components/forms/StoreForm";
 const router = createBrowserRouter([
     // authenticated routes
     { 
@@ -47,6 +48,11 @@ const router = createBrowserRouter([
                 <Main/>
             </ProtectedRoute>
         )
+    },
+    {
+        path:"/create/store",
+        element:<StoreForm/>
+        
     }
 ]);
 export default router
