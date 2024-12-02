@@ -9,6 +9,7 @@ import { LoaderWithChildren } from "../loader/LoaderWithChildren"
 import { AxiosError } from "axios"
 import { setSession } from "../../store/authSlice"
 import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
 const schema = z.object({
     email:z.string().email(),
     password:z.string().min(8).max(40)
@@ -18,6 +19,7 @@ type LoginFields = z.infer<typeof schema>
 
 export function LoginForm(){
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const {isLoading,isError,isSuccess,mutateAsync,error} = useMutation({
         retry:2,
         mutationKey:['login'],
@@ -26,6 +28,7 @@ export function LoginForm(){
             console.log(data)
             // todo : check if the data is the response expected from django token serializer
             dispatch(setSession(data.data))
+            navigate('/')
         }
     })
 

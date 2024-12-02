@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { SubmitHandler, useForm } from "react-hook-form"
+import { set, SubmitHandler, useForm } from "react-hook-form"
 import { z } from 'zod'
 import { StepperButtons } from "../stepper/StepperButtons"
 import { useContext, useRef } from "react"
@@ -23,8 +23,8 @@ export function StepperInfo(){
         resolver:zodResolver(schema)
     })
 
-    const onSubmit:SubmitHandler<StepperInfoFields> = ()=>{
-
+    const onSubmit:SubmitHandler<StepperInfoFields> = (storeInfo)=>{
+        setState(state+1)
     }
 
     
@@ -42,24 +42,26 @@ export function StepperInfo(){
             ref={formRef}
             className="w-full"
             onSubmit={handleSubmit(onSubmit)}>
-            <div className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center  gap-x-4  pb-8" >
-                <AnimationPlaceholderInput
-                    labelName="TITLE"
-                    name="store_title"
-                    type="text"
-                    register={register('store_title')}
-                    error={errors.store_title}
-                    defaultValue={getValues('store_title')}
-                /> 
-                <AnimationPlaceholderInput
-                    labelName="TITLE"
-                    name="store_title"
-                    type="text"
-                    register={register('store_title')}
-                    error={errors.store_title}
-                    defaultValue={getValues('store_title')}
-                />    
-                <div className="w-full md:col-span-2 col-span-1">
+            <div className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-10  gap-x-4  pb-8" >
+              
+                    <AnimationPlaceholderInput
+                        labelName="TITLE"
+                        name="store_title"
+                        type="text"
+                        register={register('store_title')}
+                        error={errors.store_title}
+                        defaultValue={getValues('store_title')}
+                    /> 
+                    <AnimationPlaceholderInput
+                        labelName="TITLE"
+                        name="store_title"
+                        type="text"
+                        register={register('store_title')}
+                        error={errors.store_title}
+                        defaultValue={getValues('store_title')}
+                    />   
+                
+                <div className="w-full md:col-span-2 col-span-1 max-h-max">
                     <AnimationPlaceholderTextArea
                         labelName="DESCRIPTION"
                         name="store_description"
