@@ -33,7 +33,7 @@ const useProfile:UserProfileModel = {
 }
 export function SideBarApp(){
     return (
-        <div className="h-screen ">
+        <div className="h-screen">
             <Sidebar 
                 className="h-full flex flex-col"    
                 backgroundColor="transparent"
@@ -57,11 +57,10 @@ export function SideBarApp(){
                 <MenuItem id="ACCOUNT" icon ={<FaUser/>}>ACCOUNT</MenuItem>
                 <MenuItem icon={<IoMdSettings/>} >SETTINGS</MenuItem>
                 <MenuItem icon={<IoMdNotificationsOutline/>} >NOTIFICATIONS</MenuItem>
-                <MenuItem id="LOGOUT" icon={<BiLogOut/>} >LOGOUT</MenuItem>
-            </Menu>
-
-
+                
+            </Menu>    
             </Sidebar>
+            
         </div>
     )
 }
