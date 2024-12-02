@@ -32,7 +32,6 @@ export function FixedSizeDropdown({labelName,name,list,filterFunction,showFuncti
             error={error}
             onChange={()=>
                     setFilteredList(filterFunction())}
-            
         >
             {
                 filteredList.length > 0 ? 

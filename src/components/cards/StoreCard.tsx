@@ -35,7 +35,7 @@ export function StoreCard({store:{title,images,average_rating,ratings,views},sty
                     <p className="text-xl font-bold">{title}</p>
                     <div className="flex flex-row justify-start items-center gap-x-1">
                         <FaStar size={15}/>
-                        <span>{average_rating} BUONO ({ratings})</span>
+                        <span>{average_rating} BUONO</span>
                     </div>
                 </div>
                 <div className="h-full flex flex-row justify-center items-center gap-4 ">

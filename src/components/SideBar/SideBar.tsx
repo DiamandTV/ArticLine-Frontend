@@ -11,6 +11,10 @@ import { IoMdSettings } from "react-icons/io";
 import { UserProfileModel } from "../../models/user";
 import { BiLogOut } from "react-icons/bi";
 import { IoMdNotificationsOutline } from "react-icons/io";
+import { useState } from "react";
+import { IoMdNotifications } from "react-icons/io";
+import { GiHamburgerMenu } from "react-icons/gi";
+/*
 const useProfile:UserProfileModel = {
     auth:{
         email:"",
@@ -31,13 +35,17 @@ const useProfile:UserProfileModel = {
         postal_code:""
     }
 }
+*/
+const SIDEBAR_ICON_SIZE = 22.5
 export function SideBarApp(){
+    const [collapsed,setCollapsed] = useState(false)
     return (
         <div className="h-screen">
             <Sidebar 
                 className="h-full flex flex-col"    
                 backgroundColor="transparent"
                 style={{borderColor:"rgb(75 85 99)",borderRightWidth:"2px"}}
+                collapsed={collapsed}
             >
             <Menu
                 menuItemStyles={{
@@ -48,17 +56,18 @@ export function SideBarApp(){
                     },
                 }}
             >
-                <MenuItem id="HOME" icon={<IoHome/>} >HOME</MenuItem>
-                <SubMenu id="CATEGORIES" icon={<BiSolidCategory/>} label="CATEGORIES"></SubMenu>
-                <SubMenu id="ORDERS" icon={<FaClipboardList/>} label="ORDERS"></SubMenu>
-                <SubMenu id="DASHBOARDS" icon={<IoBarChartSharp/>} label="DASHBOARDS"></SubMenu>
-                <SubMenu id="STORES" icon={<FaStore/>} label="STORES"></SubMenu>
-                <SubMenu id="CHARTS" icon={<IoChatbubbleEllipses/>} label="CHATS" ></SubMenu>
-                <MenuItem id="ACCOUNT" icon ={<FaUser/>}>ACCOUNT</MenuItem>
-                <MenuItem icon={<IoMdSettings/>} >SETTINGS</MenuItem>
-                <MenuItem icon={<IoMdNotificationsOutline/>} >NOTIFICATIONS</MenuItem>
+                <MenuItem id="HOME" icon={<GiHamburgerMenu size={SIDEBAR_ICON_SIZE}/>} onClick={()=>setCollapsed(!collapsed)} className="w-full"/>
+                <MenuItem id="HOME" icon={<IoHome size={SIDEBAR_ICON_SIZE}/>} >HOME</MenuItem>
+                <SubMenu id="CATEGORIES" icon={<BiSolidCategory size={SIDEBAR_ICON_SIZE}/>} label="CATEGORIES"></SubMenu>
+                <SubMenu id="ORDERS" icon={<FaClipboardList size={SIDEBAR_ICON_SIZE}/>} label="ORDERS"></SubMenu>
+                <SubMenu id="DASHBOARDS" icon={<IoBarChartSharp size={SIDEBAR_ICON_SIZE}/>} label="DASHBOARDS"></SubMenu>
+                <SubMenu id="STORES" icon={<FaStore size={SIDEBAR_ICON_SIZE}/>} label="STORES"></SubMenu>
+                <SubMenu id="CHARTS" icon={<IoChatbubbleEllipses size={SIDEBAR_ICON_SIZE}/>} label="CHATS" ></SubMenu>
+                <MenuItem id="ACCOUNT" icon ={<FaUser size={SIDEBAR_ICON_SIZE}/>}>ACCOUNT</MenuItem>
+                <MenuItem icon={<IoMdSettings size={SIDEBAR_ICON_SIZE}/>} >SETTINGS</MenuItem>
+                <MenuItem icon={<IoMdNotifications size={SIDEBAR_ICON_SIZE}/>} >NOTIFICATIONS</MenuItem>
                 
-            </Menu>    
+                </Menu>    
             </Sidebar>
             
         </div>

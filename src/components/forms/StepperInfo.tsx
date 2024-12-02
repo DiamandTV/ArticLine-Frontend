@@ -68,6 +68,7 @@ export function StepperInfo(){
                         register={register('store_description')}
                         error={errors.store_description}
                         defaultValue={getValues('store_description')}
+                        className="max-h-24 scrollbar-hide"
                     />
                 </div>
             
