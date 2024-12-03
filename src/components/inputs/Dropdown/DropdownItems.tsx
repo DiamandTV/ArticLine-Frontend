@@ -3,7 +3,7 @@ interface DropdownItemProps{
     icon?:unknown
     className?:string
     style?: React.CSSProperties // this is used frequently in the case of the large data list 
-    onClick:()=>void
+    onClick:(e)=>void
 }
 export function DropdownItem({title,icon,className,style,onClick}:DropdownItemProps){
     return (

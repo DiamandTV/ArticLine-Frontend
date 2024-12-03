@@ -1,23 +1,29 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Dropdown } from "./Dropdown"
 import { DropdownItem } from "./DropdownItems"
 import { FixedSizeList } from "react-window"
 import { v4 as uuidv4 } from 'uuid';
 import { UseFormRegisterReturn } from "react-hook-form";
 import { FieldError } from "react-hook-form";
+
 export interface FixedSizeDropdownProps{
     labelName:string,
     name:string,
-    list:Array<Record<string,string>>,
+    list:Array<Record<string,string>> | Array<string>,
     showFunction:(item:unknown,index:number)=>string, // the function which will return the label of the list item
-    setValue:(value:string)=>void,                    
-    filterFunction:()=>Record<string,string>[],       // the filter function which will be used for filtering the list
+    setValue?:(value:string)=>void,                    
+    filterFunction:(e:React.ChangeEvent<HTMLInputElement>)=>Record<string,string>[] | Array<string>,       // the filter function which will be used for filtering the list
     defaultValue?:string,
-    register:UseFormRegisterReturn,
-    error:FieldError|undefined,
-    onItemClick?:(item:string)=>void
+    register?:UseFormRegisterReturn,
+    error?:FieldError|undefined,
+    onItemClick?:(item:string)=>void,
+    closeOnClick?:boolean,
 }
-export function FixedSizeDropdown({labelName,name,list,filterFunction,showFunction,setValue,onItemClick,defaultValue,register,error}:FixedSizeDropdownProps){
+export function FixedSizeDropdown({labelName,name,list,filterFunction,showFunction,setValue,onItemClick,defaultValue,register,error,closeOnClick=true,filterOnClick=true}:FixedSizeDropdownProps){
+    
+    useEffect(()=>{
+        setFilteredList(list)
+    },[list])
     const [filteredList,setFilteredList] = useState(list)  
     // the state of the dropdown. true => if it's open , false => if it's closed 
     const [open,setOpen] = useState(false)  
@@ -30,8 +36,8 @@ export function FixedSizeDropdown({labelName,name,list,filterFunction,showFuncti
             setOpen={setOpen}
             defaultValue={defaultValue}
             error={error}
-            onChange={()=>
-                    setFilteredList(filterFunction())}
+            onChange={(e)=>
+                    setFilteredList(filterFunction(e))}
         >
             {
                 filteredList.length > 0 ? 
@@ -49,11 +55,11 @@ export function FixedSizeDropdown({labelName,name,list,filterFunction,showFuncti
                             key={uuidv4()}
                             style={style}
                             title={showFunction(filteredList[index],index)}
-                            onClick={()=>{
-                                setOpen(false)
-                                setValue(showFunction(filteredList[index],index))
+                            onClick={(e)=>{
+                                if(closeOnClick) setOpen(false)
+                                if(setValue) setValue(showFunction(filteredList[index],index))
                                 if(onItemClick != null) onItemClick(showFunction(filteredList[index],index))
-                            }}
+                                }}
                         />
                     )
                 }}

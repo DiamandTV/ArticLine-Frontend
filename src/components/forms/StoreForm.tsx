@@ -3,15 +3,21 @@ import { StepperForm } from "../stepper/Stepper"
 import { StepperGetStepDataProps } from "../stepper/Stepper"
 import { AddressForm } from "./AddressForm"
 import { StepperInfo } from "./StepperInfo"
+import { StepperImageForm } from "./StepperImageForm"
 export function StoreForm(){
     const getStepData = (state:number):StepperGetStepDataProps=>{
         switch(state){
             case 0:
-                return {
-                    component:<StepperInfo/>,
-                    formsKeys:['images','title','description']
+                return{
+                    component:<StepperImageForm/>,
+                    formsKeys:['image']
                 }
             case 1:
+                return {
+                    component:<StepperInfo/>,
+                    formsKeys:['store_title','store_categories','store_description']
+                }
+            case 2:
                 return {
                     component:<AddressForm/>,
                     formsKeys:['address']
@@ -26,8 +32,8 @@ export function StoreForm(){
     return (
         <StartView>
             <StepperForm
-                maxStep={2}
-                stepLabels={['STORE INFO','STORE ADDRESS']}
+                maxStep={4}
+                stepLabels={['STORE IMAGE','STORE INFO','STORE ADDRESS']}
                 getStepData={getStepData}
                 onFinish={async(record)=>{
 

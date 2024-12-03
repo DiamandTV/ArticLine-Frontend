@@ -8,7 +8,7 @@ interface DropdownProps {
     name:string,
     open:boolean,
     setOpen:(value:boolean)=>void,
-    onChange:()=>void,
+    onChange:(e:React.ChangeEvent<HTMLInputElement>)=>void,
     children:React.ReactNode,
     defaultValue?:string,
     register?:UseFormRegisterReturn,
@@ -44,7 +44,7 @@ export function Dropdown({labelName,name,onChange,defaultValue,register,error,op
                         setOpen(false)
                     }} 
                     onChange={(event)=>{
-                        onChange()
+                        onChange(event)
                         register?.onChange(event)
                     }}
                 />
