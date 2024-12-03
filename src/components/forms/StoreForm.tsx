@@ -3,13 +3,13 @@ import { StepperForm } from "../stepper/Stepper"
 import { StepperGetStepDataProps } from "../stepper/Stepper"
 import { AddressForm } from "./AddressForm"
 import { StepperInfo } from "./StepperInfo"
-import { StepperImageForm } from "./StepperImageForm"
+import { StoreImageForm } from "./StoreImageForm"
 export function StoreForm(){
     const getStepData = (state:number):StepperGetStepDataProps=>{
         switch(state){
             case 0:
                 return{
-                    component:<StepperImageForm/>,
+                    component:<StoreImageForm/>,
                     formsKeys:['image']
                 }
             case 1:
