@@ -12,7 +12,7 @@ import { TagCard } from "../cards/TagCard"
 import { v4 as uuidv4 } from 'uuid';
 const schema = z.object({
     store_title:z.string().min(1).max(255),
-    store_category:z.array(z.string()),
+    store_category:z.array(z.string()).min(1),
     store_description:z.string().min(1)
 })
 
@@ -20,19 +20,25 @@ type StepperInfoFields = z.infer<typeof schema>
 
 const originalList = ['PIZZA','CATEGORY','SUSHI']
 export function StepperInfo(){
-    const [categories,setCategories] = useState<{tags:Array<string>,list:Array<string>}>({
-        'tags':[],
-        'list':originalList
-    })
     const formRef = useRef<HTMLFormElement | null>(null)
     const {stepper:{state,setState,maxStep},record:{record,setRecord},error:{errorStepper},beforeChangeMediaQuery:{setBeforeChangeMediaQuery}} = useContext(StepperContext)
     console.log(state)
     const {handleSubmit,register,formState:{errors},getValues,setValue} = useForm<StepperInfoFields>({
-        resolver:zodResolver(schema),
+        defaultValues:record[state],
+        resolver: zodResolver(schema),
+        errors:errorStepper
+    })
+
+    const [categories,setCategories] = useState<{tags:Array<string>,list:Array<string>}>({
+        'tags':getValues('store_category') || [] ,
+        'list':originalList.filter(category=>!getValues('store_category') || !getValues('store_category').includes(category)) as Array<string>,
     })
 
     const onSubmit:SubmitHandler<StepperInfoFields> = (storeInfo)=>{
         setState(state+1)
+        const newRecord = record
+        newRecord[state] = storeInfo
+        setRecord(newRecord)
     }
 
     
@@ -48,6 +54,14 @@ export function StepperInfo(){
     useEffect(()=>{
         setValue('store_category',categories.tags)
     },[categories])
+
+    useEffect(()=>setBeforeChangeMediaQuery(()=>(isMatched)=>{
+        if(isMatched){
+            const newRecord = record
+            newRecord[state] = getValues()
+            setRecord(newRecord)
+        }
+      }),[])
 
 
     return (

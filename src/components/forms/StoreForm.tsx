@@ -1,3 +1,4 @@
+import { SigninFinish } from "../../views/SignInFinish"
 import { StartView } from "../../views/StartView"
 import { StepperForm } from "../stepper/Stepper"
 import { StepperGetStepDataProps } from "../stepper/Stepper"
@@ -22,6 +23,11 @@ export function StoreForm(){
                     component:<AddressForm/>,
                     formsKeys:['address']
                 }
+            case 3:
+                return {
+                    component:<SigninFinish/>,
+                    formsKeys:[]
+                }
             default:
                 return {
                     component:<div></div>,
@@ -36,7 +42,8 @@ export function StoreForm(){
                 stepLabels={['STORE IMAGE','STORE INFO','STORE ADDRESS']}
                 getStepData={getStepData}
                 onFinish={async(record)=>{
-
+                    //alert("OK")
+                    console.log(record)
                 }}
             >
             </StepperForm>

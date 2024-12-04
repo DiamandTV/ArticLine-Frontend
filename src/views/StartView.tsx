@@ -3,7 +3,7 @@ import Logo from '../assets/images/NoBG_Complete.png'
 
 export function StartView({children}:{children:React.ReactNode}){
         return (   
-        <div className="bg-slate-900 w-screen h-full min-h-screen flex flex-col items-center justify-center px-8 py-8"> 
+        <div className="bg-slate-900 w-screen h-full min-h-screen flex flex-col items-center justify-start px-8 py-8"> 
             <div className='w-52 h-52 md:w-64 md:h-64 lg:w-80 lg:h-80'>
                 <img src={Logo} alt="" />
             </div>
