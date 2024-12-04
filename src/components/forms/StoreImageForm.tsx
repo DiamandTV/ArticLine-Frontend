@@ -8,7 +8,7 @@ import { StepperContext } from "../stepper/StepperContext";
 import { v4 as uuidv4 } from "uuid";
 export function StoreImageForm(){
     const {stepper:{state,setState,maxStep},record:{record,setRecord},error:{errorStepper},beforeChangeMediaQuery:{setBeforeChangeMediaQuery}} = useContext(StepperContext)
-    const [images,setImages] = useState<Array<string | null>>((record[state] && record[state].images) ? record[state].images : [])
+    const [images,setImages] = useState<Array<string | null>>((record[state] && record[state].images) ? record[state].images : [null])
     const [error,setErrors] = useState(errorStepper.images ? errorStepper.images : null)
     const divRef = useRef<HTMLDivElement | null>(null)
 
