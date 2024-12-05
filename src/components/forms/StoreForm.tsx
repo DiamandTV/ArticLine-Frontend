@@ -1,10 +1,14 @@
+import { storeService } from "../../services/storeService"
+import { store } from "../../store/store"
 import { SigninFinish } from "../../views/SignInFinish"
 import { StartView } from "../../views/StartView"
+import { BlurCard } from "../cards/BlurCard"
 import { StepperForm } from "../stepper/Stepper"
 import { StepperGetStepDataProps } from "../stepper/Stepper"
-import { AddressForm } from "./AddressForm"
-import { StepperInfo } from "./StepperInfo"
+import { AddressFields, AddressForm } from "./AddressForm"
+import { StoreInfo, StoreInfoFields } from "./StoreInfo"
 import { StoreImageForm } from "./StoreImageForm"
+export type StoreStepperType = [Array<string>,StoreInfoFields,AddressFields]
 export function StoreForm(){
     const getStepData = (state:number):StepperGetStepDataProps=>{
         switch(state){
@@ -15,7 +19,7 @@ export function StoreForm(){
                 }
             case 1:
                 return {
-                    component:<StepperInfo/>,
+                    component:<StoreInfo/>,
                     formsKeys:['store_title','store_categories','store_description']
                 }
             case 2:
@@ -36,17 +40,18 @@ export function StoreForm(){
         }
     }
     return (
-        <StartView>
             <StepperForm
                 maxStep={4}
                 stepLabels={['STORE IMAGE','STORE INFO','STORE ADDRESS']}
                 getStepData={getStepData}
                 onFinish={async(record)=>{
                     //alert("OK")
+                    await storeService.createStore(
+                        storeService.serializeFromStepperData(record as StoreStepperType)
+                    )
                     console.log(record)
                 }}
             >
             </StepperForm>
-        </StartView>
     )
 }

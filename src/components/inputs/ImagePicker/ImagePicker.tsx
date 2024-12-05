@@ -20,7 +20,7 @@ export function ImagePicker({image,setImage}:{image:string|null,setImage:(image:
               }}
               ref={imageRef}/>
             <div 
-                className="w-72 h-56 bg-slate-900 bg-no-repeat bg-cover bg-center bg-opacity-60 backdrop-blur-lg rounded-xl flex flex-col justify-center items-center border-2 border-gray-400 hover:cursor-pointer"
+                className="w-72 h-80 bg-slate-900 bg-no-repeat bg-cover bg-center bg-opacity-60 backdrop-blur-lg rounded-xl flex flex-col justify-center items-center border-2 border-gray-400 hover:cursor-pointer"
                 style={{backgroundImage:`url(${image})`}}
                 onClick={()=>{
                   if(imageRef){

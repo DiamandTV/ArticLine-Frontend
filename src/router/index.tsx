@@ -8,7 +8,8 @@ import { PasswordResetSend } from "../page/PasswordResetSend";
 import { PasswordReset } from "../page/PasswordReset";
 import { Main } from "../page/App/Main";
 import { ProtectedRoute } from "./ProtectedRoute";
-import { StoreForm } from "../components/forms/StoreForm";
+import { StoreCreate } from "../page/Store/StoreCreate";
+import { Home } from "../page/Home/Home";
 const router = createBrowserRouter([
     // authenticated routes
     { 
@@ -47,12 +48,11 @@ const router = createBrowserRouter([
             <ProtectedRoute>
                 <Main/>
             </ProtectedRoute>
-        )
-    },
-    {
-        path:"/create/store",
-        element:<StoreForm/>
-        
+        ),
+        children:[
+            {path:"",element:<Home/>},
+            {path:'create/store',element:<StoreCreate/>}
+        ]
     }
 ]);
 export default router

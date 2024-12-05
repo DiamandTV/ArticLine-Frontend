@@ -65,7 +65,7 @@ export function CompanyInfoForm(){
 
     
     const onSubmit : SubmitHandler<CompanyInfoFields> = async (info)=>{
-        console.log(info)
+        //console.log(info)
         // the form has been validated, so go to the next step
         if(state < maxStep - 1){ 
             setState(state+1)

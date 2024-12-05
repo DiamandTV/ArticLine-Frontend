@@ -40,7 +40,7 @@ export function CartList({itemSize,itemCount,children,className}:CardListProps){
             <div className={`w-full  h-full ${className}`} ref={divRef} style={{ display: 'flex', flexGrow: 1 }}>
                 <AutoSizer style={{height:"100%"}}>
                     {({ width  }) => {
-                        console.log(width)
+                        //console.log(width)
                         // Use these actual sizes to calculate your percentage based sizes
                         return (
                             <FixedSizeList

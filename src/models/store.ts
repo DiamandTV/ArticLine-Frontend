@@ -1,13 +1,15 @@
+import { Dayjs } from "dayjs"
 import { AddressModel } from "./address"
 export interface StoreModel{
-    id?:number,
+    id:number,
     images:Array<string>,
-    company_profile?:number,
+    company_profile:number,
     title:string,
     description:string,
     average_rating:number,
     ratings:number,
     views:number,
-    address?:AddressModel,
-    is_certificated?:boolean
+    address:AddressModel,
+    is_certificated:boolean,
+    created_at:string | Dayjs
 }

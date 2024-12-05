@@ -82,9 +82,7 @@ export function AccountForm(){
     ]
 
     const onSubmit : SubmitHandler<AccountFields> = async (account)=>{
-        console.log(account)
         // the form has been validated, so go to the next step
-        console.log(state,maxStep)
         if(state == maxStep - 1){
             const newRecord = record
             newRecord[state] = account

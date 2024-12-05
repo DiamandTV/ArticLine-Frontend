@@ -8,7 +8,6 @@ import { Provider } from "react-redux"
 import { store } from './store/store.ts';
 import router from './router/index.tsx'
 import './index.css'
-
 const query = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(

@@ -8,9 +8,7 @@ export interface CategoryCardProps extends React.HTMLAttributes<HTMLAllCollectio
 export function CategoryCard({category:{image,name},style,className}:CategoryCardProps){
     const {card:{setCardHeight}} = useContext(CardListContext)
     const divRef = useRef<HTMLDivElement | null>(null)
-    console.log("OK")
     useEffect(()=>{
-        console.log("HIEHGT "+divRef.current?.offsetHeight)
         setCardHeight(divRef.current!.scrollHeight)
     })
     return (

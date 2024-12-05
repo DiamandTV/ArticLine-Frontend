@@ -7,6 +7,7 @@ import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { setAuthenticated, setSession } from "../store/authSlice";
+import { PermissionView } from "./PermissionView";
 
 // Protected route for the main pages 
 export function ProtectedRoute({children,redirectTo='/login'}:{children:React.ReactNode,redirectTo?:string}){
@@ -34,10 +35,12 @@ export function ProtectedRoute({children,redirectTo='/login'}:{children:React.Re
             
             switch(isAuthenticatedReponse){
                 case isAuthenticatedReturn.IS_AUTHENTICATED:
-                    dispatch(setAuthenticated(true))
+                    //dispatch(setAuthenticated(true))
+                    mutate({refresh:REFRESH_TOKEN!})
                     break;
                 case isAuthenticatedReturn.IS_NOT_AUTHENTICATED:
-                    dispatch(setAuthenticated(false))
+                    //dispatch(setAuthenticated(false))
+                    mutate({refresh:REFRESH_TOKEN!})
                     break;
                 case isAuthenticatedReturn.ACCESS_TOKEN_EXPIRED:
                     if(REFRESH_TOKEN) mutate({refresh:REFRESH_TOKEN})
@@ -73,7 +76,10 @@ export function ProtectedRoute({children,redirectTo='/login'}:{children:React.Re
             <Navigate to={redirectTo}/>
             :
             isAuthenticated ?
-            (<>{children}</>)
+            (
+                <PermissionView>
+                    {children}
+                </PermissionView>)
             : null
         
     )

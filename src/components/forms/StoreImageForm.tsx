@@ -31,11 +31,11 @@ export function StoreImageForm(){
 
     return (
         <div className="w-full flex flex-col justify-center items-center gap-y-4">
-            <div className="w-full flex flex-row justify-between items-center gap-x-2">
+            <div className="w-full h-full flex flex-row justify-between items-center gap-x-2">
                 <div className="relative">
                     <InputError error={error}/>
                 </div>
-                <div className="max-w-max flex flex-row justify-center items-center gap-x-2">
+                <div className="max-w-max h-full flex flex-row justify-center items-center gap-x-2">
                     { images.length < 5 ?  
                             <div 
                             className="hover:cursor-pointer hover:bg-sky-300 box-content p-1.5 bg-sky-500 rounded-full"
@@ -56,7 +56,7 @@ export function StoreImageForm(){
             </div>
             <div 
                 ref={divRef}
-                className="w-full grid gap-2 grid-flow-col justify-start items-center overflow-hidden">
+                className="w-full h-full grid gap-2 grid-flow-col justify-start items-center overflow-hidden">
                 {images.map((image,index)=>  (
                     <div className="relative w-full">
                         { image ? 
@@ -86,7 +86,7 @@ export function StoreImageForm(){
                 </div>)
              )}
             </div>
-            <div className="w-full">
+            <div className="w-full mt-auto">
                 <StepperButtons
                     onNextClick={()=>{
                         if(images.filter((image)=>image!=null).length === 0){

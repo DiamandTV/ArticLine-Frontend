@@ -6,14 +6,13 @@ import { FaUser } from "react-icons/fa";
 import { FaStore } from "react-icons/fa";
 import { BiSolidCategory } from "react-icons/bi";
 import { IoChatbubbleEllipses } from "react-icons/io5";
-import { AccountAvatar } from "../AccountAvatar/AccountAvatar";
 import { IoMdSettings } from "react-icons/io";
-import { UserProfileModel } from "../../models/user";
-import { BiLogOut } from "react-icons/bi";
-import { IoMdNotificationsOutline } from "react-icons/io";
 import { useState } from "react";
 import { IoMdNotifications } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { FaPlus } from "react-icons/fa6";
+import { Can } from "../../config/permissions/can";
+import { Link } from "react-router-dom";
 /*
 const useProfile:UserProfileModel = {
     auth:{
@@ -37,6 +36,7 @@ const useProfile:UserProfileModel = {
 }
 */
 const SIDEBAR_ICON_SIZE = 22.5
+const SIDEBAR_SUB_ICON_SIZE = 18.5
 export function SideBarApp(){
     const [collapsed,setCollapsed] = useState(false)
     return (
@@ -49,11 +49,19 @@ export function SideBarApp(){
             >
             <Menu
                 menuItemStyles={{
-                    subMenuContent:({level,active,disabled})=> {
-                        return {
-                            backgroundColor:"transparent"
-                        }
-                    },
+                    button: () => ({
+                        backgroundColor: "transparent",
+                        ":hover": {
+                            backgroundColor: "transparent", // Mantieni trasparente
+                            color: "inherit", // Assicura che il testo non cambi colore
+                        },
+                    }),
+                    subMenuContent: () => ({
+                        backgroundColor: "transparent",
+                        ":hover": {
+                            backgroundColor: "transparent", // Disattiva il bianco sull'hover
+                        },
+                    }),
                 }}
             >
                 <MenuItem id="HOME" icon={<GiHamburgerMenu size={SIDEBAR_ICON_SIZE}/>} onClick={()=>setCollapsed(!collapsed)} className="w-full"/>
@@ -61,7 +69,15 @@ export function SideBarApp(){
                 <SubMenu id="CATEGORIES" icon={<BiSolidCategory size={SIDEBAR_ICON_SIZE}/>} label="CATEGORIES"></SubMenu>
                 <SubMenu id="ORDERS" icon={<FaClipboardList size={SIDEBAR_ICON_SIZE}/>} label="ORDERS"></SubMenu>
                 <SubMenu id="DASHBOARDS" icon={<IoBarChartSharp size={SIDEBAR_ICON_SIZE}/>} label="DASHBOARDS"></SubMenu>
-                <SubMenu id="STORES" icon={<FaStore size={SIDEBAR_ICON_SIZE}/>} label="STORES"></SubMenu>
+                
+                <Can I="create" a="STORE" >
+                    <SubMenu id="STORES" icon={<FaStore size={SIDEBAR_ICON_SIZE}/>} label="STORES">
+                        <MenuItem icon={<FaPlus/>} aria-setsize={SIDEBAR_SUB_ICON_SIZE} className="text-sm">
+                            <Link to={'/create/store'}>CREATE</Link> 
+                        </MenuItem>
+                    </SubMenu>
+                </Can>
+                
                 <SubMenu id="CHARTS" icon={<IoChatbubbleEllipses size={SIDEBAR_ICON_SIZE}/>} label="CHATS" ></SubMenu>
                 <MenuItem id="ACCOUNT" icon ={<FaUser size={SIDEBAR_ICON_SIZE}/>}>ACCOUNT</MenuItem>
                 <MenuItem icon={<IoMdSettings size={SIDEBAR_ICON_SIZE}/>} >SETTINGS</MenuItem>

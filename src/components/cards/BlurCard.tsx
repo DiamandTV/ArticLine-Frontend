@@ -1,7 +1,7 @@
 
 interface BlurCardProps{
     children:React.ReactNode,
-    className:string
+    className?:string
 }
 export function BlurCard({children,className=""}:BlurCardProps){
     return (
