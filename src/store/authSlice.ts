@@ -10,7 +10,7 @@ import { AbilityTuple, MongoAbility, MongoQuery } from "@casl/ability";
 export interface AuthSliceModel {
     jwt:JWTModel | null,
     auth:AuthModel | null,
-    profile:UserProfileModel | CompanyProfileModel | null,
+    //profile:UserProfileModel | CompanyProfileModel | null,
     isAuthenticated:boolean | null,
     ability:MongoAbility<AbilityTuple, MongoQuery> | null,
 }
@@ -24,7 +24,7 @@ const authSliceInitialValue:AuthSliceModel = {
         refresh:localStorage.getItem(REFRESH_TOKEN) 
     },
     auth:null,
-    profile:null,
+    //profile:null,
     isAuthenticated:null,
     ability:null
 }
@@ -36,8 +36,8 @@ const authSlice = createSlice({
     reducers:{
         setSession:(state,action)=>{
             state.jwt = action.payload.jwt
-            state.profile = action.payload.profile
-            state.auth = state.profile?.auth as AuthModel
+            //state.profile = action.payload.profile
+            state.auth = (action.payload.profile as (UserProfileModel | CompanyProfileModel)).auth as AuthModel
             
             // saving the tokens , #todo: save them in cookies in future
             if(state.jwt && state.jwt.access && state.jwt.refresh){

@@ -9,17 +9,17 @@ import { FieldError } from "react-hook-form";
 export interface FixedSizeDropdownProps{
     labelName:string,
     name:string,
-    list:Array<Record<string,string>> | Array<string>,
+    list:Array<Record<string,unknown>> | Array<string>,
     showFunction:(item:unknown,index:number)=>string, // the function which will return the label of the list item
     setValue?:(value:string)=>void,                    
-    filterFunction:(e:React.ChangeEvent<HTMLInputElement>)=>Record<string,string>[] | Array<string>,       // the filter function which will be used for filtering the list
+    filterFunction:(e:React.ChangeEvent<HTMLInputElement>)=>unknown,       // the filter function which will be used for filtering the list
     defaultValue?:string,
     register?:UseFormRegisterReturn,
     error?:FieldError|undefined,
-    onItemClick?:(item:string)=>void,
+    onItemClick?:(item:unknown)=>void,
     closeOnClick?:boolean,
 }
-export function FixedSizeDropdown({labelName,name,list,filterFunction,showFunction,setValue,onItemClick,defaultValue,register,error,closeOnClick=true,filterOnClick=true}:FixedSizeDropdownProps){
+export function FixedSizeDropdown({labelName,name,list,filterFunction,showFunction,setValue,onItemClick,defaultValue,register,error,closeOnClick=true,/*filterOnClick=true*/}:FixedSizeDropdownProps){
     
     useEffect(()=>{
         setFilteredList(list)
@@ -37,7 +37,7 @@ export function FixedSizeDropdown({labelName,name,list,filterFunction,showFuncti
             defaultValue={defaultValue}
             error={error}
             onChange={(e)=>
-                    setFilteredList(filterFunction(e))}
+                    setFilteredList(filterFunction(e) as Array<Record<string,unknown>>)}
         >
             {
                 filteredList.length > 0 ? 
@@ -55,10 +55,10 @@ export function FixedSizeDropdown({labelName,name,list,filterFunction,showFuncti
                             key={uuidv4()}
                             style={style}
                             title={showFunction(filteredList[index],index)}
-                            onClick={(e)=>{
+                            onClick={()=>{
                                 if(closeOnClick) setOpen(false)
                                 if(setValue) setValue(showFunction(filteredList[index],index))
-                                if(onItemClick != null) onItemClick(showFunction(filteredList[index],index))
+                                if(onItemClick != null) onItemClick(filteredList[index])
                                 }}
                         />
                     )

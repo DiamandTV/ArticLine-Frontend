@@ -8,7 +8,7 @@ const COMPANY   =   "COMPANY"
 export default function defineAbilityFor(profile:UserProfileModel | CompanyProfileModel){
     const { can,cannot,build } = new AbilityBuilder(createMongoAbility)
     console.log(profile)
-
+    
     if(profile.auth.type === USER){
         // a normal user can only see the stores
         /*

@@ -9,7 +9,7 @@ import { CompanyInfoFields } from '../components/forms/CompanyInfoForm'
 import { useCompanyService } from '../services/companyService'
 import { CompanyProfileModel } from '../models/company'
 import { StepperGetStepDataProps } from '../components/stepper/Stepper'
-import { SigninFinish } from '../views/SignInFinish'
+import { Finish } from '../views/SignInFinish'
 // interface of the company sign in record (the record of the stepper form)
 export type CompanySigninStepperType = Array<CompanyInfoFields | AddressFields | AccountFields>
 
@@ -34,7 +34,20 @@ export function CompanySignIn(){
                 }
             case 3:
                 return {
-                    component:<SigninFinish/>,
+                    component: (
+                        <Finish
+                            queryKey={['company-signin']}
+                            loader={{
+                                message:{
+                                    error:"SOMETHING WENT WRONG",
+                                    success:"COMPANY ACCOUNT CREATED"
+                                },
+                                redirect:(data) => {
+                                    return data.isSuccess
+                                },
+                            }}
+                        />
+                    ),
                     formsKeys:[]
                 }
             default:

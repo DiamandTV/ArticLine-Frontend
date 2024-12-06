@@ -2,18 +2,34 @@ import { useContext , useState } from "react"
 import { StepperContext } from "../components/stepper/StepperContext"
 import { StepperButtons } from "../components/stepper/StepperButtons"
 import { useQuery } from '@tanstack/react-query' 
-import { AxiosError } from "axios"
+import { AxiosError, AxiosResponse } from "axios"
 import { LoaderResponse } from "../components/loader/LoaderResponse"
 
+interface FinishProps{
+    //queryFn:Promise<AxiosResponse>,
+    queryKey:Array<string>,
+    onSuccess?:(data:AxiosResponse)=>void,
+    loader:{
+        message:{
+            error:string,
+            success:string,
+            warning?:string
+        },
+        redirect:(data:{isLoading:boolean,isError:boolean,isSuccess:boolean})=>boolean,
+        
+    }
+}
+
 // last step on the finish of the sing in
-export function SigninFinish(){
+export function Finish({queryKey,onSuccess,loader}:FinishProps){
     const {stepper:{onFinish,state,setState,/*maxStep,getStepData*/},record:{record},error:{setErrorStepper}} = useContext(StepperContext)
     const [enable,setEnable] = useState(true)
     const {isLoading,isError,isSuccess,/*refetch*/} = useQuery({
         queryFn:async ()=> await onFinish(record),
         retry:2,
         // account === user || company , so it works for the user and the company
-        queryKey:["account-signin"],
+        //queryKey:["account-signin"],
+        queryKey:queryKey,
         //enabled:false,
         enabled:enable, // remove this in the future , use this only for production
         onError:(err)=>{
@@ -39,9 +55,10 @@ export function SigninFinish(){
                 
             }
         },
-        onSuccess:()=>{
+        onSuccess:(data:AxiosResponse)=>{
             setEnable(false)
             setErrorStepper({})
+            if(onSuccess) onSuccess(data)
         }
     })
   
@@ -60,12 +77,16 @@ export function SigninFinish(){
                 isError={isError}
                 isLoading={isLoading}
                 isSuccess={isSuccess}
+                /*
                 messages={{
                     error:"SOMETHING WENT WRONG",
                     success:"ACCOUNT CREATED"
                 }}
-                redirect={isSuccess}
-           />
+                    */
+                messages={loader.message}
+                redirect={loader.redirect({isLoading,isError,isSuccess})}
+                
+            />
             { isError &&
                 <StepperButtons
                     onNextClick={()=>{}}

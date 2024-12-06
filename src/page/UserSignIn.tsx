@@ -7,7 +7,7 @@ import { AccountFields } from '../components/forms/AccountForm'
 import { AddressFields } from '../components/forms/AddressForm'
 import { UserInfoFields } from '../components/forms/UserInfoForm'
 import { useUserService } from '../services/userService'
-import { SigninFinish } from '../views/SignInFinish'
+import { Finish } from '../views/SignInFinish'
 //import { HighlightedTitle } from '../components/Texts/HighlightedTitle'
 
 export type UserSigninStepperType = Array<UserInfoFields | AddressFields | AccountFields>
@@ -31,7 +31,21 @@ export function UserSignIn(){
                 }
             case 3:
                 return {
-                    component:<SigninFinish/>,
+                    component:(
+                        <Finish
+                            queryKey={['user-sign']}
+                            loader={{
+                                message:{
+                                    error:"SOMETHING WENT WRONG",
+                                    success:"ACCOUNT CREATED"
+                                },
+                                redirect:({isSuccess}) => {
+                                    return isSuccess;
+                                },
+                            }}
+                            
+                        />
+                    ),
                     formsKeys:[]
                 }
             default:

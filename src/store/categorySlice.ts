@@ -14,9 +14,10 @@ const categorySlice = createSlice({
     initialState:categorySliceInitialValue,
     reducers:{
         setCategories:(state,action)=>{
+            console.log(action.payload)
             state.categories = [...action.payload]
         },
-        clearCategory:(state,action)=>{
+        clearCategory:(state)=>{
             state.categories = null
         }
     }

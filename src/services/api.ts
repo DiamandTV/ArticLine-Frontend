@@ -9,6 +9,7 @@ api.interceptors.request.use((config)=>{
         if(accessKey){
             config.headers.Authorization = `Bearer ${accessKey}po`
         }
+        config.headers["Content-Type"] = "multipart/form-data"
         return config
     },
     (error)=>Promise.reject(error)

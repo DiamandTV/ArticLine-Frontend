@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { setAuthenticated, setSession } from "../store/authSlice";
 import { PermissionView } from "./PermissionView";
+import { setCategories } from "../store/categorySlice";
+import { storeService } from "../services/storeService";
+import { setProfile } from "../store/profileSlice";
 
 // Protected route for the main pages 
 export function ProtectedRoute({children,redirectTo='/login'}:{children:React.ReactNode,redirectTo?:string}){
@@ -21,11 +24,15 @@ export function ProtectedRoute({children,redirectTo='/login'}:{children:React.Re
         onError:()=>{
             dispatch(setAuthenticated(false))
         }, 
-        onSuccess:(data)=>{
+        onSuccess:async (data)=>{
             console.log(data)
             console.log(data.data)
             // saving the JWT tokens in the store and setting the authenticated 
             dispatch(setSession(data.data))
+            dispatch(setProfile(data.data))
+            dispatch(setCategories((await storeService.getCategories()).data))
+
+
         }
     })
     useEffect(()=>{

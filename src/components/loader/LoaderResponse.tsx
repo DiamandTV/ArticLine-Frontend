@@ -10,6 +10,7 @@ export interface LoaderResponseProps{
     isLoading:boolean,
     counterInitialValue?:number,
     redirect?:boolean,
+    //redirectTo:string,
     messages?:{
         error:string,
         success:string,

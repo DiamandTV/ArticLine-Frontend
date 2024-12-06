@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { set, SubmitHandler, useForm } from "react-hook-form"
+import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from 'zod'
 import { StepperButtons } from "../stepper/StepperButtons"
 import { useContext, useEffect, useRef, useState } from "react"
@@ -9,6 +9,9 @@ import { AnimationPlaceholderTextArea } from "../inputs/AnimationPlaceholderText
 import { FixedSizeDropdown } from "../inputs/Dropdown/FixedSizeDropdown"
 import { TagCard } from "../cards/TagCard"
 import { v4 as uuidv4 } from 'uuid';
+import { useSelector } from "react-redux"
+import { RootState } from "../../store/store"
+import { CategoryModel } from "../../models/category"
 const schema = z.object({
     title:z.string().min(1).max(255),
     category:z.array(z.string()).min(1),
@@ -17,20 +20,23 @@ const schema = z.object({
 
 export type StoreInfoFields = z.infer<typeof schema>
 
-const originalList = ['PIZZA','CATEGORY','SUSHI']
+//const originalList = ['PIZZA','CATEGORY','SUSHI']
 export function StoreInfo(){
+    const storeCategories = useSelector((state:RootState)=>state.categoryReducer.categories)
+    console.log(storeCategories)
     const formRef = useRef<HTMLFormElement | null>(null)
-    const {stepper:{state,setState,maxStep},record:{record,setRecord},error:{errorStepper},beforeChangeMediaQuery:{setBeforeChangeMediaQuery}} = useContext(StepperContext)
+    const {stepper:{state,setState},record:{record,setRecord},error:{errorStepper},beforeChangeMediaQuery:{setBeforeChangeMediaQuery}} = useContext(StepperContext)
     console.log(state)
     const {handleSubmit,register,formState:{errors},getValues,setValue} = useForm<StoreInfoFields>({
-        defaultValues:record[state],
+        defaultValues:record[state] ,
         resolver: zodResolver(schema),
         errors:errorStepper
     })
-
-    const [categories,setCategories] = useState<{tags:Array<string>,list:Array<string>}>({
-        'tags':getValues('category') || [] ,
-        'list':originalList.filter(category=>!getValues('category') || !getValues('category').includes(category)) as Array<string>,
+    console.log(getValues('category'))
+    console.log(Array.isArray((!getValues('category'))))
+    const [categories,setCategories] = useState<{tags:Array<CategoryModel>,list:Array<CategoryModel>}>({
+        'tags':getValues('category') ? storeCategories?.filter((cat)=> getValues('category').includes(cat.id.toString())) : [] ,
+        'list':storeCategories!.filter(category=>!getValues('category') || !getValues('category').includes(category.id.toString())) as Array<CategoryModel>,
     })
 
     const onSubmit:SubmitHandler<StoreInfoFields> = (storeInfo)=>{
@@ -51,7 +57,7 @@ export function StoreInfo(){
     }
 
     useEffect(()=>{
-        setValue('category',categories.tags)
+        setValue('category',categories.tags.map((cat)=>cat.id.toString()))
     },[categories])
 
     useEffect(()=>setBeforeChangeMediaQuery(()=>(isMatched)=>{
@@ -72,7 +78,7 @@ export function StoreInfo(){
               
                     <AnimationPlaceholderInput
                         labelName="TITLE"
-                        name="store_title"
+                        name="title"
                         type="text"
                         register={register('title')}
                         error={errors.title}
@@ -83,26 +89,27 @@ export function StoreInfo(){
                         <FixedSizeDropdown
                             closeOnClick={false}
                             labelName="CATEGORIES"
-                            name="store_input_categories"
+                            name="categories"
                             list={categories.list}
-                            showFunction={(item)=>item as string}
+                            showFunction={(item)=>(item as CategoryModel).name.toUpperCase() as string}
                             filterFunction={(e)=>{
                                 const value = e.target.value
                                 const regex = new RegExp(value, "i");
                                 console.log("FITLER FUNCTION")
                                 console.log(getValues('category'))
                                 if (value.trim() === "" || !value) return categories.list;
-                                return categories.list.filter((item) => item.match(regex));
+                                return categories.list.filter((item) => item.name.match(regex));
                             }}
                             error={errors.category}
                             onItemClick={(item)=>{
+                                console.log(item)
                                 const value = getValues('category')
-                                if(value) setValue('category',[...getValues('category'),item])
-                                else setValue('category',[item])
+                                if(value) setValue('category',[...getValues('category'),(item as CategoryModel).id.toString()])
+                                else setValue('category',[(item as CategoryModel).id.toString()])
                                 setCategories({
-                                    list:originalList.filter(category=>!getValues('category').includes(category)) as Array<string>,
-                                    tags:getValues('category') as Array<string>})
-                                console.log(originalList.filter((category)=>!getValues('category').includes(category)))
+                                    list:storeCategories!.filter(category=>!getValues('category').includes(category.id.toString())) as Array<CategoryModel>,
+                                    tags:[...categories.tags,item as CategoryModel]})
+                                console.log(storeCategories!.filter((category)=>!getValues('category').includes(category)))
                                 console.log(getValues())
                                 
                             }}
@@ -118,16 +125,16 @@ export function StoreInfo(){
                             onDeleteClick={(e)=>{
                                 setCategories({
                                     list:[...categories.list,category],
-                                    tags:categories.tags.filter((_,_index)=>_index != index) as Array<string>})
+                                    tags:categories.tags.filter((_,_index)=>_index != index) as Array<CategoryModel>})
                             }}
-                            >{category}</TagCard>
+                            >{category.name.toUpperCase()}</TagCard>
                         ) }
                     </div>
                 </div>
                 <div className="w-full md:col-span-2 col-span-1 max-h-max">
                     <AnimationPlaceholderTextArea
                         labelName="DESCRIPTION"
-                        name="store_description"
+                        name="description"
                         register={register('description')}
                         error={errors.description}
                         defaultValue={getValues('description')}

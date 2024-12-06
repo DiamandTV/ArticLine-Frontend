@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { authReducer } from "./authSlice"
 import { categoryReducer } from "./categorySlice"
+import { profileReducer } from "./profileSlice"
 
 export const store = configureStore({
     reducer:{
-        authReducer:authReducer,            // authentication reducer => jwt || auth || profile
-        categoryReducer:categoryReducer     // store categories reducer => categories
+        authReducer:authReducer,            // authentication reducer       =>  jwt || auth
+        profileReduce:profileReducer,       // profile reducer              =>  profile
+        categoryReducer:categoryReducer     // store categories reducer     =>  categories
     }
 })
 

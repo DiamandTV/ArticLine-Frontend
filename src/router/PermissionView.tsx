@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import defineAbilityFor from "../config/permissions/profiles";
 export function PermissionView({children}:{children:React.ReactNode}){
-    const profile = useSelector((state:RootState)=>state.authReducer.profile)
+    const profile = useSelector((state:RootState)=>state.profileReduce.profile)
     console.log(profile)
     return(
         profile ? 

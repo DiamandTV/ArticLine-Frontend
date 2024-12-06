@@ -1,26 +1,27 @@
 import { storeService } from "../../services/storeService"
-import { store } from "../../store/store"
-import { SigninFinish } from "../../views/SignInFinish"
-import { StartView } from "../../views/StartView"
-import { BlurCard } from "../cards/BlurCard"
+import { Finish } from "../../views/SignInFinish"
 import { StepperForm } from "../stepper/Stepper"
 import { StepperGetStepDataProps } from "../stepper/Stepper"
 import { AddressFields, AddressForm } from "./AddressForm"
 import { StoreInfo, StoreInfoFields } from "./StoreInfo"
 import { StoreImageForm } from "./StoreImageForm"
-export type StoreStepperType = [Array<string>,StoreInfoFields,AddressFields]
+import { useDispatch } from "react-redux"
+import { addStore } from "../../store/profileSlice"
+export type StoreStepperType = [{images:Array<string>},StoreInfoFields,AddressFields]
 export function StoreForm(){
+    const dispatch = useDispatch()
+
     const getStepData = (state:number):StepperGetStepDataProps=>{
         switch(state){
             case 0:
                 return{
                     component:<StoreImageForm/>,
-                    formsKeys:['image']
+                    formsKeys:['images']
                 }
             case 1:
                 return {
                     component:<StoreInfo/>,
-                    formsKeys:['store_title','store_categories','store_description']
+                    formsKeys:['title','categories','description']
                 }
             case 2:
                 return {
@@ -29,7 +30,23 @@ export function StoreForm(){
                 }
             case 3:
                 return {
-                    component:<SigninFinish/>,
+                    component:(
+                        <Finish
+                            queryKey={['store-create']}
+                            onSuccess={(data)=>{
+                                dispatch(addStore(data.data))
+                            }}
+                            loader={{
+                                message:{
+                                    error:"ERROR CREATING THE STORE",
+                                    success:"STORE CREATED"
+                                },
+                            redirect:() => {
+                                return false;
+                            }
+                        }}
+                        />
+                    ),
                     formsKeys:[]
                 }
             default:

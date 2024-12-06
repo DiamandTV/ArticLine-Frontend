@@ -2,7 +2,7 @@ import {AuthModel} from "./auth"
 import {AddressModel} from "./address"
 import { Dayjs } from "dayjs"
 export interface UserProfileModel{
-    id:number,
+    id?:number,
     auth:AuthModel,
     image:string,
     first_name:string,
