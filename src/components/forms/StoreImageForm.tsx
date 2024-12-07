@@ -6,9 +6,16 @@ import { StepperButtons } from "../stepper/StepperButtons";
 import { InputError } from "../inputs/InputError/InputError";
 import { StepperContext } from "../stepper/StepperContext";
 import { v4 as uuidv4 } from "uuid";
+import { ImageModel } from "../../models/image";
 export function StoreImageForm(){
-    const {stepper:{state,setState,maxStep},record:{record,setRecord},error:{errorStepper},beforeChangeMediaQuery:{setBeforeChangeMediaQuery}} = useContext(StepperContext)
-    const [images,setImages] = useState<Array<string | null>>((record[state] && record[state].images) ? record[state].images : [null])
+    const {stepper:{state,setState,/*maxStep*/},record:{record,setRecord},error:{errorStepper},/*beforeChangeMediaQuery:{setBeforeChangeMediaQuery}*/} = useContext(StepperContext)
+    const [images,setImages] = useState<Array<ImageModel | null>>(
+        (record[state] && record[state].images) 
+        ? 
+        record[state].images as Array<ImageModel | null>
+        : 
+        [{image:null}]
+    )
     const [error,setErrors] = useState(errorStepper.images ? errorStepper.images : null)
     const divRef = useRef<HTMLDivElement | null>(null)
 
@@ -71,10 +78,10 @@ export function StoreImageForm(){
                         }
                         <ImagePicker 
                             key={uuidv4()}
-                            image={images[index]!} 
+                            image={images[index] ? images[index].image : null} 
                             setImage={(image)=>{
                                 const _images = [...images]
-                                _images[index] = image as string
+                                _images[index]!.image= image as string
                                 const newRecord = record
                                 newRecord[state] = {
                                     'images':_images

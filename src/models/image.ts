@@ -1,4 +1,6 @@
+import { Dayjs } from "dayjs";
+
 export interface ImageModel{
-    image:string,
-    
+    image:string | null,
+    created_at?:string|Dayjs,
 }
