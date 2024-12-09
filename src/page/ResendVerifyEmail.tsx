@@ -11,6 +11,7 @@ export function ResendVerifyEmail(){
     const [isWarning,setWarning] = useState(false)
     const {isLoading,isError,isSuccess,error} = useQuery({
         retry:2,
+        refetchOnWindowFocus:false,
         queryKey:["auth-resend-verify-email"],
         queryFn:async()=> await useAuthService.resendVerifyEmail({
             id:id as string,

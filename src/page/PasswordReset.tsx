@@ -9,6 +9,7 @@ import { AxiosError } from "axios"
 export function PasswordReset(){
     const {token} = useParams()
     const {isLoading,isSuccess,isError,error} = useQuery({
+        refetchOnWindowFocus:false,
         queryKey:["auth-check-password-token"],
         queryFn:async ()=> await useAuthService.checkResetPasswordToken({token:token as string}),
         onSuccess:(data)=>console.log(data)

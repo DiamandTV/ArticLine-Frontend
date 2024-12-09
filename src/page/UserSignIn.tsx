@@ -12,6 +12,11 @@ import { Finish } from '../views/SignInFinish'
 
 export type UserSigninStepperType = Array<UserInfoFields | AddressFields | AccountFields>
 export function UserSignIn(){ 
+    /*
+    useEffect(()=>{
+        deleteJWT()
+    })
+    */
     const getStepData = (state:number):StepperGetStepDataProps=>{
         switch(state){
             case 0:

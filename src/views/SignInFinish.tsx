@@ -1,10 +1,10 @@
-import { useContext , useState } from "react"
+import { useContext , useEffect } from "react"
 import { StepperContext } from "../components/stepper/StepperContext"
 import { StepperButtons } from "../components/stepper/StepperButtons"
 import { useQuery } from '@tanstack/react-query' 
 import { AxiosError, AxiosResponse } from "axios"
 import { LoaderResponse } from "../components/loader/LoaderResponse"
-
+const SERVER_INTERNAL_ERROR_CODE = 500
 interface FinishProps{
     //queryFn:Promise<AxiosResponse>,
     queryKey:Array<string>,
@@ -20,20 +20,21 @@ interface FinishProps{
     }
 }
 
+
+
 // last step on the finish of the sing in
 export function Finish({queryKey,onSuccess,loader}:FinishProps){
     const {stepper:{onFinish,state,setState,/*maxStep,getStepData*/},record:{record},error:{setErrorStepper}} = useContext(StepperContext)
-    const [enable,setEnable] = useState(true)
-    const {isLoading,isError,isSuccess,/*refetch*/} = useQuery({
+    const {isLoading,isError,isSuccess,refetch} = useQuery({
         queryFn:async ()=> await onFinish(record),
         retry:2,
+        refetchOnWindowFocus:false,
         // account === user || company , so it works for the user and the company
         //queryKey:["account-signin"],
         queryKey:queryKey,
         //enabled:false,
-        enabled:enable, // remove this in the future , use this only for production
         onError:(err)=>{
-            if( err instanceof AxiosError){
+            if( err instanceof AxiosError && err.status != SERVER_INTERNAL_ERROR_CODE){
                 /*
                 const allKeys =  []
                 for(let ii=0;ii<maxStep;ii++){
@@ -56,19 +57,19 @@ export function Finish({queryKey,onSuccess,loader}:FinishProps){
             }
         },
         onSuccess:(data:AxiosResponse)=>{
-            setEnable(false)
             setErrorStepper({})
             if(onSuccess) onSuccess(data)
         }
     })
   
     // remove the comment in the future , use this only in the production
-    /*
+    
     useEffect(()=>{
+        console.log("OK")
         const fetch = async ()=> await refetch()
         fetch()
     },[])
-    */
+    
 
     return (
         <div>

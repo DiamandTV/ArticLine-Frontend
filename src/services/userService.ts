@@ -1,4 +1,4 @@
-import api from "./api"
+import { api } from "./api"
 import { UserProfileModel } from "../models/user"
 import { UserSigninStepperType  } from "../page/UserSignIn"
 import { UserInfoFields } from "../components/forms/UserInfoForm"
@@ -9,6 +9,7 @@ import dayjs from "dayjs"
 export const useUserService = 
      {
         async userSignin(userProfile:UserProfileModel){
+            // deleting the access token and the refresh token if the user decided to sign in
             console.log(userProfile.auth)
             const data = await api.post('/user/signin/',userProfile)
             return data 

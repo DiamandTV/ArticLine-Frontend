@@ -1,10 +1,10 @@
-import { useSelector } from "react-redux"
 import { CategoryCard } from "../cards/CategoryCard"
 import { CartList } from "./CardList"
-import { RootState } from "../../store/store"
+import { CategoryModel } from "../../models/category"
+import { StoreCategoriesModel } from "../../models/StoreCategories"
 
-export function CategoryCardList(){
-    const categories = useSelector((state:RootState)=>state.categoryReducer.categories)
+export function CategoryCardList({categories}:{categories:Array<CategoryModel>|Array<StoreCategoriesModel>}){
+    
     return (
         categories ? 
         <CartList

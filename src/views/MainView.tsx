@@ -2,7 +2,7 @@ import React from "react";
 
 export function MainView({children}:{children:React.ReactNode}){
     return(
-        <div className='w-screen flex flex-col gap-2 h-screen bg-slate-900 px-4 overflow-hidden'>
+        <div className='w-screen flex flex-col gap-2 h-screen bg-slate-900 px-4 overflow-hidden pb-2'>
             {children}
         </div>
     )

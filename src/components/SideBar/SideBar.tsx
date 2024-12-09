@@ -3,16 +3,17 @@ import { IoHome } from "react-icons/io5";
 import { FaClipboardList } from "react-icons/fa6";
 import { IoBarChartSharp } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
-import { FaStore } from "react-icons/fa";
 import { BiSolidCategory } from "react-icons/bi";
 import { IoChatbubbleEllipses } from "react-icons/io5";
 import { IoMdSettings } from "react-icons/io";
 import { useState } from "react";
 import { IoMdNotifications } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { FaPlus } from "react-icons/fa6";
-import { Can } from "../../config/permissions/can";
+
 import { Link } from "react-router-dom";
+import { SIDEBAR_ICON_SIZE } from "../../constraints";
+import { StoreSection } from "./Sections/StoreSection";
+import { CompanyProtectedRoute } from "../../router/CompanyProtectedRoute";
 /*
 const useProfile:UserProfileModel = {
     auth:{
@@ -35,8 +36,7 @@ const useProfile:UserProfileModel = {
     }
 }
 */
-const SIDEBAR_ICON_SIZE = 22.5
-const SIDEBAR_SUB_ICON_SIZE = 18.5
+
 export function SideBarApp(){
     const [collapsed,setCollapsed] = useState(false)
     return (
@@ -65,18 +65,16 @@ export function SideBarApp(){
                 }}
             >
                 <MenuItem id="HOME" icon={<GiHamburgerMenu size={SIDEBAR_ICON_SIZE}/>} onClick={()=>setCollapsed(!collapsed)} className="w-full"/>
-                <MenuItem id="HOME" icon={<IoHome size={SIDEBAR_ICON_SIZE}/>} >HOME</MenuItem>
+                <Link to={"/"}>
+                    <MenuItem id="HOME" icon={<IoHome size={SIDEBAR_ICON_SIZE}/>} >HOME</MenuItem>
+                </Link>
                 <SubMenu id="CATEGORIES" icon={<BiSolidCategory size={SIDEBAR_ICON_SIZE}/>} label="CATEGORIES"></SubMenu>
                 <SubMenu id="ORDERS" icon={<FaClipboardList size={SIDEBAR_ICON_SIZE}/>} label="ORDERS"></SubMenu>
                 <SubMenu id="DASHBOARDS" icon={<IoBarChartSharp size={SIDEBAR_ICON_SIZE}/>} label="DASHBOARDS"></SubMenu>
                 
-                <Can I="create" a="STORE" >
-                    <SubMenu id="STORES" icon={<FaStore size={SIDEBAR_ICON_SIZE}/>} label="STORES">
-                        <MenuItem icon={<FaPlus/>} aria-setsize={SIDEBAR_SUB_ICON_SIZE} className="text-sm">
-                            <Link to={'/create/store'}>CREATE</Link> 
-                        </MenuItem>
-                    </SubMenu>
-                </Can>
+                <CompanyProtectedRoute>
+                    <StoreSection/>
+                </CompanyProtectedRoute>
                 
                 <SubMenu id="CHARTS" icon={<IoChatbubbleEllipses size={SIDEBAR_ICON_SIZE}/>} label="CHATS" ></SubMenu>
                 <MenuItem id="ACCOUNT" icon ={<FaUser size={SIDEBAR_ICON_SIZE}/>}>ACCOUNT</MenuItem>

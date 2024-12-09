@@ -3,17 +3,18 @@ import { useMutation } from "@tanstack/react-query";
 import { useAuthService } from "../services/authService";
 import { isAuthenticatedReturn } from "../services/authService";
 import { LoaderResponse } from "../components/loader/LoaderResponse";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { setAuthenticated, setSession } from "../store/authSlice";
 import { PermissionView } from "./PermissionView";
 import { setCategories } from "../store/categorySlice";
-import { storeService } from "../services/storeService";
+import { companyStoreService } from "../services/companyStoreService";
 import { setProfile } from "../store/profileSlice";
+import { StartView } from "../views/StartView";
 
 // Protected route for the main pages 
-export function ProtectedRoute({children,redirectTo='/login'}:{children:React.ReactNode,redirectTo?:string}){
+export function ProtectedRoute({redirectTo='/login'}:{redirectTo?:string}){
     const isAuthenticated = useSelector((state:RootState)=>state.authReducer.isAuthenticated)
     const REFRESH_TOKEN = useSelector((state:RootState)=>state.authReducer.jwt?.refresh)
     const ACCESS_TOKEN = useSelector((state:RootState)=>state.authReducer.jwt?.access)
@@ -30,7 +31,7 @@ export function ProtectedRoute({children,redirectTo='/login'}:{children:React.Re
             // saving the JWT tokens in the store and setting the authenticated 
             dispatch(setSession(data.data))
             dispatch(setProfile(data.data))
-            dispatch(setCategories((await storeService.getCategories()).data))
+            dispatch(setCategories((await companyStoreService.getCategories()).data))
 
 
         }
@@ -39,7 +40,7 @@ export function ProtectedRoute({children,redirectTo='/login'}:{children:React.Re
             
             // checking if the user has got the JWT Token
             const isAuthenticatedReponse = useAuthService.isAuthenticated(ACCESS_TOKEN as string | null)
-            
+            console.log(REFRESH_TOKEN)
             switch(isAuthenticatedReponse){
                 case isAuthenticatedReturn.IS_AUTHENTICATED:
                     //dispatch(setAuthenticated(true))
@@ -67,17 +68,19 @@ export function ProtectedRoute({children,redirectTo='/login'}:{children:React.Re
     
     return (
         isLoading || isAuthenticated == null ?
-            <LoaderResponse
-                isLoading={isLoading || isAuthenticated == null}
-                isError={isError}
-                isSuccess={isSuccess}
-                messages={{
-                    error:"",
-                    warning:"",
-                    success:""
-                }}
-                redirect={false}
-            />
+            <StartView>
+                <LoaderResponse
+                    isLoading={isLoading || isAuthenticated == null}
+                    isError={isError}
+                    isSuccess={isSuccess}
+                    messages={{
+                        error:"",
+                        warning:"",
+                        success:""
+                    }}
+                    redirect={false}
+                />
+            </StartView>
             :
             !isAuthenticated ? 
             <Navigate to={redirectTo}/>
@@ -85,7 +88,7 @@ export function ProtectedRoute({children,redirectTo='/login'}:{children:React.Re
             isAuthenticated ?
             (
                 <PermissionView>
-                    {children}
+                    <Outlet/>
                 </PermissionView>)
             : null
         

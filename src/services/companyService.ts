@@ -1,4 +1,4 @@
-import api from "./api"
+import { api } from "./api"
 import { CompanyProfileModel } from "../models/company"
 import { CompanySigninStepperType } from "../page/CompanySignIn"
 //import { CompanyInfoFields } from "../components/forms/CompanyInfoForm"

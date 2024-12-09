@@ -1,8 +1,9 @@
 import { useContext, useEffect, useRef } from "react"
 import { CategoryModel } from "../../models/category"
 import { CardListContext } from "../CardList/CardListContext"
+import { StoreCategoriesModel } from "../../models/StoreCategories"
 export interface CategoryCardProps extends React.HTMLAttributes<HTMLAllCollection>{
-    category:CategoryModel
+    category:CategoryModel | StoreCategoriesModel
 }
 
 export function CategoryCard({category:{image,name},style,className}:CategoryCardProps){
@@ -18,7 +19,11 @@ export function CategoryCard({category:{image,name},style,className}:CategoryCar
             <div className="w-full h-32 bg-transparent bg-no-repeat bg-center bg-cover rounded-t-lg" style={{backgroundImage:`url(${image})`}}>
             </div>
             */}
-            <img className="w-full h-30 bg-transparent bg-no-repeat bg-center bg-contain rounded-t-lg" src={image} loading="lazy"/>
+            {
+            <div className="w-full h-30 bg-transparent">
+                <img className="w-full h-40 bg-transparent bg-no-repeat bg-center bg-cover rounded-t-lg" src={image} loading="lazy"/>
+            </div>
+            }
             <p className=" px-2 py-3 text-center text-lg bg-slate-300 bg-opacity-30 backdrop-blur-lg rounded-b-lg">{name.toUpperCase()}</p>
         </div>
     )

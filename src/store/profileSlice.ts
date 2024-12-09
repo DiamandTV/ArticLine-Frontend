@@ -20,11 +20,14 @@ const profileSlice = createSlice({
         setProfile:(state,action)=>{
             state.profile = action.payload.profile
         },
+        setStores:(state,action)=>{
+            state.stores = action.payload
+        },
         addStore:(state,action)=>{
             state.stores = [...state.stores,action.payload]
         }
     }
 })
 
-export const { setProfile,addStore } = profileSlice.actions
+export const { setProfile,setStores,addStore } = profileSlice.actions
 export const profileReducer = profileSlice.reducer

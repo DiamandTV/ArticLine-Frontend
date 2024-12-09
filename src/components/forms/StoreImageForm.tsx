@@ -47,7 +47,7 @@ export function StoreImageForm(){
                             <div 
                             className="hover:cursor-pointer hover:bg-sky-300 box-content p-1.5 bg-sky-500 rounded-full"
                             onClick={()=>{
-                                if(images.length < 5 && !images.includes(null)) setImages([...images,null])
+                                if(images.length < 5 && !images.includes(null)) setImages([...images,{image:null}])
                                 else if(images.length < 5){
                                     setErrors(["You can't put more than five images for the store"])
                                     setTimeout(()=>{
@@ -65,7 +65,7 @@ export function StoreImageForm(){
                 ref={divRef}
                 className="w-full h-full grid gap-2 grid-flow-col justify-start items-center overflow-hidden">
                 {images.map((image,index)=>  (
-                    <div className="relative w-full">
+                    <div className="relative w-full" key={uuidv4()}>
                         { image ? 
                             <div 
                                 className="max-w-max absolute z-10 top-2 right-2 hover:cursor-pointer hover:bg-red-300 box-content p-1.5 bg-red-500 rounded-full"

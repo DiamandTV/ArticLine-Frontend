@@ -13,9 +13,11 @@ export function ImagePicker({image,setImage}:{image:string|null,setImage:(image:
               accept="image/*"
               onChange={(e)=>{
                 if(e.target! && e.target.files ){
-                  const file =  URL.createObjectURL(e.target.files[0])
-                  console.log(file)
-                  setImage(file)
+                  const reader = new FileReader()
+                  reader.readAsDataURL(e.target.files[0])
+                  if(reader) reader.onload! = ()=>{
+                    if(reader.result) setImage(reader.result as string)
+                  }
                 }
               }}
               ref={imageRef}/>

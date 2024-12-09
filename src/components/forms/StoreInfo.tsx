@@ -14,7 +14,7 @@ import { RootState } from "../../store/store"
 import { CategoryModel } from "../../models/category"
 const schema = z.object({
     title:z.string().min(1).max(255),
-    category:z.array(z.string()).min(1),
+    categories:z.array(z.string()).min(1),
     description:z.string().min(1)
 })
 
@@ -32,11 +32,11 @@ export function StoreInfo(){
         resolver: zodResolver(schema),
         errors:errorStepper
     })
-    console.log(getValues('category'))
-    console.log(Array.isArray((!getValues('category'))))
+    console.log(getValues('categories'))
+    console.log(Array.isArray((!getValues('categories'))))
     const [categories,setCategories] = useState<{tags:Array<CategoryModel>,list:Array<CategoryModel>}>({
-        'tags':getValues('category') ? storeCategories?.filter((cat)=> getValues('category').includes(cat.id.toString())) : [] ,
-        'list':storeCategories!.filter(category=>!getValues('category') || !getValues('category').includes(category.id.toString())) as Array<CategoryModel>,
+        'tags':getValues('categories') ? storeCategories?.filter((cat)=> getValues('categories').includes(cat.id.toString())) : [] ,
+        'list':storeCategories!.filter(category=>!getValues('categories') || !getValues('categories').includes(category.id.toString())) as Array<CategoryModel>,
     })
 
     const onSubmit:SubmitHandler<StoreInfoFields> = (storeInfo)=>{
@@ -57,7 +57,7 @@ export function StoreInfo(){
     }
 
     useEffect(()=>{
-        setValue('category',categories.tags.map((cat)=>cat.id.toString()))
+        setValue('categories',categories.tags.map((cat)=>cat.id.toString()))
     },[categories])
 
     useEffect(()=>setBeforeChangeMediaQuery(()=>(isMatched)=>{
@@ -96,20 +96,20 @@ export function StoreInfo(){
                                 const value = e.target.value
                                 const regex = new RegExp(value, "i");
                                 console.log("FITLER FUNCTION")
-                                console.log(getValues('category'))
+                                console.log(getValues('categories'))
                                 if (value.trim() === "" || !value) return categories.list;
                                 return categories.list.filter((item) => item.name.match(regex));
                             }}
-                            error={errors.category}
+                            error={errors.categories}
                             onItemClick={(item)=>{
                                 console.log(item)
-                                const value = getValues('category')
-                                if(value) setValue('category',[...getValues('category'),(item as CategoryModel).id.toString()])
-                                else setValue('category',[(item as CategoryModel).id.toString()])
+                                const value = getValues('categories')
+                                if(value) setValue('categories',[...getValues('categories'),(item as CategoryModel).id.toString()])
+                                else setValue('categories',[(item as CategoryModel).id.toString()])
                                 setCategories({
-                                    list:storeCategories!.filter(category=>!getValues('category').includes(category.id.toString())) as Array<CategoryModel>,
+                                    list:storeCategories!.filter(category=>!getValues('categories').includes(category.id.toString())) as Array<CategoryModel>,
                                     tags:[...categories.tags,item as CategoryModel]})
-                                console.log(storeCategories!.filter((category)=>!getValues('category').includes(category)))
+                                console.log(storeCategories!.filter((category)=>!getValues('categories').includes(category)))
                                 console.log(getValues())
                                 
                             }}

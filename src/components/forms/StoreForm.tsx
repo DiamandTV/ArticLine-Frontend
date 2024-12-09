@@ -1,4 +1,4 @@
-import { storeService } from "../../services/storeService"
+import { companyStoreService } from "../../services/companyStoreService"
 import { Finish } from "../../views/SignInFinish"
 import { StepperForm } from "../stepper/Stepper"
 import { StepperGetStepDataProps } from "../stepper/Stepper"
@@ -63,8 +63,8 @@ export function StoreForm(){
                 getStepData={getStepData}
                 onFinish={async(record)=>{
                     //alert("OK")
-                    await storeService.createStore(
-                        storeService.serializeFromStepperData(record as StoreStepperType)
+                    return await companyStoreService.createStore(
+                        companyStoreService.serializeFromStepperData(record as StoreStepperType)
                     )
                     console.log(record)
                 }}

@@ -1,5 +1,5 @@
 import { REFRESH_TOKEN } from "../constraints";
-import api from "./api";
+import { api } from "./api";
 import { jwtDecode } from "jwt-decode";
 
 export enum isAuthenticatedReturn {
@@ -22,13 +22,13 @@ export const useAuthService = {
         return await api.post(`/password/reset/${token}`,passwords)
     },
     async verifyEmail({id,token}:{id:string,token:string}){
-        console.log("VERIFICATING THE ACCOUNT USER")
        return api.get(`/email/verify/${id}/${token}`)
     },
     async resendVerifyEmail({id}:{id:string}){
         return api.post(`/email/resend/${id}`,{})
     },
     async refreshJWTToken(refresh:{refresh:string}){
+        console.log(refresh)
         return api.post('/refresh',refresh)
     },
     isAuthenticated(accessToken:string | null):isAuthenticatedReturn{

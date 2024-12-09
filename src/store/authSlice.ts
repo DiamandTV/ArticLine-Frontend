@@ -4,8 +4,8 @@ import { AuthModel } from "../models/auth";
 import { JWTModel } from "../models/jwt";
 import { UserProfileModel } from "../models/user";
 import { CompanyProfileModel } from "../models/company";
-import { ACCESS_TOKEN,REFRESH_TOKEN } from "../constraints";
 import { AbilityTuple, MongoAbility, MongoQuery } from "@casl/ability";
+import { getAccessToken, getRefreshToken, saveJWT } from "../services/jwt";
 
 export interface AuthSliceModel {
     jwt:JWTModel | null,
@@ -15,13 +15,10 @@ export interface AuthSliceModel {
     ability:MongoAbility<AbilityTuple, MongoQuery> | null,
 }
 
-console.log(localStorage.getItem(REFRESH_TOKEN))
-
-
 const authSliceInitialValue:AuthSliceModel = {
     jwt:{
-        access:localStorage.getItem(ACCESS_TOKEN) ,
-        refresh:localStorage.getItem(REFRESH_TOKEN) 
+        access:getAccessToken() ,
+        refresh:getRefreshToken() 
     },
     auth:null,
     //profile:null,
@@ -41,8 +38,10 @@ const authSlice = createSlice({
             
             // saving the tokens , #todo: save them in cookies in future
             if(state.jwt && state.jwt.access && state.jwt.refresh){
-                localStorage.setItem(ACCESS_TOKEN,state.jwt?.access)
-                localStorage.setItem(REFRESH_TOKEN,state.jwt.refresh)
+                saveJWT({
+                    access:state.jwt.access!,
+                    refresh:state.jwt.refresh!
+                })
             }
             // set the user as authenticated
             state.isAuthenticated = true
@@ -51,12 +50,12 @@ const authSlice = createSlice({
             //state.ability = defineAbilityFor(state.profile!);
             //console.log(state.profile)
         },
-        saveTokensInStorage:(state)=>{
-            if(state.jwt && state.jwt.access && state.jwt.refresh){
-                localStorage.setItem(ACCESS_TOKEN,state.jwt?.access)
-                localStorage.setItem(REFRESH_TOKEN,state.jwt.refresh)
-            }
-        },
+        // saveTokensInStorage:(state)=>{
+        //     if(state.jwt && state.jwt.access && state.jwt.refresh){
+        //         localStorage.setItem(ACCESS_TOKEN,state.jwt?.access)
+        //         localStorage.setItem(REFRESH_TOKEN,state.jwt.refresh)
+        //     }
+        // },
         setAuthenticated:(state,action)=>{
             state.isAuthenticated = action.payload
         },

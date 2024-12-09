@@ -1,9 +1,9 @@
-import { CategoryCard } from "../../components/cards/CategoryCard"
 import { CartList } from "../../components/CardList/CardList"
 import { StoreCard } from "../../components/cards/StoreCard"
-import { CategoryModel } from "../../models/category"
 import { StoreModel } from "../../models/store"
 import { CategoryCardList } from "../../components/CardList/CategoryList"
+import { useSelector } from "react-redux"
+import { RootState } from "../../store/store"
 
 
 const stores:Array<StoreModel> = [
@@ -49,9 +49,10 @@ const stores:Array<StoreModel> = [
     }
 ]
 export function  Home(){
+    const categories = useSelector((state:RootState)=>state.categoryReducer.categories)
     return (
         <>
-        <CategoryCardList/>
+        <CategoryCardList categories={categories!}/>
         <hr className="bg-gray-600 border-gray-500 " />
             <CartList
                 itemCount={stores.length}
