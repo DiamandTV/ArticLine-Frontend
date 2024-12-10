@@ -26,7 +26,7 @@ const router = createBrowserRouter([
                     {path:"/",element:<Home/>},
                     {path:'store/create',element:<StoreCreate/>},
                     {
-                        path:'store/details/:id/',
+                        path:'store/details/:store-id/',
                         element:<Store/>,
                         children:[
                             {path:'sub-category/:sub-category-id',element:<StoreCategory/>}

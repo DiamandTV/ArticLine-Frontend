@@ -6,8 +6,6 @@ import { CardImage } from "../cards/CardImage";
 import { AddressModel } from "../../models/address";
 import { RatingCard } from "../cards/RatingsCard";
 import { DescriptionCard } from "../cards/DescriptionCard";
-import { CategoryCardList } from "../CardList/CategoryList";
-import { Tab, Tabs } from "@mui/material";
 
 const formatStreet = (address:AddressModel)=>{
     return `${address.street} - ${address.city} ( ${address.postal_code} )`

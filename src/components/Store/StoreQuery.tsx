@@ -4,17 +4,18 @@ import { useQuery } from "@tanstack/react-query";
 import { LoaderResponse } from "../loader/LoaderResponse";
 import { BlurCard } from "../cards/BlurCard";
 import { useDispatch } from "react-redux";
-import { setStoreDetails } from "../../store/storeSlice";
+import { clearStoreDetails, setStoreDetails } from "../../store/storeSlice";
+import { useEffect } from "react";
 
 
 export function StoreQuery({children}:{children:React.ReactNode}){
     const params = useParams()
-    const storeId = params.id
+    const storeId = params['store-id']
     const dispatch = useDispatch()
     const {isLoading,isError,isSuccess} = useQuery({
         refetchOnMount:false,
         refetchOnWindowFocus:false,
-        queryKey:['store-details'],
+        queryKey:['store-details',storeId],
         queryFn:async()=>{
             if(storeId){
                 return await useStoreService.getStoreDetails(storeId)
@@ -25,6 +26,10 @@ export function StoreQuery({children}:{children:React.ReactNode}){
         }
         
     })
+    useEffect(()=>{
+        dispatch(clearStoreDetails())
+    },[])
+
     if(!storeId) return;
 
     return (
@@ -37,11 +42,14 @@ export function StoreQuery({children}:{children:React.ReactNode}){
                         isError={isError}
                         isSuccess={isSuccess}
                         redirect={false}
+                        messages={{
+                            error:"SOMETHING WENT WRONG",
+                            warning:"MAYBE SOMETHING WENT WRONG",
+                            success:""
+                        }}
                     />
                 </BlurCard>
             </div>
         )
     )
-
-
 }
