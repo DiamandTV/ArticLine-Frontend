@@ -13,7 +13,9 @@ import { Main } from "../page/App/Main";
 import { Home } from "../page/Home/Home";
 import { Store } from "../page/Store/Store";
 import { StoreCategory } from "../page/Store/StoreCategory";
+import { ProductCreate } from "../page/Store/ProductCreate";
 const router = createBrowserRouter([
+    {path:"/product",element:<ProductCreate/>},
     // main app routes
     {
         path:"",

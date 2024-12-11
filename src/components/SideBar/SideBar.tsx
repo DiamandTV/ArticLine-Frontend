@@ -38,7 +38,7 @@ const useProfile:UserProfileModel = {
 */
 
 export function SideBarApp(){
-    const [collapsed,setCollapsed] = useState(false)
+    const [collapsed,setCollapsed] = useState(true)
     return (
         <div className="h-screen">
             <Sidebar 
@@ -46,6 +46,9 @@ export function SideBarApp(){
                 backgroundColor="transparent"
                 style={{borderColor:"rgb(75 85 99)",borderRightWidth:"2px"}}
                 collapsed={collapsed}
+                onMouseEnter={()=>setCollapsed(false)}
+                onMouseLeave={()=>setCollapsed(true)}
+
             >
             <Menu
                 menuItemStyles={{

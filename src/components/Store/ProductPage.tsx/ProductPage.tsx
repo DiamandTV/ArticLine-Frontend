@@ -27,12 +27,6 @@ export function ProductPage(){
                 onChange={(page)=>dispatch(setPageForCategory({storeCategoryId,page}))}
                 />
             <GridView>
-                {/* if the user is a company account , show him the button to create a new product for his store*/}
-                {store ?
-                    <Can I="create" a="PRODUCT" this={store}>
-                        <div></div>
-                    </Can>
-                : null}
                 {products?.map((product)=>{
                     return(
                         <ProductCard 

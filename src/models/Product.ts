@@ -1,4 +1,4 @@
-import { StoreModel } from "./store";
+//import { StoreModel } from "./store";
 
 export interface ProductModel{
     image:string|null,
