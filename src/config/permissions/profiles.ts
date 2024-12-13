@@ -25,8 +25,8 @@ export default function defineAbilityFor(profile:UserProfileModel | CompanyProfi
         // the user can see the stores but they can also create a personal
         can('read','STORE')
         can('create','STORE')
-        can('update','STORE',{id:profile.id})
-        can('delete','STORE',{id:profile.id})
+        can('update','STORE',{company_profile:profile.id})
+        can('delete','STORE',{company_profile:profile.id})
 
         can('read','STORE')
         can('create','PRODUCT',{company_profile:profile.id})

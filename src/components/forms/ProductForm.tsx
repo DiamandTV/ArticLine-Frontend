@@ -1,109 +1,75 @@
-// import { Dialog } from "@mui/material";
-// import { StepperForm, StepperGetStepDataProps } from "../stepper/Stepper";
-// import { StoreImageForm } from "./StoreImageForm";
-// export function ProductForm(){
-//     const getStepData = (state:number):StepperGetStepDataProps=>{
-//         switch (state){
-//             case 0:
-//                 return {
-//                     component:<StoreImageForm/>,
-//                     formsKeys:['images']
-//                 }
-//             case 1:
-//                 return {
-//                     formsKeys:[],
-//                     component:(<div></div>)
-//                 }
-//             case 2:
-//                 return {
-//                     formsKeys:[],
-//                     component:(<div></div>)
-//                 }
-//             default:
-//                 return {
-//                     formsKeys:[],
-//                     component:(<div></div>)
-//                 }
-//                 break;
-//         }
-
-//     }
-//     return (
-
-//             <StepperForm 
-//                 maxStep={2}
-//                 stepLabels={["PRODUCTS","PRODUCTS DETAILS"]}
-//                 getStepData={getStepData}
-//                 onFinish={()=>{
-
-//                 }}>
-
-//             </StepperForm>
-        
-//     )
-// }
+// PRODUCT CREATE FORM
 import { zodResolver } from "@hookform/resolvers/zod"
-import { StepperContext } from "@mui/material"
-import { useContext, useEffect, useRef } from "react"
-import { SubmitHandler, useForm } from "react-hook-form"
+import { Slider } from "@mui/material"
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { z } from 'zod'
 import { AnimationPlaceholderInput } from "../inputs/AnimationPlaceholderInput"
 import { AnimationPlaceholderTextArea } from "../inputs/AnimationPlaceholderTextArea"
 import { FixedSizeDropdown } from "../inputs/Dropdown/FixedSizeDropdown"
-import { store } from "../../store/store"
 import { StoreCategoriesModel } from "../../models/StoreCategories"
-import { StoreModel } from "../../models/store"
+import { MINIMUM_TEMPERATURE_RANGE } from "../../constraints"
+import { ImagePicker } from "../inputs/ImagePicker/ImagePicker"
 
 const schema = z.object({
     image:z.string(),
+    /*
+    name:z.string().min(1),
+    description:z.string().min(1),
+    price:z.coerce.number().min(1),
+    store_category:z.string().min(1),
+    */
+    
     name:z.string(),
     description:z.string(),
-    price:z.number(),
+    price:z.coerce.number(),
     store_category:z.string(),
-    temperature_start_range:z.number(),
-    temperature_end_range:z.number()
+    
+    temperature:z.array(z.number()),
 })
 
-type ProductFormFields = z.infer<typeof schema>
+export type ProductFormFields = z.infer<typeof schema>
 
-const store_categorys:Array<StoreCategoriesModel> = [
-    {
-        id:0,
-        name:"PIZZA",
-        image:"",
-        description:"",
-        store:1
-    },
-    {
-        id:1,
-        name:"SUSHI",
-        image:"",
-        description:"",
-        store:1
-    },
-    {
-        id:2,
-        name:"ARANCIA",
-        image:"",
-        description:"",
-        store:1
-    }
-]
-export function ProductForm(){
-    const {register,getValues,setValue,handleSubmit,formState:{errors}} = useForm<ProductFormFields>({
+interface ProductFormProps{
+    store_categorys:Array<StoreCategoriesModel>,
+    onSubmitForm:(productInfo:ProductFormFields)=>Promise<Record<string,string> | null>,
+    children:React.ReactNode
+}
+export function ProductForm({store_categorys,children,onSubmitForm}:ProductFormProps){
+    const {register,getValues,setValue,handleSubmit,formState:{errors},control,setError} = useForm<ProductFormFields>({
         resolver:zodResolver(schema)
     })
     const onSubmit:SubmitHandler<ProductFormFields> = async (productInfo)=>{
-
+        console.log(productInfo)
+        const errors = await onSubmitForm(productInfo)
+        console.log(errors)
+        if(errors){
+            Object.entries(errors).forEach(([key,value])=>{
+                setError(key,{type:"custom",message:value[0]})
+            })
+        }
     }
-    
+    console.log(errors)
     return(
         <form
-        className="w-full"
+        className="w-full h-full flex flex-col justify-between items-center "
         onSubmit={handleSubmit(onSubmit)}>   
-            <div className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-10 gap-x-4 pb-8">
-                <div>
-                    
+            <div className="w-full grid grid-cols-1 md:grid-cols-1 justify-center items-start gap-y-10 gap-x-4 pb-8">
+                <div className="w-full">
+                    <Controller 
+                        name="image"
+                        control={control} 
+                        defaultValue={getValues('image')} 
+                        render={({field:{value}})=>{
+                            return (
+                                <ImagePicker
+                                error={errors.image}
+                                image={value}
+                                setImage={(image)=>setValue('image',image)}
+                                className="w-full"
+                            />
+                            )
+                        }}/>
+                  
                 </div>
                 <div className="w-full h-full flex flex-col gap-y-10 gap-x-4 pb-8">
                     <AnimationPlaceholderInput
@@ -115,20 +81,19 @@ export function ProductForm(){
                         defaultValue={getValues('name')}
                     />
                     
-                    <div className="w-full h-full grid grid-cols-4 gap-x-4">
+                    <div className="w-full grid grid-cols-4 gap-x-4">
                         <AnimationPlaceholderInput
                             labelName="PRICE"
                             type="text"
                             name="price"
                             register={register('price')}
-                            defaultValue={getValues('price').toString()}
+                            defaultValue={getValues('price') ? getValues('price').toString() : ""}
                             error={errors.price}
                         />
-                        <div className="w-full h-full col-span-3">
+                        <div className="w-full h-full col-span-3 mt-0.5">
                             <FixedSizeDropdown
                                 labelName="CATEGORY"
                                 name="store_category"
-                                
                                 register={register('store_category')}
                                 defaultValue={getValues('store_category')}
                                 error={errors.store_category}
@@ -149,14 +114,61 @@ export function ProductForm(){
                             />
                         </div>
                     </div>
+
+                    <Controller
+                        name="temperature"
+                        control={control}
+                        defaultValue={[-20,40]}
+                        render={({field})=>{
+                            return (
+                                <Slider
+                                    
+                                    {...field}
+                                    onChange={(e,value)=>{
+                                        if(Array.isArray(value) && !( isNaN(value[1]) && isNaN(value[0] ))){ 
+                                            if(value[1] - value[0] > MINIMUM_TEMPERATURE_RANGE){
+                                                field.onChange(e,value)
+                                            }
+                                        }
+                                    }}
+                                    aria-label="TEMPERATURE "
+                                    valueLabelDisplay="auto"
+                                    valueLabelFormat={(value)=>`${value}°C`}
+                                    getAriaValueText={(value)=>`${value}°C`}
+                                    disableSwap
+                                    step={0.01}
+                                    min={-20}
+                                    max={40}
+                                    sx={{
+                                        "& .MuiSlider-rail":{
+                                            color:"#38bdf8",
+                                            opacity:0.5
+                                        },
+                                        "& .MuiSlider-track":{
+                                            color:"#38bdf8"
+                                        },
+                                        "& .MuiSlider-thumb":{
+                                            color:"#38bdf8"
+                                        }
+                                    }}
+                                />
+                            )
+                        }}
+                    />
                     <AnimationPlaceholderTextArea
                         labelName="DESCRIPTION"
                         name="description"
                         register={register('description')}
                         error={errors.description}
                         defaultValue={getValues('description')}
+                        className="max-h-32"
                     />
+                    
                 </div>
+                
+            </div>
+            <div className="w-full justify-self-end self-end flex flex-col justify-center items-end mt-auto">
+                {children}
             </div>
         </form>
     )

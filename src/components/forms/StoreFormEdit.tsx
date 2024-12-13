@@ -1,3 +1,4 @@
+// !!! INLINE STORE FORM MODE
 import { StepperForm } from "../stepper/Stepper"
 import { StepperGetStepDataProps } from "../stepper/Stepper"
 import { AddressFields, AddressForm } from "./AddressForm"
@@ -6,11 +7,13 @@ import { StoreImageForm } from "./StoreImageForm"
 import { companyStoreService } from "../../services/companyStoreService"
 import { useDispatch } from "react-redux"
 import { addStore } from "../../store/profileSlice"
-import { Finish } from "../../views/Finish"
-import { ImageModel } from "../../models/image"
-export type StoreStepperType = [{images:Array<ImageModel>},StoreInfoFields,AddressFields]
-export function StoreForm(){
+import { FinishLine } from "../../views/FinishLine"
+import { useNavigate } from "react-router-dom"
+import { StoreModel } from "../../models/store"
+export type StoreStepperType = [{images:Array<string>},StoreInfoFields,AddressFields]
+export function StoreFormEdit({store}:{store?:StoreModel}){
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const getStepData = (state:number):StepperGetStepDataProps=>{
         switch(state){
             case 0:
@@ -31,20 +34,23 @@ export function StoreForm(){
             case 3:
                 return {
                     component:(
-                        <Finish
-                            queryKey={['store-create']}
-                            onSuccess={(data)=>{
-                                dispatch(addStore(data.data))
-                            }}
-                            loader={{
-                                message:{
-                                    error:"ERROR CREATING THE STORE",
-                                    success:"STORE CREATED"
-                                },
-                            redirect:() => {
-                                return false;
+                    <FinishLine
+                        button={{
+                            text:"EDIT STORE",
+                            onClick:()=>{
+
                             }
-                        }}/>    
+                        }}
+                        queryKey={['store-edit']}
+                        onSuccess={(data)=>{
+                            const storeData = data.data as StoreModel
+                            navigate(`/store/details/${storeData.id}/`)
+                            dispatch(addStore(data.data))
+                        }}
+                        onError={()=>{
+
+                        }}
+                    />
                     ),
                     formsKeys:[]
                 }
@@ -57,15 +63,16 @@ export function StoreForm(){
     }
     return (
             <StepperForm
+                singleLine
                 maxStep={4}
                 stepLabels={['STORE IMAGE','STORE INFO','STORE ADDRESS']}
                 getStepData={getStepData}
+                defaultValue={companyStoreService.decodeToStepperData(store)}
                 onFinish={async(record)=>{
                     //alert("OK")
                     return await companyStoreService.createStore(
                         companyStoreService.serializeFromStepperData(record as StoreStepperType)
                     )
-                
                 }}
             >
             </StepperForm>

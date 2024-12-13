@@ -14,6 +14,7 @@ import { Home } from "../page/Home/Home";
 import { Store } from "../page/Store/Store";
 import { StoreCategory } from "../page/Store/StoreCategory";
 import { ProductCreate } from "../page/Store/ProductCreate";
+import { StoresCompany } from "../page/Store/CompanyStores";
 const router = createBrowserRouter([
     {path:"/product",element:<ProductCreate/>},
     // main app routes
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
                 children:[
                     {path:"/",element:<Home/>},
                     {path:'store/create',element:<StoreCreate/>},
+                    {path:'/store/list/company',element:<StoresCompany/>},
                     {
                         path:'store/details/:store-id/',
                         element:<Store/>,

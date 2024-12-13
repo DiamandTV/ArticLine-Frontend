@@ -1,12 +1,13 @@
+//!!! ACTUAL STORE VISUALIZING SESSION
 import { createSlice } from "@reduxjs/toolkit";
 import { StoreModel } from "../models/store";
-import { Product } from "../models/Product";
 import { PaginationModel } from "../models/pagination";
+import { ProductModel } from "../models/Product";
 
 export interface StoreDetailsModel{
     store:StoreModel | null,
     //productPage:number,
-    products:Array<Product>|null,
+    products:Array<ProductModel>|null,
     pageCountCategories:Record<string,number> | null,
     pagination:Omit<PaginationModel,'results'> |null
 }
@@ -34,19 +35,27 @@ const storeSlice = createSlice({
             state.store = null;
             state.pageCountCategories = null;
         },
+        addStoreCategory:(state,action)=>{
+            if(!state.store) return; 
+            const storeCategories = !state.store.store_categories ? [action.payload] : [...(state.store.store_categories!),action.payload]
+            state.store = {...state.store,store_categories:storeCategories}
+        },
+        addStoreProduct:(state,action)=>{
+            const products = !state.products ? [action.payload] : [...(state.products),action.payload]
+            state.products = products
+        },
         setCategoriesAndPagination:(state,action)=>{
             const pagination:PaginationModel = action.payload
             state.pagination = {...pagination}
             console.log(pagination.results)
-            state.products = [...(pagination.results as Array<Product>)]
+            state.products = [...(pagination.results as Array<ProductModel>)]
         },
         setPageForCategory:(state,action)=>{
-            
             const storeCategoryID = action.payload.storeCategoryId
             state.pageCountCategories = {...state.pageCountCategories,[storeCategoryID]:action.payload.page} 
         },
     }
 })
 
-export const {setStoreDetails,clearStoreDetails,setCategoriesAndPagination,setPageForCategory} = storeSlice.actions
+export const {setStoreDetails,clearStoreDetails,addStoreCategory,setCategoriesAndPagination,setPageForCategory,addStoreProduct} = storeSlice.actions
 export const storeReducer = storeSlice.reducer

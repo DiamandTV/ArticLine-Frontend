@@ -9,7 +9,7 @@ import { FieldError } from "react-hook-form";
 export interface FixedSizeDropdownProps{
     labelName:string,
     name:string,
-    list:Array<Record<string,unknown>> | Array<string>,
+    list:Array<Record<string,unknown>> | Array<string> | Array<unknown>,
     showFunction:(item:unknown,index:number)=>string, // the function which will return the label of the list item
     setValue?:(value:string)=>void,                    
     filterFunction:(e:React.ChangeEvent<HTMLInputElement>)=>unknown,       // the filter function which will be used for filtering the list

@@ -1,4 +1,4 @@
-import { ProductPage } from "../../components/Store/ProductPage.tsx/ProductPage"
+import { ProductPage } from "../../components/Store/ProductPage/ProductPage"
 import { StoreCategoryQuery } from "../../components/Store/StoreCategory/StoreCategoryQuery"
 
 export function StoreCategory(){

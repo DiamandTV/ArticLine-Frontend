@@ -7,12 +7,13 @@ import { InputError } from "../inputs/InputError/InputError";
 import { StepperContext } from "../stepper/StepperContext";
 import { v4 as uuidv4 } from "uuid";
 import { ImageModel } from "../../models/image";
-export function StoreImageForm(){
-    const {stepper:{state,setState,/*maxStep*/},record:{record,setRecord},error:{errorStepper},/*beforeChangeMediaQuery:{setBeforeChangeMediaQuery}*/} = useContext(StepperContext)
+export function StoreImageForm({className,indexStepper}:{className?:string,indexStepper:number}){
+    const {stepper:{state,setState,/*maxStep*/singleLine},record:{record,setRecord},error:{errorStepper},/*beforeChangeMediaQuery:{setBeforeChangeMediaQuery}*/finish:{finish}} = useContext(StepperContext)
+    const stateStepper = singleLine ? indexStepper : state
     const [images,setImages] = useState<Array<ImageModel | null>>(
-        (record[state] && record[state].images) 
+        (record[stateStepper] && record[stateStepper].images) 
         ? 
-        record[state].images as Array<ImageModel | null>
+        record[stateStepper].images as Array<ImageModel | null>
         : 
         [{image:null}]
     )
@@ -24,20 +25,28 @@ export function StoreImageForm(){
         e.preventDefault()
         if(e.deltaY == 0) return;
         divRef.current!.scrollLeft = divRef.current!.scrollLeft + e.deltaY
-        
-        console.log( divRef.current!.scrollLeft + e.deltaY)
+        //console.log( divRef.current!.scrollLeft + e.deltaY)
     }
 
     useEffect(()=>{
+        console.log(record[stateStepper])
         if(divRef){
             divRef.current?.addEventListener('wheel',onScroll)
             return ()=> divRef.current?.removeEventListener('wheel',onScroll)
         }
-        console.log(record)
+        
+        
     },[])
 
+    // useEffect(()=>{
+    //     console.log("OKdsds",state)
+    //     if(finish && singleLine){
+    //         setState(state+1)
+    //     }
+    // },[finish])
+
     return (
-        <div className="w-full flex flex-col justify-center items-center gap-y-4">
+        <div className={"w-full flex flex-col justify-center items-center gap-y-4 "}>
             <div className="w-full h-full flex flex-row justify-between items-center gap-x-2">
                 <div className="relative">
                     <InputError error={error}/>
@@ -77,13 +86,14 @@ export function StoreImageForm(){
                             </div> : null
                         }
                         <ImagePicker 
+                            className={className}
                             key={uuidv4()}
                             image={images[index] ? images[index].image : null} 
                             setImage={(image)=>{
                                 const _images = [...images]
                                 _images[index]!.image= image as string
                                 const newRecord = record
-                                newRecord[state] = {
+                                newRecord[stateStepper] = {
                                     'images':_images
                                 }
                                 setRecord(newRecord)

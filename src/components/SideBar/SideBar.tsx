@@ -8,8 +8,6 @@ import { IoChatbubbleEllipses } from "react-icons/io5";
 import { IoMdSettings } from "react-icons/io";
 import { useState } from "react";
 import { IoMdNotifications } from "react-icons/io";
-import { GiHamburgerMenu } from "react-icons/gi";
-
 import { Link } from "react-router-dom";
 import { SIDEBAR_ICON_SIZE } from "../../constraints";
 import { StoreSection } from "./Sections/StoreSection";
@@ -67,7 +65,6 @@ export function SideBarApp(){
                     }),
                 }}
             >
-                <MenuItem id="HOME" icon={<GiHamburgerMenu size={SIDEBAR_ICON_SIZE}/>} onClick={()=>setCollapsed(!collapsed)} className="w-full"/>
                 <Link to={"/"}>
                     <MenuItem id="HOME" icon={<IoHome size={SIDEBAR_ICON_SIZE}/>} >HOME</MenuItem>
                 </Link>

@@ -6,7 +6,7 @@ import { ProductCard } from "../../cards/ProductCard";
 import { useParams } from "react-router-dom";
 import { setPageForCategory } from "../../../store/storeSlice";
 import {v4 as uuid} from "uuid"
-import { Can } from "../../../config/permissions/can";
+//import { Can } from "../../../config/permissions/can";
 
 export function ProductPage(){
     const params = useParams()
@@ -14,7 +14,7 @@ export function ProductPage(){
     const products = useSelector((state:RootState)=>state.storeReducer.products)
     const pageForCategories = useSelector((state:RootState)=>state.storeReducer.pageCountCategories)
     const storeCategoryId =params['sub-category-id']
-    const store = useSelector((state:RootState)=>state.storeReducer.store)
+    //const store = useSelector((state:RootState)=>state.storeReducer.store)
     const dispatch = useDispatch()
     if(!storeCategoryId) return null;
     

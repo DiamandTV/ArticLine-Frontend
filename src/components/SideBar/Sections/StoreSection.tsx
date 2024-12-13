@@ -32,12 +32,18 @@ export function StoreSection(){
     return (
         <Can I="create" a="STORE" >
             <SubMenu id="STORES" icon={<FaStore size={SIDEBAR_ICON_SIZE}/>} label="STORES">
+                {mineStores && mineStores.map((store)=>(
+                    <Link to={`/store/details/${store.id}`} key={uuid()}>
+                        <MenuItem >{store.title.toUpperCase()}</MenuItem>
+                    </Link>
+                ))}
+                {/* CHECK IF THE COMPANY HA MORE THAN FOUR STORES , IF IT'S LIKE THAT SHOW HIM A BUTTON TO SHOW OTHER STORES*/}
+                {
+                    <Link to={"/store/list/company"}>
+                        <MenuItem aria-setsize={SIDEBAR_SUB_ICON_SIZE} className="text-sm">OTHER STORE...</MenuItem>
+                    </Link>
+                }
                 <Link to={"/store/create"}>
-                    {mineStores && mineStores.map((store)=>(
-                        <Link to={`/store/details/${store.id}`} key={uuid()}>
-                            <MenuItem >{store.title.toUpperCase()}</MenuItem>
-                        </Link>
-                    ))}
                     <MenuItem icon={<FaPlus/>} aria-setsize={SIDEBAR_SUB_ICON_SIZE} className="text-sm">CREATE</MenuItem>
                 </Link>
             </SubMenu>

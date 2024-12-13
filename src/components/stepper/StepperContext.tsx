@@ -9,6 +9,7 @@ export interface StepperContextProps{
         getStepData:(state:number)=>StepperGetStepDataProps,
         maxStep:number,
         onFinish:(record:Array<Record<string,unknown>>)=>Promise<AxiosResponse> | Record<string,string>,
+        singleLine:boolean
     },
     record:{
         record:Array<Record<string,unknown>>,
@@ -21,6 +22,10 @@ export interface StepperContextProps{
     beforeChangeMediaQuery:{
         beforeChangeMediaQuery:(isMatched:boolean)=>void,
         setBeforeChangeMediaQuery:(newOnChangedMediaQuery:()=>(isMatched:boolean)=>void)=>void,
+    },
+    finish:{
+        finish:boolean,
+        setFinish:(finish:boolean)=>void
     }
 }
 export const StepperContext = createContext<StepperContextProps>({
@@ -34,6 +39,7 @@ export const StepperContext = createContext<StepperContextProps>({
             formsKeys:[]
         }),
         onFinish:()=>({}),
+        singleLine:false
     },
     record:{
         record:[],
@@ -46,6 +52,10 @@ export const StepperContext = createContext<StepperContextProps>({
     beforeChangeMediaQuery:{
         beforeChangeMediaQuery:()=>{},
         setBeforeChangeMediaQuery:()=>{}
+    },
+    finish:{
+        finish:false,
+        setFinish:()=>{}
     }
 })
 

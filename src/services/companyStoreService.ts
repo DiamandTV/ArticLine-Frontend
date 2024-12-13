@@ -33,5 +33,18 @@ export const companyStoreService = {
             ...(object as (StoreInfoFields & AddressFields)) ,
             images:record[0].images,
         }  
+    },
+    decodeToStepperData(store?:StoreModel):StoreStepperType|null{
+        if(!store) return null;
+        console.log(store)
+        return[
+            {images:store.images} ,
+            {
+                title:store.title,
+                description:store.description,
+                categories:store.categories
+            },
+            {address:{...store.address}}
+        ]
     }
 }

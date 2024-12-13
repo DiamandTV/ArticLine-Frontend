@@ -7,7 +7,7 @@ import { AccountFields } from '../components/forms/AccountForm'
 import { AddressFields } from '../components/forms/AddressForm'
 import { UserInfoFields } from '../components/forms/UserInfoForm'
 import { useUserService } from '../services/userService'
-import { Finish } from '../views/SignInFinish'
+import { Finish } from '../views/Finish'
 //import { HighlightedTitle } from '../components/Texts/HighlightedTitle'
 
 export type UserSigninStepperType = Array<UserInfoFields | AddressFields | AccountFields>

@@ -6,8 +6,9 @@ export interface StepperButtonsProps{
     onPreviousClick?:()=>void
 }
 export function StepperButtons({onNextClick,onPreviousClick}:StepperButtonsProps){
-    const {stepper:{state,maxStep}} = useContext<StepperContextProps>(StepperContext)
+    const {stepper:{state,maxStep,singleLine}} = useContext<StepperContextProps>(StepperContext)
     return (
+        !singleLine ? 
         <div className=" flex flex-row justify-between items-center">          
         {
             state > 0 ?
@@ -27,7 +28,7 @@ export function StepperButtons({onNextClick,onPreviousClick}:StepperButtonsProps
                 />
             : null
         }
-    </div>
+    </div> : null
 
     )
 }

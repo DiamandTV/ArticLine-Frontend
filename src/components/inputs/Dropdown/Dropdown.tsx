@@ -12,7 +12,7 @@ interface DropdownProps {
     children:React.ReactNode,
     defaultValue?:string,
     register?:UseFormRegisterReturn,
-    error?:FieldError
+    error?:FieldError,
 }
 export function Dropdown({labelName,name,onChange,defaultValue,register,error,open,setOpen,children}:DropdownProps){
 

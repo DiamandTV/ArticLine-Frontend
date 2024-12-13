@@ -9,7 +9,7 @@ import { CompanyInfoFields } from '../components/forms/CompanyInfoForm'
 import { useCompanyService } from '../services/companyService'
 import { CompanyProfileModel } from '../models/company'
 import { StepperGetStepDataProps } from '../components/stepper/Stepper'
-import { Finish } from '../views/SignInFinish'
+import { Finish } from '../views/Finish'
 // interface of the company sign in record (the record of the stepper form)
 export type CompanySigninStepperType = Array<CompanyInfoFields | AddressFields | AccountFields>
 

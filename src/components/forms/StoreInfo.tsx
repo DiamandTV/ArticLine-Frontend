@@ -1,3 +1,5 @@
+
+//todo: in future make this look better. Make this code better
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from 'zod'
@@ -14,45 +16,43 @@ import { RootState } from "../../store/store"
 import { CategoryModel } from "../../models/category"
 const schema = z.object({
     title:z.string().min(1).max(255),
-    categories:z.array(z.string()).min(1),
+    categories:z.array(z.coerce.number()).min(1),
     description:z.string().min(1)
 })
 
 export type StoreInfoFields = z.infer<typeof schema>
 
 //const originalList = ['PIZZA','CATEGORY','SUSHI']
-export function StoreInfo(){
+export function StoreInfo({indexStepper}:{indexStepper:number}){
     const storeCategories = useSelector((state:RootState)=>state.categoryReducer.categories)
-    console.log(storeCategories)
     const formRef = useRef<HTMLFormElement | null>(null)
-    const {stepper:{state,setState},record:{record,setRecord},error:{errorStepper},beforeChangeMediaQuery:{setBeforeChangeMediaQuery}} = useContext(StepperContext)
-    console.log(state)
+    const {stepper:{state,setState,singleLine},record:{record,setRecord},error:{errorStepper},beforeChangeMediaQuery:{setBeforeChangeMediaQuery},finish:{finish}} = useContext(StepperContext)
+    const stepperIndex = singleLine ? indexStepper : state;
     const {handleSubmit,register,formState:{errors},getValues,setValue} = useForm<StoreInfoFields>({
-        defaultValues:record[state] ,
+        defaultValues:record[stepperIndex] ,
         resolver: zodResolver(schema),
         errors:errorStepper
     })
-    console.log(getValues('categories'))
-    console.log(Array.isArray((!getValues('categories'))))
     const [categories,setCategories] = useState<{tags:Array<CategoryModel>,list:Array<CategoryModel>}>({
-        'tags':getValues('categories') ? storeCategories?.filter((cat)=> getValues('categories').includes(cat.id.toString())) : [] ,
-        'list':storeCategories!.filter(category=>!getValues('categories') || !getValues('categories').includes(category.id.toString())) as Array<CategoryModel>,
+        'tags':getValues('categories') ? storeCategories?.filter((cat)=> getValues('categories').includes(cat.id)) : [] ,
+        'list':storeCategories!.filter(category=>!getValues('categories') || !getValues('categories').includes(category.id)) as Array<CategoryModel>,
     })
 
     const onSubmit:SubmitHandler<StoreInfoFields> = (storeInfo)=>{
-        setState(state+1)
+        setState(stepperIndex+1)
         const newRecord = record
-        newRecord[state] = storeInfo
+        newRecord[stepperIndex] = storeInfo
         setRecord(newRecord)
+
     }
 
     
     const onPreviousClick = ()=>{
-        if(state > 0){
+        if(stepperIndex > 0){
             const newRecord = record
-            newRecord[state] = getValues()
+            newRecord[stepperIndex] = getValues()
             setRecord(newRecord)
-            setState(state-1)
+            setState(stepperIndex-1)
         }
     }
 
@@ -60,10 +60,18 @@ export function StoreInfo(){
         setValue('categories',categories.tags.map((cat)=>cat.id.toString()))
     },[categories])
 
+    useEffect(()=>{
+        console.log(getValues() )
+        if(formRef && formRef.current && singleLine && finish){
+            console.log("FINISHING")
+            formRef.current.requestSubmit()
+        }
+    },[finish])
+
     useEffect(()=>setBeforeChangeMediaQuery(()=>(isMatched)=>{
         if(isMatched){
             const newRecord = record
-            newRecord[state] = getValues()
+            newRecord[stepperIndex] = getValues()
             setRecord(newRecord)
         }
       }),[])

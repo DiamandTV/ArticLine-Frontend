@@ -4,7 +4,8 @@ import { StepperButtons } from "../components/stepper/StepperButtons"
 import { useQuery } from '@tanstack/react-query' 
 import { AxiosError, AxiosResponse } from "axios"
 import { LoaderResponse } from "../components/loader/LoaderResponse"
-const SERVER_INTERNAL_ERROR_CODE = 500
+import { SERVER_INTERNAL_ERROR_CODE } from "../constraints"
+
 interface FinishProps{
     //queryFn:Promise<AxiosResponse>,
     queryKey:Array<string>,
@@ -21,10 +22,9 @@ interface FinishProps{
 }
 
 
-
 // last step on the finish of the sing in
 export function Finish({queryKey,onSuccess,loader}:FinishProps){
-    const {stepper:{onFinish,state,setState,/*maxStep,getStepData*/},record:{record},error:{setErrorStepper}} = useContext(StepperContext)
+    const {stepper:{onFinish,state,setState,/*maxStep,getStepData*/singleLine},record:{record},error:{setErrorStepper}} = useContext(StepperContext)
     const {isLoading,isError,isSuccess,refetch} = useQuery({
         queryFn:async ()=> await onFinish(record),
         retry:2,

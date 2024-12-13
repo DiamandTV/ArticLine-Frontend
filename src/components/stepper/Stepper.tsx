@@ -16,7 +16,9 @@ export interface StepperProps{
     maxStep:number ,
     stepLabels : Array<string|null>,
     getStepData: (state:number)=>StepperGetStepDataProps,
-    onFinish:(record:Array<Record<string,unknown >>)=>Promise<AxiosResponse> | Record<string,string>
+    onFinish:(record:Array<Record<string,unknown >>)=>Promise<AxiosResponse> | Record<string,string>,
+    singleLine?:boolean,
+    defaultValue?:Array<Record<string,unknown>>|null
 }
 
 
@@ -49,10 +51,11 @@ function getStepperStyle(index:number,state:number):SxProps{
     } 
 }
 
-export function StepperForm({maxStep,getStepData,stepLabels,onFinish}:StepperProps){
+export function StepperForm({maxStep,getStepData,stepLabels,onFinish,singleLine=false,defaultValue}:StepperProps){
     const [state,setState] = useState(0)
-    const [record,setRecord] = useState<Array<Record<string,unknown>>>([])
+    const [record,setRecord] = useState<Array<Record<string,unknown>>>(defaultValue ? defaultValue : [])
     const [errorStepper,setErrorStepper] = useState<Record<string,unknown>>({})
+    const [finish,setFinish] = useState(false)
     const [beforeChangeMediaQuery,setBeforeChangeMediaQuery] = useState<(isMatched:boolean)=>void>(()=>()=>{})
     //const sm = useMediaQuery("(max-width: 640px)")
     //const md = useMediaQuery({query:'(max-width: 768px)'},undefined,onChangeMediaQuery)
@@ -72,9 +75,10 @@ export function StepperForm({maxStep,getStepData,stepLabels,onFinish}:StepperPro
 
     return(
         <StepperContext.Provider  
-        value={{stepper:{state,setState, getStepData,maxStep,stepLabels,onFinish},
+        value={{stepper:{state,setState, getStepData,maxStep,stepLabels,onFinish,singleLine},
             record:{record,setRecord},error:{errorStepper,setErrorStepper},
-            beforeChangeMediaQuery:{beforeChangeMediaQuery,setBeforeChangeMediaQuery}
+            beforeChangeMediaQuery:{beforeChangeMediaQuery,setBeforeChangeMediaQuery},
+            finish:{finish,setFinish}
             }}>
             <div className="w-full">
                 {md ? 
@@ -101,6 +105,7 @@ export function StepperForm({maxStep,getStepData,stepLabels,onFinish}:StepperPro
                 </> 
                 :
                 <>
+                {!singleLine ?
                     <Stepper activeStep={state}>
                         {stepLabels.map((label,index)=>{
                             const isShowError = showError(index)
@@ -113,12 +118,17 @@ export function StepperForm({maxStep,getStepData,stepLabels,onFinish}:StepperPro
                                 </Step> 
                             )
                         })}
-                    </Stepper>
-                    <div className="pt-10">
-                    {component}
+                    </Stepper> : null}
+                    <div className={!singleLine ? "pt-10" : ""}>
+                        {!singleLine ? component :
+                            Array.from({length:maxStep},(_,index)=>{
+                                return getStepData(index).component;
+                            })
+                        }
                     </div>
                 </>
                 }
+                
             </div>
         </StepperContext.Provider>
     ) 

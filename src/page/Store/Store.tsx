@@ -1,5 +1,5 @@
 import { StoreQuery } from "../../components/Store/StoreQuery";
-import { StoreHeader } from "../../components/Store/StoreHeader";
+import { StoreHeader } from "../../components/Store/StoreHeader/StoreHeader";
 import { StoreBody } from "../../components/Store/StoreBody";
 export function Store(){
     return (

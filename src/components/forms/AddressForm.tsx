@@ -12,7 +12,7 @@ import { StepperContext } from "../stepper/StepperContext";
 import {  useEffect,useState } from "react"
 const schema = z.object({
   address:z.object({
-    
+    //id:z.coerce.number().optional(),
     recipient_name: z.string().min(1).max(255),
     street: z.string().min(1).max(255),
     city: z.string().min(1).max(255),
@@ -31,12 +31,13 @@ const schema = z.object({
 
 export type AddressFields = z.infer<typeof schema>;
 
-export function AddressForm() {
+export function AddressForm({indexStepper}:{indexStepper:number}) {
   const formRef = useRef<HTMLFormElement | null>(null)
-  const {stepper:{state,setState,maxStep},record:{record,setRecord},error:{errorStepper},beforeChangeMediaQuery:{setBeforeChangeMediaQuery}} = useContext(StepperContext)
+  const {stepper:{state,setState,maxStep,singleLine},record:{record,setRecord},error:{errorStepper},beforeChangeMediaQuery:{setBeforeChangeMediaQuery},finish:{finish}} = useContext(StepperContext)
+  const stepperIndex = singleLine ? indexStepper : state
   const [lastFocus,setLastFocus] = useState(false)
   const { register, getValues, setValue,formState:{errors},handleSubmit,setFocus} = useForm<AddressFields>({
-    defaultValues:record[state],
+    defaultValues:record[stepperIndex],
     resolver: zodResolver(schema),
     errors:errorStepper
   });
@@ -46,11 +47,17 @@ export function AddressForm() {
   useEffect(()=>setBeforeChangeMediaQuery(()=>(isMatched)=>{
     if(isMatched){
         const newRecord = record
-        newRecord[state] = getValues()
+        newRecord[stepperIndex] = getValues()
         setRecord(newRecord)
     }
   }),[])
   
+  useEffect(()=>{
+    console.log(record[indexStepper])
+    if(formRef && formRef.current && singleLine && finish){
+      formRef.current.requestSubmit()
+    }
+  },[finish])
     
 
   const handleFilter = (
@@ -87,7 +94,7 @@ export function AddressForm() {
     }
     // also need to focus the input which i'm gonna put the value dinamically
     const newRecord = [...record]
-    newRecord[state] = {
+    newRecord[stepperIndex] = {
       ...getValues(),
       address:{
         province:province,
@@ -115,21 +122,21 @@ export function AddressForm() {
 
   const onSubmit : SubmitHandler<AddressFields> = async (address)=>{
     console.log(address)
-    if(state < maxStep - 1){
-      setState(state+1)
+    if(stepperIndex < maxStep - 1){
+      setState(stepperIndex+1)
       const newRecord = record
-      newRecord[state] = address
+      newRecord[stepperIndex] = address
       setRecord(newRecord)
     }
   }
 
   const onPreviousClick = ()=>{
-    if(state > 0){
+    if(stepperIndex > 0){
       const newRecord = record
-      newRecord[state] = getValues()
+      newRecord[stepperIndex] = getValues()
       setRecord(newRecord)
       setRecord(newRecord)
-      setState(state-1)
+      setState(stepperIndex-1)
     }
   }
 
