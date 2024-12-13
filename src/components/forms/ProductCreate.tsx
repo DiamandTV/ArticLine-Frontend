@@ -8,6 +8,8 @@ import { ProductModel } from "../../models/Product";
 import { checkForError } from "../../constraints";
 import { useParams } from "react-router-dom";
 import { addStoreProduct } from "../../store/storeSlice";
+import { useContext } from "react";
+import { DrawerContext } from "../Drawer/DrawerContext";
 
 
 export function ProductCreate(){
@@ -15,6 +17,7 @@ export function ProductCreate(){
     const params = useParams()
     const store = useSelector((state:RootState)=>state.storeReducer.store)
     
+    const {setOpen} = useContext(DrawerContext)
     const {mutateAsync} = useMutation({
         mutationKey:['store-create-product'],
         mutationFn:async(product:ProductModel)=>{
@@ -26,6 +29,8 @@ export function ProductCreate(){
                 if((data.data as ProductModel).store_category.toString() === actualStoreCategory){
                     // add the product to the session only if the user is visualizing the same sub category of the product category
                     dispatch(addStoreProduct(data.data))
+                    // close the drawer
+                    setOpen(false)       
                 } 
 
             }

@@ -10,8 +10,8 @@ import { MAX_CARD_IN_PAGE } from "../../constraints"
 export function StoresCompany(){
     const [page,setPage] = useState(1)
     const stores = useSelector((state:RootState)=>state.profileReduce.stores)
-    const count = Math.floor(stores.length/MAX_CARD_IN_PAGE) 
-    console.log(stores)
+    const count = Math.ceil(stores.length/MAX_CARD_IN_PAGE) 
+    console.log(count)
     return ( 
         <div className="flex flex-col gap-y-4"> 
         <PaginationButtons

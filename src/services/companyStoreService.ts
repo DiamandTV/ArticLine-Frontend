@@ -2,6 +2,7 @@ import { AddressFields } from "../components/forms/AddressForm"
 import { StoreStepperType } from "../components/forms/StoreForm"
 import { StoreInfoFields } from "../components/forms/StoreInfo"
 import { StoreModel } from "../models/store"
+import { store } from "../store/store"
 import { api } from "./api"
 export const companyStoreService = {
     async getCategories(){
@@ -9,6 +10,9 @@ export const companyStoreService = {
     },
     async createStore(store:StoreStepperType){
         return await api.post('/store/company',store)
+    },
+    async updateStore({store,storeId}:{store:StoreModel,storeId:string|undefined|number}){
+        return await api.put(`/store/details/${storeId}/update`,store)
     },
     async getCompanyStoresPage(){
         return await api.get('/store/company')

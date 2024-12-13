@@ -1,6 +1,7 @@
-import { Dialog, DialogContent, Drawer } from "@mui/material";
+import { Drawer } from "@mui/material";
 import { IconTextButton } from "../buttons/IconTextButton";
-import { useState } from "react";
+import { useContext } from "react";
+import { DrawerContext } from "../Drawer/DrawerContext";
 
 export interface PopupIconButtonProps{
     children:React.ReactNode
@@ -11,8 +12,8 @@ export interface PopupIconButtonProps{
 }
 
 export function PopupIconButton({children,iconData:{label,icon}}:PopupIconButtonProps){
-    const [open,setOpen] = useState(false)
-
+    //const [open,setOpen] = useState(false)
+    const {open,setOpen} = useContext(DrawerContext)
     return(
         <>
             <IconTextButton
@@ -22,6 +23,7 @@ export function PopupIconButton({children,iconData:{label,icon}}:PopupIconButton
                     setOpen(true)
                 }}
             />
+            
             <Drawer
                 anchor="right"
                 open={open}

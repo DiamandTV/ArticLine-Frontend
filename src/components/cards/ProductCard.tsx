@@ -1,14 +1,22 @@
 import { FaPlus } from "react-icons/fa6"
 import { ProductModel } from "../../models/Product"
 import { CardImage } from "./CardImage"
+import { useContext } from "react"
+import { DialogContext } from "../Dialog/DialogContext"
 
 interface ProductCardProps{
     product:ProductModel
 }
 export function ProductCard({product}:ProductCardProps){
     console.log(product)
+    const {setOpen} = useContext(DialogContext)
     return (
-        <div className="w-full h-full max-h-60 grid grid-cols-2 justify-between items-star bg-slate-200 bg-opacity-30 backdrop-blur-lg rounded-xl px-6 py-4 box-border">
+        <div 
+            onClick={()=>{
+                console.log(setOpen)
+                setOpen(true)
+            }}
+            className="hover:cursor-pointer w-full h-full max-h-72 grid grid-cols-2 justify-between items-star bg-slate-200 bg-opacity-30 backdrop-blur-lg rounded-xl px-6 py-4 box-border">
             <div className="flex flex-col gap-y-2">
                 <h1 className="text-2xl text-ellipsis overflow-hidden font-normal">{product.name}</h1>
                 <p className="w-full h-full max-h-20 lipsis overflow-hidden text-el">

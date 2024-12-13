@@ -7,9 +7,12 @@ import { StoreCategoriesModel } from "../../models/StoreCategories";
 import { useStoreCategoriesService } from "../../services/storeCategoriesSevice";
 import { checkForError } from "../../constraints";
 import { addStoreCategory } from "../../store/storeSlice";
+import { useContext } from "react";
+import { DrawerContext } from "../Drawer/DrawerContext";
 
 export function StoreCategoryCreate(){
     const dispatch = useDispatch()
+    const {setOpen} = useContext(DrawerContext)
     const store = useSelector((state:RootState)=>state.storeReducer.store)
     const {mutateAsync} = useMutation({
         mutationKey:['store-create-sub-category'],
@@ -20,6 +23,8 @@ export function StoreCategoryCreate(){
         onSuccess:(data)=>{
             if(store && store.store_categories && data && data.data){
                 dispatch(addStoreCategory(data?.data))
+                // close the drawer
+                setOpen(false)
             }
         }
     })

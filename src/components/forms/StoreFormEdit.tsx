@@ -5,15 +5,16 @@ import { AddressFields, AddressForm } from "./AddressForm"
 import { StoreInfo, StoreInfoFields } from "./StoreInfo"
 import { StoreImageForm } from "./StoreImageForm"
 import { companyStoreService } from "../../services/companyStoreService"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { addStore } from "../../store/profileSlice"
 import { FinishLine } from "../../views/FinishLine"
 import { useNavigate } from "react-router-dom"
 import { StoreModel } from "../../models/store"
+import { RootState } from "../../store/store"
 export type StoreStepperType = [{images:Array<string>},StoreInfoFields,AddressFields]
 export function StoreFormEdit({store}:{store?:StoreModel}){
     const dispatch = useDispatch()
-    const navigate = useNavigate()
+    //const store = useSelector((state:RootState)=>state.storeReducer.store)
     const getStepData = (state:number):StepperGetStepDataProps=>{
         switch(state){
             case 0:
@@ -43,9 +44,11 @@ export function StoreFormEdit({store}:{store?:StoreModel}){
                         }}
                         queryKey={['store-edit']}
                         onSuccess={(data)=>{
-                            const storeData = data.data as StoreModel
-                            navigate(`/store/details/${storeData.id}/`)
-                            dispatch(addStore(data.data))
+                            const storeData = data.data as StoreModel 
+                            console.log(storeData)
+                            alert("OK")
+                            //navigate(`/store/details/${storeData.id}/`)
+                            //dispatch(addStore(data.data))
                         }}
                         onError={()=>{
 
@@ -70,9 +73,10 @@ export function StoreFormEdit({store}:{store?:StoreModel}){
                 defaultValue={companyStoreService.decodeToStepperData(store)}
                 onFinish={async(record)=>{
                     //alert("OK")
-                    return await companyStoreService.createStore(
-                        companyStoreService.serializeFromStepperData(record as StoreStepperType)
-                    )
+                    return await companyStoreService.updateStore({
+                        store:companyStoreService.serializeFromStepperData(record as StoreStepperType),
+                        storeId:store?.id
+                    })
                 }}
             >
             </StepperForm>

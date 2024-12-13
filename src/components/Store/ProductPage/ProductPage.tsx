@@ -6,6 +6,8 @@ import { ProductCard } from "../../cards/ProductCard";
 import { useParams } from "react-router-dom";
 import { setPageForCategory } from "../../../store/storeSlice";
 import {v4 as uuid} from "uuid"
+import { DialogProductCard } from "../../cards/DialogProductCard";
+import { DialogProvider } from "../../Dialog/DialogProvider";
 //import { Can } from "../../../config/permissions/can";
 
 export function ProductPage(){
@@ -29,9 +31,11 @@ export function ProductPage(){
             <GridView>
                 {products?.map((product)=>{
                     return(
-                        <ProductCard 
-                            key={uuid()}
-                            product={product}/>
+                        <DialogProvider>
+                            <DialogProductCard 
+                                key={uuid()}
+                                product={product}/>
+                        </DialogProvider>
                     )
                 })}
             </GridView>

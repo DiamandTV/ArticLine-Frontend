@@ -65,11 +65,10 @@ export function ProductForm({store_categorys,children,onSubmitForm}:ProductFormP
                                 error={errors.image}
                                 image={value}
                                 setImage={(image)=>setValue('image',image)}
-                                className="w-full"
+                                className="w-full max-h-60"
                             />
                             )
                         }}/>
-                  
                 </div>
                 <div className="w-full h-full flex flex-col gap-y-10 gap-x-4 pb-8">
                     <AnimationPlaceholderInput
