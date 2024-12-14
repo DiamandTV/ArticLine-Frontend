@@ -12,6 +12,9 @@ export const companyStoreService = {
     async updateStore({store,storeId}:{store:StoreFormFields,storeId:string|undefined|number}){
         return await api.put(`/store/details/${storeId}/update`,store)
     },
+    async deleteStore(storeId:string|number|undefined){
+        return await api.delete(`/store/details/${storeId}/delete`)
+    },
     async getCompanyStoresPage(){
         return await api.get('/store/company')
     },

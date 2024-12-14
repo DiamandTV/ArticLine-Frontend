@@ -10,6 +10,7 @@ import { AxiosResponse } from "axios";
 import { useContext } from "react";
 import { DrawerContext } from "../Drawer/DrawerContext";
 import { updateStoreDetails } from "../../store/storeSlice";
+import { DeleteButton } from "../buttons/DeleteButton";
 
 interface StoreEditProps{
     store?:StoreModel
@@ -51,16 +52,29 @@ export function StoreFromEdit({store}:StoreEditProps){
                     return checkForError(e)
                 }
             }}
-        >
+        >  
+            <div className="w-full h-14 flex flex-row justify-center gap-x-2">
                 <TextButton
-                    className="float-right"
+                    className="max-w-[1000] w-full"
                     text="EDIT THE STORE"
                     type="submit"
                     onClick={()=>{
 
                     }}
-                
                 />
+                <DeleteButton
+                    onClick={()=>{
+                        // ask for the user if he's convince about deleting the store
+                        if(store )  {
+                            companyStoreService.deleteStore(store.id)
+                        } 
+                        else {
+                            //todo: show a toast error
+                            
+                        }
+                    }}
+                />
+            </div>
         </StoreForm>
     )
 }

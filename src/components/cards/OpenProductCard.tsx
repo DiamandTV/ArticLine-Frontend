@@ -1,4 +1,3 @@
-import { BiTrash } from "react-icons/bi";
 import { ProductModel } from "../../models/Product";
 import { TextButton } from "../buttons/TextButtons";
 import { Counter } from "../inputs/Counter/Counter";
@@ -7,6 +6,7 @@ import { CardImage } from "./CardImage";
 import { Can } from "../../config/permissions/can";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { DeleteButton } from "../buttons/DeleteButton";
 
 export function OpenProductCard({product}:{product:ProductModel}){
     console.log(product)
@@ -22,16 +22,16 @@ export function OpenProductCard({product}:{product:ProductModel}){
                 <Counter/>
                 <div className="w-full h-24 max-h-96 px-4 py-4 flex flex-row justify-center gap-x-2">
                     <TextButton
-                        className="max-w-full w-full py-4  text-xl font-bold"
+                        className="w-full max-w-[100%] py-4  text-xl font-bold"
                         text="AGGIUNGI"
                         onClick={()=>{
                         
                     }}
                 />
                 <Can I="delete" a="PRODUCT" this={store!}>
-                    <div className="max-w-max h-full flex flex-col justify-center items-center px-4 bg-red-600 rounded-xl ">
-                        <BiTrash size={25} color="white"/>
-                    </div>
+                    <DeleteButton onClick={()=>{
+
+                    }}/>
                 </Can>
                 </div>
             </div>
