@@ -7,8 +7,8 @@ import { PopupIconButton } from "../../PopUps/PoupIconButton";
 import { BlurCard } from "../../cards/BlurCard";
 import { ProductCreate } from "../../forms/ProductCreate";
 import { StoreCategoryCreate } from "../../forms/StoreCategoryCreate";
-import { StoreFormEdit } from "../../forms/StoreFormEdit";
 import { DrawerProvider } from "../../Drawer/DrawerProvider";
+import { StoreFromEdit } from "../../forms/StoreEdit";
 
 export function StoreSettings(){
     const store = useSelector((state:RootState)=>state.storeReducer.store)
@@ -23,8 +23,8 @@ export function StoreSettings(){
                             icon:<IoIosSettings size={30}/>
                         }}
                     >
-                        <BlurCard className=" w-[600px] max-w-4xl h-full max-h-screen text-white pt-4">
-                            <StoreFormEdit store={store}/>
+                        <BlurCard className=" w-[600px] max-w-4xl max-h-max text-white pt-4">
+                            <StoreFromEdit store={store}/>
                         </BlurCard>    
                     </PopupIconButton>
                 </DrawerProvider>

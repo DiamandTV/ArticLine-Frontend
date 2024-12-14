@@ -1,26 +1,25 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ImagePicker } from "../inputs/ImagePicker/ImagePicker";
 import { FaPlus } from "react-icons/fa6";
 import { RiDeleteBin5Fill } from "react-icons/ri";
-import { StepperButtons } from "../stepper/StepperButtons";
 import { InputError } from "../inputs/InputError/InputError";
-import { StepperContext } from "../stepper/StepperContext";
 import { v4 as uuidv4 } from "uuid";
 import { ImageModel } from "../../models/image";
-export function StoreImageForm({className,indexStepper}:{className?:string,indexStepper:number}){
-    const {stepper:{state,setState,/*maxStep*/singleLine},record:{record,setRecord},error:{errorStepper},/*beforeChangeMediaQuery:{setBeforeChangeMediaQuery}*/finish:{finish}} = useContext(StepperContext)
-    const stateStepper = singleLine ? indexStepper : state
+import { FieldError, useFormContext } from "react-hook-form";
+export function StoreImageForm({className}:{className?:string}){
+    //const {stepper:{state,setState,/*maxStep*/singleLine},record:{record,setRecord},error:{errorStepper},/*beforeChangeMediaQuery:{setBeforeChangeMediaQuery}*/finish:{finish}} = useContext(StepperContext)
+    const control = useFormContext()
+    const {setValue,getValues,formState:{errors},setError} = control
+    
     const [images,setImages] = useState<Array<ImageModel | null>>(
-        (record[stateStepper] && record[stateStepper].images) 
+        (getValues('images') && getValues('images')) 
         ? 
-        record[stateStepper].images as Array<ImageModel | null>
+        getValues('images') as Array<ImageModel | null>
         : 
         [{image:null}]
     )
-    const [error,setErrors] = useState(errorStepper.images ? errorStepper.images : null)
+    //const [error,setErrors] = useState(errorStepper.images ? errorStepper.images : null)
     const divRef = useRef<HTMLDivElement | null>(null)
-
-    console.log(record)
     const onScroll = (e:WheelEvent)=>{
         e.preventDefault()
         if(e.deltaY == 0) return;
@@ -29,12 +28,11 @@ export function StoreImageForm({className,indexStepper}:{className?:string,index
     }
 
     useEffect(()=>{
-        console.log(record[stateStepper])
         if(divRef){
             divRef.current?.addEventListener('wheel',onScroll)
             return ()=> divRef.current?.removeEventListener('wheel',onScroll)
         }
-        
+        console.log(images)
         
     },[])
 
@@ -49,7 +47,7 @@ export function StoreImageForm({className,indexStepper}:{className?:string,index
         <div className={"w-full flex flex-col justify-center items-center gap-y-4 "}>
             <div className="w-full h-full flex flex-row justify-between items-center gap-x-2">
                 <div className="relative">
-                    <InputError error={error}/>
+                    <InputError error={errors.images as FieldError | undefined}/>
                 </div>
                 <div className="max-w-max h-full flex flex-row justify-center items-center gap-x-2">
                     { images.length < 5 ?  
@@ -58,12 +56,12 @@ export function StoreImageForm({className,indexStepper}:{className?:string,index
                             onClick={()=>{
                                 if(images.length < 5 && !images.includes(null)) setImages([...images,{image:null}])
                                 else if(images.length < 5){
-                                    setErrors(["You can't put more than five images for the store"])
+                                    setError('images',{type:"custom",message:"You can't put more than five images for the store"})
                                     setTimeout(()=>{
                                         // todo:sistemarlo per metterlo nell effect in modo da avere una funziona di ritorno che canella automaticamente il listener
-                                        setErrors(null)
+                                        setError('images',{type:"custom",message:undefined})
                                     },4000)
-                                } else setErrors("Before setting another image please use this input")
+                                } else setError('images',{type:"custom", message:"Before setting another image please use this input"})
                             }}>
                             <FaPlus size={15}/>
                         </div> : null
@@ -90,29 +88,17 @@ export function StoreImageForm({className,indexStepper}:{className?:string,index
                             key={uuidv4()}
                             image={images[index] ? images[index].image : null} 
                             setImage={(image)=>{
-                                const _images = [...images]
+                                console.log(getValues())
+                                const _images = getValues('images') ? getValues('images') : []
                                 _images[index]!.image= image as string
-                                const newRecord = record
-                                newRecord[stateStepper] = {
-                                    'images':_images
-                                }
-                                setRecord(newRecord)
+                                setValue('images',_images)
                                 setImages(_images)
+                                console.log(_images)
+                                
                             }}
                         />
                 </div>)
              )}
-            </div>
-            <div className="w-full mt-auto">
-                <StepperButtons
-                    onNextClick={()=>{
-                        if(images.filter((image)=>image!=null).length === 0){
-                            setErrors(["You have to choose an iamge for your store. It will be better if tou choose five of them"])
-                        } else {
-                            setState(state+1)
-                        }
-                    }}
-                />
             </div>
         </div>
     )

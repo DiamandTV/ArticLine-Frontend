@@ -1,7 +1,7 @@
 import Carousel from 'react-multi-carousel';
-import WithStyles from 'react-multi-carousel'
 import { ImageModel } from '../../models/image';
 import "react-multi-carousel/lib/styles.css";
+//import "../../App.css"
 interface CarouselProps{
     images:Array<ImageModel>
 }
@@ -10,7 +10,6 @@ export function CarouselImages({images}:CarouselProps){
 
     return ( 
         <Carousel
-
             additionalTransfrom={0}
             arrows
             autoPlay
@@ -21,7 +20,7 @@ export function CarouselImages({images}:CarouselProps){
             draggable
             focusOnSelect={false}
             infinite
-            itemClass="h-[325px]"
+            itemClass="h-[325px] itemClass"
             keyBoardControl
             minimumTouchDrag={80}
             pauseOnHover
@@ -31,7 +30,7 @@ export function CarouselImages({images}:CarouselProps){
             responsive={{
             desktop: {
                 breakpoint: {
-                max: 3000,
+                max: 4000,
                 min: 1024
                 },
                 items: 1,
@@ -62,6 +61,7 @@ export function CarouselImages({images}:CarouselProps){
             sliderClass=""
             slidesToSlide={1}
             swipeable
+            
         >
             {images.map((image)=>(
                  <img className='w-full h-full rounded-xl' src={image.image!}/>

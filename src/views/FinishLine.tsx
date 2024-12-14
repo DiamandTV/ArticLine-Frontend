@@ -4,7 +4,7 @@ import { TextButton } from "../components/buttons/TextButtons"
 import { AxiosError, AxiosResponse } from "axios"
 import { StepperContext } from "../components/stepper/StepperContext"
 import { SERVER_INTERNAL_ERROR_CODE } from "../constraints"
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 
 interface FinishLineProps{
     button:{
@@ -20,10 +20,11 @@ export function FinishLine({button:{text,onClick},queryKey,onSuccess,onError}:Fi
     //const data = useContext(StepperContext)
     const {isLoading,isError,isSuccess,refetch} = useQuery({
         queryFn:async ()=> {
+            console.log("RECORD")
             console.log(record)
-            return await onFinish(record)
+            return await onFinish([...record])
         },
-        retry:2,
+        retry:0,
         enabled:false,
         refetchOnWindowFocus:false,
         // account === user || company , so it works for the user and the company
@@ -59,10 +60,12 @@ export function FinishLine({button:{text,onClick},queryKey,onSuccess,onError}:Fi
     })
   
     useEffect(()=>{
-        if(finish){
+        if(finish ){
             refetch()
         }
     },[finish])
+
+    
 
 
     return (

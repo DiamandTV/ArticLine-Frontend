@@ -1,4 +1,4 @@
-import { Dialog, DialogContent } from "@mui/material";
+import { Dialog } from "@mui/material";
 import { ProductModel } from "../../models/Product";
 import { useContext } from "react";
 import { ProductCard } from "./ProductCard";
@@ -15,14 +15,19 @@ export function DialogProductCard({product}:{product:ProductModel}){
                 onClose={()=>setOpen(false)}
                 PaperProps={{
                     style:{
-                        backgroundColor:"transparent"
+                        backgroundColor:"#0f172a",
+                        padding:"0px",
+                        margin:"0px"
+                    }
+                }}
+                sx={{
+                    "& .MuiDialogContent-root":{
+                        padding:"0px",
+                        backgroundColor:"#0f172a"
                     }
                 }}
                 >
-                <DialogContent>
-                    <OpenProductCard product={product}/>
-                </DialogContent>
-                
+                <OpenProductCard product={product}/>
             </Dialog>
             <ProductCard 
                 product={product}

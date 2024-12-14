@@ -1,3 +1,4 @@
+/*
 // !!! INLINE STORE FORM MODE
 import { StepperForm } from "../stepper/Stepper"
 import { StepperGetStepDataProps } from "../stepper/Stepper"
@@ -6,7 +7,7 @@ import { StoreInfo, StoreInfoFields } from "./StoreInfo"
 import { StoreImageForm } from "./StoreImageForm"
 import { companyStoreService } from "../../services/companyStoreService"
 import { useDispatch, useSelector } from "react-redux"
-import { addStore } from "../../store/profileSlice"
+import { addStore, updateStore } from "../../store/profileSlice"
 import { FinishLine } from "../../views/FinishLine"
 import { useNavigate } from "react-router-dom"
 import { StoreModel } from "../../models/store"
@@ -45,7 +46,7 @@ export function StoreFormEdit({store}:{store?:StoreModel}){
                         queryKey={['store-edit']}
                         onSuccess={(data)=>{
                             const storeData = data.data as StoreModel 
-                            console.log(storeData)
+                            dispatch(updateStore(storeData))
                             alert("OK")
                             //navigate(`/store/details/${storeData.id}/`)
                             //dispatch(addStore(data.data))
@@ -82,3 +83,4 @@ export function StoreFormEdit({store}:{store?:StoreModel}){
             </StepperForm>
     )
 }
+    */

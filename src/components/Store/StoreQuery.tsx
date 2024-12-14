@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useStoreService } from "../../services/storeService";
 import { useQuery } from "@tanstack/react-query";
 import { LoaderResponse } from "../loader/LoaderResponse";
@@ -6,11 +6,13 @@ import { BlurCard } from "../cards/BlurCard";
 import { useDispatch } from "react-redux";
 import { clearStoreDetails, setStoreDetails } from "../../store/storeSlice";
 import { useEffect } from "react";
+import { StoreModel } from "../../models/store";
 
 
 export function StoreQuery({children}:{children:React.ReactNode}){
     const params = useParams()
     const storeId = params['store-id']
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const {isLoading,isError,isSuccess} = useQuery({
         refetchOnMount:false,
@@ -22,7 +24,11 @@ export function StoreQuery({children}:{children:React.ReactNode}){
             }
         },
         onSuccess:(data)=>{
-            dispatch(setStoreDetails(data?.data))
+            if(data && data.data){
+                const store = data.data as StoreModel
+                dispatch(setStoreDetails(data?.data))
+                if(store.store_categories && store.store_categories.length > 0)  navigate(`sub-category/${store.store_categories[0].id}`)
+            }
         }
         
     })

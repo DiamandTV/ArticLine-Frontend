@@ -12,6 +12,9 @@ export const MINIMUM_TEMPERATURE_RANGE:number = 5 // minimum temperature range w
 
 export const MAX_CARD_IN_PAGE:number = 2
 
+// The regex to understand if the image is an url or base 64. If it's an url don't send it 
+export const urlPattern = new RegExp('https?:\\/\\/(\\w+:?\\w*@)?([\\w.-]+)(:\\d+)?(\\/[^\\s]*)?', 'i');
+
 export function checkForError(error:unknown){
     if(error instanceof AxiosError && error.status != SERVER_INTERNAL_ERROR_CODE){
         try{

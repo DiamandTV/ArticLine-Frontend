@@ -8,7 +8,7 @@ import { StoreSettings } from "./StoreSettings";
 export function StoreHeader(){
     
     return(
-        <div className="w-full grid grid-cols-5 gap-x-8">
+        <div className="w-full grid grid-cols-5 gap-x-8 items-stretch">
             <StoreImages/>
             <BlurCard className=" col-span-3 h-full flex flex-row gap-y-4">
                 <StoreDetails/>

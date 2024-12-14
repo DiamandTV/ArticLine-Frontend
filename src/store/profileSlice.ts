@@ -25,9 +25,18 @@ const profileSlice = createSlice({
         },
         addStore:(state,action)=>{
             state.stores = [...state.stores,action.payload]
+        },
+        updateStore:(state,action)=>{
+            const storeToUpdate = action.payload as StoreModel
+            state.stores = [...state.stores.map((store)=>{
+                if(store.id === storeToUpdate.id){
+                    return storeToUpdate
+                }
+                return store
+            })] 
         }
     }
 })
 
-export const { setProfile,setStores,addStore } = profileSlice.actions
+export const { setProfile,setStores,addStore,updateStore } = profileSlice.actions
 export const profileReducer = profileSlice.reducer

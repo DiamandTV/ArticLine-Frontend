@@ -8,7 +8,7 @@ export interface TextButtonProps{
 export function TextButton({text,children,onClick,className,type="button"}:TextButtonProps){
     return(
         <button
-            className={`max-w-max p-2 hover:cursor-pointer hover:bg-sky-300 box-content p-4 bg-sky-500 rounded-xl text-md ${className}`}
+            className={`max-w-max hover:cursor-pointer hover:bg-sky-300 box-border p-4 bg-sky-500 rounded-xl text-md ${className}`}
             onClick={onClick}
             type={type}
         >   

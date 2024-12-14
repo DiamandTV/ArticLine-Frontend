@@ -31,6 +31,9 @@ const storeSlice = createSlice({
             })
             state.pageCountCategories = {...pageCount}
         },
+        updateStoreDetails:(state,action)=>{
+            state.store = {...action.payload}
+        },
         clearStoreDetails:(state)=>{
             state.store = null;
             state.pageCountCategories = null;
@@ -57,5 +60,5 @@ const storeSlice = createSlice({
     }
 })
 
-export const {setStoreDetails,clearStoreDetails,addStoreCategory,setCategoriesAndPagination,setPageForCategory,addStoreProduct} = storeSlice.actions
+export const {setStoreDetails,updateStoreDetails,clearStoreDetails,addStoreCategory,setCategoriesAndPagination,setPageForCategory,addStoreProduct} = storeSlice.actions
 export const storeReducer = storeSlice.reducer
