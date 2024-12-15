@@ -15,6 +15,12 @@ export const MAX_CARD_IN_PAGE:number = 2
 // The regex to understand if the image is an url or base 64. If it's an url don't send it 
 export const urlPattern = new RegExp('https?:\\/\\/(\\w+:?\\w*@)?([\\w.-]+)(:\\d+)?(\\/[^\\s]*)?', 'i');
 
+export const MAX_COUNTER_VALUE = 20
+
+// The user can has maximum 10 different cart contemporanaly
+export const MAX_CART_LENGTH = 10
+export const CART_SECTOR =     'ARTICLINE-CART-SECTOR'
+
 export function checkForError(error:unknown){
     if(error instanceof AxiosError && error.status != SERVER_INTERNAL_ERROR_CODE){
         try{

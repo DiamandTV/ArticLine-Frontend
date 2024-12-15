@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom"
 import { useStoreService } from "../../../services/storeService";
 import { useQuery } from "@tanstack/react-query";
-import { LoaderResponse } from "../../loader/LoaderResponse";
-import { BlurCard } from "../../cards/BlurCard";
+//import { LoaderResponse } from "../../loader/LoaderResponse";
+//import { BlurCard } from "../../cards/BlurCard";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { setCategoriesAndPagination } from "../../../store/storeSlice";
@@ -14,19 +14,21 @@ export function StoreCategoryQuery({children}:{children:React.ReactNode}){
     const storeId = params['store-id']
     const storeCategoryId = params['sub-category-id']
     const pageCountCategories = useSelector((state:RootState)=>state.storeReducer.pageCountCategories)
+
+    //todo: improve this code writing type. migliorare la scrittura
     let page = null
-    try{
-        if(pageCountCategories && storeCategoryId) page = pageCountCategories![storeCategoryId] as number;
-    } catch(e){
-        console.log(e)
-    }
-    console.log(pageCountCategories)
+    if(pageCountCategories && storeCategoryId) page = pageCountCategories![storeCategoryId] as number;
+    if(!page) page = 1
+   
     const {isLoading,isError,isSuccess} = useQuery({
         refetchOnMount:false,
         refetchOnWindowFocus:false,
         queryKey:['store-sub-category-details',storeId,storeCategoryId,page],
         queryFn:async()=>{
             console.log("Ok")
+            console.log(storeId)
+            console.log(storeCategoryId)
+            console.log(page)
             if(storeId && storeCategoryId && page){
                 return await useStoreService.getStoreCategoryProducts({storeId,storeCategoryId,page})
             }
@@ -43,7 +45,6 @@ export function StoreCategoryQuery({children}:{children:React.ReactNode}){
 
 
     if(!storeId || !storeCategoryId) return;
-
     return (
         isSuccess ? children : 
         (

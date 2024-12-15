@@ -5,18 +5,20 @@ import { companyStoreService } from "../../services/companyStoreService";
 import { StoreForm, StoreFormFields } from "./StoreForm";
 import { checkForError } from "../../constraints";
 import { useDispatch } from "react-redux";
-import { updateStore } from "../../store/profileSlice";
+import { deleteStore, updateStore } from "../../store/profileSlice";
 import { AxiosResponse } from "axios";
 import { useContext } from "react";
 import { DrawerContext } from "../Drawer/DrawerContext";
 import { updateStoreDetails } from "../../store/storeSlice";
 import { DeleteButton } from "../buttons/DeleteButton";
+import { useNavigate } from "react-router-dom";
 
 interface StoreEditProps{
     store?:StoreModel
 }
 export function StoreFromEdit({store}:StoreEditProps){
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const {setOpen} = useContext(DrawerContext)
     //const store = useSelector((state:RootState)=>state.storeReducer.store)
     const {mutateAsync} = useMutation({
@@ -55,7 +57,7 @@ export function StoreFromEdit({store}:StoreEditProps){
         >  
             <div className="w-full h-14 flex flex-row justify-center gap-x-2">
                 <TextButton
-                    className="max-w-[1000] w-full"
+                    className="max-w-[1000px] w-full"
                     text="EDIT THE STORE"
                     type="submit"
                     onClick={()=>{
@@ -66,7 +68,14 @@ export function StoreFromEdit({store}:StoreEditProps){
                     onClick={()=>{
                         // ask for the user if he's convince about deleting the store
                         if(store )  {
-                            companyStoreService.deleteStore(store.id)
+                            try{
+                                companyStoreService.deleteStore(store.id)
+                                dispatch(deleteStore(store))
+                                navigate('/store/list/company')
+                                
+                            } catch(e){
+                                console.log(e)
+                            }
                         } 
                         else {
                             //todo: show a toast error

@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { UserSignIn } from "../page/UserSignIn";
 import { CompanySignIn } from "../page/CompanySignIn";
-import { LogIn } from "../page/Login";
+import { LogIn } from "../page/login";
 import { UnsignedRoute } from "./UnsignedRoute";
 import { EmailAndResend } from "../page/EmailAndResend";
 import { PasswordForget } from "../page/PasswordForget";
@@ -13,10 +13,11 @@ import { Main } from "../page/App/Main";
 import { Home } from "../page/Home/Home";
 import { Store } from "../page/Store/Store";
 import { StoreCategory } from "../page/Store/StoreCategory";
-import { ProductCreate } from "../page/Store/ProductCreate";
+//import { ProductCreate } from "../page/Store/ProductCreate";
 import { StoresCompany } from "../page/Store/CompanyStores";
+import { Checkout } from "../page/Checkout/Checkout";
 const router = createBrowserRouter([
-    {path:"/product",element:<ProductCreate/>},
+    //{path:"/product",element:<ProductCreate/>},
     // main app routes
     {
         path:"",
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
                     }
                 ]
             },
+            {path:"/checkout/payment/:cart-id",element:<Checkout/>},
           
         ]
     },

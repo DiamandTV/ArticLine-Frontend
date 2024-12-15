@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { StoreModel } from "../models/store";
 import { PaginationModel } from "../models/pagination";
 import { ProductModel } from "../models/Product";
+import { StoreCategoriesModel } from "../models/StoreCategories";
 
 export interface StoreDetailsModel{
     store:StoreModel | null,
@@ -34,6 +35,31 @@ const storeSlice = createSlice({
         updateStoreDetails:(state,action)=>{
             state.store = {...action.payload}
         },
+        deleteStoreCategory:(state,action)=>{
+            const storeCategoryToDelete = action.payload as StoreCategoriesModel
+            console.log(state.store)
+            if(state.store && state.store.categories){
+                const storeCategories = [...state.store!.store_categories!.filter((category)=>{
+                    if(category.id === storeCategoryToDelete.id) return false
+                    return true
+                })]
+                state.store = {...state.store,store_categories:[...storeCategories]}
+                // if the product store category is the same of the store cateogory to delete, delete also the products
+                if(state.products?.length && state.products[0].store_category === storeCategoryToDelete.id){
+                    state.products = []
+                }
+            }
+        },
+        updateStoreCategory:(state,action)=>{
+            if(state.store && state.store?.store_categories){;
+                const storeCategoryToUpdate = action.payload as StoreCategoriesModel
+                const storeCategories:Array<StoreCategoriesModel> = state.store.store_categories.map((category)=>{
+                    if(category.id === storeCategoryToUpdate.id) return storeCategoryToUpdate
+                    return category
+                })
+                state.store = {...state.store,store_categories:[...storeCategories]}
+            }
+        },
         clearStoreDetails:(state)=>{
             state.store = null;
             state.pageCountCategories = null;
@@ -46,6 +72,19 @@ const storeSlice = createSlice({
         addStoreProduct:(state,action)=>{
             const products = !state.products ? [action.payload] : [...(state.products),action.payload]
             state.products = products
+        },
+        updateStoreProduct:(state,action)=>{
+            if(!state.products) return;
+            const productToUpdate = action.payload as ProductModel
+            state.products = [...state.products.map((product)=>{
+                if(product.id===productToUpdate.id) return productToUpdate
+                return product
+            })]
+        },
+        deleteStoreProduct:(state,action)=>{
+            if(!state.products) return;
+            const productToDelete = action.payload as ProductModel
+            state.products = [...state.products.filter((product)=>product.id!==productToDelete.id)]
         },
         setCategoriesAndPagination:(state,action)=>{
             const pagination:PaginationModel = action.payload
@@ -60,5 +99,5 @@ const storeSlice = createSlice({
     }
 })
 
-export const {setStoreDetails,updateStoreDetails,clearStoreDetails,addStoreCategory,setCategoriesAndPagination,setPageForCategory,addStoreProduct} = storeSlice.actions
+export const {setStoreDetails,updateStoreDetails,deleteStoreCategory,updateStoreCategory,deleteStoreProduct,clearStoreDetails,addStoreCategory,setCategoriesAndPagination,setPageForCategory,addStoreProduct,updateStoreProduct} = storeSlice.actions
 export const storeReducer = storeSlice.reducer

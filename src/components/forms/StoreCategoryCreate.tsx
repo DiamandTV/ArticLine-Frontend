@@ -9,8 +9,10 @@ import { checkForError } from "../../constraints";
 import { addStoreCategory } from "../../store/storeSlice";
 import { useContext } from "react";
 import { DrawerContext } from "../Drawer/DrawerContext";
+import { useNavigate } from "react-router-dom";
 
 export function StoreCategoryCreate(){
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const {setOpen} = useContext(DrawerContext)
     const store = useSelector((state:RootState)=>state.storeReducer.store)
@@ -22,9 +24,15 @@ export function StoreCategoryCreate(){
         },
         onSuccess:(data)=>{
             if(store && store.store_categories && data && data.data){
-                dispatch(addStoreCategory(data?.data))
+                const storeCategory = data.data as StoreCategoriesModel
+                dispatch(addStoreCategory(storeCategory))
                 // close the drawer
                 setOpen(false)
+
+                // if the createn sub category is the first one then navigate the user to it
+                if(store.store_categories && store.store_categories.length == 0){
+                    navigate(`sub-category/${storeCategory.id}`)
+                }
             }
         }
     })

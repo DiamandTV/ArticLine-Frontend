@@ -1,6 +1,6 @@
 export interface StoreCategoriesModel{
     id?:number,
-    image:string,
+    image?:string,
     name:string,
     description:string,
     store:number

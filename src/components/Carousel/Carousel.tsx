@@ -1,6 +1,7 @@
 import Carousel from 'react-multi-carousel';
 import { ImageModel } from '../../models/image';
 import "react-multi-carousel/lib/styles.css";
+import {v4 as uuid} from "uuid"
 //import "../../App.css"
 interface CarouselProps{
     images:Array<ImageModel>
@@ -64,7 +65,7 @@ export function CarouselImages({images}:CarouselProps){
             
         >
             {images.map((image)=>(
-                 <img className='w-full h-full rounded-xl' src={image.image!}/>
+                 <img key={uuid()} className='w-full h-full rounded-xl' src={image.image!}/>
             ))}
         </Carousel>
     )

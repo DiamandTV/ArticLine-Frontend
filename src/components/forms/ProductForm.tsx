@@ -9,8 +9,11 @@ import { FixedSizeDropdown } from "../inputs/Dropdown/FixedSizeDropdown"
 import { StoreCategoriesModel } from "../../models/StoreCategories"
 import { MINIMUM_TEMPERATURE_RANGE } from "../../constraints"
 import { ImagePicker } from "../inputs/ImagePicker/ImagePicker"
+import { ProductModel } from "../../models/Product"
+import { useProductService } from "../../services/productService"
 
 const schema = z.object({
+    id:z.coerce.number().optional(),
     image:z.string(),
     /*
     name:z.string().min(1),
@@ -32,11 +35,13 @@ export type ProductFormFields = z.infer<typeof schema>
 interface ProductFormProps{
     store_categorys:Array<StoreCategoriesModel>,
     onSubmitForm:(productInfo:ProductFormFields)=>Promise<Record<string,string> | null>,
-    children:React.ReactNode
+    children:React.ReactNode,
+    product?:ProductModel
 }
-export function ProductForm({store_categorys,children,onSubmitForm}:ProductFormProps){
+export function ProductForm({store_categorys,children,onSubmitForm,product}:ProductFormProps){
     const {register,getValues,setValue,handleSubmit,formState:{errors},control,setError} = useForm<ProductFormFields>({
-        resolver:zodResolver(schema)
+        resolver:zodResolver(schema),
+        defaultValues:useProductService.decodeProductData({product, storeCategories:store_categorys}) as ProductFormFields|undefined
     })
     const onSubmit:SubmitHandler<ProductFormFields> = async (productInfo)=>{
         console.log(productInfo)

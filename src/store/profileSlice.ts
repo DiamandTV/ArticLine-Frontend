@@ -34,9 +34,16 @@ const profileSlice = createSlice({
                 }
                 return store
             })] 
+        },
+        // deleteStoreCategory:(state,action)=>{
+             
+        // },
+        deleteStore:(state,action)=>{
+            const storeToDelete = action.payload as StoreModel
+            state.stores = [...state.stores.filter((store)=>store.id!==storeToDelete.id)]
         }
     }
 })
 
-export const { setProfile,setStores,addStore,updateStore } = profileSlice.actions
+export const { setProfile,setStores,addStore,updateStore,deleteStore } = profileSlice.actions
 export const profileReducer = profileSlice.reducer

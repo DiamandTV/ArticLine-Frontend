@@ -36,8 +36,8 @@ export function StoreSettings(){
                             icon:<FaPlus size={30}/>
                         }}
                     >
-                    <BlurCard className="max-w-lg w-full h-full max-h-screen text-white">
-                            <StoreCategoryCreate/>
+                        <BlurCard className="max-w-lg w-full h-full max-h-screen text-white">
+                                <StoreCategoryCreate/>
                         </BlurCard>
                     </PopupIconButton>
                 </DrawerProvider>

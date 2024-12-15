@@ -1,7 +1,7 @@
 import Title from '../../assets/images/Title.png'
 //import { Iconbutton } from '../../components/buttons/Iconbutton';
 import { PiUserLight } from "react-icons/pi";
-import { SearchBar } from '../SearchBar/SearchBar';
+import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { FaHeart } from "react-icons/fa6";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { CiHeart } from "react-icons/ci";

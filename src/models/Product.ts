@@ -1,7 +1,8 @@
 //import { StoreModel } from "./store";
 
 export interface ProductModel{
-    image:string|null,
+    id?:number,
+    image?:string|null,
     name:string,
     description:string,
     store:number,

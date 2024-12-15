@@ -1,4 +1,5 @@
 import { StoreCategoryFields } from "../components/forms/StoreCategoryForm";
+import { urlPattern } from "../constraints";
 import { StoreModel } from "../models/store";
 import { StoreCategoriesModel } from "../models/StoreCategories";
 import { api } from "./api";
@@ -8,10 +9,18 @@ export const useStoreCategoriesService = {
         if(!storeCategory.store) return;
         return api.post(`store/details/${storeCategory.store}/sub_category/`,storeCategory)
     },
+    async updateStoreCategory({storeCategory}:{storeCategory:StoreCategoriesModel}){
+        return api.patch(`store/details/${storeCategory.store}/sub_category/${storeCategory.id}/update`,storeCategory)
+    },
+    async deleteStoreCategory({storeCategory}:{storeCategory:StoreCategoriesModel}){
+        return api.delete(`store/details/${storeCategory.store}/sub_category/${storeCategory.id}/delete`)
+    },
     serilizeStoreCategoryData({storeCategory,store}:{storeCategory:StoreCategoryFields,store:StoreModel}):StoreCategoriesModel{
-        return {
+        const data:StoreCategoriesModel = {
             store:store.id,
             ...storeCategory
         }
+        if (storeCategory.image.match(urlPattern)) delete data.image
+        return data 
     }
 }

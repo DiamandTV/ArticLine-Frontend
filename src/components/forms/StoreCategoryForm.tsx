@@ -5,6 +5,7 @@ import { StoreCategory } from "../../page/Store/StoreCategory"
 import { ImagePicker } from "../inputs/ImagePicker/ImagePicker"
 import { AnimationPlaceholderInput } from "../inputs/AnimationPlaceholderInput"
 import { AnimationPlaceholderTextArea } from "../inputs/AnimationPlaceholderTextArea"
+import { StoreCategoriesModel } from "../../models/StoreCategories"
 
 const schema = z.object({
     /*
@@ -12,6 +13,7 @@ const schema = z.object({
     name:z.string().min(1),
     description:z.string().min(1)
     */
+    id:z.coerce.number().optional(),
     image:z.string().min(1),
     name:z.string(),
     description:z.string()
@@ -21,11 +23,13 @@ export type StoreCategoryFields = z.infer<typeof schema>
 
 interface StoreCategoryFormProps{
     onSubmitForm:(productInfo:StoreCategoryFields)=>Promise<Record<string,string> | null>,
-    children:React.ReactNode
+    children:React.ReactNode,
+    storeCategory?:StoreCategoriesModel
 }
-export function StoreCategoryForm({children,onSubmitForm}:StoreCategoryFormProps){
+export function StoreCategoryForm({children,onSubmitForm,storeCategory}:StoreCategoryFormProps){
     const {handleSubmit,control,register,formState:{errors},setValue,getValues,setError} = useForm<StoreCategoryFields>({
-        resolver:zodResolver(schema)
+        resolver:zodResolver(schema),
+        defaultValues:storeCategory as StoreCategoryFields|undefined
     })
 
     const onSubmit:SubmitHandler<StoreCategoryFields> = async (storeCategoryInfo)=>{

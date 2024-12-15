@@ -78,7 +78,7 @@ export function StoreImageForm({className}:{className?:string}){
                                 className="max-w-max absolute z-10 top-2 right-2 hover:cursor-pointer hover:bg-red-300 box-content p-1.5 bg-red-500 rounded-full"
                                 onClick={()=>{
                                     //if(images.length < 5) setImages([...images,null])
-                                    setImages(images.filter((image,_index)=>_index != index))
+                                    if(images.length > 1) setImages(images.filter((image,_index)=>_index != index))
                                 }}>
                                 <RiDeleteBin5Fill size={15}/> 
                             </div> : null
