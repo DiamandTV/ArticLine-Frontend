@@ -1,11 +1,11 @@
 import { StartView } from "../views/StartView"
 import { useQuery } from "@tanstack/react-query"
-import { LoaderResponse } from "../components/loader/LoaderResponse"
+import { LoaderResponse } from "../components/Loader/LoaderResponse"
 import { useAuthService } from "../services/authService"
 import { useNavigate, useParams } from "react-router-dom"
 import { AxiosError } from "axios"
 import { useEffect, useState } from "react"
-import { TextButton } from "../components/buttons/TextButtons"
+import { TextButton } from "../components/Buttons/TextButtons"
 import { HighlightedTitle } from "../components/Texts/HighlightedTitle"
 export function VerifyEmail({resendEmail}:{resendEmail:()=>void}){
     const {id,token} = useParams()

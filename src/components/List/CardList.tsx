@@ -9,7 +9,7 @@ export interface CardListProps extends React.HTMLAttributes<HTMLAllCollection>{
     children:ComponentType<ListChildComponentProps>
 }
 
-export function CartList({itemSize,itemCount,children,className}:CardListProps){
+export function CardList({itemSize,itemCount,children,className}:CardListProps){
     const [cardHeight,setCardHeight] = useState(0)
     const divRef = useRef<HTMLDivElement | null>(null)
     const listRef = useRef<FixedSizeList | null>(null)

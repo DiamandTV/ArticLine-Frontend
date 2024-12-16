@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { CartCard } from "../cards/CartCard"
+import { CartCard } from "../Cards/CartCard"
 import { RootState } from "../../store/store";
 import { CartModel } from "../../models/Order";
 

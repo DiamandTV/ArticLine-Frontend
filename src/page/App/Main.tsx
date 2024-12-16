@@ -3,7 +3,7 @@ import { NavBar } from "../../layouts/NavBar/NavBar"
 import { MainView } from "../../views/MainView"
 import { NavBarType } from "../../layouts/NavBar/NavBarTypes"
 //import { SearchBar } from "../../components/SearchBar/SearchBar"
-import { SideBarApp } from "../../components/SideBar/SideBar"
+import { SideBarApp } from "../../layouts/SideBar/SideBar"
 import { Outlet } from "react-router-dom"
 
 export function Main(){

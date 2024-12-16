@@ -1,5 +1,5 @@
 import { Drawer } from "@mui/material";
-import { IconTextButton } from "../buttons/IconTextButton";
+import { IconTextButton } from "../Buttons/IconTextButton";
 import { useContext } from "react";
 import { DrawerContext } from "../Drawer/DrawerContext";
 

@@ -1,12 +1,12 @@
 import { ProductModel } from "../../models/Product";
-import { TextButton } from "../buttons/TextButtons";
+import { TextButton } from "../Buttons/TextButtons";
 import { Counter } from "../inputs/Counter/Counter";
 import { BlurCard } from "./BlurCard";
 import { CardImage } from "./CardImage";
 import { Can } from "../../config/permissions/can";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { DeleteButton } from "../buttons/DeleteButton";
+import { DeleteButton } from "../Buttons/DeleteButton";
 import { useContext, useState } from "react";
 import { addProductToCart } from "../../store/cartsSlice";
 import { OrderItemModel } from "../../models/Order";

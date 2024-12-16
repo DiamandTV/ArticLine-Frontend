@@ -6,7 +6,7 @@ import { FixedSizeDropdown } from "../inputs/Dropdown/FixedSizeDropdown";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { StepperButtons } from "../stepper/StepperButtons";
+import { StepperButtons } from "../Stepper/StepperButtons";
 import { useContext, useRef } from "react";
 import { StepperContext } from "../stepper/StepperContext";
 import {  useEffect,useState } from "react"

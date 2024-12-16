@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { TextButton } from "../buttons/TextButtons";
+import { TextButton } from "../Buttons/TextButtons";
 import { StoreCategoryForm } from "./StoreCategoryForm";
 import { RootState } from "../../store/store";
 import { useMutation } from "@tanstack/react-query";
@@ -9,7 +9,7 @@ import { checkForError } from "../../constraints";
 import { deleteStoreCategory,updateStoreCategory } from "../../store/storeSlice";
 import { useContext } from "react";
 import { DrawerContext } from "../Drawer/DrawerContext";
-import { DeleteButton } from "../buttons/DeleteButton";
+import { DeleteButton } from "../Buttons/DeleteButton";
 
 export function StoreCategoryEdit({storeCategory}:{storeCategory:StoreCategoriesModel|undefined}){
     const dispatch = useDispatch()

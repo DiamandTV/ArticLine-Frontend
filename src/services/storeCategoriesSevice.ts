@@ -1,4 +1,4 @@
-import { StoreCategoryFields } from "../components/forms/StoreCategoryForm";
+import { StoreCategoryFields } from "../components/Forms/StoreCategoryForm";
 import { urlPattern } from "../constraints";
 import { StoreModel } from "../models/store";
 import { StoreCategoriesModel } from "../models/StoreCategories";

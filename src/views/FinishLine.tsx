@@ -1,8 +1,8 @@
 // Finish Component of the Stepper for the in line Stepper Mode
 import { useContext, useEffect } from "react"
-import { TextButton } from "../components/buttons/TextButtons"
+import { TextButton } from "../components/Buttons/TextButtons"
 import { AxiosError, AxiosResponse } from "axios"
-import { StepperContext } from "../components/stepper/StepperContext"
+import { StepperContext } from "../components/Stepper/StepperContext"
 import { SERVER_INTERNAL_ERROR_CODE } from "../constraints"
 import { useMutation, useQuery } from "@tanstack/react-query"
 

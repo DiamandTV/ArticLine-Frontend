@@ -2,9 +2,9 @@ import { AnimationPlaceholderInput,AnimationPlaceholderInputProps } from "../inp
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { StepperButtons } from "../stepper/StepperButtons"
+import { StepperButtons } from "../Stepper/StepperButtons"
 import { useContext, useRef } from "react"
-import { StepperContext } from "../stepper/StepperContext"
+import { StepperContext } from "../Stepper/StepperContext"
 import {  useEffect } from "react"
 //import { useUserService } from "../../services/userService"
 

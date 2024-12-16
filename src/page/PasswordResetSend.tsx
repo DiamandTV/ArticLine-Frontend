@@ -1,4 +1,4 @@
-import { LoaderResponse } from "../components/loader/LoaderResponse";
+import { LoaderResponse } from "../components/Loader/LoaderResponse";
 import { StartView } from "../views/StartView";
 export function PasswordResetSend(){
     return (

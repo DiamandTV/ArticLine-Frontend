@@ -1,5 +1,5 @@
-import { LoaderResponse } from "../loader/LoaderResponse"
-import { LoaderResponseProps } from "../loader/LoaderResponse"
+import { LoaderResponse } from "./LoaderResponse"
+import { LoaderResponseProps } from "./LoaderResponse"
 export interface LoaderWithChildrenProps{
     children:React.ReactNode,
     loader:LoaderResponseProps,

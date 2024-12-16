@@ -21,6 +21,9 @@ export const MAX_COUNTER_VALUE = 20
 export const MAX_CART_LENGTH = 10
 export const CART_SECTOR =     'ARTICLINE-CART-SECTOR'
 
+// Time to add to the order
+export const ORDER_MINUTES_OFFSET = 30
+
 export function checkForError(error:unknown){
     if(error instanceof AxiosError && error.status != SERVER_INTERNAL_ERROR_CODE){
         try{

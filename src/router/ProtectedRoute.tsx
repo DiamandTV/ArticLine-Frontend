@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useAuthService } from "../services/authService";
 import { isAuthenticatedReturn } from "../services/authService";
-import { LoaderResponse } from "../components/loader/LoaderResponse";
+import { LoaderResponse } from "../components/Loader/LoaderResponse";
 import { Navigate, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";

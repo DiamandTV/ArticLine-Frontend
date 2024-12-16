@@ -1,4 +1,4 @@
-import { BlurCard } from "../../cards/BlurCard";
+import { BlurCard } from "../../Cards/BlurCard";
 //import { CarouselImages } from "../Carousel/Carousel";
 import { StoreDetails } from "./StoreDetails";
 import { StoreImages } from "./StoreImages";

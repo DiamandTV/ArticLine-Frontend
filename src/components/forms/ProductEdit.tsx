@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { ProductForm, ProductFormFields } from "./ProductForm";
 import { RootState } from "../../store/store";
-import { TextButton } from "../buttons/TextButtons";
+import { TextButton } from "../Buttons/TextButtons";
 import { useMutation } from "@tanstack/react-query";
 import { useProductService } from "../../services/productService";
 import { ProductModel } from "../../models/Product";
@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import { updateStoreProduct } from "../../store/storeSlice";
 import { useContext } from "react";
 import { DrawerContext } from "../Drawer/DrawerContext";
-import { DeleteProduct } from "../buttons/DeleteProduct";
+import { DeleteProduct } from "../Buttons/DeleteProduct";
 
 
 export function ProductEdit({product}:{product:ProductModel}){

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { CartCard } from "../cards/CartCard";
+import { CartCard } from "../Cards/CartCard";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 

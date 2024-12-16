@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { StoreForm, StoreFormFields } from "./StoreForm";
-import { TextButton } from "../buttons/TextButtons";
+import { TextButton } from "../Buttons/TextButtons";
 import { checkForError } from "../../constraints";
 import { companyStoreService } from "../../services/companyStoreService";
 import { useDispatch } from "react-redux";
@@ -25,6 +25,7 @@ export function StoreFormCreate(){
         <StoreForm
             onSubmitForm={async (storeData:StoreFormFields)=>{
                     try{
+                        console.log(storeData)
                         await mutateAsync(storeData)   
                     } catch(e){
                         return checkForError(e)

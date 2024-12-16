@@ -1,5 +1,5 @@
 import { StartView } from "../views/StartView";
-import { PasswordForgetForm } from "../components/forms/PasswordForgetForm";
+import { PasswordForgetForm } from "../components/Forms/PasswordForgetForm";
 import { useNavigate } from "react-router-dom";
 
 export function PasswordForget(){

@@ -10,9 +10,8 @@ export function StoreImageForm({className}:{className?:string}){
     //const {stepper:{state,setState,/*maxStep*/singleLine},record:{record,setRecord},error:{errorStepper},/*beforeChangeMediaQuery:{setBeforeChangeMediaQuery}*/finish:{finish}} = useContext(StepperContext)
     const control = useFormContext()
     const {setValue,getValues,formState:{errors},setError} = control
-    
     const [images,setImages] = useState<Array<ImageModel | null>>(
-        (getValues('images') && getValues('images')) 
+        (getValues('images')!==undefined && getValues('images').length > 0) 
         ? 
         getValues('images') as Array<ImageModel | null>
         : 
@@ -89,10 +88,10 @@ export function StoreImageForm({className}:{className?:string}){
                             image={images[index] ? images[index].image : null} 
                             setImage={(image)=>{
                                 console.log(getValues())
-                                const _images = getValues('images') ? getValues('images') : []
+                                const _images = getValues('images') ? getValues('images') : [{image:null}]
                                 _images[index]!.image= image as string
                                 setValue('images',_images)
-                                setImages(_images)
+                                setImages([..._images])
                                 console.log(_images)
                                 
                             }}

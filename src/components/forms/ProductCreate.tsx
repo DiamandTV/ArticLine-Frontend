@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { ProductForm, ProductFormFields } from "./ProductForm";
 import { RootState } from "../../store/store";
-import { TextButton } from "../buttons/TextButtons";
+import { TextButton } from "../Buttons/TextButtons";
 import { useMutation } from "@tanstack/react-query";
 import { useProductService } from "../../services/productService";
 import { ProductModel } from "../../models/Product";

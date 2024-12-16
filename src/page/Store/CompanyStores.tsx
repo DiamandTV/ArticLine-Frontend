@@ -4,7 +4,7 @@ import { RootState} from "../../store/store"
 import { PaginationButtons } from "../../components/Store/ProductPage/PaginationButtons"
 import { useState } from "react"
 import { GridView } from "../../views/GridView"
-import { StoreCard } from "../../components/cards/StoreCard"
+import { StoreCard } from "../../components/Cards/StoreCard"
 import { MAX_CARD_IN_PAGE } from "../../constraints"
 
 export function StoresCompany(){

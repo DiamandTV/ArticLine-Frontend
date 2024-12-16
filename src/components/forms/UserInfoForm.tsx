@@ -2,11 +2,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { AnimationPlaceholderInput,AnimationPlaceholderInputProps } from "../inputs/AnimationPlaceholderInput"
 import { AnimationDatePicker } from "../inputs/DatePicker/AnimationDatePicker"
 import { SubmitHandler, useForm,FormProvider } from "react-hook-form"
-import { StepperButtons } from "../stepper/StepperButtons"
+import { StepperButtons } from "../Stepper/StepperButtons"
 import dayjs, { Dayjs } from 'dayjs';
 import { z } from "zod"
 import { useContext, useRef } from "react"
-import { StepperContext } from "../stepper/StepperContext"
+import { StepperContext } from "../Stepper/StepperContext"
 import {  useEffect } from "react"
 
 

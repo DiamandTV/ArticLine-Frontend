@@ -1,9 +1,9 @@
 import { useContext , useEffect } from "react"
-import { StepperContext } from "../components/stepper/StepperContext"
-import { StepperButtons } from "../components/stepper/StepperButtons"
+import { StepperContext } from "../components/Stepper/StepperContext"
+import { StepperButtons } from "../components/Stepper/StepperButtons"
 import { useQuery } from '@tanstack/react-query' 
 import { AxiosError, AxiosResponse } from "axios"
-import { LoaderResponse } from "../components/loader/LoaderResponse"
+import { LoaderResponse } from "../components/Loader/LoaderResponse"
 import { SERVER_INTERNAL_ERROR_CODE } from "../constraints"
 
 interface FinishProps{

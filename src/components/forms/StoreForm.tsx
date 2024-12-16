@@ -47,7 +47,6 @@ export function StoreForm({onSubmitForm,children,store}:StoreFormProps){
         defaultValues:store as StoreFormFields 
     })
 
-
     const onSubmit:SubmitHandler<StoreFormFields> = async (storeInfo) => {
         const errors = await onSubmitForm(storeInfo)
         console.log(errors)

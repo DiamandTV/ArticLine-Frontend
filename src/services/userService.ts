@@ -1,9 +1,9 @@
 import { api } from "./api"
 import { UserProfileModel } from "../models/user"
 import { UserSigninStepperType  } from "../page/UserSignIn"
-import { UserInfoFields } from "../components/forms/UserInfoForm"
-import { AddressFields } from "../components/forms/AddressForm"
-import { AccountFields } from "../components/forms/AccountForm"
+import { UserInfoFields } from "../components/Forms/UserInfoForm"
+import { AddressFields } from "../components/Forms/AddressForm"
+import { AccountFields } from "../components/Forms/AccountForm"
 import dayjs from "dayjs"
 
 export const useUserService = 

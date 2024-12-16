@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useStoreService } from "../../services/storeService";
 import { useQuery } from "@tanstack/react-query";
-import { LoaderResponse } from "../loader/LoaderResponse";
-import { BlurCard } from "../cards/BlurCard";
+import { LoaderResponse } from "../Loader/LoaderResponse";
+import { BlurCard } from "../Cards/BlurCard";
 import { useDispatch } from "react-redux";
 import { clearStoreDetails, setStoreDetails } from "../../store/storeSlice";
 import { useEffect } from "react";

@@ -4,11 +4,11 @@ import { RootState } from "../../../store/store";;
 import { IoIosSettings } from "react-icons/io"
 import { FaPlus } from "react-icons/fa6";
 import { PopupIconButton } from "../../PopUps/PoupIconButton";
-import { BlurCard } from "../../cards/BlurCard";
-import { ProductCreate } from "../../forms/ProductCreate";
-import { StoreCategoryCreate } from "../../forms/StoreCategoryCreate";
+import { BlurCard } from "../../Cards/BlurCard";
+import { ProductCreate } from "../../Forms/ProductCreate";
+import { StoreCategoryCreate } from "../../Forms/StoreCategoryCreate";
 import { DrawerProvider } from "../../Drawer/DrawerProvider";
-import { StoreFromEdit } from "../../forms/StoreEdit";
+import { StoreFromEdit } from "../../Forms/StoreEdit";
 
 export function StoreSettings(){
     const store = useSelector((state:RootState)=>state.storeReducer.store)

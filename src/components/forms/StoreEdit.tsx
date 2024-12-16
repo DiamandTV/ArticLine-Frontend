@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { StoreModel } from "../../models/store"
-import { TextButton } from "../buttons/TextButtons";
+import { TextButton } from "../Buttons/TextButtons";
 import { companyStoreService } from "../../services/companyStoreService";
 import { StoreForm, StoreFormFields } from "./StoreForm";
 import { checkForError } from "../../constraints";
@@ -10,7 +10,7 @@ import { AxiosResponse } from "axios";
 import { useContext } from "react";
 import { DrawerContext } from "../Drawer/DrawerContext";
 import { updateStoreDetails } from "../../store/storeSlice";
-import { DeleteButton } from "../buttons/DeleteButton";
+import { DeleteButton } from "../Buttons/DeleteButton";
 import { useNavigate } from "react-router-dom";
 
 interface StoreEditProps{

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef } from "react"
 import { CategoryModel } from "../../models/category"
-import { CardListContext } from "../CardList/CardListContext"
+import { CardListContext } from "../List/CardListContext"
 import { StoreCategoriesModel } from "../../models/StoreCategories"
 export interface CategoryCardProps extends React.HTMLAttributes<HTMLAllCollection>{
     category:CategoryModel | StoreCategoriesModel

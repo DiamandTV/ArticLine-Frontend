@@ -1,12 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm,SubmitHandler } from "react-hook-form"
 import { AnimationPlaceholderInput } from "../inputs/AnimationPlaceholderInput"
-import { TextButton } from "../buttons/TextButtons"
+import { TextButton } from "../Buttons/TextButtons"
 import { z } from "zod"
 import { useMutation } from "@tanstack/react-query"
 import { useAuthService } from "../../services/authService"
 import { AxiosError } from "axios"
-import { LoaderResponse } from "../loader/LoaderResponse"
+import { LoaderResponse } from "../Loader/LoaderResponse"
 
 const schema = z.object({
     password: z.string().min(8).max(40),

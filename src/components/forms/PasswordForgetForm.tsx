@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AnimationPlaceholderInput } from "../inputs/AnimationPlaceholderInput"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { TextButton } from "../buttons/TextButtons"
+import { TextButton } from "../Buttons/TextButtons"
 import { useAuthService } from "../../services/authService"
 import { z } from "zod"
 

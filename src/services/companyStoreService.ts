@@ -1,4 +1,4 @@
-import { StoreFormFields } from "../components/forms/StoreForm"
+import { StoreFormFields } from "../components/Forms/StoreForm"
 import { urlPattern } from "../constraints"
 import { ImageModel } from "../models/image"
 import { api } from "./api"

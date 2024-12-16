@@ -1,7 +1,7 @@
-import { CartList } from "../../components/CardList/CardList"
-import { StoreCard } from "../../components/cards/StoreCard"
+import { CardList } from "../../components/List/CardList"
+import { StoreCard } from "../../components/Cards/StoreCard"
 import { StoreModel } from "../../models/store"
-import { CategoryCardList } from "../../components/CardList/CategoryList"
+import { CategoryCardList } from "../../components/List/CategoryList"
 import { useSelector } from "react-redux"
 import { RootState } from "../../store/store"
 
@@ -54,22 +54,22 @@ export function  Home(){
         <>
         <CategoryCardList categories={categories!}/>
         <hr className="bg-gray-600 border-gray-500 " />
-            <CartList
+            <CardList
                 itemCount={stores.length}
                 
                 itemSize={320}
                 className="py-4"
             >
                 {({index,style})=><StoreCard  store={stores[index]} style={style} className="px-1 first:pr-1 first:pl-0 last:pr-0 last:pl-1"/>}
-            </CartList>
-            <CartList
+            </CardList>
+            <CardList
                 itemCount={stores.length}
                 
                 itemSize={320}
                 className="py-4"
             >
                 {({index,style})=><StoreCard  store={stores[index]} style={style} className="px-1 first:pr-1 first:pl-0 last:pr-0 last:pl-1"/>}
-            </CartList>
+            </CardList>
         </>
     )
 }

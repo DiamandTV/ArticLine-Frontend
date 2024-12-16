@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { SIDEBAR_ICON_SIZE } from "../../constraints";
 import { StoreSection } from "./Sections/StoreSection";
 import { CompanyProtectedRoute } from "../../router/CompanyProtectedRoute";
+import { CartSection } from "./Sections/CartSection";
 /*
 const useProfile:UserProfileModel = {
     auth:{
@@ -70,6 +71,9 @@ export function SideBarApp(){
                 </Link>
                 <SubMenu id="CATEGORIES" icon={<BiSolidCategory size={SIDEBAR_ICON_SIZE}/>} label="CATEGORIES"></SubMenu>
                 <SubMenu id="ORDERS" icon={<FaClipboardList size={SIDEBAR_ICON_SIZE}/>} label="ORDERS"></SubMenu>
+                
+                <CartSection/>
+
                 <SubMenu id="DASHBOARDS" icon={<IoBarChartSharp size={SIDEBAR_ICON_SIZE}/>} label="DASHBOARDS"></SubMenu>
                 
                 <CompanyProtectedRoute>
@@ -78,9 +82,9 @@ export function SideBarApp(){
                 
                 <SubMenu id="CHARTS" icon={<IoChatbubbleEllipses size={SIDEBAR_ICON_SIZE}/>} label="CHATS" ></SubMenu>
                 <MenuItem id="ACCOUNT" icon ={<FaUser size={SIDEBAR_ICON_SIZE}/>}>ACCOUNT</MenuItem>
-                <MenuItem icon={<IoMdSettings size={SIDEBAR_ICON_SIZE}/>} >SETTINGS</MenuItem>
-                <MenuItem icon={<IoMdNotifications size={SIDEBAR_ICON_SIZE}/>} >NOTIFICATIONS</MenuItem>
                 
+                <MenuItem icon={<IoMdNotifications size={SIDEBAR_ICON_SIZE}/>} >NOTIFICATIONS</MenuItem>
+                <MenuItem icon={<IoMdSettings size={SIDEBAR_ICON_SIZE}/>} >SETTINGS</MenuItem>
                 </Menu>    
             </Sidebar>
             

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { TextButton } from "../buttons/TextButtons";
+import { TextButton } from "../Buttons/TextButtons";
 import { StoreCategoryForm } from "./StoreCategoryForm";
 import { RootState } from "../../store/store";
 import { useMutation } from "@tanstack/react-query";

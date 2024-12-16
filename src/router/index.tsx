@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { UserSignIn } from "../page/UserSignIn";
 import { CompanySignIn } from "../page/CompanySignIn";
-import { LogIn } from "../page/login";
+import { LogIn } from "../page/Login";
 import { UnsignedRoute } from "./UnsignedRoute";
 import { EmailAndResend } from "../page/EmailAndResend";
 import { PasswordForget } from "../page/PasswordForget";
@@ -16,6 +16,7 @@ import { StoreCategory } from "../page/Store/StoreCategory";
 //import { ProductCreate } from "../page/Store/ProductCreate";
 import { StoresCompany } from "../page/Store/CompanyStores";
 import { Checkout } from "../page/Checkout/Checkout";
+import { Carts } from "../page/Carts/Carts";
 const router = createBrowserRouter([
     //{path:"/product",element:<ProductCreate/>},
     // main app routes
@@ -36,10 +37,17 @@ const router = createBrowserRouter([
                         children:[
                             {path:'sub-category/:sub-category-id',element:<StoreCategory/>}
                         ]
+                    },
+                    {
+                        path:"carts",
+                        element:<Carts/>,
+                        children:[
+                            {path:"checkout/payment/:cart-id",element:<Checkout/>}
+                        ]
                     }
                 ]
             },
-            {path:"/checkout/payment/:cart-id",element:<Checkout/>},
+
           
         ]
     },

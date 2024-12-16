@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { CartModel } from "../../models/Order";
-import { TextButton } from "../buttons/TextButtons";
+import { TextButton } from "../Buttons/TextButtons";
 import { useNavigate } from "react-router-dom";
 import { StoreModel } from "../../models/store";
 

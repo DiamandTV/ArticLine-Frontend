@@ -4,13 +4,13 @@ import { Controller,useFormContext } from "react-hook-form";
 
 export interface AnimationDatePickerProps{
     labelName:string,
-    type:string,
+    type?:string,
     name:string,
     readonly?:boolean
     maxLength?:number,
     
 }
-export function AnimationDatePicker({labelName,type,name,maxLength,readonly=true/*register,error*/}:AnimationDatePickerProps){
+export function AnimationDatePicker({labelName,type="text",name,maxLength,readonly=true/*register,error*/}:AnimationDatePickerProps){
     const { control } = useFormContext()
     return (
         <Controller name={name} control={control} render={({field,fieldState:{error}})=> <MobileDatePicker

@@ -1,6 +1,6 @@
 
 import { CategoryModel } from "../../models/category"
-import { CategoryCard } from "../cards/CategoryCard"
+import { CategoryCard } from "../Cards/CategoryCard"
 import { useEffect, useRef } from "react"
 export interface CategoryCardListProps {
     length:number,

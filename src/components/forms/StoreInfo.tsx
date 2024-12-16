@@ -3,13 +3,13 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitHandler, useForm, useFormContext } from "react-hook-form"
 import { z } from 'zod'
-import { StepperButtons } from "../stepper/StepperButtons"
+import { StepperButtons } from "../Stepper/StepperButtons"
 import { useContext, useEffect, useRef, useState } from "react"
-import { StepperContext } from "../stepper/StepperContext"
+import { StepperContext } from "../Stepper/StepperContext"
 import { AnimationPlaceholderInput } from "../inputs/AnimationPlaceholderInput"
 import { AnimationPlaceholderTextArea } from "../inputs/AnimationPlaceholderTextArea"
 import { FixedSizeDropdown } from "../inputs/Dropdown/FixedSizeDropdown"
-import { TagCard } from "../cards/TagCard"
+import { TagCard } from "../Cards/TagCard"
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from "react-redux"
 import { RootState } from "../../store/store"

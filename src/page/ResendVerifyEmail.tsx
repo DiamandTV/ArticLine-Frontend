@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { LoaderResponse } from "../components/loader/LoaderResponse";
+import { LoaderResponse } from "../components/Loader/LoaderResponse";
 import { StartView } from "../views/StartView";
 import { useAuthService } from "../services/authService";
 import { HighlightedTitle } from "../components/Texts/HighlightedTitle";

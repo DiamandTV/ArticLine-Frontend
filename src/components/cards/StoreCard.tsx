@@ -4,7 +4,7 @@ import { FaStar } from "react-icons/fa";
 import { FaComments } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { useContext } from "react";
-import { CardListContext } from "../CardList/CardListContext";
+import { CardListContext } from "../List/CardListContext";
 import { FaHeart } from "react-icons/fa6";
 import { IoMenu } from "react-icons/io5";
 import { Link } from "react-router-dom";
