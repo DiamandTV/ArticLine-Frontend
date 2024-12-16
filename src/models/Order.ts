@@ -3,8 +3,8 @@ import { CompanyProfileModel } from "./company"
 import { ProductModel } from "./Product"
 import { UserProfileModel } from "./user"
 //import { StoreModel } from "./store"
-export type CartModel = Record<number|string,OrderItemModel> 
-export type StoreToCartModel = Record<number|string,CartModel>
+// export type CartModel = Record<number|string,OrderItemModel> 
+// export type StoreToCartModel = Record<number|string,CartModel>
 
 export type OrderStatus = 'NOT_ACCEPTED'|'ACCEPTED'|'WORKING_ON'|'SENDED'|'DELIVERED'
 export interface OrderModel{
