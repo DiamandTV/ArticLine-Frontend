@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { CartModel } from "../models/cart";
 import { useCartService } from "../services/cartService";
 import { OrderItemModel } from "../models/Order";
+import { MAX_CART_LENGTH } from "../constraints";
 
 // dealing the cart with the javascript Object and not Array
 /*
@@ -26,54 +27,26 @@ const cartsInitalState:CartsSliceModel = {
     carts:[]
 }
 
-// const cartsSlice = createSlice({
-//     name:'carts',
-//     initialState:cartsInitalState,
-//     reducers:{
-//         addProductToCart:(state,action)=>{
-//             const {cart,orderItem,store} = useCartService.getCartFromCarts({payload:action.payload,carts:state.carts})
-//             if(cart && orderItem && store){
-//                 const productId = orderItem.product_item.id!
-//                 const productQuantity = orderItem.product_quantity
-//                 const storeId = store.id
-//                 const item:OrderItemModel = cart[productId] ? {...orderItem,product_quantity:productQuantity+cart[productId].product_quantity} : {...orderItem}
-//                 state.carts = {...state.carts,
-//                     [storeId]:
-//                         {...state.carts[storeId],
-//                             [productId]:item
-//                         }}
-//                 useCartService.saveCarts({cart:state.carts})
-//             }
-//         },
-//         deleteProductFromCart:(state,action)=>{
-//             const {cart,orderItem,store} = useCartService.getCartFromCarts({payload:action.payload,carts:state.carts})
-//             if(cart && orderItem && store){
-//                 const storeId = store.id
-//                 const newItems = {...state.carts[storeId]}
-//                 delete newItems[orderItem.product_item.id!]
-                
-//                 state.carts = {
-//                     ...state.carts,
-//                     [storeId]:newItems
-//                 }
-//                 if(!Object.keys(newItems).length) delete state.carts[storeId]
-//                 useCartService.saveCarts({cart:state.carts})
-//             }
-//         },
-//         deleteCart:(state,action)=>{
-//             const store = action.payload.store as StoreModel
-//             delete state.carts[store.id]
-//             state.carts = {...state.carts}
-//             useCartService.saveCarts({cart:state.carts})
-//         }
-        
-//     }
-// })
-
 const cartsSlice = createSlice({
     name:'carts',
     initialState:cartsInitalState,
     reducers:{
+        setCarts:(state,action)=>{
+            state.carts = [...action.payload]
+        },
+        addCart:(state,action)=>{
+            if(state.carts.length < MAX_CART_LENGTH){
+                state.carts = state.carts.concat(action.payload)
+            }
+        },
+        updateCart:(state,action)=>{
+            const cartToUpdate = action.payload as CartModel
+            state.carts = state.carts.map((cart)=>{
+                if(cart.id === cartToUpdate.id) return cartToUpdate
+                return cart
+            })
+            
+        },
         addProductToCart:(state,action)=>{
             const {cart,orderItem,store,filterCart} = useCartService.getCartFromCarts({payload:action.payload,carts:state.carts})
             if(cart && orderItem && store){
@@ -84,14 +57,15 @@ const cartsSlice = createSlice({
                 state.carts = [...filterCart,cart]
             }
         },
-        deleteProductToCart:(state,action)=>{
+        deleteProductFromCart:(state,action)=>{
 
         },
         deleteCart:(state,action)=>{
-
+            const cartToDelete = action.payload as CartModel
+            state.carts = state.carts.filter((cart)=>cart.id !== cartToDelete.id)
         }
     }
 })
 
-export const {} = cartsSlice.actions
+export const {setCarts,addCart,updateCart,deleteProductFromCart,addProductToCart,deleteCart,} = cartsSlice.actions
 export const cartsReducer = cartsSlice.reducer

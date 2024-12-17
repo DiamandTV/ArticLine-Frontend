@@ -16,7 +16,7 @@ export function CartCheckout(){
         {/* 
             // todo:in the future when all the all is completed let the user modify the cart also in the checkout cart
                 */}
-            <CartCard thisCart={thisCart} />
+            {/*<CartCard thisCart={thisCart} />*/}
         </>
         : null
     )

@@ -6,18 +6,48 @@ import { CardImage } from "./CardImage";
 import { Can } from "../../config/permissions/can";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { DeleteButton } from "../Buttons/DeleteButton";
-import { useContext, useState } from "react";
-import { addProductToCart } from "../../store/cartsSlice";
-import { OrderItemModel } from "../../models/Order";
-import { DialogContext } from "../Dialog/DialogContext";
+import { useState } from "react";
+import { DeleteProduct } from "../Buttons/DeleteProduct";
+import { useCartService } from "../../services/cartService";
+import { CartModel } from "../../models/cart";
+import { addCart, updateCart } from "../../store/cartsSlice";
 
-export function OpenProductCard({product}:{product:ProductModel}){
-    const dispatch = useDispatch()
+export function OpenProductCard({product,onClick}:{product:ProductModel}){
     const [counter,setCounter] = useState(1)
-    const {setOpen} = useContext(DialogContext)
+    const dispatch = useDispatch()
     const store = useSelector((state:RootState)=>state.storeReducer.store)
-    
+    const carts = useSelector((state:RootState)=>state.cartsReducer.carts)
+
+    const onProductAdd = async(product:ProductModel)=>{
+        
+        const cartIndex = carts.findIndex((cart)=>cart.store === store?.id)
+        const order_item = {product_item:product.id!,product_quantity:counter}
+        console.log(cartIndex)
+        if(cartIndex!==-1){
+            // the cart already exists , only update if
+            const cart = useCartService.updateOrAddItem({cart:{...carts[cartIndex]},orderItem:order_item})
+            console.log(cart)
+            const data = await useCartService.updateCart({cart})
+            if(data){
+                console.log(data)
+                dispatch(updateCart(data))
+            }
+        } else{
+            // create a new cart
+            const cart:CartModel = {
+                store:store?.id,
+                order_items:[
+                    order_item
+                ]
+            }
+            const data  = await useCartService.createCart({cart})
+            console.log(data)
+            if(data){
+                dispatch(addCart(data))
+            }
+        }
+        
+    }
     return(
         <BlurCard className="p-0 w-96" style={{padding:"0px"}}>
             <div className="w-[500px] flex flex-col gap-4">
@@ -31,21 +61,12 @@ export function OpenProductCard({product}:{product:ProductModel}){
                     <TextButton
                         className="w-full max-w-[1000px] py-4  text-white"
                         text={`AGGIUNGI FOR ${product.price * counter}$`}
-                        onClick={()=>{
-                            // add this item to the this store cart
-                            const orderItem:OrderItemModel = {
-                                product_item:product,
-                                product_quantity:counter
-                            }
-                            dispatch(addProductToCart({store,orderItem}))
-                            // close the dialog after the product has been added to the cart
-                            setOpen(false)
-                    }}
+                        onClick={async()=>{
+                            await onProductAdd(product)
+                        }}
                 />
                 <Can I="delete" a="PRODUCT" this={store!}>
-                    <DeleteButton onClick={()=>{
-
-                    }}/>
+                    <DeleteProduct product={product}/>
                 </Can>
                 </div>
             </div>

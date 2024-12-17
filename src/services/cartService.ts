@@ -2,22 +2,24 @@ import { CART_SECTOR } from "../constraints"
 import { CartModel } from "../models/cart"
 import { OrderItemModel } from "../models/Order"
 import { StoreModel } from "../models/store"
+import { AxiosResponse } from "axios"
 import { api } from "./api"
+import { ProductModel } from "../models/Product"
 
 export const useCartService = {
     saveCarts({cart}:{cart:StoreToCartModel}){
         const cartJSON = JSON.stringify(cart)
         localStorage.setItem(CART_SECTOR,cartJSON)
     },
-    getCarts():StoreToCartModel{
+    getCarts():Array<CartModel>{
         const cartsJSON = localStorage.getItem(CART_SECTOR)
-        if(!cartsJSON) return {}
+        if(!cartsJSON) return []
         try{
         const carts = JSON.parse(cartsJSON)
-        return carts as StoreToCartModel
+        return carts as Array<CartModel>
         }catch(e){
             console.log(e)
-            return {}
+            return []
         }
     },
     getCartFromCarts({payload,carts}:{payload:{store:StoreModel,orderItem:OrderItemModel},carts:Array<CartModel>}):{filterCart:Array<CartModel>,cart:CartModel|null,orderItem:OrderItemModel|null,store:StoreModel|null}{
@@ -35,16 +37,60 @@ export const useCartService = {
     // getFetchCarts( {cart}:{cart:CartModel}){
         
     // },
-    createCart({cart}:{cart:CartModel}){
-        return api.post('/store/carts',{cart})
+    updateOrAddItem({cart,orderItem}:{cart:CartModel,orderItem:OrderItemModel}):CartModel{
+        const orderItems = cart.order_items.map((_orderItem)=>{
+            if(_orderItem.product_item === orderItem.product_item){
+                return {..._orderItem,product_item:(_orderItem.product_item as ProductModel).id!,product_quantity:_orderItem.product_quantity + orderItem.product_quantity}
+            }
+            _orderItem.product_item = (_orderItem.product_item as ProductModel).id!
+            return _orderItem
+        })
+        cart.order_items = orderItems
+        if(!cart.order_items.length) cart.order_items.push(orderItem)
+        console.log(cart)
+        return cart
     },
-    updateCart({cart}:{cart:CartModel}){
-        return api.put(`/store/carts/${cart.id}/update`)
+    createNewCart({cart,orderItem}:{cart:CartModel,orderItem:OrderItemModel}){
+       
+    },
+    async createCart({cart}:{cart:CartModel}):Promise<CartModel|null>{
+        console.log(cart)
+        try{
+            
+            const data =  await api.post('/store/carts',cart)
+            if(data && (data as AxiosResponse).data){
+                return data.data as CartModel
+            }
+        }catch(e){
+            console.log(e)
+        }
+        return null
+    },
+    async updateCart({cart}:{cart:CartModel}):Promise<CartModel|null>{
+        console.log(cart)
+        try{    
+            const data = await api.patch(`/store/carts/${cart.id}/update`,cart)
+            if(data && data.data){
+                return data.data as CartModel
+            }
+        }catch(e){
+            console.log(e)
+        }
+        return null
     },
     deleteCart({cart}:{cart:CartModel}){
-        return api.delete(`/store/carts/${cart.id}/delete`)
+        try{
+            const data = api.delete(`/store/carts/${cart.id}/delete`)
+            return data
+        } catch(e){
+            console.log(e)
+        }   
+        return null
     },
     doesCartExist({cart}:{carts?:Array<CartModel>,cart:CartModel}){
         return cart.id ? true : false
-    }    
+    },
+    getCartsList(){
+        return api.get('/store/carts')
+    },   
 }

@@ -5,8 +5,9 @@ import { CartModel } from "../../models/Order";
 
 export function CartStore(){
     const store = useSelector((state:RootState)=>state.storeReducer.store)
-    const cart = useSelector((state:RootState)=>state.cartsReducer.carts)
-    if(!cart || !store) return;
-    const thisCart = cart[store.id] as CartModel
-    return <CartCard store={store} thisCart={thisCart}/>
+    const carts = useSelector((state:RootState)=>state.cartsReducer.carts)
+    if(!carts || !store) return;
+    const thisCart = carts.find((cart)=>cart.store === store.id)
+    console.log(thisCart)
+    return thisCart ? <CartCard store={store} thisCart={thisCart}/> : null
 }

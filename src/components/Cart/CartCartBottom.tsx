@@ -1,8 +1,10 @@
 import { useMemo } from "react";
-import { CartModel } from "../../models/Order";
+import { CartModel } from "../../models/cart";
+import { OrderItemModel } from "../../models/Order";
 import { TextButton } from "../Buttons/TextButtons";
 import { useNavigate } from "react-router-dom";
 import { StoreModel } from "../../models/store";
+import { ProductModel } from "../../models/Product";
 
 interface CardCartBottomProps{
     cart:CartModel,
@@ -11,7 +13,7 @@ interface CardCartBottomProps{
 
 function getTotal(cart:CartModel){
     let total = 0
-    Object.values(cart).forEach((orderItem)=>total+=orderItem.product_item.price * orderItem.product_quantity)
+    cart.order_items.forEach((orderItem:OrderItemModel)=>total+=(orderItem.product_item as ProductModel).price * orderItem.product_quantity)
     return total
 }
 export function CardCartBottom({cart,store}:CardCartBottomProps){

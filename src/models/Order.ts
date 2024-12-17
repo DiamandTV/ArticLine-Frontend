@@ -20,7 +20,7 @@ export interface OrderModel{
 
 export interface OrderItemModel{
     id?:number,
-    product_item:ProductModel,
+    product_item:ProductModel|number,
     product_quantity:number,
     order?:number
 }

@@ -4,9 +4,11 @@ import { StoreModel } from "../models/store";
 import { PaginationModel } from "../models/pagination";
 import { ProductModel } from "../models/Product";
 import { StoreCategoriesModel } from "../models/StoreCategories";
+import { CartModel } from "../models/cart";
 
 export interface StoreDetailsModel{
     store:StoreModel | null,
+    cart:CartModel | null,
     //productPage:number,
     products:Array<ProductModel>|null,
     pageCountCategories:Record<string,number> | null,
@@ -15,6 +17,7 @@ export interface StoreDetailsModel{
 
 const storeIntialValues:StoreDetailsModel = {
     store:null,
+    cart:null,
     pageCountCategories:null,
     products:null,
     pagination:null
@@ -25,6 +28,8 @@ const storeSlice = createSlice({
     initialState:storeIntialValues,
     reducers:{
         setStoreDetails:(state,action)=>{
+            //state.cart = action.payload.carts
+            //delete action.payload.carts
             state.store = action.payload
             const pageCount:Record<string,number> = {};
             state.store?.store_categories?.forEach((subCategorie)=>{
