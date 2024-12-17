@@ -1,38 +1,23 @@
-import { useDispatch } from "react-redux"
-import { DeleteButton } from "../Buttons/DeleteButton";
 import { BlurCard } from "./BlurCard";
-
-import { deleteCart } from "../../store/cartsSlice";
 //import { TextButton } from "../Buttons/TextButtons";
 import { CartModel } from "../../models/cart";
 import { CardCartBottom } from "../Cart/CartCartBottom";
 import { StoreModel } from "../../models/store";
 import { CartItems } from "../Cart/CartItems";
-import { useCartService } from "../../services/cartService";
+import { DeleteCartButton } from "../buttons/DeleteCartButton";
 
 interface CardCardProps{
     thisCart:CartModel,
     store?:StoreModel,
 }
 export function CartCard({thisCart,store}:CardCardProps){
-    const dispatch = useDispatch()
     return(
         thisCart && thisCart ?
-        <BlurCard className="bg-white rounded-xl max-h-max max-w-screen-sm sticky top-0">
+        <BlurCard className="bg-white rounded-xl max-h-max sticky top-0 max-w-sm">
             <div className="w-full h-14 flex flex-row justify-between">
                 <h1 className="text-xl">CART</h1>
                 {
-                    store ? <DeleteButton
-                        onClick={async()=>{
-                            alert("OK")
-                            const data = await useCartService.deleteCart({cart:thisCart})
-                            alert(data)
-                            if(data){
-                                dispatch(deleteCart({store}))
-                            }
-                        }
-                    }
-                    /> : null
+                    store ? <DeleteCartButton thisCart={thisCart}/> : null
                 }
                
             </div>

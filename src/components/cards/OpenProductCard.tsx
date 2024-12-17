@@ -6,15 +6,17 @@ import { CardImage } from "./CardImage";
 import { Can } from "../../config/permissions/can";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { DeleteProduct } from "../Buttons/DeleteProduct";
 import { useCartService } from "../../services/cartService";
 import { CartModel } from "../../models/cart";
 import { addCart, updateCart } from "../../store/cartsSlice";
+import { DialogContext } from "../Dialog/DialogContext";
 
-export function OpenProductCard({product,onClick}:{product:ProductModel}){
-    const [counter,setCounter] = useState(1)
+export function OpenProductCard({product}:{product:ProductModel}){
     const dispatch = useDispatch()
+    const [counter,setCounter] = useState(1)
+    const {setOpen} = useContext(DialogContext)
     const store = useSelector((state:RootState)=>state.storeReducer.store)
     const carts = useSelector((state:RootState)=>state.cartsReducer.carts)
 
@@ -22,13 +24,15 @@ export function OpenProductCard({product,onClick}:{product:ProductModel}){
         
         const cartIndex = carts.findIndex((cart)=>cart.store === store?.id)
         const order_item = {product_item:product.id!,product_quantity:counter}
-        console.log(cartIndex)
+        
         if(cartIndex!==-1){
             // the cart already exists , only update if
             const cart = useCartService.updateOrAddItem({cart:{...carts[cartIndex]},orderItem:order_item})
+            console.log("CART")
             console.log(cart)
             const data = await useCartService.updateCart({cart})
             if(data){
+                console.log("DATA CART")
                 console.log(data)
                 dispatch(updateCart(data))
             }
@@ -41,13 +45,14 @@ export function OpenProductCard({product,onClick}:{product:ProductModel}){
                 ]
             }
             const data  = await useCartService.createCart({cart})
-            console.log(data)
             if(data){
                 dispatch(addCart(data))
             }
+            
         }
-        
+        setOpen(false)
     }
+
     return(
         <BlurCard className="p-0 w-96" style={{padding:"0px"}}>
             <div className="w-[500px] flex flex-col gap-4">

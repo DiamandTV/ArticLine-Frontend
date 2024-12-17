@@ -13,6 +13,7 @@ export default {
     },
   },
   plugins: [
+    require("@tailwindcss/container-queries"),
     plugin(function ({ addUtilities }) {
       addUtilities({
         '.scrollbar-hide': {

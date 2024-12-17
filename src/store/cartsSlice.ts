@@ -1,24 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { CartModel } from "../models/cart";
-import { useCartService } from "../services/cartService";
-import { OrderItemModel } from "../models/Order";
 import { MAX_CART_LENGTH } from "../constraints";
 
-// dealing the cart with the javascript Object and not Array
-/*
-{
-    storeId:{
-        productId:ORDER_ITEM_MODEL
-    },
-     storeId:{
-        productId:ORDER_ITEM_MODEL
-    },
-     storeId:{
-        productId:ORDER_ITEM_MODEL
-    },
-    ...
-}
-*/ 
 export interface CartsSliceModel{
     carts:Array<CartModel>
 }
@@ -47,18 +30,24 @@ const cartsSlice = createSlice({
             })
             
         },
-        addProductToCart:(state,action)=>{
-            const {cart,orderItem,store,filterCart} = useCartService.getCartFromCarts({payload:action.payload,carts:state.carts})
-            if(cart && orderItem && store){
-                const productId:number= orderItem.product_item.id!
-                const productQuantity = orderItem.product_quantity
-                const item:OrderItemModel = cart[productId] ? {...orderItem,product_quantity:productQuantity+cart[productId].product_quantity} : {...orderItem}
-                cart.order_items.push(item)
-                state.carts = [...filterCart,cart]
-            }
-        },
-        deleteProductFromCart:(state,action)=>{
-
+        // addProductToCart:(state,action)=>{
+        //     const {cart,orderItem,store,filterCart} = useCartService.getCartFromCarts({payload:action.payload,carts:state.carts})
+        //     if(cart && orderItem && store){
+        //         const productId:number= orderItem.product_item.id!
+        //         const productQuantity = orderItem.product_quantity
+        //         const item:OrderItemModel = cart[productId] ? {...orderItem,product_quantity:productQuantity+cart[productId].product_quantity} : {...orderItem}
+        //         cart.order_items.push(item)
+        //         state.carts = [...filterCart,cart]
+        //     }
+        // },
+        deleteOrderItemFromCart:(state,action)=>{
+            const cart = action.payload as CartModel
+            state.carts = state.carts.flatMap((_cart)=>{
+                if(_cart.id === cart.id){
+                    return cart.order_items.length ? [cart] : []
+                }
+                return [_cart]
+            })
         },
         deleteCart:(state,action)=>{
             const cartToDelete = action.payload as CartModel
@@ -67,5 +56,5 @@ const cartsSlice = createSlice({
     }
 })
 
-export const {setCarts,addCart,updateCart,deleteProductFromCart,addProductToCart,deleteCart,} = cartsSlice.actions
+export const {setCarts,addCart,updateCart,deleteOrderItemFromCart,/*addProductToCart,*/deleteCart,} = cartsSlice.actions
 export const cartsReducer = cartsSlice.reducer

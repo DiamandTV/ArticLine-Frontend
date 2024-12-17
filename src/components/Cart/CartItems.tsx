@@ -18,7 +18,7 @@ export function CartItems({thisCart,store}:CartItems){
                     console.log(orderItem)
                     return (
                         <>
-                            <CartItem key={uuid()} orderItem={orderItem} store={store}/>
+                            <CartItem key={uuid()} orderItem={orderItem} thisCart={thisCart} store={store}/>
                         </>
                     )
                 })

@@ -20,14 +20,14 @@ export function ProductPage(){
     const dispatch = useDispatch()
     return(
         storeCategoryId ?
-        <div className="flex flex-col gap-y-4"> 
+        <div className="@container flex flex-col gap-y-4"> 
             <PaginationButtons 
                 count={pagination?.number_of_pages}
                 // todo : check the value of the varible because it can be null
                 page={pageForCategories![storeCategoryId]}
                 onChange={(page)=>dispatch(setPageForCategory({storeCategoryId,page}))}
                 />
-            <GridView>
+            <GridView className="grid-cols-2 @md:grid-cols-2 @lg:grid-cols-3">
                 {products?.map((product)=>{
                     return(
                         <DialogProvider  key={uuid()}>
