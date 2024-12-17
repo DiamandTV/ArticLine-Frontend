@@ -31,7 +31,7 @@ const schema = z.object({
 
 export type AddressFields = z.infer<typeof schema>;
 
-export function AddressForm({indexStepper}:{indexStepper:number}) {
+export function AddressForm({indexStepper}:{indexStepper?:number}) {
   const formRef = useRef<HTMLFormElement | null>(null)
   const {stepper:{state,setState,maxStep,singleLine},record:{record,setRecord},error:{errorStepper},beforeChangeMediaQuery:{setBeforeChangeMediaQuery},finish:{finish}} = useContext(StepperContext)
   const stepperIndex = singleLine ? indexStepper : state

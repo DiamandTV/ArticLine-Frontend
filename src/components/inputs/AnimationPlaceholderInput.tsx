@@ -45,6 +45,7 @@ export function AnimationPlaceholderInput(
                             if(register?.onBlur != null) register.onBlur(e)
                             }
                         }  
+                        value={!register && defaultValue ? defaultValue : ""}
                     />
                     <InputError error={error}/>
                 </div>

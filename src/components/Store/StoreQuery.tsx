@@ -14,7 +14,8 @@ export function StoreQuery({children}:{children:React.ReactNode}){
     const storeId = params['store-id']
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const {isLoading,isError,isSuccess} = useQuery({
+    const {isLoading,isError,isSuccess,refetch} = useQuery({
+        enabled:false,
         refetchOnMount:false,
         refetchOnWindowFocus:false,
         queryKey:['store-details',storeId],
@@ -34,6 +35,7 @@ export function StoreQuery({children}:{children:React.ReactNode}){
     })
     useEffect(()=>{
         dispatch(clearStoreDetails())
+        refetch()
     },[])
 
     if(!storeId) return;

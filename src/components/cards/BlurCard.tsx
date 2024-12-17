@@ -1,3 +1,4 @@
+import { twMerge } from "tailwind-merge"
 
 interface BlurCardProps{
     children:React.ReactNode,
@@ -6,7 +7,7 @@ interface BlurCardProps{
 }
 export function BlurCard({children,className="",style}:BlurCardProps){
     return (
-        <div className={"w-full p-8 bg-slate-200 bg-opacity-30 backdrop-blur-lg rounded-xl "+className} style={style}>
+        <div className={twMerge("w-full p-8 bg-slate-200 bg-opacity-30 backdrop-blur-lg rounded-xl "+className)} style={style}>
             {children}
         </div>
     )

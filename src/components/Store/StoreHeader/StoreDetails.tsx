@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import { AddressModel } from "../../../models/address";
 import { RootState } from "../../../store/store";
-import { DescriptionCard } from "../../Cards/DescriptionCard";
-import { RatingCard } from "../../Cards/RatingsCard";
+import { DescriptionCard } from "../../cards/DescriptionCard";
+import { RatingCard } from "../../cards/RatingsCard";
 const formatStreet = (address?:AddressModel)=>{
     if(!address) return "";
     return `${address.street} - ${address.city} ( ${address.postal_code} )`

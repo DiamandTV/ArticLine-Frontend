@@ -6,7 +6,7 @@ import { GridView } from "../../../views/GridView";
 import { useParams } from "react-router-dom";
 import { setPageForCategory } from "../../../store/storeSlice";
 import {v4 as uuid} from "uuid"
-import { DialogProductCard } from "../../Cards/DialogProductCard";
+import { DialogProductCard } from "../../cards/DialogProductCard";
 import { DialogProvider } from "../../Dialog/DialogProvider";
 //import { Can } from "../../../config/permissions/can";
 
@@ -19,7 +19,7 @@ export function ProductPage(){
     //const store = useSelector((state:RootState)=>state.storeReducer.store)
     const dispatch = useDispatch()
     return(
-        storeCategoryId ?
+        storeCategoryId && pageForCategories ?
         <div className="@container flex flex-col gap-y-4"> 
             <PaginationButtons 
                 count={pagination?.number_of_pages}

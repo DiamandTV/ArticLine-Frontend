@@ -28,8 +28,8 @@ const storeSlice = createSlice({
     initialState:storeIntialValues,
     reducers:{
         setStoreDetails:(state,action)=>{
-            //state.cart = action.payload.carts
-            //delete action.payload.carts
+            state.cart = action.payload.carts
+            delete action.payload.carts
             state.store = action.payload
             const pageCount:Record<string,number> = {};
             state.store?.store_categories?.forEach((subCategorie)=>{

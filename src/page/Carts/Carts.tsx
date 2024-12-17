@@ -1,15 +1,20 @@
 import { Outlet } from "react-router-dom";
-import { CartList } from "../../components/List/CartList";
+import { CartList } from "../../components/Cart/CartList/CartList";
+import { CartsQuery } from "../../components/Cart/CartsQuery";
 
 // !! Carts list
 export function Carts(){
     return(
-        <div className="w-full flex flex-row justify-start items-start">
-            <div>
-                {/* list of the carts */}
-                <CartList/>
+        <CartsQuery>
+            <div className="w-full h-full flex flex-row gap-x-2 justify-start items-start">
+                <div className="w-1/2">
+                    {/* list of the carts */}
+                    <CartList/>
+                </div>
+                <div className="w-1/2 h-full">
+                    <Outlet/>
+                </div>
             </div>
-            <Outlet/>
-        </div>
+        </CartsQuery>
     )
 }

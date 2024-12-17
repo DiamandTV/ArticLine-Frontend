@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import { CartCard } from "../Cards/CartCard"
+import { CartCard } from "../Cards/CartCard";
 import { RootState } from "../../store/store";
-import { CartModel } from "../../models/Order";
+import { CartProvider } from "./CartProvider/CartProvider";
 
 export function CartStore(){
     const store = useSelector((state:RootState)=>state.storeReducer.store)
@@ -9,5 +9,10 @@ export function CartStore(){
     if(!carts || !store) return;
     const thisCart = carts.find((cart)=>cart.store === store.id)
     console.log(thisCart)
-    return thisCart ? <CartCard store={store} thisCart={thisCart}/> : null
+    return thisCart ? (
+        <CartProvider cart={thisCart} store={store}>
+            <CartCard />
+        </CartProvider>
+    )
+     : null
 }

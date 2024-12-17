@@ -1,24 +1,20 @@
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { CartModel } from "../../models/cart";
 import { OrderItemModel } from "../../models/Order";
 import { TextButton } from "../Buttons/TextButtons";
 import { useNavigate } from "react-router-dom";
-import { StoreModel } from "../../models/store";
 import { ProductModel } from "../../models/Product";
-
-interface CardCartBottomProps{
-    cart:CartModel,
-    store?:StoreModel
-}
+import { CartContext } from "./CartProvider/CartContext";
 
 function getTotal(cart:CartModel){
     let total = 0
     cart.order_items.forEach((orderItem:OrderItemModel)=>total+=(orderItem.product_item as ProductModel).price * orderItem.product_quantity)
     return total
 }
-export function CardCartBottom({cart,store}:CardCartBottomProps){
+export function CardCartBottom(){
     const navigate = useNavigate()
-    const total = useMemo(()=>getTotal(cart),[cart])
+    const {cart,store} = useContext(CartContext)
+    const total = useMemo(()=>getTotal(cart!),[cart])
     return(
         <div className="w-full flex flex-col gap-y-2">
             <div className="w-full flex flex-row justify-between items-center pr-3">
@@ -29,7 +25,7 @@ export function CardCartBottom({cart,store}:CardCartBottomProps){
                 <TextButton
                     text="CHECKOUT"
                     onClick={()=>{
-                        navigate(`/checkout/payment/${store?.id}`)
+                        navigate(`/carts/checkout/payment/${cart!.id}`)
                     }}
                 /> : null
             }
