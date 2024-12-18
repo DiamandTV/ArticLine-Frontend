@@ -28,6 +28,7 @@ export function AnimationPlaceholderInput(
                     {labelName.toUpperCase()}
                 </label>
                 <div className="w-full flex flex-row justify-between items-center border-b-2 border-blue-200">
+                    {register ?
                     <input 
                         {...register}
                         className="change-icon-to-white focus:outline-none focus:border-transparent border-transparent h-10 w-full border-b-2 bg-transparent px-2 text-lg"
@@ -45,8 +46,28 @@ export function AnimationPlaceholderInput(
                             if(register?.onBlur != null) register.onBlur(e)
                             }
                         }  
-                        value={!register && defaultValue ? defaultValue : ""}
+                        
                     />
+                    :
+                    <input 
+                        value={defaultValue}
+                        className="change-icon-to-white focus:outline-none focus:border-transparent border-transparent h-10 w-full border-b-2 bg-transparent px-2 text-lg"
+                        id={name}
+                        type={type} 
+                        name={name} 
+                        maxLength={maxLength}
+                        onFocus={()=>{
+                            setFocus(true)
+                            if(onFocus != null) onFocus()
+                        }}
+                        onBlur={(e)=>{
+                            setFocus(e.target.value == '' ? false : true)
+                            if(onBlur != null) onBlur()
+                            //if(register && register!.onBlur != null) register.onBlur(e)
+                            }
+                        }  
+                        
+                    />    }
                     <InputError error={error}/>
                 </div>
         </div>

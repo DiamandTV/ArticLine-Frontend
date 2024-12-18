@@ -1,6 +1,5 @@
 import { Menu, MenuItem, Sidebar, SubMenu } from "react-pro-sidebar";
 import { IoHome } from "react-icons/io5";
-import { FaClipboardList } from "react-icons/fa6";
 import { IoBarChartSharp } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
 import { BiSolidCategory } from "react-icons/bi";
@@ -13,6 +12,7 @@ import { SIDEBAR_ICON_SIZE } from "../../constraints";
 import { StoreSection } from "./Sections/StoreSection";
 import { CompanyProtectedRoute } from "../../router/CompanyProtectedRoute";
 import { CartSection } from "./Sections/CartSection";
+import { OrderSection } from "./Sections/OrderSection";
 /*
 const useProfile:UserProfileModel = {
     auth:{
@@ -70,16 +70,17 @@ export function SideBarApp(){
                     <MenuItem id="HOME" icon={<IoHome size={SIDEBAR_ICON_SIZE}/>} >HOME</MenuItem>
                 </Link>
                 <SubMenu id="CATEGORIES" icon={<BiSolidCategory size={SIDEBAR_ICON_SIZE}/>} label="CATEGORIES"></SubMenu>
-                <SubMenu id="ORDERS" icon={<FaClipboardList size={SIDEBAR_ICON_SIZE}/>} label="ORDERS"></SubMenu>
+                
                 
                 <CartSection/>
-
                 <SubMenu id="DASHBOARDS" icon={<IoBarChartSharp size={SIDEBAR_ICON_SIZE}/>} label="DASHBOARDS"></SubMenu>
                 
                 <CompanyProtectedRoute>
                     <StoreSection/>
                 </CompanyProtectedRoute>
                 
+                <OrderSection/>
+
                 <SubMenu id="CHARTS" icon={<IoChatbubbleEllipses size={SIDEBAR_ICON_SIZE}/>} label="CHATS" ></SubMenu>
                 <MenuItem id="ACCOUNT" icon ={<FaUser size={SIDEBAR_ICON_SIZE}/>}>ACCOUNT</MenuItem>
                 
