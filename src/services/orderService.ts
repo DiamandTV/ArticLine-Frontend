@@ -5,7 +5,7 @@ export const useOrderService = {
     async createOrder({order}:{order:OrderModel}){
         return api.post('/order/details/',order)
     },
-    async getOrders(){
-        return api.get('/order/details/')
+    async getOrders({page='1'}:{page?:string|null|number}){
+        return api.get(`/order/details/?page=${page}`)
     }
 }

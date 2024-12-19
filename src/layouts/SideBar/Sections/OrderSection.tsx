@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export function OrderSection(){
     return(
-        <Link>
+        <Link to={'/orders'}>
             <MenuItem id="ORDERS" icon={<FaClipboardList size={SIDEBAR_ICON_SIZE}/>} >ORDERS</MenuItem>
         </Link>
     )

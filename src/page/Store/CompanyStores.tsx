@@ -1,7 +1,7 @@
 // todo: to manage large number of stores, prefer to use pagination on the backend for the company stores
 import { useSelector } from "react-redux"
 import { RootState} from "../../store/store"
-import { PaginationButtons } from "../../components/Store/ProductPage/PaginationButtons"
+import { PaginationButtons } from "../../components/Pagination/PaginationButtons"
 import { useState } from "react"
 import { GridView } from "../../views/GridView"
 import { StoreCard } from "../../components/Cards/StoreCard"

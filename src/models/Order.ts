@@ -2,6 +2,7 @@ import { Dayjs } from "dayjs"
 import { CompanyProfileModel } from "./company"
 import { ProductModel } from "./Product"
 import { UserProfileModel } from "./user"
+import { CartModel } from "./cart"
 //import { StoreModel } from "./store"
 // export type CartModel = Record<number|string,OrderItemModel> 
 // export type StoreToCartModel = Record<number|string,CartModel>
@@ -9,13 +10,16 @@ import { UserProfileModel } from "./user"
 export type OrderStatus = 'NOT_ACCEPTED'|'ACCEPTED'|'WORKING_ON'|'SENDED'|'DELIVERED'
 export interface OrderModel{
     id?:number,
-    total_price:number,
-    status:OrderStatus,
+    total_price?:number,
+    status?:OrderStatus,
     profile?:UserProfileModel | CompanyProfileModel,
-    order_items:Array<OrderItemModel>,
+    //order_items:Array<OrderItemModel>,
     //store:StoreModel,
-    delivery_time:string | Dayjs,
-    created_at:string | Dayjs
+    delivery_time?:string | Dayjs|null,
+    request_earliest_delivery:boolean,
+    delivered_time?:string | Dayjs,
+    created_at?:string | Dayjs
+    cart:string|number
 }
 
 export interface OrderItemModel{

@@ -1,13 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { OrderModel } from "../models/Order"
+import { PaginationModel } from "../models/pagination"
 interface OrderSliceModel{
-    activeOrders:Array<OrderModel>,
-    notActiveOrders:Array<OrderModel>
+    // activeOrders:Array<OrderModel>,
+    // notActiveOrders:Array<OrderModel>
+    orders:Array<OrderModel>,
+    pageCountCategories:Record<string,number> | null,
+    pagination:Omit<PaginationModel,'results'> |null
 }
 
 const orderSliceInitialValue:OrderSliceModel = {
-    activeOrders:[],
-    notActiveOrders:[]
+    orders:[],
 }
 
 const orderSlice = createSlice({
@@ -15,7 +18,7 @@ const orderSlice = createSlice({
     initialState:orderSliceInitialValue,
     reducers:{
         setOrders:(state,action)=>{
-
+            state.orders = [...action.payload]
         },
         clearOrders:(state,action)=>{
 

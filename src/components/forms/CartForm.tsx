@@ -14,17 +14,29 @@ const schema = z.object({
 
 type CartFormFields = z.infer<typeof schema>
 
-export function CartForm(){
+interface CartFormProps{
+    onSubmitForm:(CartForm:CartFormFields)=>Promise<Record<string,string> | null>,
+    children:React.ReactNode,}
+
+export function CartForm({onSubmitForm,children}:CartFormProps){
     const profile = useSelector((state:RootState)=>state.profileReduce.profile)
     const methods = useForm<CartFormFields>({
         resolver:zodResolver(schema)
     })
 
-    const {handleSubmit} = methods
+    const {handleSubmit,setError,formState:{errors}} = methods
     const onSubmit:SubmitHandler<CartFormFields> = async (cartInfo)=>{
         console.log(cartInfo)
+        const errors = await onSubmitForm(cartInfo)
+        console.log(errors)
+        if(errors){
+            Object.entries(errors).forEach(([key,value])=>{
+                setError(key,{type:"custom",message:value[0]})
+            })
+        }
     }
 
+    console.log(errors)
     return (
         <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)} className="h-full flex flex-col gap-y-4 ">
@@ -34,13 +46,7 @@ export function CartForm(){
                     <h1 className="text-2xl text-center col-span-2 font-semibold">DELIVERY ADDRESS</h1>
                     <AddressFormReadOnly address={profile!.address}/>
                 </div>
-                <TextButton
-                    className="mt-auto"
-                    text="ORDER"
-                    onClick={()=>{
-
-                    }}
-                />
+                {children}
             </form>
         </FormProvider>
         

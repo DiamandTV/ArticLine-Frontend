@@ -2,21 +2,38 @@ import { useQuery } from "@tanstack/react-query"
 import { useOrderService } from "../../../services/orderService"
 import { BlurCard } from "../../Cards/BlurCard"
 import { LoaderResponse } from "../../Loader/LoaderResponse"
-import { useEffect } from "react"
+import { useContext, useEffect } from "react"
+//import { useParams, useSearchParams } from "react-router-dom"
+import { PaginationModel } from "../../../models/pagination"
+import { PaginationContext } from "../../Pagination/PaginationContext"
+import { useDispatch } from "react-redux"
+import { setOrders } from "../../../store/orderSlice"
+
 
 export function OrderQuery({children}:{children:React.ReactNode}){
+    //const [searchParams] = useSearchParams()
+    const dispatch = useDispatch()
+    const {setPageData,page} = useContext(PaginationContext)
     const {isSuccess,isError,isLoading,refetch} = useQuery({
         queryKey:['get-orders'],
-        queryFn:async()=>await useOrderService.getOrders(),
+        queryFn:async()=>await useOrderService.getOrders({page:page}),
         refetchOnMount:false,
         refetchOnWindowFocus:false,
         onSuccess:(data)=>{
             console.log(data)
+            if(data && data.data){
+                const paginationData = {...data.data} as  PaginationModel
+                dispatch(setOrders(paginationData.results))
+                delete paginationData.results
+                if(paginationData && setPageData) setPageData(paginationData)
+            }
+            
         }
     })
     useEffect(()=>{
         refetch()
     },[])
+
     return (
             isSuccess ? children : 
             (

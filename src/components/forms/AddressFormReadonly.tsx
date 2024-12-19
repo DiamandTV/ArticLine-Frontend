@@ -35,7 +35,6 @@ export function AddressFormReadOnly({address}:AddressFormReadOnlyProps){
         <>
             {
                 dataSet.map((data)=>{
-                    console.log(data.defaultValue)
                     return (
                         <AnimationPlaceholderInput
                             labelName={data.labelName}

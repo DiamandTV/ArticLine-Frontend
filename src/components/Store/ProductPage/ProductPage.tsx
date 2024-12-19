@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { PaginationButtons } from "./PaginationButtons";
+import { PaginationButtons } from "../../Pagination/PaginationButtons";
 import { RootState } from "../../../store/store";
 import { GridView } from "../../../views/GridView";
 //import { ProductCard } from "../../cards/ProductCard";
