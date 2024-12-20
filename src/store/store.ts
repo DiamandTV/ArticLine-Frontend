@@ -5,6 +5,7 @@ import { profileReducer } from "./profileSlice"
 import { storeReducer } from "./storeSlice"
 import { cartsReducer } from "./cartsSlice"
 import { orderReducer } from "./orderSlice"
+import { homeReducer } from "./homeSlice"
 export const store = configureStore({
     reducer:{
         authReducer:authReducer,            // authentication reducer       =>  jwt || auth
@@ -12,7 +13,8 @@ export const store = configureStore({
         categoryReducer:categoryReducer,    // store categories reducer     =>  categories
         storeReducer:storeReducer,          // store details reducer        =>  store || categories || sub categories || products  
         cartsReducer:cartsReducer,          // store carts reducer          =>  carts
-        orderReducer:orderReducer           // profile orders               =>  orders
+        orderReducer:orderReducer,          // profile orders               =>  orders
+        homeReducer:homeReducer             // home stores reducer          =>  home
     }
 })
 

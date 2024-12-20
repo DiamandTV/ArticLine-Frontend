@@ -11,6 +11,7 @@ export function DeleteProduct({product}:{product:ProductModel}){
     const {setOpen} = useContext(DrawerContext)
     return (
         <DeleteButton
+            className=""
             onClick={()=>{
                 try{
                     // delete this product and remove it from the actual store session

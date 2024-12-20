@@ -4,6 +4,7 @@ import { OrderItemModel } from "../models/Order"
 import { AxiosResponse } from "axios"
 import { api } from "./api"
 import { ProductModel } from "../models/Product"
+import { notifyCheck } from "../utlis/notify"
 
 export const useCartService = {
     // saveCarts({cart}:{cart:StoreToCartModel}){
@@ -65,6 +66,7 @@ export const useCartService = {
             }
         }catch(e){
             console.log(e)
+            notifyCheck(e)
         }
         return null
     },
@@ -77,6 +79,7 @@ export const useCartService = {
             }
         }catch(e){
             console.log(e)
+            notifyCheck(e)
         }
         return null
     },

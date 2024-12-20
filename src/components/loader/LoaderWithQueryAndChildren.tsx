@@ -24,3 +24,54 @@
 //         />
 //     )
 // }
+
+import { useQuery } from "@tanstack/react-query"
+import { BlurCard } from "../Cards/BlurCard"
+import { LoaderResponse } from "./LoaderResponse"
+import { useEffect } from "react"
+import { AxiosResponse } from "axios"
+//import { useParams, useSearchParams } from "react-router-dom"
+
+interface LoaderQueryProps{
+    onSuccess:(data:AxiosResponse)=>void,
+    onError:(error:unknown)=>void
+    queryKey:Array<unknown>,
+    queryFn:()=>Promise<AxiosResponse>,
+    children:React.ReactNode
+}
+
+export function LoaderQuery({onSuccess,onError,queryFn,queryKey,children}:LoaderQueryProps){
+    //const [searchParams] = useSearchParams()
+    const {isSuccess,isError,isLoading,refetch} = useQuery({
+        refetchOnMount:false,
+        refetchOnWindowFocus:false,
+        queryKey:queryKey,
+        queryFn:async()=>await queryFn(),
+        onSuccess:onSuccess,
+        onError:onError
+    })
+    useEffect(()=>{
+        refetch()
+    },[])
+
+    return (
+            isSuccess ? children : 
+            (
+                <div className="w-full h-screen min-h-5 flex justify-center items-center">
+                    <BlurCard className="h-full flex justify-center items-center">
+                        <LoaderResponse
+                            isLoading={isLoading}
+                            isError={isError}
+                            isSuccess={isSuccess}
+                            redirect={false}
+                            messages={{
+                                error:"SOMETHING WENT WRONG",
+                                warning:"MAYBE SOMETHING WENT WRONG",
+                                success:""
+                            }}
+                        />
+                    </BlurCard>
+                </div>
+            )
+        )
+}

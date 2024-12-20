@@ -63,15 +63,19 @@ export function OpenProductCard({product}:{product:ProductModel}){
                 </div>
                 <Counter counter={counter} setCounter={setCounter}/>
                 <div className="w-full h-24 max-h-96 px-4 py-4 flex flex-row justify-center gap-x-2">
-                    <TextButton
-                        className="w-full max-w-[1000px] py-4  text-white"
-                        text={`AGGIUNGI FOR ${product.price * counter}$`}
-                        onClick={async()=>{
-                            await onProductAdd(product)
-                        }}
-                />
+                    <Can I="create" a="CART" this={store!}>
+                        <TextButton
+                            className="w-full max-w-[1000px] py-4  text-white"
+                            text={`AGGIUNGI FOR ${product.price * counter}$`}
+                            onClick={async()=>{
+                                await onProductAdd(product)
+                            }}
+                        />
+                    </Can>
                 <Can I="delete" a="PRODUCT" this={store!}>
-                    <DeleteProduct product={product}/>
+                    <div className="max-w-max ml-auto">
+                        <DeleteProduct product={product}/>
+                    </div>
                 </Can>
                 </div>
             </div>
