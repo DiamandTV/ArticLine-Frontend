@@ -7,6 +7,8 @@ import { QueryClient , QueryClientProvider } from '@tanstack/react-query'
 import { Provider } from "react-redux"
 import { store } from './store/store.ts';
 import router from './router/index.tsx'
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import './index.css'
 const query = new QueryClient()
 
@@ -15,6 +17,7 @@ createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <QueryClientProvider client={query}>
+          <ToastContainer/>
           <RouterProvider router={router}/>
         </QueryClientProvider>
       </LocalizationProvider>

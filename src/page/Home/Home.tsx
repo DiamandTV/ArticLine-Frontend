@@ -4,6 +4,8 @@ import { StoreModel } from "../../models/store"
 import { CategoryCardList } from "../../components/List/CategoryList"
 import { useSelector } from "react-redux"
 import { RootState } from "../../store/store"
+import { useEffect } from "react"
+import { toast } from 'react-toastify';
 
 
 const stores:Array<StoreModel> = [
@@ -50,6 +52,13 @@ const stores:Array<StoreModel> = [
 ]
 export function  Home(){
     const categories = useSelector((state:RootState)=>state.categoryReducer.categories)
+
+    useEffect(()=>{
+        toast.success("Success Notification !", {
+            position: "top-right"
+        });
+    },[])
+
     return (
         <>
         <CategoryCardList categories={categories!}/>

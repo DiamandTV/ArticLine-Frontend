@@ -26,6 +26,7 @@ export function ProductCreate(){
         onSuccess:(data)=>{
             const actualStoreCategory = params['sub-category-id']
             alert(actualStoreCategory)
+            console.log(data)
             if(data && data.data && actualStoreCategory){
                 if((data.data as ProductModel).store_category.toString() === actualStoreCategory){
                     // add the product to the session only if the user is visualizing the same sub category of the product category
