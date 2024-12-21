@@ -11,9 +11,9 @@
 //     return children
 // }
 
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
+import { toast } from "react-toastify";
 import { useEventSource, useEventSourceListener } from "@react-nano/use-event-source";
 
 export function NotifierView({children}:{children:React.ReactNode}){
@@ -24,7 +24,8 @@ export function NotifierView({children}:{children:React.ReactNode}){
         eventSource,
         ['NEW ORDER'],
         (evt)=>{
-            alert(evt)
+            alert(evt.data)
+            toast.warn(evt.data)
         },
     )    
 
