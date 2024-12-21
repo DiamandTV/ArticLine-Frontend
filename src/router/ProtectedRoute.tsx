@@ -12,12 +12,15 @@ import { setCategories } from "../store/categorySlice";
 import { companyStoreService } from "../services/companyStoreService";
 import { setProfile } from "../store/profileSlice";
 import { StartView } from "../views/StartView";
+import { NotifierView } from "./NotifierView";
+import { SSEProvider } from "react-hooks-sse";
 
 // Protected route for the main pages 
 export function ProtectedRoute({redirectTo='/login'}:{redirectTo?:string}){
     const isAuthenticated = useSelector((state:RootState)=>state.authReducer.isAuthenticated)
     const REFRESH_TOKEN = useSelector((state:RootState)=>state.authReducer.jwt?.refresh)
     const ACCESS_TOKEN = useSelector((state:RootState)=>state.authReducer.jwt?.access)
+    const auth = useSelector((state:RootState)=>state.authReducer.auth)
     const dispatch = useDispatch()
     const {isLoading,isSuccess,isError, mutate } = useMutation({
         mutationKey:['auth-refresh-jwt-token'],
@@ -88,7 +91,9 @@ export function ProtectedRoute({redirectTo='/login'}:{redirectTo?:string}){
             isAuthenticated ?
             (
                 <PermissionView>
-                    <Outlet/>
+                        <NotifierView>
+                            <Outlet/>
+                        </NotifierView>
                 </PermissionView>)
             : null
         

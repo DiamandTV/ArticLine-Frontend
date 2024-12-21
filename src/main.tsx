@@ -18,7 +18,7 @@ createRoot(document.getElementById('root')!).render(
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <QueryClientProvider client={query}>
           <ToastContainer/>
-          <RouterProvider router={router}/>
+            <RouterProvider router={router}/>
         </QueryClientProvider>
       </LocalizationProvider>
   </Provider>
