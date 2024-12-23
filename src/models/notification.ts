@@ -1,6 +1,13 @@
 import { Dayjs } from "dayjs";
 
-export interface NotificationModel{
+export interface NotificationEventModel{
+    sender:unknown,
+    receiver:unknown,
+    notification:NotificationModel,
+}
+
+export interface NotificationModel {
+    id?:string|number,
     image?:string,
     event_type?:string,
     title?:string,

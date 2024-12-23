@@ -4,9 +4,12 @@ import { useCartService } from "../../services/cartService"
 import { setCarts } from "../../store/cartsSlice"
 import { BlurCard } from "../Cards/BlurCard"
 import { LoaderResponse } from "../Loader/LoaderResponse"
+import { useNavigate } from "react-router-dom"
+import { CartModel } from "../../models/cart"
 
 export function CartsQuery({children,load=true}:{children:React.ReactNode,load?:boolean}){
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const {isSuccess,isError,isLoading} = useQuery({
         refetchOnMount:false,
         refetchOnWindowFocus:false,
@@ -16,8 +19,11 @@ export function CartsQuery({children,load=true}:{children:React.ReactNode,load?:
         },
         onSuccess:(data)=>{
             if(data && data.data ){
-                console.log(data.data)
+                const carts:Array<CartModel> = data.data
                 dispatch(setCarts(data.data))
+                // if(carts){
+                //     navigate(`/carts/checkout/payment/${carts[0].id}`)
+                // }
             }
         },
     })

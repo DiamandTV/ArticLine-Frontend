@@ -7,7 +7,16 @@ import { CartModel } from "./cart"
 // export type CartModel = Record<number|string,OrderItemModel> 
 // export type StoreToCartModel = Record<number|string,CartModel>
 
-export type OrderStatus = 'NOT_ACCEPTED'|'ACCEPTED'|'WORKING_ON'|'SENDED'|'DELIVERED'
+export type OrderStatus = 'NOT ACCEPTED'|'ACCEPTED'|'WORKING ON'|'SENDED'|'DELIVERED'
+
+export const STATUS_INDEX = {
+    'NOT ACCEPTED'  :   0,
+    'ACCEPTED'      :   1,
+    'WORKING ON'    :   2,
+    'SENDED'        :   3,
+    'DELIVERED'     :   4
+}
+
 export interface OrderModel{
     id?:number,
     total_price?:number,
@@ -19,7 +28,7 @@ export interface OrderModel{
     request_earliest_delivery:boolean,
     delivered_time?:string | Dayjs,
     created_at?:string | Dayjs
-    cart:string|number
+    cart:CartModel,
 }
 
 export interface OrderItemModel{

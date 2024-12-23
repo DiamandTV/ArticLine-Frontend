@@ -1,15 +1,10 @@
-import { FaStore } from "react-icons/fa6"
-import { IconTextButton } from "../../Buttons/IconTextButton"
 import { BlurCard } from "../../Cards/BlurCard"
-import { IoMdCart } from "react-icons/io"
-import { DeleteCartButton } from "../../buttons/DeleteCartButton"
 import { OrderModel } from "../../../models/Order"
-import { SIDEBAR_ICON_SIZE } from "../../../constraints"
 
 export function OrderListItem({order}:{order:OrderModel}){
     return(
         <BlurCard className="flex flex-row gap-x-2 justify-between items-center h-20 py-4 ">
-            <div></div>
+            <div>sd</div>
         </BlurCard>
     )
 }

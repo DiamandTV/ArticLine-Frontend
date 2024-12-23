@@ -37,6 +37,9 @@ export const useCartService = {
     // getFetchCarts( {cart}:{cart:CartModel}){
         
     // },
+    getCartFromId({carts,id}:{carts:Array<CartModel>,id:number|string}){
+        return carts.find((cart)=>cart.id==id)
+    },
     updateOrAddItem({cart,orderItem}:{cart:CartModel,orderItem:OrderItemModel}):CartModel{
         let finded = false
         const orderItems = cart.order_items.map((_orderItem)=>{

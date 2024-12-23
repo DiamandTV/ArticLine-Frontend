@@ -24,6 +24,9 @@ export const CART_SECTOR =     'ARTICLINE-CART-SECTOR'
 // Time to add to the order
 export const ORDER_MINUTES_OFFSET = 30
 
+// Early delivery request tool kit message
+export const TOOLKIT_EARLY_MESSAGE = 'The user has choosen the earliest delivey option please give him a delivery time'
+
 export function checkForError(error:unknown){
     if(error instanceof AxiosError && error.status != SERVER_INTERNAL_ERROR_CODE){
         try{

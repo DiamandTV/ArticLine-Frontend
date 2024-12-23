@@ -18,6 +18,8 @@ import { StoresCompany } from "../page/Store/CompanyStores";
 import { Checkout } from "../page/Checkout/Checkout";
 import { Carts } from "../page/Carts/Carts";
 import { Orders } from "../page/Orders/Orders";
+import { OrderDetail } from "../components/Order/OrderDetail";
+import { OrdersCompany } from "../page/Orders/OrdersCompany";
 const router = createBrowserRouter([
     //{path:"/product",element:<ProductCreate/>},
     // main app routes
@@ -49,9 +51,14 @@ const router = createBrowserRouter([
                     {
                         path:"orders",
                         element:<Orders/>,
-                        // children:[
-                        //     {path:"checkout/payment/:cart-id",element:<Checkout/>}
-                        // ]
+                        children:[
+                            {path:"details",element:<OrderDetail/>}
+                        ]
+                    },
+                    {
+                        path:"orders/company",
+                        element:<OrdersCompany/>
+
                     }
                     
                 ]

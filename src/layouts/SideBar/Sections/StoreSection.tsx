@@ -28,10 +28,13 @@ export function StoreSection(){
                 */}
             <SubMenu id="STORES" icon={<FaStore size={SIDEBAR_ICON_SIZE}/>} label="STORES">
                 <Link to={"/store/list/company"}>
-                        <MenuItem aria-setsize={SIDEBAR_SUB_ICON_SIZE} className="text-sm">OTHER STORE...</MenuItem>
+                    <MenuItem  className="text-sm">OTHER STORE</MenuItem>
+                </Link>
+                <Link to={"/orders/company"}>
+                    <MenuItem className="text-sm">ORDERS</MenuItem>
                 </Link> 
                 <Link to={"/store/create"}>
-                    <MenuItem icon={<FaPlus/>} aria-setsize={SIDEBAR_SUB_ICON_SIZE} className="text-sm">CREATE</MenuItem>
+                    <MenuItem icon={<FaPlus/>} className="text-sm">CREATE</MenuItem>
                 </Link>
             </SubMenu>
         </Can>

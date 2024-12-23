@@ -3,6 +3,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../store/store"
 import { HomeStores } from "../../components/Home/HomeStores"
 import { HomeList } from "../../components/Home/HomeList"
+import { useEffect } from "react"
 
 export function  Home(){
     const categories = useSelector((state:RootState)=>state.categoryReducer.categories)

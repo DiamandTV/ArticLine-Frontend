@@ -7,7 +7,7 @@ import { useContext, useEffect } from "react"
 import { PaginationModel } from "../../../models/pagination"
 import { PaginationContext } from "../../Pagination/PaginationContext"
 import { useDispatch } from "react-redux"
-import { setOrders } from "../../../store/orderSlice"
+import { OrderType, setOrders } from "../../../store/orderSlice"
 
 
 export function OrderQuery({children}:{children:React.ReactNode}){
@@ -23,7 +23,10 @@ export function OrderQuery({children}:{children:React.ReactNode}){
             console.log(data)
             if(data && data.data){
                 const paginationData = {...data.data} as  PaginationModel
-                dispatch(setOrders(paginationData.results))
+                dispatch(setOrders({
+                    orders:paginationData.results,
+                    type:OrderType.NORMAL
+                }))
                 delete paginationData.results
                 if(paginationData && setPageData) setPageData(paginationData)
             }

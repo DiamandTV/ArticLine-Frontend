@@ -11,10 +11,11 @@ import { CartContext } from "./CartProvider/CartContext"
 import { IconButton } from "../buttons/IconButton"
 import { AiFillProduct } from "react-icons/ai";
 import { useNavigate } from "react-router-dom"
+import { twMerge } from "tailwind-merge"
 export function CartItem({orderItem}:{orderItem:OrderItemModel}){
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const {cart} = useContext(CartContext)
+    const {cart,classNames:{productClassName,deleteProductButtonClassName,counterClassName,detailsClassName}} = useContext(CartContext)
     const [open,setOpen] = useState(true)
     const [counter,setCounter] = useState(orderItem.product_quantity)
 
@@ -40,9 +41,9 @@ export function CartItem({orderItem}:{orderItem:OrderItemModel}){
                 <span>{(orderItem.product_item as ProductModel).price}$</span>
             </div>
             <div className={`w-full ${open ? 'max-h-10' : 'max-h-0'} overflow-hidden transition-all duration-500 ease-in-out `}>
-                <div className="w-full h-10 flex flex-row justify-between items-center gap-x-2 relative">
+                <div className={"w-full h-10 flex flex-row justify-between items-center gap-x-2 relative "+detailsClassName}>
                     <IconButton
-                        className="bg-green-700 max-h-max text-md rounded-full p-2"
+                        className={"bg-green-700 max-h-max text-md rounded-full p-2 " + productClassName}
                         icon={<AiFillProduct/>}
                         onClick={()=>{
                             navigate(`/store/details/${cart.store}/sub-category/${(orderItem.product_item as ProductModel).id}`)
@@ -57,10 +58,10 @@ export function CartItem({orderItem}:{orderItem:OrderItemModel}){
                             setCounter(counter)
                         }}
                         iconSize={12}
-                        className="max-w-max text-lg gap-x-6"
+                        className={"max-w-max text-lg gap-x-6 " +counterClassName}
                     />
                     <DeleteButton
-                        className="max-h-max text-md rounded-full p-2 "
+                        className={"max-h-max text-md rounded-full p-2 " +deleteProductButtonClassName}
                         onClick={async ()=>{
                             // const data = useCartService.deleteCart({cart:thisC})
                             // dispatch(deleteProductFromCart({store,orderItem}))
