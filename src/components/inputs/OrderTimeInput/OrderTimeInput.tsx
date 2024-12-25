@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { ORDER_MINUTES_OFFSET } from "../../../constraints";
 import { Controller, useFormContext } from "react-hook-form";
 export function OrderTimeInput(){
-    const {control} = useFormContext()
+    const {control,setValue} = useFormContext()
 
     return(
         <Controller
@@ -12,7 +12,9 @@ export function OrderTimeInput(){
             defaultValue={true}
             name="request_earliest_delivery"
             render={({field})=>(
-                <RadioGroup  {...field}>
+                <RadioGroup  {...field} onChange={(_,value)=>{
+                    setValue('request_earliest_delivery',value==='true')
+                }}>
                     <div className="w-full h-full flex flex-col gap-y-6 col-span-2">
                         <FormControlLabel 
                             control={<Radio />} 

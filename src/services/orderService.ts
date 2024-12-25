@@ -8,7 +8,9 @@ export const useOrderService = {
     async getOrders({page='1'}:{page?:string|null|number}){
         return api.get(`/order/details/?page=${page}`)
     },
-    
+    async getInActiveCompanyOrders({page='1'}:{page?:number|null|string}){
+        return api.get(`orders/inactive/company/?page=${page}`)
+    },
     async getActiveCompanyOrders({page='1'}:{page?:string|null|number}){
         return api.get(`orders/active/company/?page=${page}`)
     },
@@ -19,7 +21,7 @@ export const useOrderService = {
         return api.patch(`order/active/company/delivery_time/update/${order.id}`,{delivery_time})
     },
     async deleteOrder({order}:{order:OrderModel}){
-        return api.delete(`order/active/company/delete/${order.id}`)
+        return api.patch(`order/active/company/delete/${order.id}`)
     }
 
 }

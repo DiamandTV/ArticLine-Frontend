@@ -13,9 +13,9 @@ import { OrderType, setOrders } from "../../../store/orderSlice"
 export function OrderQuery({children}:{children:React.ReactNode}){
     //const [searchParams] = useSearchParams()
     const dispatch = useDispatch()
-    const {setPageData,page} = useContext(PaginationContext)
+    const {setPageData,page,setLoading} = useContext(PaginationContext)
     const {isSuccess,isError,isLoading,refetch} = useQuery({
-        queryKey:['get-orders'],
+        queryKey:['get-orders',page],
         queryFn:async()=>await useOrderService.getOrders({page:page}),
         refetchOnMount:false,
         refetchOnWindowFocus:false,
@@ -37,8 +37,14 @@ export function OrderQuery({children}:{children:React.ReactNode}){
         refetch()
     },[])
 
+    useEffect(()=>{
+        if(setLoading){
+        setLoading(isLoading)
+        }
+    },[isLoading])
+
     return (
-            isSuccess ? children : 
+            !isError ? children : 
             (
                 <div className="w-full h-screen min-h-5 flex justify-center items-center">
                     <BlurCard className="h-full flex justify-center items-center">

@@ -1,6 +1,6 @@
 //!!! START USING ALWAYS REACT COMPOUND COMPONENTS
 
-import { Avatar, Button, Dialog, Tooltip } from "@mui/material"
+import { Avatar, Button, Tooltip } from "@mui/material"
 import { OrderModel } from "../../models/Order"
 import { BlurCard } from "./BlurCard"
 import { CartProvider } from "../Cart/CartProvider/CartProvider"
@@ -22,7 +22,6 @@ import { useDispatch } from "react-redux"
 import { OrderType, updateOrder } from "../../store/orderSlice"
 import { notify } from "../../utlis/notify"
 import { AxiosError } from "axios"
-import { DeleteButton } from "../Buttons/DeleteButton"
 import { DeleteOrderButton } from "../buttons/DeleteOrderButton"
 
 interface OrderCardProps{
@@ -149,18 +148,22 @@ export function OrderCompleteCard({order}:{order:OrderModel}){
                     </div>  
                 </div>
             </div>
-            <div className="w-full flex flex-row gap-x-2">
-                <TextButton
-                    text="NEXT STEP"
-                    onClick={async()=>{
-                        await onNext()
-                    }}
-                />
+            <div className="w-full flex flex-row gap-x-2 mt-auto">
+                {
+                    order.status != 'CANCELED' &&
+                    <TextButton
+                        text="NEXT STEP"
+                        onClick={async()=>{
+                            await onNext()
+                        }}
+                    />
+                }
                 {/*
                 <DeleteOrderButton
                     order={order!}
                 />
                 */}
+                
             </div>
         </OrderCard>
     )

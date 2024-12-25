@@ -5,7 +5,7 @@ export function StatusCard({status}:{status:OrderStatus}){
     const getData = (): { color: string } => {
         switch (status) {
             case 'NOT ACCEPTED':
-                return { color: 'bg-red-500' }; // Rosso per indicare che non è accettato
+                return { color: 'bg-orange-red' }; // Rosso per indicare che non è accettato
             case 'ACCEPTED':
                 return { color: 'bg-sky-500' }; // Blu per indicare che è stato accettato
             case 'WORKING ON':
@@ -14,6 +14,8 @@ export function StatusCard({status}:{status:OrderStatus}){
                 return { color: 'bg-orange-400' }; // Arancione per indicare che è stato inviato
             case 'DELIVERED':
                 return { color: 'bg-green-600' }; // Verde per indicare che è stato consegnato
+            case 'CANCELED':
+                return {color: 'bg-red-600'}
             default:
                 return { color: 'bg-gray-400' }; // Grigio per gli stati sconosciuti o predefiniti
         }

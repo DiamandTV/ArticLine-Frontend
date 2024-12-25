@@ -38,7 +38,7 @@ export function PaginationButtonWithContext(){
         pageData && page && setPage && pageData.number_of_pages > 1 ?
         <div className="max-w-max max-h-max bg-white p-2 rounded-xl self-end justify-self-end sticky top-0">
             <Stack spacing={2}>
-                <Pagination count={pageData.count} shape="rounded" page={page} onChange={(_,page)=>setPage(page)}/>
+                <Pagination count={pageData.number_of_pages} shape="rounded" page={page} onChange={(_,page)=>setPage(page)}/>
             </Stack>
         </div> : null
     )

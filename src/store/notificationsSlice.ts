@@ -14,13 +14,14 @@ const notificationsSlice = createSlice({
     initialState:notificationsSliceInitialValue,
     reducers:{
         setNotifications:(state,action)=>{
-
+            state.notifications = [...action.payload]
         },
         addNotification:(state,action)=>{
-
+            state.notifications = [action.payload,...state.notifications]
         },
         deleteNotification:(state,action)=>{
-
+            const notificationToDelete = action.payload as NotificationModel
+            state.notifications = [...state.notifications.filter((notification)=>notification.id!==notificationToDelete.id)]
         }
     },
 })

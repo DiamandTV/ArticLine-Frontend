@@ -35,12 +35,15 @@ export function CartForm({onSubmitForm,children}:CartFormProps){
             })
         }
     }
-
+    console.log(methods.getValues())
     console.log(errors)
     return (
         <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)} className="h-full flex flex-col gap-y-4 ">
                 <h2 className="text-2xl text-center font-semibold">DELIVERY TIME</h2>
+                {
+                    // todo:show the error
+                }
                 <OrderTimeInput/>
                 <div className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-11 gap-x-4 py-10">
                     <h1 className="text-2xl text-center col-span-2 font-semibold">DELIVERY ADDRESS</h1>

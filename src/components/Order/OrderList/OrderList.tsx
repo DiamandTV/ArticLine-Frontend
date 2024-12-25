@@ -4,8 +4,8 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useContext, useMemo } from "react";
 import { StatusCard } from "../../cards/StatusCard";
 import { OrderStatus } from "../../../models/Order";
-import usePagination from "@mui/material/usePagination/usePagination";
 import { PaginationContext } from "../../Pagination/PaginationContext";
+import dayjs from "dayjs";
 
 
 interface OrderTableModel{
@@ -95,7 +95,8 @@ const columns:Array<GridColDef> = [
 
 export function OrderList(){
     const orders = useSelector((state:RootState)=>state.orderReducer.orders)
-    const {pageData} = useContext(PaginationContext)
+    const {pageData,setPage} = useContext(PaginationContext)
+    console.log(orders)
     const rows = useMemo(()=>{
         
         return orders.map((order)=>{
@@ -105,9 +106,9 @@ export function OrderList(){
                 store_name:order.cart.store_name,
                 status:order.status,
                 total:order.total_price!,
-                created:order.created_at,
-                delivery_time:!order.delivery_time && 'NOT YET',
-                delivered_time:!order.delivered_time && 'NOT YET'
+                created:dayjs(order.created_at).format('DD/MM/YY hh:mm'),
+                delivery_time:order.delivery_time ? dayjs(order.delivery_time).format('DD/MM/YY hh:mm') : 'NOT YET',
+                delivered_time:order.delivered_time ? dayjs(order.delivered_time).format('DD/MM/YY hh:mm') : 'NOT YET'
             }
     })
     },[orders])
@@ -117,15 +118,21 @@ export function OrderList(){
                 <DataGrid
                     columns={columns}
                     rows={rows}
-                    rowCount={pageData?.number_of_pages}
+                    rowCount={pageData!.count}
                     filterMode="server"
                     paginationMode="server"
-                    pagination={true}
-                    autoPageSize={true}
-                    paginationModel={{page:2,pageSize:10}}
+                    pagination
+                    paginationModel={{page:pageData!.current_page_number-1,pageSize:pageData!.page_size}}
                     paginationMeta={{
-                        hasNextPage:false,
-                        
+                        hasNextPage:pageData!.next ? true : false,
+                    }}
+                    onPaginationMetaChange={()=>{
+
+                    }}
+                    onPaginationModelChange={(model)=>{
+                        if(setPage){
+                            setPage(model.page+1)
+                        }
                     }}
                 />
             </div>
