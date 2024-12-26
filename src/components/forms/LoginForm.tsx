@@ -9,7 +9,7 @@ import { LoaderWithChildren } from "../Loader/LoaderWithChildren"
 import { AxiosError } from "axios"
 import { setSession } from "../../store/authSlice"
 import { useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 const schema = z.object({
     email:z.string().email(),
     password:z.string().min(8).max(40)
@@ -86,7 +86,7 @@ export function LoginForm(){
                 },       
             }}
         >
-            <form className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-8 gap-x-4 " onSubmit={handleSubmit(onSubmit)}> 
+            <form className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-4 gap-x-4 " onSubmit={handleSubmit(onSubmit)}> 
                 {userLogInForms.map((form)=>
                         <AnimationPlaceholderInput 
                             key={form.name}
@@ -98,7 +98,10 @@ export function LoginForm(){
                             defaultValue={form.defaultValue}
                         />
                         )} 
-                <div className="flex col-span-2 w-full items-center justify-center">    
+                <div className="flex flex-col col-span-2 w-full items-center justify-center gap-y-4">   
+                    <Link to={'/choose/signin'}  className="w-full flex flex-row justify-end">
+                        <span className="float-right text-sm italic">You haven't an account yet. Create it now!</span>                
+                    </Link>
                     <TextButton
                             type="submit"
                             text="LOGIN"

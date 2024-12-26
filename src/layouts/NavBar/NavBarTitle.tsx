@@ -7,6 +7,7 @@ import { PopupProvider } from '../../components/Popup/PopupProvider';
 import { PopupApp } from '../../components/Popup/Popup';
 import { NotificationQuery } from '../../components/Notifications/NotificationQuery';
 import { NotificationList } from '../../components/Notifications/NotificationList';
+import { PaginationProvider } from '../../components/Pagination/PaginationProvider';
 export function NavBarTitle(){
     return (
         <div className='w-full grid grid-cols-4 justify-between items-center p-2 ' >
@@ -22,11 +23,9 @@ export function NavBarTitle(){
             <div className='w-full flex flex-row justify-end items-end gap-x-2'>
                 <PopupProvider>
                     <NotificationButtonWithBadge/>
-                    <NotificationQuery>
                         <PopupApp>
                             <NotificationList/>
                         </PopupApp>
-                    </NotificationQuery>
                 </PopupProvider>
                 <div className='max-w-max p-3 rounded-xl justify-self-end hover:cursor-pointer border-2 border-gray-700'>
                     <CiHeart

@@ -10,7 +10,7 @@ export enum isAuthenticatedReturn {
 
 export const useAuthService = {
     async login(authInfo:{email:string,password:string}) {
-        return  await api.post('/login',authInfo)
+        return  await api.post(`/login`,authInfo)
     },
     async sendResetPasswordRequest(body:{email:string}){
         return await api.post('/password/reset',body)

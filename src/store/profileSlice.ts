@@ -5,11 +5,13 @@ import { StoreModel } from "../models/store";
 
 export interface ProfileSliceModel{
     profile:UserProfileModel | CompanyProfileModel | null,
+    notification:unknown,
     stores:Array<StoreModel>,
 }
 
 const profileInitalState:ProfileSliceModel = {
     profile:null,
+    notification:null,
     stores:[]
 }
 

@@ -20,6 +20,8 @@ import { Carts } from "../page/Carts/Carts";
 import { Orders } from "../page/Orders/Orders";
 import { OrderDetail } from "../components/Order/OrderDetail";
 import { OrdersCompany } from "../page/Orders/OrdersCompany";
+import { CourierSignIn } from "../page/CourierSignIn";
+import { ChooseSignIn } from "../page/ChooseSignIn"
 const router = createBrowserRouter([
     //{path:"/product",element:<ProductCreate/>},
     // main app routes
@@ -72,10 +74,18 @@ const router = createBrowserRouter([
         element:<UnsignedRoute/>,
         children:[
              // authenticated routes
+                {
+                    path:"choose/signin",
+                    element:<ChooseSignIn/>
+                },
                 { 
                     path: "user/signin", 
                     element: <UserSignIn/>,
                     
+                },
+                {
+                    path:"courier/signin",
+                    element:<CourierSignIn/>
                 },
                 { 
                     path: "company/signin",
