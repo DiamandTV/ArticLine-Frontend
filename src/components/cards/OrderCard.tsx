@@ -110,6 +110,7 @@ OrderCard.DeliveryTime = function OrderCardDeliveryTime(){
     )
 }
 
+
 export function OrderCompleteCard({order}:{order:OrderModel}){
     const dispatch = useDispatch()
     const onNext = async()=>{

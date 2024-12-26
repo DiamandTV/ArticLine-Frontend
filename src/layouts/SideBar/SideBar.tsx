@@ -85,7 +85,7 @@ export function SideBarApp(){
                 <SubMenu id="CHARTS" icon={<IoChatbubbleEllipses size={SIDEBAR_ICON_SIZE}/>} label="CHATS" ></SubMenu>
                 <MenuItem id="ACCOUNT" icon ={<FaUser size={SIDEBAR_ICON_SIZE}/>}>ACCOUNT</MenuItem>
                 
-                {/*<MenuItem icon={<IoMdNotifications size={SIDEBAR_ICON_SIZE}/>} >NOTIFICATIONS</MenuItem>*/}
+                {/*<MenuItem icon={<IoMdnotifications size={SIDEBAR_ICON_SIZE}/>} >NOTIFICATIONS</MenuItem>*/}
                 <MenuItem icon={<IoMdSettings size={SIDEBAR_ICON_SIZE}/>} >SETTINGS</MenuItem>
                 </Menu>    
             </Sidebar>
