@@ -9,7 +9,7 @@ import { CartCard } from "./CartCard"
 import { OrderStatusProgressBar } from "../ProgressBar/OrderStatusProgressBar"
 import { TextButton } from "../Buttons/TextButtons"
 import { OrderProvider } from "../OrderCompany/OrderContext/OrderProvider"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { OrderContext } from "../OrderCompany/OrderContext/OrderContext"
 import { IoIosInformationCircle } from "react-icons/io";
 import { TOOLKIT_EARLY_MESSAGE } from "../../constraints"
@@ -23,6 +23,7 @@ import { OrderType, updateOrder } from "../../store/orderSlice"
 import { notify } from "../../utlis/notify"
 import { AxiosError } from "axios"
 import { DeleteOrderButton } from "../buttons/DeleteOrderButton"
+import { Dropdown } from "../inputs/Dropdown/Dropdown"
 
 interface OrderCardProps{
     order:OrderModel,
@@ -111,6 +112,28 @@ OrderCard.DeliveryTime = function OrderCardDeliveryTime(){
 }
 
 
+OrderCard.ChooseCourier = function OrderCartChooseCourier(){
+
+    const {order} = useContext(OrderContext)
+    const [open,setOpen] = useState(false)
+    if(!order) return 
+    return(
+        <BlurCard>
+            <Dropdown
+                labelName="COURIER"
+                name="order_courier"
+                open={open}
+                setOpen={setOpen}
+                onChange={()=>{
+
+                }}
+            >
+                <div></div>
+            </Dropdown>
+        </BlurCard>
+    )
+}
+
 export function OrderCompleteCard({order}:{order:OrderModel}){
     const dispatch = useDispatch()
     const onNext = async()=>{
@@ -149,6 +172,7 @@ export function OrderCompleteCard({order}:{order:OrderModel}){
                     </div>  
                 </div>
             </div>
+            <OrderCard.ChooseCourier/>
             <div className="w-full flex flex-row gap-x-2 mt-auto">
                 {
                     order.status != 'CANCELED' &&

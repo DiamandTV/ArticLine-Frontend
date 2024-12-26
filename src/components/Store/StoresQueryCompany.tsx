@@ -1,20 +1,28 @@
 import { useDispatch } from "react-redux"
 import { useQuery } from "@tanstack/react-query"
 import { companyStoreService } from "../../services/companyStoreService"
-import { useEffect } from "react"
+import { useContext, useEffect } from "react"
 import { BlurCard } from "../Cards/BlurCard"
 import { LoaderResponse } from "../Loader/LoaderResponse"
 import {  setStores } from "../../store/profileSlice"
+import { PaginationContext } from "../Pagination/PaginationContext"
+import { PaginationModel } from "../../models/pagination"
 
 export function StoresQueryCompany({children,load=true}:{children:React.ReactNode,load?:boolean}){
     const dispatch = useDispatch()
+    const {page,setPageData} = useContext(PaginationContext)
     const {isLoading,isError,isSuccess,refetch} = useQuery({
-        queryKey:['company-stores-list'],
-        queryFn:async()=>await companyStoreService.getCompanyStores(),
+        queryKey:['company-stores-list',page],
+        queryFn:async()=>await companyStoreService.getCompanyStores({page}),
         refetchOnMount:false,
         refetchOnWindowFocus:false,
         onSuccess:(data)=>{
-            if(data.data) dispatch(setStores(data.data.results))
+            if(data && data.data){
+                const paginationData = {...data.data} as  PaginationModel
+                dispatch(setStores(data.data.results))
+                delete paginationData.results
+                if(paginationData && setPageData) setPageData(paginationData)
+            }
         }
     })
 

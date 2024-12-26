@@ -11,6 +11,9 @@ export const useCompanyService = {
         console.log(companyProfile)
         return api.post('/company/signin/',companyProfile)
     },
+    async getCompanyCouriers({page='1',search=''}:{page:string|number|undefined,search?:string}){
+        return api.get(`/company/couriers/?page=${page}&search=${search}`)
+    },
     serializeFromStepperData(record:[CompanyProfileModel, AddressFields, AccountFields]):CompanyProfileModel{
         let object:Partial<CompanyProfileModel> = {};
         console.log("RECORD");

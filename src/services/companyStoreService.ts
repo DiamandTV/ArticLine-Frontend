@@ -7,7 +7,7 @@ export const companyStoreService = {
         return await api.get('/store/categories')
     },
     async createStore(store:StoreFormFields){
-        return await api.post('/store/company',store)
+        return await api.post('/store/company/',store)
     },
     async updateStore({store,storeId}:{store:StoreFormFields,storeId:string|undefined|number}){
         return await api.put(`/store/details/${storeId}/update`,store)
@@ -15,12 +15,12 @@ export const companyStoreService = {
     async deleteStore(storeId:string|number|undefined){
         return await api.delete(`/store/details/${storeId}/delete`)
     },
-    async getCompanyStoresPage(){
-        return await api.get('/store/company')
-    },
-    async getCompanyStores(){
+    // async getCompanyStoresPage(){
+    //     return await api.get('/store/company')
+    // },
+    async getCompanyStores({page='1'}:{page:string|number|undefined}){
         //const PAGE = 1
-        const data = await api.get(`/store/company`)
+        const data = await api.get(`/store/company/?page=${page}`)
         return data
     },
     filterImagesWithOutUrl(store:StoreFormFields):StoreFormFields{
