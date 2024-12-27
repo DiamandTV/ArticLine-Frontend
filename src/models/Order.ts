@@ -3,6 +3,7 @@ import { CompanyProfileModel } from "./company"
 import { ProductModel } from "./Product"
 import { UserProfileModel } from "./user"
 import { CartModel } from "./cart"
+import { CourierProfileModel } from "./Courier"
 //import { StoreModel } from "./store"
 // export type CartModel = Record<number|string,OrderItemModel> 
 // export type StoreToCartModel = Record<number|string,CartModel>
@@ -13,8 +14,10 @@ export const STATUS_INDEX = {
     'NOT ACCEPTED'  :   0,
     'ACCEPTED'      :   1,
     'WORKING ON'    :   2,
-    'SENDED'        :   3,
-    'DELIVERED'     :   4,
+    'READY'         :   3,
+    'SENDED'        :   4,
+    'DELIVERED'     :   5,
+    'CANCELED'      :   1000
 }
 
 export interface OrderModel{
@@ -30,6 +33,7 @@ export interface OrderModel{
     created_at?:string | Dayjs,
     canceled_at?:string | Dayjs,
     cart:CartModel,
+    courier?:CourierProfileModel
 }
 
 export interface OrderItemModel{

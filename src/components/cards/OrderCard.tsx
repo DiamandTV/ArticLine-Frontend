@@ -1,7 +1,7 @@
 //!!! START USING ALWAYS REACT COMPOUND COMPONENTS
 
 import { Avatar, Button, Tooltip } from "@mui/material"
-import { OrderModel } from "../../models/Order"
+import { OrderModel, STATUS_INDEX } from "../../models/Order"
 import { BlurCard } from "./BlurCard"
 import { CartProvider } from "../Cart/CartProvider/CartProvider"
 import dayjs from "dayjs"
@@ -9,7 +9,7 @@ import { CartCard } from "./CartCard"
 import { OrderStatusProgressBar } from "../ProgressBar/OrderStatusProgressBar"
 import { TextButton } from "../Buttons/TextButtons"
 import { OrderProvider } from "../OrderCompany/OrderContext/OrderProvider"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { OrderContext } from "../OrderCompany/OrderContext/OrderContext"
 import { IoIosInformationCircle } from "react-icons/io";
 import { TOOLKIT_EARLY_MESSAGE } from "../../constraints"
@@ -20,10 +20,21 @@ import { DialogApp } from "../Dialog/Dialog"
 import { useOrderService } from "../../services/orderService"
 import { useDispatch } from "react-redux"
 import { OrderType, updateOrder } from "../../store/orderSlice"
-import { notify } from "../../utlis/notify"
-import { AxiosError } from "axios"
+import { notify, notifyCheck } from "../../utlis/notify"
+import { AxiosError, AxiosResponse } from "axios"
 import { DeleteOrderButton } from "../buttons/DeleteOrderButton"
 import { Dropdown } from "../inputs/Dropdown/Dropdown"
+import { PaginationProvider } from "../Pagination/PaginationProvider"
+import { useInfiniteQuery } from "@tanstack/react-query"
+import { useCompanyService } from "../../services/companyService"
+import { PaginationContext } from "../Pagination/PaginationContext"
+import { PaginationModel } from "../../models/pagination"
+import { usePaginationInfiniteScroll } from "../../hooks/usePaginationInfiniteScroll"
+import { CourierProfileModel } from "../../models/Courier"
+import { AccountCard } from "./AccountCard"
+import { useForm } from "react-hook-form"
+import { SearchServer } from "./SearchServer"
+import { DeleteButton } from "../Buttons/DeleteButton"
 
 interface OrderCardProps{
     order:OrderModel,
@@ -32,7 +43,6 @@ interface OrderCardProps{
 
 
 export function OrderCard({order,children}:OrderCardProps){
-    
     return (
        <BlurCard className="h-full max-h-full py-2 bg-slate-600 flex flex-col gap-y-6 p-4 px-6">      
             <OrderProvider order={order}>
@@ -112,27 +122,157 @@ OrderCard.DeliveryTime = function OrderCardDeliveryTime(){
 }
 
 
-OrderCard.ChooseCourier = function OrderCartChooseCourier(){
+OrderCard.DelayTime = function OrderCardDelayTime(){
+    const {order} = useContext(OrderContext)
+    if (!order || order?.status === 'NOT ACCEPTED' || order?.status === 'CANCELED') return
+    return(
+        <DialogProvider>
+            <DialogContext.Consumer>
+                {
+                    ({setOpen})=>(
+                            <TextButton
+                                text="CHOOSE DELAY"
+                                onClick={()=>{
+                                    setOpen(true)
+                                }}
+                            />  
+                        ) 
+                }
+            </DialogContext.Consumer>
+            <DialogApp>
+                <DeliveryForm/>
+            </DialogApp>
+        </DialogProvider>
+    )
+}
 
+
+OrderCard.ChooseCourier = function OrderCartChooseCourier(){
+    const dispatch = useDispatch()
     const {order} = useContext(OrderContext)
     const [open,setOpen] = useState(false)
+    const canEditCourier = ()=>{
+        const readyIndex = STATUS_INDEX.READY
+        if (order && STATUS_INDEX[order.status!] >= readyIndex) return false
+        return true
+    }
+    
+    const {register,watch,setValue,getValues} = useForm<{search:string}>({
+        disabled:!canEditCourier(),
+        defaultValues:{search:order?.courier ? `${order.courier.first_name} ${order.courier.last_name}` : ""}
+    })
+
+    // todo: make the search render more smooth
+    const {data,ref} = usePaginationInfiniteScroll({
+        queryKey:['get-couriers',watch('search')],
+        queryFn:({pageParam})=>useCompanyService.getCompanyCouriers({page:pageParam,search:watch('search')}),
+    })
+
+    
     if(!order) return 
     return(
-        <BlurCard>
+        <BlurCard className="w-full flex flex-row gap-x-6 justify-between items-center">
             <Dropdown
                 labelName="COURIER"
-                name="order_courier"
-                open={open}
-                setOpen={setOpen}
+                name="search"
+                open={canEditCourier() ? open : false}
+                setOpen={canEditCourier() ? setOpen : ()=>{}}
+                register={register('search')}
+                defaultValue={getValues('search')}
                 onChange={()=>{
 
                 }}
             >
-                <div></div>
+                {data ? data!.pages.map((page)=>{
+                    return (page.data as PaginationModel).results.map((profile:CourierProfileModel)=>{
+                                return (
+                                    <AccountCard profile={profile} className="hover:cursor-pointer" 
+                                        onClick={async(event)=>{
+                                            event.stopPropagation()
+                                            try{
+                                                console.log(profile)
+                                                const data = await useOrderService.updateOrderCourier({order,courier:profile})
+                                                if(data && data.data){
+                                                    dispatch(updateOrder({
+                                                        order:data.data,
+                                                        type:OrderType.COMPANY_ACTIVE
+                                                    }))
+                                                }
+                                                const complete_name = profile.first_name + " " + profile.last_name
+                                                setValue('search',complete_name)
+                                            }catch(e){
+                                                console.log(e)
+                                                notifyCheck(e)
+                                            }                                            
+                                        }}
+                                    />
+                                )
+                            }) 
+                }) : null}
+                <div ref={ref} className="py-1"></div>
             </Dropdown>
+            { canEditCourier() && 
+                <DeleteButton
+                    className="ml-auto"
+                    onClick={async()=>{
+                        try{
+                            const data = await useOrderService.updateOrderCourier({order})
+                            dispatch(updateOrder({
+                                order:data.data,
+                                type:OrderType.COMPANY_ACTIVE
+                            }))
+                        }catch(e){
+                            console.log(e)
+                        }
+                    }}
+                />
+            }
         </BlurCard>
     )
 }
+
+// OrderCard.SearchCourier = function OrderCardSearchCourier(){
+//     return ( 
+//         <div className="p-10 bg-slate-900">
+//             <BlurCard className="w-[500px] flex flex-col gap-4 ">
+//                 <SearchServer
+//                     queryKey={['get-couriers']}
+//                     queryFn={useCompanyService.getCompanyCouriers}
+//                 />
+//             </BlurCard>
+//         </div>
+//     )
+// }
+
+// OrderCard.ChooseCourierDialog = function OrderCardChooseCourierDialog(){
+//     const {order} = useContext(OrderContext)
+
+//     if(!order) return 
+//     return(
+//         <DialogProvider>
+//             <DialogContext.Consumer>
+//                 {
+//                     ({setOpen})=>{
+//                         return(
+//                             <>
+//                                 <TextButton
+//                                     text="CHOOSE COURIER"
+//                                     onClick={()=>{
+//                                         setOpen(true)
+//                                     }}
+//                                 />
+                                
+//                             </>
+//                         )
+//                     }
+//                 }
+//             </DialogContext.Consumer>
+//             <DialogApp>
+//                 <OrderCard.SearchCourier/>
+//             </DialogApp>
+//         </DialogProvider>
+//     )
+// }
 
 export function OrderCompleteCard({order}:{order:OrderModel}){
     const dispatch = useDispatch()
@@ -149,6 +289,21 @@ export function OrderCompleteCard({order}:{order:OrderModel}){
             if(e instanceof AxiosError) notify(e.response?.data)
         }
     }
+
+    const showNextStep = ()=>{
+        // show only the next step when the order status is less than the ready state
+        /* 
+            la company può cambiare tranquillamente lo stato dell'ordine (unidirezionale . Sono in avanti), se l'ordine non è stato spedito. 
+            Dopo che è stato preparato l'ordine la company non puoò più far avanzare il suo status ma lo può fare solo il corriere
+
+        */
+       
+        // ready index is the status index after which the company can't modify the order status
+        const readyIndex = STATUS_INDEX.READY
+        if (STATUS_INDEX[order.status!] >= readyIndex) return false
+        return true
+    }
+
     return(
         <OrderCard order={order}>
             <OrderCard.TopBar/>
@@ -168,14 +323,16 @@ export function OrderCompleteCard({order}:{order:OrderModel}){
                     {/*DELIVERY CREATED TIME AND DELIVERY TIME*/}
                     <div className="w-full flex flex-col gap-y-2">
                         <OrderCard.CreatedTime/>
+                        <OrderCard.DelayTime/>
                         <OrderCard.DeliveryTime/>
                     </div>  
                 </div>
             </div>
             <OrderCard.ChooseCourier/>
+ 
             <div className="w-full flex flex-row gap-x-2 mt-auto">
                 {
-                    order.status != 'CANCELED' &&
+                    showNextStep() &&
                     <TextButton
                         text="NEXT STEP"
                         onClick={async()=>{

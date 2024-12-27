@@ -1,3 +1,4 @@
+import { CourierProfileModel } from "../models/Courier";
 import { OrderModel } from "../models/Order";
 import { api } from "./api";
 
@@ -19,6 +20,9 @@ export const useOrderService = {
     },
     async updateOrderDeliveryTime({order,delivery_time}:{order:OrderModel,delivery_time:string}){
         return api.patch(`order/active/company/delivery_time/update/${order.id}`,{delivery_time})
+    },
+    async updateOrderCourier({order,courier}:{order:OrderModel,courier?:CourierProfileModel}){
+        return api.patch(`order/active/company/courier/update/${order.id}`,{courier_id:courier?.id})
     },
     async deleteOrder({order}:{order:OrderModel}){
         return api.patch(`order/active/company/delete/${order.id}`)

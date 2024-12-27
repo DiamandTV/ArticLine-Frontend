@@ -13,7 +13,7 @@ export function DialogApp({children}:{children:React.ReactNode}){
                 className="rounded-xl"
                 PaperProps={{
                     style:{
-                        backgroundColor:"#0f172a",
+                        backgroundColor:"#0f1720",
                         padding:"0px",
                         margin:"0px",
                         borderRadius:"0.75rem"
@@ -22,7 +22,7 @@ export function DialogApp({children}:{children:React.ReactNode}){
                 sx={{
                     "& .MuiDialogContent-root":{
                         padding:"0px",
-                        backgroundColor:"#0f172a",
+                        backgroundColor:"tranparent",
                         borderRadius:"0.75rem"
                     }
                 }}

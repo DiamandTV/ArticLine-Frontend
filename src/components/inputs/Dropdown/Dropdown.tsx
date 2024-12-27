@@ -15,8 +15,8 @@ interface DropdownProps {
     error?:FieldError,
 }
 export function Dropdown({labelName,name,onChange,defaultValue,register,error,open,setOpen,children}:DropdownProps){
-
     const [focus,setFocus] = useState(defaultValue ? true : false)
+
     return(
         <div className="relative flex flex-col w-full">
             <div 
@@ -40,8 +40,8 @@ export function Dropdown({labelName,name,onChange,defaultValue,register,error,op
                         setFocus(true)
                     }}
                     onBlur={(e)=>{
-                        setFocus(e.target.value == '' ? false : true)
-                        setOpen(false)
+                        setTimeout(()=>setFocus(e.target.value == '' ? false : true),50)
+                        setTimeout(()=>setOpen(false),50)  
                     }} 
                     onChange={(event)=>{
                         onChange(event)
