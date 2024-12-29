@@ -1,5 +1,5 @@
 import { StaticDateTimePicker } from "@mui/x-date-pickers";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { useContext, useState } from "react";
 import { useOrderService } from "../../services/orderService";
 import { OrderContext } from "../OrderCompany/OrderContext/OrderContext";
@@ -17,7 +17,7 @@ export function DelayForm(){
         // the store owner has set the time so save it in the db . Notify the user only when the order has been accepted
         if (!order || !value) return
         try{
-            const data = await useOrderService.updateOrderDeliveryTime({order,delivery_time:value!.format()})
+            const data = await useOrderService.updateOrderDelayTime({order,delay_time:value!.format()})
             if(data && data.data){
                 dispatch(updateOrder({
                     order:data.data as OrderModel,
@@ -31,7 +31,7 @@ export function DelayForm(){
     }
     return(
         <>
-        <StaticDateTimePicker value={value} onChange={(value)=>setValue(value)} onAccept={async(value)=>await onAccept(value)}/>
+        <StaticDateTimePicker value={value} onChange={(value)=>setValue(value)} onAccept={async(value)=>await onAccept(value)} minDateTime={dayjs(order!.delivery_time!)}/>
         </>
     )
 }

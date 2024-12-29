@@ -31,7 +31,7 @@ export function DeliveryForm(){
     }
     return(
         <>
-        <StaticDateTimePicker value={value} onChange={(value)=>setValue(value)} onAccept={async(value)=>await onAccept(value)}/>
+        <StaticDateTimePicker value={value} onChange={(value)=>setValue(value)} onAccept={async(value)=>await onAccept(value)} disablePast/>
         </>
     )
 }

@@ -35,6 +35,7 @@ import { AccountCard } from "./AccountCard"
 import { useForm } from "react-hook-form"
 import { SearchServer } from "./SearchServer"
 import { DeleteButton } from "../Buttons/DeleteButton"
+import { DelayForm } from "../forms/DelayForm"
 
 interface OrderCardProps{
     order:OrderModel,
@@ -114,7 +115,10 @@ OrderCard.DeliveryTime = function OrderCardDeliveryTime(){
             {order.delivery_time && !order.request_earliest_delivery &&
                 <div className="w-full flex flex-row justify-between items-center">
                     <h1>DELIVERY TIME</h1>
-                    <h1>{dayjs(order.delivery_time).format('DD/MM/YYYY hh:mm')}</h1>
+                    <div className="flex flex-row gap-x-1 justify-center items-center">
+                        <h1 className={`${order.delay_time ? "line-through text-[11px]" : ""}`}>{dayjs(order.delivery_time).format('DD/MM/YYYY HH:mm')}</h1>    
+                        {order.delay_time && <h1 className="text-orange-red font-semibold">{dayjs(order.delay_time).format('DD/MM/YYYY HH:mm')}</h1>}
+                    </div>
                 </div>
             }
         </>
@@ -140,7 +144,7 @@ OrderCard.DelayTime = function OrderCardDelayTime(){
                 }
             </DialogContext.Consumer>
             <DialogApp>
-                <DeliveryForm/>
+                <DelayForm/>
             </DialogApp>
         </DialogProvider>
     )

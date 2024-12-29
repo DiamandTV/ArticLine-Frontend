@@ -10,22 +10,26 @@ export const useOrderService = {
         return api.get(`/order/details/?page=${page}`)
     },
     async getInActiveCompanyOrders({page='1'}:{page?:number|null|string}){
-        return api.get(`orders/inactive/company/?page=${page}`)
+        return api.get(`/orders/inactive/company/?page=${page}`)
     },
     async getActiveCompanyOrders({page='1'}:{page?:string|null|number}){
-        return api.get(`orders/active/company/?page=${page}`)
+        return api.get(`/orders/active/company/?page=${page}`)
     },
     async updateOrderStatus({order}:{order:OrderModel}){
-        return api.patch(`order/active/company/status/update/${order.id}`)
+        return api.patch(`/order/active/company/status/update/${order.id}`)
     },
     async updateOrderDeliveryTime({order,delivery_time}:{order:OrderModel,delivery_time:string}){
-        return api.patch(`order/active/company/delivery_time/update/${order.id}`,{delivery_time})
+        return api.patch(`/order/active/company/delivery_time/update/${order.id}`,{delivery_time})
+    },
+    async updateOrderDelayTime({order,delay_time}:{order:OrderModel,delay_time:string}){
+        console.log(delay_time)
+        return api.patch(`/order/active/company/delay_time/update/${order.id}`,{delay_time})
     },
     async updateOrderCourier({order,courier}:{order:OrderModel,courier?:CourierProfileModel}){
-        return api.patch(`order/active/company/courier/update/${order.id}`,{courier_id:courier?.id})
+        return api.patch(`/order/active/company/courier/update/${order.id}`,{courier_id:courier?.id})
     },
     async deleteOrder({order}:{order:OrderModel}){
-        return api.patch(`order/active/company/delete/${order.id}`)
+        return api.patch(`/order/active/company/delete/${order.id}`)
     }
 
 }

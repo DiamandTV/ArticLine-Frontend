@@ -2,17 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 import { UserProfileModel } from "../models/user";
 import { CompanyProfileModel } from "../models/company";
 import { StoreModel } from "../models/store";
+import { DeviceModel } from "../models/Device";
 
 export interface ProfileSliceModel{
     profile:UserProfileModel | CompanyProfileModel | null,
     notification:unknown,
     stores:Array<StoreModel>,
+    devices:Array<DeviceModel>
 }
 
 const profileInitalState:ProfileSliceModel = {
     profile:null,
     notification:null,
-    stores:[]
+    stores:[],
+    devices:[]
 }
 
 const profileSlice = createSlice({
@@ -43,9 +46,13 @@ const profileSlice = createSlice({
         deleteStore:(state,action)=>{
             const storeToDelete = action.payload as StoreModel
             state.stores = [...state.stores.filter((store)=>store.id!==storeToDelete.id)]
+        },
+
+        setDevices:(state,actions)=>{
+            state.devices = [...actions.payload]
         }
-    }
+    },
 })
 
-export const { setProfile,setStores,addStore,updateStore,deleteStore } = profileSlice.actions
+export const { setProfile,setStores,addStore,updateStore,deleteStore ,setDevices} = profileSlice.actions
 export const profileReducer = profileSlice.reducer
