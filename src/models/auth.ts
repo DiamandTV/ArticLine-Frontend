@@ -5,5 +5,5 @@ export interface AuthModel {
     phone_number:string,
     is_verified?:boolean,
     is_superuser?:boolean, 
-    type?:'USER' | 'COMPANY'
+    type?:'USER' | 'COMPANY' | 'COURIER'
 }
