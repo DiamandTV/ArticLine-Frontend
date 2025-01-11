@@ -4,7 +4,8 @@ import { ImageModel } from "../models/image"
 import { api } from "./api"
 export const companyStoreService = {
     async getCategories(){
-        return await api.get('/store/categories')
+        const data = await api.get('/store/categories')
+        return data;
     },
     async createStore(store:StoreFormFields){
         return await api.post('/store/company/',store)

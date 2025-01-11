@@ -2,7 +2,7 @@ import axios, { InternalAxiosRequestConfig } from "axios"
 import { getAccessToken } from "./jwt";
 
 const api = axios.create({
-    baseURL:"http://localhost:8000"
+    baseURL:"http://192.168.6.79:8000"
 })
 
 
