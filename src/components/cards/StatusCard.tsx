@@ -10,6 +10,8 @@ export function StatusCard({status}:{status:OrderStatus}){
                 return { color: 'bg-sky-500' }; // Blu per indicare che è stato accettato
             case 'WORKING ON':
                 return { color: 'bg-yellow-600' }; // Giallo per indicare che è in lavorazione
+            case 'READY':
+                return {color:  'bg-green-400'};
             case 'SENDED':
                 return { color: 'bg-orange-400' }; // Arancione per indicare che è stato inviato
             case 'DELIVERED':
