@@ -8,7 +8,7 @@ import { CourierProfileModel } from "./Courier"
 // export type CartModel = Record<number|string,OrderItemModel> 
 // export type StoreToCartModel = Record<number|string,CartModel>
 
-export type OrderStatus = 'NOT ACCEPTED'|'ACCEPTED'|'WORKING ON'|'SENDED'|'DELIVERED'|'CANCELED'
+export type OrderStatus = 'NOT ACCEPTED'|'ACCEPTED'|'WORKING ON'|'READY'|'SENDED'|'DELIVERED'|'CANCELED'
 
 export const STATUS_INDEX = {
     'NOT ACCEPTED'  :   0,
