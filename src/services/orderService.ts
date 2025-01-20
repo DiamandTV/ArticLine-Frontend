@@ -13,7 +13,9 @@ export const useOrderService = {
         return api.get(`/orders/inactive/company/?page=${page}`)
     },
     async getActiveCompanyOrders({page='1'}:{page?:string|null|number}){
-        return api.get(`/orders/active/company/?page=${page}`)
+        const data = await api.get(`/orders/active/company/?page=${page}`)
+        console.error(data)
+        return data
     },
     async updateOrderStatus({order}:{order:OrderModel}){
         return api.patch(`/order/active/company/status/update/${order.id}`)

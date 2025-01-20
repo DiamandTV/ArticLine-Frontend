@@ -3,6 +3,8 @@ import { AxiosError } from "axios"
 export const ACCESS_TOKEN  =   'ARTICLINE-ACCESS-JWT-TOKEN'
 export const REFRESH_TOKEN =   'ARTICLINE-REFRESH-JWT-TOKEN'
 
+export const HOST_URL = "http://localhost:8000";
+
 export const SERVER_INTERNAL_ERROR_CODE = 500
 
 export const SIDEBAR_ICON_SIZE = 22.5

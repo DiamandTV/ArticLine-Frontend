@@ -1,8 +1,9 @@
 import axios, { InternalAxiosRequestConfig } from "axios"
 import { getAccessToken } from "./jwt";
+import { HOST_URL } from "../constraints";
 
 const api = axios.create({
-    baseURL:"http://192.168.1.249:8000"
+    baseURL:HOST_URL
 })
 
 

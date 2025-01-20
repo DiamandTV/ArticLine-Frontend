@@ -19,11 +19,12 @@ import { NotificationEventModel } from '../models/notification';
 import { addOrder, OrderType, updateOrder, } from '../store/orderSlice';
 import { NotifyCard } from '../components/cards/NotifyCard';
 import { addNotification } from '../store/notificationsSlice';
+import { HOST_URL } from '../constraints';
 
 export function NotifierView({children}:{children:React.ReactNode}){
     const auth = useSelector((state:RootState)=>state.authReducer.auth)
     const dispatch = useDispatch()
-    const [eventSource/*,eventSourceStatus*/] = useEventSource(`http://127.0.0.1:8000/events/listener/notifier_${auth?.id}`,true)
+    const [eventSource/*,eventSourceStatus*/] = useEventSource(`${HOST_URL}/events/listener/notifier_${auth?.id}`,true)
 
     // useEffect(()=>{
     //     const notification:NotificationModel = {
