@@ -9,10 +9,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { SIDEBAR_ICON_SIZE } from "../../constraints";
 import { StoreSection } from "./Sections/StoreSection";
-import { CompanyProtectedRoute } from "../../router/CompanyProtectedRoute";
+//import { CompanyProtectedRoute } from "../../router/CompanyProtectedRoute";
 import { CartSection } from "./Sections/CartSection";
 import { OrderSection } from "./Sections/OrderSection";
 import { DeviceSection } from "./Sections/DeviceSection";
+//import { OrderBatchSection } from "./Sections/OrderBatchSection";
 /*
 const useProfile:UserProfileModel = {
     auth:{
@@ -77,9 +78,10 @@ export function SideBarApp(){
                 
                 
                 <StoreSection/>
+                
                 <DeviceSection/>
 
-
+                
                 <OrderSection/>
 
                 <SubMenu id="CHARTS" icon={<IoChatbubbleEllipses size={SIDEBAR_ICON_SIZE}/>} label="CHATS" ></SubMenu>

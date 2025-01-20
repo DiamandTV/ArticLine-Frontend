@@ -4,6 +4,7 @@ import { ProductModel } from "./Product"
 import { UserProfileModel } from "./user"
 import { CartModel } from "./cart"
 import { CourierProfileModel } from "./Courier"
+import { DeviceModel } from "./Device"
 //import { StoreModel } from "./store"
 // export type CartModel = Record<number|string,OrderItemModel> 
 // export type StoreToCartModel = Record<number|string,CartModel>
@@ -35,6 +36,15 @@ export interface OrderModel{
     canceled_at?:string | Dayjs,
     cart:CartModel,
     courier?:CourierProfileModel
+}
+
+export interface OrderBatchModel {
+    id?:number,
+    orders:Array<number>,
+    device:DeviceModel,
+    courier:CourierProfileModel,
+    pickup_time:Array<number>,
+    created_at:Dayjs|string,
 }
 
 export interface OrderItemModel{

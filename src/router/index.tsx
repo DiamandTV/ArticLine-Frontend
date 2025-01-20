@@ -23,6 +23,7 @@ import { OrdersCompany } from "../page/Orders/OrdersCompany";
 import { CourierSignIn } from "../page/CourierSignIn";
 import { ChooseSignIn } from "../page/ChooseSignIn"
 import { Devices } from "../page/Devices/Devices";
+import { OrdersCompanyChunck } from "../page/OrderBatch/OrdersCompanyBatch";
 const router = createBrowserRouter([
     //{path:"/product",element:<ProductCreate/>},
     // main app routes
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
                         path:"orders/company",
                         element:<OrdersCompany/>
 
+                    },
+                    {
+                        path:"/orders/batch/company",
+                        element:<OrdersCompanyChunck/>
                     },
                     {
                         path:"devices/list/company",

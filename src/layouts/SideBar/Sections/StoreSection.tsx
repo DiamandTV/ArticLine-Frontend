@@ -6,6 +6,8 @@ import { SIDEBAR_ICON_SIZE } from "../../../constraints";
 import { StoreCreateIcon } from "../../../components/Icons/StoreCreate";
 import { CompanyProtectedRoute } from "../../../router/CompanyProtectedRoute";
 import { StoreOrderIcon } from "../../../components/Icons/StoreOrder";
+
+import { StoreOrderBatchIcon } from "../../../components/Icons/StoreOrderBatch";
 export function StoreSection(){
     return (
         <CompanyProtectedRoute>
@@ -45,6 +47,9 @@ export function StoreSection(){
                     <Link to={"/orders/company"}>
                         <MenuItem className="text-sm" icon={<StoreOrderIcon size={SIDEBAR_ICON_SIZE}/>}>ORDERS</MenuItem>
                     </Link> 
+                    <Link to={'/orders/batch/company'}>
+                        <MenuItem id="ORDERS" className="text-sm" icon={<StoreOrderBatchIcon size={SIDEBAR_ICON_SIZE}/>} >BATCH</MenuItem>                    
+                    </Link>
             </Can>
         </CompanyProtectedRoute>
     )

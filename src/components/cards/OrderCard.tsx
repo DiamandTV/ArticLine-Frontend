@@ -332,8 +332,9 @@ export function OrderCompleteCard({order}:{order:OrderModel}){
                     </div>  
                 </div>
             </div>
-            <OrderCard.ChooseCourier/>
- 
+            {
+                //<OrderCard.ChooseCourier/>
+            }
             <div className="w-full flex flex-row gap-x-2 mt-auto">
                 {
                     showNextStep() &&

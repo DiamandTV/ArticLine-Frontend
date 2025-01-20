@@ -1,16 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { OrderModel } from "../models/Order"
+import { OrderBatchModel, OrderModel } from "../models/Order"
 
 export enum OrderType{
     NORMAL,
     COMPANY_ACTIVE,
-    COMPANY_NO_ACTIVE
+    COMPANY_NO_ACTIVE,
+    COMPANY_ACTIVE_BATCH,
+    COMPANY_NO_ACTIVE_BATCH
 }
 
 const targetMapping:Record<OrderType,keyof OrderSliceModel> = {
     [OrderType.NORMAL]: "orders",
     [OrderType.COMPANY_ACTIVE]: "companyActiveOrders",
     [OrderType.COMPANY_NO_ACTIVE]: "companyNoActiveOrders",
+    [OrderType.COMPANY_ACTIVE_BATCH]: "companyActiveOrdersBatch",
+    [OrderType.COMPANY_NO_ACTIVE_BATCH]: "companyNoActiveOrdersBatch"
 };
 interface OrderSliceModel{
     // activeOrders:Array<OrderModel>,
@@ -18,6 +22,8 @@ interface OrderSliceModel{
     orders:Array<OrderModel>,
     companyActiveOrders:Array<OrderModel>        // company orders
     companyNoActiveOrders:Array<OrderModel>
+    companyActiveOrdersBatch:Array<OrderBatchModel>,
+    companyNoActiveOrdersBatch:Array<OrderBatchModel>
     // pageCountCategories:Record<string,number> | null,
     // pagination:Omit<PaginationModel,'results'> |null
 }
@@ -26,7 +32,9 @@ interface OrderSliceModel{
 const orderSliceInitialValue:OrderSliceModel = {
     orders:[],
     companyActiveOrders:[], // orders for the company
-    companyNoActiveOrders:[]
+    companyNoActiveOrders:[],
+    companyActiveOrdersBatch:[],
+    companyNoActiveOrdersBatch:[]
 }
 
 

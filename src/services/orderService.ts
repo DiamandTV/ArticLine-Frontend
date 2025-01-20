@@ -32,6 +32,13 @@ export const useOrderService = {
     },
     async deleteOrder({order}:{order:OrderModel}){
         return api.patch(`/order/active/company/delete/${order.id}`)
-    }
+    },
 
+    // ? ORDER BATCH SERVICE
+    async createOrderBatch(){
+        return api.patch(``)
+    },
+    async getActiveCompanyOrdersBatch({page='1'}:{page?:string|number|null}){
+        return api.get(`/orders/batch/active/?page=${page}`)
+    }
 }

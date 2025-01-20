@@ -1,5 +1,4 @@
 import { FaClipboardUser, FaStore } from "react-icons/fa6";
-import { SIDEBAR_ICON_SIZE } from "../../constraints";
 import { Badge } from "@mui/material";
 
 export function StoreOrderIcon({size}:{size:number}){
