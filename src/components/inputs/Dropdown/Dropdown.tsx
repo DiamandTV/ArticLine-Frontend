@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { UseFormRegisterReturn } from "react-hook-form";
+import { FieldErrorsImpl, Merge, UseFormRegisterReturn } from "react-hook-form";
 import { FieldError } from "react-hook-form";
 import { InputError } from "../InputError/InputError";
 export interface DropdownProps {
@@ -12,14 +12,16 @@ export interface DropdownProps {
     children:React.ReactNode,
     defaultValue?:string,
     register?:UseFormRegisterReturn,
-    error?:FieldError,
+    error?:FieldError | Merge<FieldError, FieldErrorsImpl> | undefined,
     value?:string
 }
 export function Dropdown({labelName,name,onChange,defaultValue,register,error,open,setOpen,children,value}:DropdownProps){
     const [focus,setFocus] = useState(defaultValue ? true : false)
-    // useEffect(()=>{
-    //     setFocus(defaultValue ? true : false)
-    // },[open])
+    useEffect(()=>{
+        if(!focus){
+            setFocus(defaultValue ? true : false)
+        }
+    },[open])
     return(
         <div className="relative flex flex-col w-full">
             <div 
@@ -34,18 +36,19 @@ export function Dropdown({labelName,name,onChange,defaultValue,register,error,op
                 </label>
                 <div className="w-full flex flex-row justify-between items-center border-b-2 border-blue-200">
                 <input 
-                    {...register}  
+                      
                     className="focus:outline-none focus:border-transparent border-transparent h-10 w-full bg-transparent px-2 text-lg"
                     id={name}
                     type={"text"} 
                     name={name} 
+                    {...register}
                     onFocus={()=>{
                         setOpen(true)
                         setFocus(true)
                     }}
                     onBlur={(e)=>{
                         setTimeout(()=>setFocus(e.target.value == '' ? false : true),50)
-                        setTimeout(()=>setOpen(false),50)  
+                        setTimeout(()=>setOpen(false),100)  
                     }} 
                     onChange={(event)=>{
                         onChange(event)

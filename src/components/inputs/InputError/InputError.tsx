@@ -1,9 +1,9 @@
 
 import { useEffect, useState } from "react";
-import { FieldError } from "react-hook-form"
+import { FieldError, FieldErrorsImpl, Merge } from "react-hook-form"
 import { GoAlertFill } from "react-icons/go";
 interface InputErrorProps{
-    error:FieldError | undefined | Array<string>
+    error:FieldError | Merge<FieldError, FieldErrorsImpl> | undefined | Array<string>
 }
 export function InputError({error}:InputErrorProps){
     const OPEN_POPUP_TIME = 5000 // 5000 ms

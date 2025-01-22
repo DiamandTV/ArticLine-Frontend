@@ -12,7 +12,7 @@ import { CourierProfileModel } from "../../../models/Courier"
 export function CourierInput(props:Omit<DropdownProps,"open"|"setOpen"|"children">){
     //const dispatch = useDispatch()
     const [open,setOpen] = useState(false)
-    const {getValues,register} = useFormContext()
+    const {getValues,register,formState:{errors}} = useFormContext()
 
     return(
         <>
@@ -21,6 +21,7 @@ export function CourierInput(props:Omit<DropdownProps,"open"|"setOpen"|"children
                 {...props}
                 name={`${props.name}.label`}
                 register={register(`${props.name}.label`)}
+                error={errors[`${props.name}.label`] }
                 defaultValue={getValues(`${props.name}.label`)}
                 open={open}
                 setOpen={()=>{

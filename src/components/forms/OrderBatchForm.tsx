@@ -14,20 +14,20 @@ const schema = z.object({
     //company:z.coerce.number(),
     device:z.object({
         id:z.coerce.number(),
-        label:z.string().min(1).max(255)
+        label:z.string().min(1).max(255).optional()
     }),
     courier:z.object({
         id:z.coerce.number(),
-        label:z.string().min(1).max(255)
+        label:z.string().min(1).max(255).optional()
     }),
     orders:z.object({
         ids:z.array(z.coerce.number()).min(0),
-        label:z.string()
+        label:z.string().optional()
     }),
     pickup_time:z.custom<Dayjs>((val) => val instanceof dayjs, 'Invalid date').optional()
 })
 
-type OrderBatchFormFields = z.infer<typeof schema>
+export type OrderBatchFormFields = z.infer<typeof schema>
 
 interface OrderBatchFormProps{
     onSubmitForm:(orderBatchInfo:OrderBatchFormFields)=>Promise<Record<string,string> | null>,
@@ -45,6 +45,7 @@ export function OrderBatchForm({onSubmitForm,children}:OrderBatchFormProps){
         const errors = await onSubmitForm(orderBatchInfo)
         console.log(errors)
     }
+    console.log(errors)
     return (
         <FormProvider {...control}>
             <form
@@ -69,22 +70,19 @@ export function OrderBatchForm({onSubmitForm,children}:OrderBatchFormProps){
                         name="device"
                         labelName="DEVICE"
                         register={register('device')}
-                        error={errors.device}
                         onChange={()=>{}}
                     />
                     <CourierInput
                         name="courier"
                         labelName="COURIER"
                         register={register('courier')}
-                        error={errors.courier}
                         onChange={()=>{
                         }}
                     />
                     <OrderPickerInput
                         name="orders"
                         labelName="ORDERS"
-                        register={register('orders')}
-                        error={errors.orders}
+                        register={register('orders')}            
                         onChange={()=>{
                             
                         }}

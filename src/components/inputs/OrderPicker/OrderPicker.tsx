@@ -11,23 +11,17 @@ import { TagCard } from "../../Cards/TagCard"
 
 export function OrderPickerInput(props:Omit<DropdownProps,'children'|'open'|'setOpen'>){
     const [open,setOpen] = useState(false)
-    const {register,getValues} = useFormContext()
+    const {register,getValues,formState:{errors}} = useFormContext()
     return (
         <>
             <Dropdown
                 {...props}
                 
                 open={open}
-                setOpen={()=>{
-                    if(open){
-                        setTimeout(()=>setOpen(false),100)
-
-                    }else {
-                        setOpen(true)
-                    }
-                }}
+                setOpen={setOpen}
                 name={`${props.name}.label`}
                 register={register(`${props.name}.label`)}
+                error={errors[`${props.name}.label`] }
                 defaultValue={getValues(`${props.name}.label`)}
             >
                 <OrderPickerInput.DropdownItems {...props}/>

@@ -40,11 +40,11 @@ export interface OrderModel{
 
 export interface OrderBatchModel {
     id?:number,
-    orders:Array<number>,
-    device:DeviceModel,
-    courier:CourierProfileModel,
-    pickup_time:Array<number>,
-    created_at:Dayjs|string,
+    orders?:Array<number>,
+    device?:DeviceModel,
+    courier?:CourierProfileModel,
+    pickup_time?:Dayjs|string,
+    created_at?:Dayjs|string,
 }
 
 export interface OrderItemModel{

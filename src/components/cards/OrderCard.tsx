@@ -9,7 +9,7 @@ import { CartCard } from "./CartCard"
 import { OrderStatusProgressBar } from "../ProgressBar/OrderStatusProgressBar"
 import { TextButton } from "../Buttons/TextButtons"
 import { OrderProvider } from "../OrderCompany/OrderContext/OrderProvider"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import { OrderContext } from "../OrderCompany/OrderContext/OrderContext"
 import { IoIosInformationCircle } from "react-icons/io";
 import { TOOLKIT_EARLY_MESSAGE } from "../../constraints"
@@ -21,22 +21,22 @@ import { useOrderService } from "../../services/orderService"
 import { useDispatch } from "react-redux"
 import { OrderType, updateOrder } from "../../store/orderSlice"
 import { notify, notifyCheck } from "../../utlis/notify"
-import { AxiosError, AxiosResponse } from "axios"
+import { AxiosError } from "axios"
 import { DeleteOrderButton } from "../buttons/DeleteOrderButton"
 import { Dropdown } from "../inputs/Dropdown/Dropdown"
-import { PaginationProvider } from "../Pagination/PaginationProvider"
-import { useInfiniteQuery } from "@tanstack/react-query"
+//import { PaginationProvider } from "../Pagination/PaginationProvider"
+//import { useInfiniteQuery } from "@tanstack/react-query"
 import { useCompanyService } from "../../services/companyService"
-import { PaginationContext } from "../Pagination/PaginationContext"
+//import { PaginationContext } from "../Pagination/PaginationContext"
 import { PaginationModel } from "../../models/pagination"
 import { usePaginationInfiniteScroll } from "../../hooks/usePaginationInfiniteScroll"
 import { CourierProfileModel } from "../../models/Courier"
 import { AccountCard } from "./AccountCard"
 import { useForm } from "react-hook-form"
-import { SearchServer } from "./SearchServer"
+//import { SearchServer } from "./SearchServer"
 import { DeleteButton } from "../Buttons/DeleteButton"
 import { DelayForm } from "../forms/DelayForm"
-import { AccountAvatar } from "../AccountAvatar/AccountAvatar"
+//import { AccountAvatar } from "../AccountAvatar/AccountAvatar"
 import { StatusCard } from "./StatusCard"
 import { twMerge } from "tailwind-merge"
 
@@ -193,7 +193,8 @@ OrderCard.ChooseCourier = function OrderCartChooseCourier(){
                 }}
             >
                 {data ? data!.pages.map((page)=>{
-                    return (page.data as PaginationModel).results.map((profile:CourierProfileModel)=>{
+                    return (page.data as PaginationModel).results.map((res)=>{
+                        const profile = res as CourierProfileModel
                                 return (
                                     <AccountCard profile={profile} className="hover:cursor-pointer" 
                                         onClick={async(event)=>{

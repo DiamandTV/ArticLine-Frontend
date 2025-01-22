@@ -2,7 +2,7 @@ export interface TextButtonProps{
     className?:string,
     text?:string,
     children?:React.ReactNode,
-    onClick:(e:React.MouseEvent<HTMLButtonElement>)=>void,
+    onClick?:(e:React.MouseEvent<HTMLButtonElement>)=>void,
     type?:"button" | "submit" | "reset" | undefined,
 }
 export function TextButton({text,children,onClick,className,type="button"}:TextButtonProps){
@@ -12,7 +12,9 @@ export function TextButton({text,children,onClick,className,type="button"}:TextB
             onClick={(e:React.MouseEvent<HTMLButtonElement>)=>{
                 e.stopPropagation()
                 e.nativeEvent.stopImmediatePropagation()
-                onClick(e)
+                if (onClick){
+                    onClick(e)
+                }
             }}
             type={type}
         >   

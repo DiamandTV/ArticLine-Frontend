@@ -4,7 +4,7 @@ import { LoaderQuery } from "../loader/LoaderWithQueryAndChildren";
 import { PaginationButtonWithContext } from "../Pagination/PaginationRender";
 import { PaginationContext } from "../Pagination/PaginationContext";
 import { useOrderService } from "../../services/orderService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { OrderType, setOrders } from "../../store/orderSlice";
 import { PaginationModel } from "../../models/pagination";
 import { AddButton } from "../buttons/AddButton";
@@ -13,9 +13,12 @@ import { DrawerContext } from "../Drawer/DrawerContext";
 import { DrawerApp } from "../Drawer/Drawer";
 import { BlurCard } from "../Cards/BlurCard";
 import { OrderBatchCreate } from "../forms/OrderBatchCreate";
+import { RootState } from "../../store/store";
+import { OrderBatchCard } from "../cards/OrderBatchCard";
 
 export function OrderBatchCompanyActive(){
     const dispatch = useDispatch()
+    const activeOrdersBatch = useSelector((state:RootState)=>state.orderReducer.companyActiveOrdersBatch)
     const {page,setPageData} = useContext(PaginationContext)
     return (
         <LoaderQuery
@@ -29,7 +32,8 @@ export function OrderBatchCompanyActive(){
                 }))
                 delete paginationData.results
                 if(paginationData && setPageData) setPageData(paginationData)
-            }}
+                console.warn(data.data)
+                }}
             onError={(error)=>{
                 console.error(error)
             }}
@@ -57,7 +61,11 @@ export function OrderBatchCompanyActive(){
                     </DrawerProvider>
                 </div>
                 <GridView className="grid-cols-1 @md:grid-cols-1 @lg:grid-cols-1 @xl:grid-cols-2 @2xl:grid-cols-3">
-                    <div></div>
+                    {
+                        activeOrdersBatch.map((orderBatch)=>{
+                            return <OrderBatchCard orderBatch={orderBatch}/>
+                        })
+                    }
                 </GridView>
             </div>
         </LoaderQuery>
