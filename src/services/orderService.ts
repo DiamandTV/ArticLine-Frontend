@@ -12,8 +12,8 @@ export const useOrderService = {
     async getInActiveCompanyOrders({page='1'}:{page?:number|null|string}){
         return api.get(`/orders/inactive/company/?page=${page}`)
     },
-    async getActiveCompanyOrders({page='1'}:{page?:string|null|number}){
-        const data = await api.get(`/orders/active/company/?page=${page}`)
+    async getActiveCompanyOrders({page='1',search="",added=[]}:{page?:string|null|number,search?:string,added?:Array<int>}){
+        const data = await api.get(`/orders/active/company/?page=${page}&added=${JSON.stringify(added)}&search=${search}`)
         console.error(data)
         return data
     },

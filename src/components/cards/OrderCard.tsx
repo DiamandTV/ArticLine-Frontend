@@ -36,6 +36,9 @@ import { useForm } from "react-hook-form"
 import { SearchServer } from "./SearchServer"
 import { DeleteButton } from "../Buttons/DeleteButton"
 import { DelayForm } from "../forms/DelayForm"
+import { AccountAvatar } from "../AccountAvatar/AccountAvatar"
+import { StatusCard } from "./StatusCard"
+import { twMerge } from "tailwind-merge"
 
 interface OrderCardProps{
     order:OrderModel,
@@ -52,6 +55,8 @@ export function OrderCard({order,children}:OrderCardProps){
        </BlurCard>
     )
 }
+
+
 
 OrderCard.TopBar = function OrderCardTopBar (){
     const {order} = useContext(OrderContext)
@@ -277,6 +282,27 @@ OrderCard.ChooseCourier = function OrderCartChooseCourier(){
 //         </DialogProvider>
 //     )
 // }
+
+export function OrderShortCard({order,className="",onClick}:{order:OrderModel,className?:string,onClick?:()=>void}){
+    return (
+        <OrderCard order={order}>
+            <div 
+                className={"w-full flex flex-row items-center justify-between "+twMerge(className)}
+                onClick={onClick}
+                >    
+                <Avatar
+                    alt={`${order.profile?.first_name} ${order.profile?.last_name}`}
+                    src={order.profile?.image}
+                    sx={{width:"35px",height:"35px"}}
+                />
+                <h1 className="text-xl italic">#{order.id}</h1>
+                <div className="w-28 flex flex-row items-center justify-end">
+                    <StatusCard status={order.status!}/>
+                </div>
+            </div>
+        </OrderCard>
+    )
+}
 
 export function OrderCompleteCard({order}:{order:OrderModel}){
     const dispatch = useDispatch()

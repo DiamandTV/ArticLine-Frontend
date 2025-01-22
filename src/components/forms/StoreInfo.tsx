@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from "react-redux"
 import { RootState } from "../../store/store"
 import { CategoryModel } from "../../models/category"
+import { ChipsContainer } from "../container/ChipsContainer"
 /*
 const schema = z.object({
     title:z.string().min(1).max(255),
@@ -234,9 +235,9 @@ export function StoreInfo({indexStepper}:{indexStepper?:number}){
                         /> 
                         
                     </div>
-                <div className="w-full p-2 py-2  h-20 bg-slate-900 bg-opacity-50 backdrop-blur-lg  rounded-xl col-span-2 overflow-hidden flex flex-col gap-2.5">          
-                    <span className="text-xs ">CATEGORY</span>
-                    <div className="w-full h-full px-2 flex flex-row flex-wrap gap-2">
+                    <ChipsContainer
+                        title="CATEGORIES"
+                        >
                         { categories.tags.map((category,index)=>
                             <TagCard
                             key={uuidv4()}
@@ -247,8 +248,7 @@ export function StoreInfo({indexStepper}:{indexStepper?:number}){
                             }}
                             >{category.name.toUpperCase()}</TagCard>
                         ) }
-                    </div>
-                </div>
+                    </ChipsContainer>
                 <div className="w-full md:col-span-2 col-span-1 max-h-max">
                     <AnimationPlaceholderTextArea
                         labelName="DESCRIPTION"

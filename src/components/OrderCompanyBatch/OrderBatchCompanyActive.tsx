@@ -8,6 +8,11 @@ import { useDispatch } from "react-redux";
 import { OrderType, setOrders } from "../../store/orderSlice";
 import { PaginationModel } from "../../models/pagination";
 import { AddButton } from "../buttons/AddButton";
+import { DrawerProvider } from "../Drawer/DrawerProvider";
+import { DrawerContext } from "../Drawer/DrawerContext";
+import { DrawerApp } from "../Drawer/Drawer";
+import { BlurCard } from "../Cards/BlurCard";
+import { OrderBatchCreate } from "../forms/OrderBatchCreate";
 
 export function OrderBatchCompanyActive(){
     const dispatch = useDispatch()
@@ -32,12 +37,24 @@ export function OrderBatchCompanyActive(){
             <div className="w-full @container flex flex-col gap-y-4">
                 <PaginationButtonWithContext/>
                 <div className="w-full float-right">
-                    <AddButton 
-                        className="float-right"
-                        onClick={()=>{
-                            //  creating the new Order Batch form
-                            //  open the Drawer and show the Order Batch form
-                    }}/>
+                    <DrawerProvider>
+                        <DrawerContext.Consumer>
+                            {({setOpen})=>(
+                                <AddButton 
+                                className="float-right"
+                                onClick={()=>{
+                                    //  creating the new Order Batch form
+                                    //  open the Drawer and show the Order Batch form
+                                    setOpen(true);
+                                }}/>
+                            )}
+                        </DrawerContext.Consumer>
+                        <DrawerApp>
+                            <BlurCard className="min-h-full ">
+                                <OrderBatchCreate/>     
+                            </BlurCard>
+                        </DrawerApp>
+                    </DrawerProvider>
                 </div>
                 <GridView className="grid-cols-1 @md:grid-cols-1 @lg:grid-cols-1 @xl:grid-cols-2 @2xl:grid-cols-3">
                     <div></div>

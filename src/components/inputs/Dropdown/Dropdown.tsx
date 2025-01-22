@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { FieldError } from "react-hook-form";
 import { InputError } from "../InputError/InputError";
-interface DropdownProps {
+export interface DropdownProps {
     labelName:string,
     name:string,
     open:boolean,
@@ -13,16 +13,20 @@ interface DropdownProps {
     defaultValue?:string,
     register?:UseFormRegisterReturn,
     error?:FieldError,
+    value?:string
 }
-export function Dropdown({labelName,name,onChange,defaultValue,register,error,open,setOpen,children}:DropdownProps){
+export function Dropdown({labelName,name,onChange,defaultValue,register,error,open,setOpen,children,value}:DropdownProps){
     const [focus,setFocus] = useState(defaultValue ? true : false)
-
+    // useEffect(()=>{
+    //     setFocus(defaultValue ? true : false)
+    // },[open])
     return(
         <div className="relative flex flex-col w-full">
             <div 
                 className="relative flex justify-between items-center h-10 w-full border-b-2 bg-transparent px-2 hover:cursor-pointer" 
                 
                 >
+                    
               <label
                     className= {`select-none transition-all duration-100 ease-in-out absolute z-10 bottom-0 px-0 py-2 text-neutral-400 hover:cursor-pointer ${focus ? 'translate-y-[-80%] translate-x-2 text-sm ' : 'translate-y-0 translate-x-0 text-lg'}`} 
                     htmlFor={name}>
@@ -47,6 +51,8 @@ export function Dropdown({labelName,name,onChange,defaultValue,register,error,op
                         onChange(event)
                         register?.onChange(event)
                     }}
+                    value={value}
+                    
                 />
                 <div className="flex flex-row items-start justify-end gap-2">
                     <IoMdArrowDropdown 
