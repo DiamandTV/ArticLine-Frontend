@@ -48,7 +48,7 @@ export function Dropdown({labelName,name,onChange,defaultValue,register,error,op
                     }}
                     onBlur={(e)=>{
                         setTimeout(()=>setFocus(e.target.value == '' ? false : true),50)
-                        setTimeout(()=>setOpen(false),100)  
+                        setTimeout(()=>setOpen(false),200)  
                     }} 
                     onChange={(event)=>{
                         onChange(event)

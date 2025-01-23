@@ -11,7 +11,9 @@ import { DeviceModel } from "./Device"
 
 export type OrderStatus = 'NOT ACCEPTED'|'ACCEPTED'|'WORKING ON'|'READY'|'SENDED'|'DELIVERED'|'CANCELED'
 
-export const STATUS_INDEX = {
+export type OrderBatchStatus = 'PENDING' | 'PICKED UP' | 'IN PROGRESS' | 'COMPLETED'
+
+export const STATUS_INDEX:Record<OrderStatus,number> = {
     'NOT ACCEPTED'  :   0,
     'ACCEPTED'      :   1,
     'WORKING ON'    :   2,
@@ -20,6 +22,13 @@ export const STATUS_INDEX = {
     'DELIVERED'     :   5,
     'CANCELED'      :   1000
 }
+
+export const ORDER_BATCH_STATUS_INDEX:Record<OrderBatchStatus,number> = {
+    'PENDING'       :   0,
+    'PICKED UP'    :   1,
+    'IN PROGRESS'   :   2,
+    'COMPLETED'      :   3
+}   
 
 export interface OrderModel{
     id?:number,
@@ -35,12 +44,14 @@ export interface OrderModel{
     created_at?:string | Dayjs,
     canceled_at?:string | Dayjs,
     cart:CartModel,
-    courier?:CourierProfileModel
+    //courier?:CourierProfileModel
 }
 
 export interface OrderBatchModel {
     id?:number,
-    orders?:Array<number>,
+    title:string,
+    status:OrderBatchStatus,
+    orders?:Array<OrderModel>,
     device?:DeviceModel,
     courier?:CourierProfileModel,
     pickup_time?:Dayjs|string,

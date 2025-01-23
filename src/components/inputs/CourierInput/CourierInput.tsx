@@ -24,13 +24,7 @@ export function CourierInput(props:Omit<DropdownProps,"open"|"setOpen"|"children
                 error={errors[`${props.name}.label`] }
                 defaultValue={getValues(`${props.name}.label`)}
                 open={open}
-                setOpen={()=>{
-                    if(open){
-                        setTimeout(()=>setOpen(false),100)
-                    }else{
-                        setOpen(true)
-                    }
-                }}
+                setOpen={setOpen}
             >
                 <CourierInput.DropDownItem {...props}/>      
             </Dropdown>       

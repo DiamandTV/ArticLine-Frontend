@@ -34,7 +34,7 @@ function getStepperStyle():SxProps{
 
 
 
-function OrderStatusProgressBarIcon({ status }: { status: OrderStatus }) {
+function OrderStatusProgressBarIcon({ status }: { status :unknown}) {
     switch (status) {
         case 'NOT ACCEPTED':
             return <AiOutlineCloseCircle size={24}/>;
@@ -50,13 +50,13 @@ function OrderStatusProgressBarIcon({ status }: { status: OrderStatus }) {
             return <AiOutlineCloseCircle size={24} color="gray"/>;
     }
 }
-export function OrderStatusProgressBar({status}:{status:OrderStatus}){
-    
-    return(
+
+export function StatusProgressBar({status,STATUS}:{status:string,STATUS:Record<string,number>}){
+    return ( 
         <div className="w-1/2">
-            <Stepper activeStep={STATUS_INDEX[status]}  orientation="vertical" >
+            <Stepper activeStep={STATUS[status]! as number}  orientation="vertical" >
                 {
-                    Object.keys(STATUS_INDEX).map((state)=>{
+                    Object.keys(STATUS).map((state)=>{
                         return(
                             <Step key={state} sx={getStepperStyle()}>
                                 {/*<StepLabel icon={<OrderStatusProgressBarIcon status={state}/>}>*/}
@@ -69,5 +69,14 @@ export function OrderStatusProgressBar({status}:{status:OrderStatus}){
                 }
             </Stepper>
         </div>
+    )
+}
+
+export function OrderStatusProgressBar({status,STATUS}:{status:OrderStatus,STATUS:Record<string,number>}){
+    
+    return(
+        <>
+            <StatusProgressBar status={status} STATUS={STATUS}/>
+        </>
     )
 }

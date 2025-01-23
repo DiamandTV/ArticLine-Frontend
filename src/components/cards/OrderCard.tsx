@@ -339,7 +339,7 @@ export function OrderCompleteCard({order}:{order:OrderModel}){
         <OrderCard order={order}>
             <OrderCard.TopBar/>
             <div className="w-full flex flex-row">
-                <OrderStatusProgressBar status={order.status!}/>
+                <OrderStatusProgressBar status={order.status!} STATUS={STATUS_INDEX}/>
                 <div className="w-full flex flex-col gap-y-4">
                     <CartProvider 
                         cart={order.cart}

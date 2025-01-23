@@ -31,13 +31,15 @@ export type OrderBatchFormFields = z.infer<typeof schema>
 
 interface OrderBatchFormProps{
     onSubmitForm:(orderBatchInfo:OrderBatchFormFields)=>Promise<Record<string,string> | null>,
-    children:React.ReactNode
+    children:React.ReactNode,
+    defaultValue?:OrderBatchFormFields
 
 }
 
-export function OrderBatchForm({onSubmitForm,children}:OrderBatchFormProps){
+export function OrderBatchForm({onSubmitForm,children,defaultValue}:OrderBatchFormProps){
     const control =  useForm<OrderBatchFormFields>({
-        resolver:zodResolver(schema)
+        resolver:zodResolver(schema),
+        defaultValues:defaultValue ?? null
     })
     const {register,handleSubmit,formState:{errors},getValues} = control
     const onSubmit:SubmitHandler<OrderBatchFormFields> = async (orderBatchInfo) =>{
