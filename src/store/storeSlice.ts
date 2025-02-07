@@ -55,6 +55,13 @@ const storeSlice = createSlice({
                 }
             }
         },
+        updateStoreCategories:(state,action)=>{
+            const store_categories:StoreCategoriesModel[] = action.payload
+            if(state.store && store_categories){
+                state.store = {...state.store,store_categories:[...store_categories]}
+                
+            }
+        },
         updateStoreCategory:(state,action)=>{
             if(state.store && state.store?.store_categories){;
                 const storeCategoryToUpdate = action.payload as StoreCategoriesModel
@@ -104,5 +111,5 @@ const storeSlice = createSlice({
     }
 })
 
-export const {setStoreDetails,updateStoreDetails,deleteStoreCategory,updateStoreCategory,deleteStoreProduct,clearStoreDetails,addStoreCategory,setCategoriesAndPagination,setPageForCategory,addStoreProduct,updateStoreProduct} = storeSlice.actions
+export const {setStoreDetails,updateStoreDetails,deleteStoreCategory,updateStoreCategories,updateStoreCategory,deleteStoreProduct,clearStoreDetails,addStoreCategory,setCategoriesAndPagination,setPageForCategory,addStoreProduct,updateStoreProduct} = storeSlice.actions
 export const storeReducer = storeSlice.reducer
