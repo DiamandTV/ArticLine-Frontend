@@ -56,9 +56,15 @@ const storeSlice = createSlice({
             }
         },
         updateStoreCategories:(state,action)=>{
-            const store_categories:StoreCategoriesModel[] = action.payload
+            const store_categories:StoreCategoriesModel[] = [...(action.payload as StoreCategoriesModel[]).map((cat,index)=>{
+                
+                return {
+                    ...cat,
+                    order:index
+                }
+            })]
             if(state.store && store_categories){
-                state.store = {...state.store,store_categories:[...store_categories]}
+                state.store = {...state.store,store_categories:store_categories}
                 
             }
         },

@@ -15,11 +15,12 @@ import {
   ,
   } from '@dnd-kit/modifiers';
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
+import { useStoreCategoriesService } from "../../services/storeCategoriesSevice";
 
 export function StoreCategoryTabs(){
     const dispatch = useDispatch()
     const store = useSelector((state:RootState)=>state.storeReducer.store)
-    const handleDragEnd = (event:DragEndEvent)=>{
+    const handleDragEnd = async(event:DragEndEvent)=>{
         const {active,over } = event;
         if(!over?.id || !active?.id ) return;
     
@@ -27,10 +28,23 @@ export function StoreCategoryTabs(){
         const end = over.id as string
         const oldIndex = store?.store_categories?.findIndex((cat)=>cat.id!.toString() === start)
         const newIndex = store?.store_categories?.findIndex((cat)=>cat.id!.toString() === end)
-        if(oldIndex != undefined && newIndex != undefined){
+  
+        if(oldIndex!=undefined && newIndex!=undefined && oldIndex !==newIndex ){ 
+            
             const store_categories_updated = arrayMove(store!.store_categories as StoreCategoriesModel[],oldIndex,newIndex)
             dispatch(updateStoreCategories(store_categories_updated))
             // todo : send a request to the to tell it about the position change
+            try{
+                const changeStoreCategory = store?.store_categories?.find((cat)=>cat.id!.toString()===start)    
+                if(!changeStoreCategory){
+                    throw Error("The drop element doesn't belonged to the store sub categories list")
+                }
+                await useStoreCategoriesService.updateStoreCategoriesOrdered({storeCategory:changeStoreCategory,order:newIndex})
+            }catch(e){
+                console.error("ERROR IN SORTING THE STORE SUB CATEGORIES")
+                console.error(e)
+                alert("ERROR IN SORTING THE STORE SUB CATEGORIES")
+            }
         }
         
     }
@@ -132,7 +146,7 @@ function TabComponent({store,category,attributes,listeners}:CategoryTabIntern){
     const current  = storeCategoryIdFromParam === category.id!.toString()
     return(
         <div
-            className={`max-w-max flex flex-row gap-2 justify-center items-end ${current ? 'text-lg font-bold text-white' : 'text-lg font-light'}`}  
+            className={`max-w-max flex flex-row gap-2 justify-center items-end ${current ? 'text-lg font-bold text-white' : 'text-lg font-light'} hover:cursor-pointer`}  
             onClick={(event) => {
                 alert("Ok")
                 navigate(`/store/details/${store.id}/sub-category/${category.id}`);

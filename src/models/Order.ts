@@ -32,6 +32,7 @@ export const ORDER_BATCH_STATUS_INDEX:Record<OrderBatchStatus,number> = {
 
 export interface OrderModel{
     id?:number,
+    order?:number,
     total_price?:number,
     status?:OrderStatus,
     profile?:UserProfileModel | CompanyProfileModel,

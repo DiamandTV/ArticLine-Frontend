@@ -8,7 +8,8 @@ import { OrderShortCard } from "../../cards/OrderCard"
 import { PaginationModel } from "../../../models/pagination"
 import { ChipsContainer } from "../../container/ChipsContainer"
 import { TagCard } from "../../Cards/TagCard"
-
+import { DeleteButton } from "../../Buttons/DeleteButton"
+import { RiDragMoveLine } from "react-icons/ri";
 export function OrderPickerInput(props:Omit<DropdownProps,'children'|'open'|'setOpen'>){
     const [open,setOpen] = useState(false)
     const {register,getValues,formState:{errors}} = useFormContext()
@@ -26,7 +27,10 @@ export function OrderPickerInput(props:Omit<DropdownProps,'children'|'open'|'set
             >
                 <OrderPickerInput.DropdownItems {...props}/>
             </Dropdown>
-            <OrderPickerInput.OrdersChipsContainer {...props}/>
+            {
+                    <OrderPickerInput.OrdersSortable {...props}/>
+            //      <OrderPickerInput.OrdersChipsContainer {...props}/>
+            }
         </>
     )
 }
@@ -70,6 +74,55 @@ OrderPickerInput.DropdownItems = function DropdownItems(props:Omit<DropdownProps
             }) : null}
             <div ref={ref} className="py-1"></div>
         </>
+    )
+}
+
+OrderPickerInput.OrdersSortable = function OrdersSortable(props:Omit<DropdownProps,'children'|'open'|'setOpen'>){
+    const {watch} = useFormContext()
+    const orders = watch(`${props.name}.ids`) as Array<number> || null
+    return(
+        <>
+            <ChipsContainer
+                title="ORDERS"
+                className="h-full"
+                
+            >   <div className="w-full grid grid-cols-2 justify-between items-center"> 
+                    {orders ? orders.map((orderId)=>{
+                        return(
+                            <OrderPickerInput.OrderSortableItem orderId={orderId} {...props}/>
+                        )
+                    }) : null}
+                </div>
+            </ChipsContainer>
+        </>
+    )
+}
+
+type OrderSortableItemProps = Omit<DropdownProps,'children'|'open'|'setOpen'> & {orderId:number}
+
+OrderPickerInput.OrderSortableItem = function OrderSortableItem(props:OrderSortableItemProps){
+    const {setValue,getValues} = useFormContext()
+    return(
+        <div className="w-full flex flex-row h-12 bg-slate-900 p-2 rounded-xl">
+            <div className="w-full flex flex-row  items-center justify-start gap-x-2" >
+                <span className="text-xs font-extralight">ORDER</span>
+                <h1 className="italic font-semibold">#{props.orderId}</h1>
+            </div>
+            <div className="w-full flex flex-row items-center justify-center gap-x-2">
+                <DeleteButton
+                    onClick={()=>{
+                        const ordersID = getValues(`${props.name}.ids`) as Array<number>
+                        setValue(`${props.name}.ids`,ordersID.filter((id)=>id!==props.orderId))
+                    }}
+                />
+                <div 
+                    className={"max-w-max h-full flex flex-col justify-center items-center px-4 bg-sky-400 rounded-xl hover:cursor-pointer text-2xl "}
+                >
+                    <RiDragMoveLine  color="white"/>
+                </div>
+        
+            </div>
+        </div>
     )
 }
 
