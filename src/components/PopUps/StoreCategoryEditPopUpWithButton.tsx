@@ -13,7 +13,8 @@ import { RootState } from "../../store/store"
 export function StoreCategoryEditPopUpWithButton(){
     const params = useParams()
     const store = useSelector((state:RootState)=>state.storeReducer.store)
-    const store_categories = store?.store_categories?.find((store)=>store.id?.toString() === params['sub-category-id'])
+    
+    const store_categories = store?.store_categories?.find((store)=>store?.id?.toString() === params['sub-category-id'])
     return (
         store && store_categories ?
         <Can I="update" a="STORE" this={store!}>

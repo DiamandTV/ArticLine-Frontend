@@ -1,34 +1,20 @@
-import { Tab, Tabs } from "@mui/material";
-import {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {v4 as uuid} from "uuid"
 import { StoreCategoryEditPopUpWithButton } from "../PopUps/StoreCategoryEditPopUpWithButton";
-import {DndContext, DragEndEvent, useDraggable, useDroppable} from '@dnd-kit/core';
+import {closestCenter, DndContext, DragEndEvent,} from '@dnd-kit/core';
 import { StoreModel } from "../../models/store";
 import { StoreCategoriesModel } from "../../models/StoreCategories";
-import { arrayMove } from '@dnd-kit/sortable';
+import { arrayMove, SortableContext, useSortable } from '@dnd-kit/sortable';
 import { updateStoreCategories } from "../../store/storeSlice";
-const getTabStyle = ()=>({
-    "&.MuiTab-root":{
-        color:"white",
-        opacity:0.6,
-        fontWeight:"100",
-        fontSize:"12px",
-        // borderRight:"2px solid rgb(51 65 85)",
-        // borderLeft:"2px solid rgb(51 65 85)"
-    },
-    "&.Mui-selected":{
-        borderBottomColor:"red",
-        color:'white',
-        opacity:1,
-        fontWeight:"600",
-        fontSize:"18px",
-        
-    },   
-    
-})
+import { CSS } from "@dnd-kit/utilities";
+import { TbDragDrop } from "react-icons/tb";
+import {
+    restrictToParentElement
+  ,
+  } from '@dnd-kit/modifiers';
+import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 
 export function StoreCategoryTabs(){
     const dispatch = useDispatch()
@@ -38,78 +24,128 @@ export function StoreCategoryTabs(){
         if(!over?.id || !active?.id ) return;
     
         const start = active.id as string;
-        const end = over.id as string;
-        
-        alert(start)
-        alert(end)
-        if(store?.store_categories && start && end && start !== '-1' && end !== '-1'){
-            const store_categories_updated = arrayMove(store!.store_categories as StoreCategoriesModel[],Number(start),Number(end))
+        const end = over.id as string
+        const oldIndex = store?.store_categories?.findIndex((cat)=>cat.id!.toString() === start)
+        const newIndex = store?.store_categories?.findIndex((cat)=>cat.id!.toString() === end)
+        if(oldIndex != undefined && newIndex != undefined){
+            const store_categories_updated = arrayMove(store!.store_categories as StoreCategoriesModel[],oldIndex,newIndex)
             dispatch(updateStoreCategories(store_categories_updated))
-            // console.error()
-            // console.error(updated)
+            // todo : send a request to the to tell it about the position change
         }
+        
     }
 
     return (
+        store && store.store_categories ? 
         <div className="w-full max-h-max flex flex-row gap-y-4 gap-x-2">
-            <DndContext onDragEnd={handleDragEnd}>
-                <CategoryTabs/>
+            <DndContext modifiers={[restrictToParentElement]} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                <SortableContext items={store.store_categories.map((cate)=>cate.id!.toString())}
+                        //strategy={verticalListSortingStrategy}
+                    >
+                    <CategoryTabs/>
+                </SortableContext>
             </DndContext>
             <StoreCategoryEditPopUpWithButton/>
         </div> 
+         : null
     )
 }
 
 function CategoryTabs(){
-    const [value,setValue] = useState(0)
     const store = useSelector((state:RootState)=>state.storeReducer.store)
-    const {setNodeRef} = useDroppable({
-        id:'0',
-    })
-    
+
     return (
-        <Tabs   
-            ref={setNodeRef}
-            TabIndicatorProps={{style:{
-                //backgroundColor:"#0ea5e9",
-                backgroundColor:"transparent",
-                height:"3px",
+        <div   
                 
-            }}}    
             //className="w-full rounded-xl hover:cursor-pointer border-2 border-gray-700"    
-            className="w-full bg-slate-200 bg-opacity-30 backdrop-blur-lg rounded-xl sticky top-0"    
-            value={value} 
-            onChange={(_,value)=>setValue(value)}>  
+            className="w-full flex flex-row justify-start gap-x-8 bg-slate-200 bg-opacity-30 backdrop-blur-lg rounded-xl sticky top-0 px-4"    
+            // value={value} 
+            // onChange={(_,value)=>{
+            //     alert(value)
+            //     setValue(value)
+            //     }}
+            >  
                 {store?.store_categories?.map((category)=>(
                     <CategoryTab key={uuid()} store={store} category={category}/>
                 ))}
-        </Tabs>
+        </div>
     )
 }
 
 
-function CategoryTab({ store, category }: { store: StoreModel; category: StoreCategoriesModel }) {
-    const navigate = useNavigate();
-    const id = category.id?.toString() ?? null
-    const { attributes, listeners, setNodeRef, transform } = useDraggable({
-        id: id || "unknown-category",
-    });
+function CategoryTab({ store, category}: { store: StoreModel; category: StoreCategoriesModel }) {
+    
+    const id = category?.id?.toString() ?? '-1'
+    const {
+        attributes,
+        listeners,
+        setNodeRef,
+        transform,
+        transition,
+      } = useSortable({id: id});
+    
 
     const style = transform ? {
-        transform: `translate(${transform.x}px, ${transform.y}px)`,
-        transition: "transform 150ms ease", // Opzionale, per rendere il movimento più fluido
+        transform: CSS.Transform.toString(transform),
+        transition, // Opzionale, per rendere il movimento più fluido
     } : undefined;
 
+    if(!category?.id) return
     return (
-        <div ref={setNodeRef} {...attributes} {...listeners} style={style}>
-            <Tab
-                sx={getTabStyle()}
-                label={category.name}
-                onClick={() => {
-                    navigate(`/store/details/${store.id}/sub-category/${category.id}`);
-                }}
-            />
+        
+        <div
+            className="h-full flex flex-row justify-center items-center"
+            ref={setNodeRef} style={style}
+        >
+            <TabComponent 
+                        store={store}
+                        category={category}
+                        attributes={attributes}
+                        listeners={listeners}
+                    
+                    />
         </div>
     );
+}
+
+interface CategoryTabIntern{
+    store:StoreModel,
+    category:StoreCategoriesModel,
+    attributes: {
+        role: string;
+        tabIndex: number;
+        'aria-pressed': boolean | undefined;
+        'aria-roledescription': string;
+        'aria-describedby': string;
+    },
+    listeners:SyntheticListenerMap | undefined,
+ 
+
+}
+
+function TabComponent({store,category,attributes,listeners}:CategoryTabIntern){
+    const navigate = useNavigate()
+    const params = useParams()
+    const storeCategoryIdFromParam = params['sub-category-id']
+
+    if(!storeCategoryIdFromParam) return
+    const current  = storeCategoryIdFromParam === category.id!.toString()
+    return(
+        <div
+            className={`max-w-max flex flex-row gap-2 justify-center items-end ${current ? 'text-lg font-bold text-white' : 'text-lg font-light'}`}  
+            onClick={(event) => {
+                alert("Ok")
+                navigate(`/store/details/${store.id}/sub-category/${category.id}`);
+                event.stopPropagation()
+            }}
+        >
+            <h5>{category.name.toUpperCase()}</h5>
+            <TbDragDrop 
+                size={current ? 20 : 20}
+                {...attributes}
+                {...listeners}
+            />
+        </div>
+    ) 
 }
 
