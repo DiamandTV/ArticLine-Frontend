@@ -66,10 +66,13 @@ OrderBatchCard.OrderList = function OrderList({className=""}:{className?:string}
     const {orderBatch} = useContext(OrderBatchContext)
     return (
         <BlurCard className={twMerge(`bg-white rounded-xl sticky top-0 w-full max-h-full ${className}`)}>
-            <div className="w-full flex flex-col my-4 border-2 border-slate-400 rounded-xl p-2 max-h-96 overflow-y-scroll scrollbar-hide ">
-                {orderBatch?.orders ? orderBatch.orders!.map((order)=>{
+            <div className="w-full flex flex-col my-4 border-2 border-slate-400 rounded-xl p-2 max-h-96 overflow-y-scroll scrollbar-hide gap-y-2">
+                {orderBatch?.orders ? orderBatch.orders!.map((order,index)=>{
                     return (
-                        <OrderBatchCard.OrderListItem order={order}/>
+                        <>
+                            <OrderBatchCard.OrderListItem order={order}/>
+                            {(orderBatch?.orders?.length && index !== orderBatch.orders.length - 1) && <hr className="border-slate-400"/>}
+                        </>
                     )
                 }) : null}
             </div>
@@ -79,7 +82,7 @@ OrderBatchCard.OrderList = function OrderList({className=""}:{className?:string}
 
 OrderBatchCard.OrderListItem = function OrderListItem({order}:{order:OrderModel}){
     return(
-        <div className="w-full flex flex-col justify-between items-center border-b-2 py-0 last:border-b-0 border-slate-400 gap-y-2 cursor-pointer">
+        <div className="w-full flex flex-col justify-between items-center   gap-y-2 cursor-pointer">
             <div 
                 
                 className="w-full flex flex-row justify-between items-center px-2">
@@ -90,7 +93,7 @@ OrderBatchCard.OrderListItem = function OrderListItem({order}:{order:OrderModel}
                         //<span className="block text-[18px] font-medium ">{().name}</span>
                         //<p style={{display:"-webkit-box",WebkitLineClamp:4,WebkitBoxOrient:"vertical"}} className="text-center text-sm font-thin text-ellipsis overflow-clip whitespace-normal">{order.}</p>
                     }
-                    <StatusCard status={order.status!}/>
+                    <StatusCard status={order.status!} className="text-nowrap"/>
                 </div>
                 <span>{order.total_price}$</span>
             </div>

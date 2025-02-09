@@ -11,8 +11,8 @@ export function OrdersCompanyChunck(){
         <TabsProvider>
             <div className="w-full flex flex-col gap-y-2">
                 <TabsApp>
-                    <Tab label="ACTIVE ORDERS CHUNKS"/>
-                    <Tab label="INACTIVE ORDERS CHUNKS"/>
+                    <Tab label="ACTIVE ORDERS BATCH"/>
+                    <Tab label="INACTIVE ORDERS BATCH"/>
                 </TabsApp>
                 <TabPanel index={0}>
                     <PaginationProvider>

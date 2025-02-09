@@ -1,6 +1,7 @@
+import { twMerge } from "tailwind-merge";
 import { OrderStatus } from "../../models/Order";
 
-export function StatusCard({status}:{status:OrderStatus}){
+export function StatusCard({status,className = ""}:{status:OrderStatus,className?:string}){
     
     const getData = (): { color: string } => {
         switch (status) {
@@ -24,8 +25,8 @@ export function StatusCard({status}:{status:OrderStatus}){
     };
     
     return(
-        <div className={`h-full flex justify-center items-center text-gray-200`}>
-            <h6 className={`text-sm p-1.5 rounded-xl max-h-max ${getData().color}`}>{status}</h6>
+        <div className={twMerge(`h-full flex justify-center items-center text-gray-200 ${className}`)}>
+            <h6 className={`text-sm p-1.5 rounded-xl max-h-max text-ellipsis ${getData().color}` }>{status}</h6>
         </div>
     )
 }

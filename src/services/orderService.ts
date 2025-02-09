@@ -17,6 +17,9 @@ export const useOrderService = {
         console.error(data)
         return data
     },
+    async updateOrderSort(data:{id:number,order:number}){
+        return await api.patch(`order/company/order/update/${data.id}`,data)
+    },
     async updateOrderStatus({order}:{order:OrderModel}){
         return api.patch(`/order/active/company/status/update/${order.id}`)
     },

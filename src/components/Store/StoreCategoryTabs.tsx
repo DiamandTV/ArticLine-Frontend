@@ -12,10 +12,10 @@ import { CSS } from "@dnd-kit/utilities";
 import { TbDragDrop } from "react-icons/tb";
 import {
     restrictToParentElement
-  ,
   } from '@dnd-kit/modifiers';
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import { useStoreCategoriesService } from "../../services/storeCategoriesSevice";
+import { Can } from "../../config/permissions/can";
 
 export function StoreCategoryTabs(){
     const dispatch = useDispatch()
@@ -146,7 +146,7 @@ function TabComponent({store,category,attributes,listeners}:CategoryTabIntern){
     const current  = storeCategoryIdFromParam === category.id!.toString()
     return(
         <div
-            className={`max-w-max flex flex-row gap-2 justify-center items-end ${current ? 'text-lg font-bold text-white' : 'text-lg font-light'} hover:cursor-pointer`}  
+            className={`max-w-max py-2 flex flex-row gap-2 justify-center items-end ${current ? 'text-lg font-bold text-white' : 'text-lg font-light'} hover:cursor-pointer`}  
             onClick={(event) => {
                 alert("Ok")
                 navigate(`/store/details/${store.id}/sub-category/${category.id}`);
@@ -154,11 +154,13 @@ function TabComponent({store,category,attributes,listeners}:CategoryTabIntern){
             }}
         >
             <h5>{category.name.toUpperCase()}</h5>
-            <TbDragDrop 
-                size={current ? 20 : 20}
-                {...attributes}
-                {...listeners}
-            />
+            <Can I="update" a="STORE" this={store!}>
+                <TbDragDrop 
+                    size={current ? 20 : 20}
+                    {...attributes}
+                    {...listeners}
+                />
+            </Can>
         </div>
     ) 
 }
