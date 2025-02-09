@@ -37,7 +37,7 @@ export function OrderBatchCard({orderBatch}:{orderBatch:OrderBatchModel}){
                     <OrderBatchCard.Courier/>
                 </div>
                 <OrderBatchCard.PickupTime/>
-                <OrderBatchCard.EditButton/>      
+                <OrderBatchCard.ChooseButton/>
             </OrderBatchProvider>
         </BlurCard>
     )
@@ -142,6 +142,12 @@ OrderBatchCard.PickupTime = function PickupTime(){
     )
 }
 
+OrderBatchCard.ChooseButton = function ChooseButton(){
+    const {orderBatch} = useContext(OrderBatchContext)
+    if(orderBatch?.status == "PENDING") return <OrderBatchCard.EditButton/>
+    return <OrderBatchCard.GraphButton/>
+}
+
 OrderBatchCard.EditButton = function EditButton(){
     return(
         <DrawerProvider>
@@ -165,5 +171,13 @@ OrderBatchCard.EditButton = function EditButton(){
                 </BlurCard>
             </DrawerApp>
         </DrawerProvider>
+    )
+}
+
+OrderBatchCard.GraphButton = function GraphButton(){
+    return(
+        <TextButton text="BATCH DATA" onClick={()=>{
+
+        }}/>
     )
 }

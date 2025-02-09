@@ -47,7 +47,7 @@ OrderPickerInput.DropdownItems = function DropdownItems(props:Omit<DropdownProps
     const {watch,setValue,getValues} = useFormContext()
     const {data,ref} = usePaginationInfiniteScroll({
         queryKey:['get-company-orders-batch',watch(`${props.name}.label`),watch(`${props.name}.ids`)],
-        queryFn:async(pageParam)=>useOrderService.getActiveCompanyOrders({
+        queryFn:async(pageParam)=>useOrderService.serachActiveCompanyOrders({
             page:pageParam.pageParam,
             search:watch(`${props.name}.label`),
             added:watch(`${props.name}.ids`)

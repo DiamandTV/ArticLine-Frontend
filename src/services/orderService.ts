@@ -12,9 +12,13 @@ export const useOrderService = {
     async getInActiveCompanyOrders({page='1'}:{page?:number|null|string}){
         return api.get(`/orders/inactive/company/?page=${page}`)
     },
-    async getActiveCompanyOrders({page='1',search="",added=[]}:{page?:string|null|number,search?:string,added?:Array<int>}){
-        const data = await api.get(`/orders/active/company/?page=${page}&added=${JSON.stringify(added)}&search=${search}`)
+    async serachActiveCompanyOrders({page='1',search="",added=[]}:{page?:string|null|number,search?:string,added?:Array<int>}){
+        const data = await api.get(`/orders/active/company/search/?page=${page}&added=${JSON.stringify(added)}&search=${search}`)
         console.error(data)
+        return data
+    },
+    async getActiveCompanyOrders({page='1'}:{page?:string}){
+        const data = await api.get(`/orders/active/company/?page=${page}`)
         return data
     },
     async updateOrderSort(data:{id:number,order:number}){
