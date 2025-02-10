@@ -1,14 +1,10 @@
 import { useContext } from "react";
 import { ORDER_BATCH_STATUS_INDEX, OrderBatchModel, OrderModel } from "../../models/Order";
 import { OrderBatchContext } from "../OrderCompanyBatch/OrderBatchContext/OrderBatchContext";
-import { Avatar } from "@mui/material";
-import { DeleteOrderButton } from "../buttons/DeleteOrderButton";
 import { DeleteButton } from "../Buttons/DeleteButton";
-import { OrderCard } from "./OrderCard";
 import { OrderBatchProvider } from "../OrderCompanyBatch/OrderBatchContext/OrderBatchProvider";
 import { BlurCard } from "./BlurCard";
 import { DeviceCard } from "./DeviceCard";
-import { Account } from "../../page/App/Account";
 import { AccountCard } from "./AccountCard";
 import dayjs from "dayjs";
 import { StatusCard } from "./StatusCard";
@@ -18,8 +14,8 @@ import { TextButton } from "../Buttons/TextButtons";
 import { DrawerProvider } from "../Drawer/DrawerProvider";
 import { DrawerContext } from "../Drawer/DrawerContext";
 import { DrawerApp } from "../Drawer/Drawer";
-import { OrderBatchCreate } from "../forms/OrderBatchCreate";
 import { OrderBatchEdit } from "../forms/OrderBatchEdit";
+import { useNavigate } from "react-router-dom";
 
 export function OrderBatchCard({orderBatch}:{orderBatch:OrderBatchModel}){
     return(
@@ -175,9 +171,11 @@ OrderBatchCard.EditButton = function EditButton(){
 }
 
 OrderBatchCard.GraphButton = function GraphButton(){
+    const navigate = useNavigate()
+    const {orderBatch} = useContext(OrderBatchContext)
     return(
         <TextButton text="BATCH DATA" onClick={()=>{
-
+            navigate(`/order/batch/${orderBatch?.id}/active/data`)
         }}/>
     )
 }

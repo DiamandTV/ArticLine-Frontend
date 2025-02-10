@@ -1,10 +1,10 @@
 import { createContext } from "react";
 import { OrderBatchModel } from "../../../models/Order";
 
-interface OrderBatchContexttModel{
+interface OrderBatchContextModel{
     orderBatch:OrderBatchModel|null
 }
 
-export const OrderBatchContext = createContext<OrderBatchContexttModel>({
+export const OrderBatchContext = createContext<OrderBatchContextModel>({
     orderBatch:null
 })

@@ -59,6 +59,15 @@ export interface OrderBatchModel {
     created_at?:Dayjs|string,
 }
 
+export interface OrderBatchDataModel{
+    id:number,
+    order_batch:number,
+    temperature:number,
+    humidity:number,
+    battery:number,
+    created_at:string
+}
+
 export interface OrderItemModel{
     id?:number,
     product_item:ProductModel|number,

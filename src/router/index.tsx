@@ -23,7 +23,9 @@ import { OrdersCompany } from "../page/Orders/OrdersCompany";
 import { CourierSignIn } from "../page/CourierSignIn";
 import { ChooseSignIn } from "../page/ChooseSignIn"
 import { Devices } from "../page/Devices/Devices";
-import { OrdersCompanyChunck } from "../page/OrderBatch/OrdersCompanyBatch";
+import { OrdersCompanyBatch } from "../page/OrderBatch/OrdersCompanyBatch";
+import { ActiveOrderBatchData } from "../page/OrderBatchData/ActiveOrderBatchData";
+import { InActiveOrderBatchData } from "../page/OrderBatchData/InActiveOrderBatchData";
 const router = createBrowserRouter([
     //{path:"/product",element:<ProductCreate/>},
     // main app routes
@@ -66,7 +68,15 @@ const router = createBrowserRouter([
                     },
                     {
                         path:"/orders/batch/company",
-                        element:<OrdersCompanyChunck/>
+                        element:<OrdersCompanyBatch/>,
+                    },
+                    {
+                        path:"/order/batch/:order-batch-id/active/data",
+                        element:<ActiveOrderBatchData/>
+                    },
+                    {
+                        path:"/order/batch/:order-batch-id/inactive/data",
+                        element:<InActiveOrderBatchData/>
                     },
                     {
                         path:"devices/list/company",

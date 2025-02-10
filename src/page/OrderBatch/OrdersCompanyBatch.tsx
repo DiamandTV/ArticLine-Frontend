@@ -5,7 +5,7 @@ import { PaginationProvider } from "../../components/Pagination/PaginationProvid
 import { OrderBatchCompanyActive } from "../../components/OrderCompanyBatch/OrderBatchCompanyActive";
 import { OrderBatchCompanyNoActive } from "../../components/OrderCompanyBatch/OrderBatchCompanyNoActive";
 
-export function OrdersCompanyChunck(){
+export function OrdersCompanyBatch(){
 
     return (
         <TabsProvider>
