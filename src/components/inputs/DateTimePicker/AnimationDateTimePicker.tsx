@@ -5,14 +5,16 @@ import { AnimationDatePickerInput } from "../DatePicker/AnimationDatePickerInput
 import { Dayjs } from "dayjs";
 export interface AnimationDateTimePickerProps{
     labelName:string,
-    type:string,
     name:string,
     readonly?:boolean
     maxLength?:number,
-    defaultValue?:Dayjs
-    
+    defaultValue?:Dayjs,
+    constraints?:{
+        minDateTime:unknown,
+        maxDateTime:unknown
+    }
 }
-export function AnimationDateTimePicker({labelName,type,name,readonly=false,maxLength,defaultValue}:AnimationDateTimePickerProps){
+export function AnimationDateTimePicker({labelName,name,readonly=false,maxLength,defaultValue,constraints}:AnimationDateTimePickerProps){
     const {control} = useFormContext()
     console.log()
     return(
@@ -21,11 +23,13 @@ export function AnimationDateTimePicker({labelName,type,name,readonly=false,maxL
             control={control}
             render={({field,fieldState:{error}})=>(
                 <MobileDateTimePicker 
+                    minDateTime={constraints?.minDateTime}
+                    maxDateTime={constraints?.maxDateTime}
                     defaultValue={defaultValue}
                     slots={{
                         textField:(params)=><AnimationDatePickerInput
                                         labelName={labelName}
-                                        type={type}
+                                        type={"text"}
                                         name={name}
                                         readonly={readonly}
                                         maxLength={maxLength}

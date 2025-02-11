@@ -8,13 +8,18 @@ export interface AnimationDatePickerProps{
     name:string,
     readonly?:boolean
     maxLength?:number,
-    
+    constraints?:{
+        minDate:unknown,
+        maxDate:unknown
+    }
 }
-export function AnimationDatePicker({labelName,type="text",name,maxLength,readonly=true/*register,error*/}:AnimationDatePickerProps){
+export function AnimationDatePicker({labelName,type="text",name,maxLength,readonly=true,constraints/*register,error*/}:AnimationDatePickerProps){
     const { control } = useFormContext()
     return (
         <Controller name={name} control={control} render={({field,fieldState:{error}})=> <MobileDatePicker
             //defaultValue={dayjs(new Date())}
+            minDate={constraints?.minDate}
+            maxDate={constraints?.maxDate}
             slots={{
             textField:(params)=><AnimationDatePickerInput
                 labelName={labelName}

@@ -1,44 +1,15 @@
-import { renderTimeViewClock } from "@mui/x-date-pickers"
-import { Dayjs } from "dayjs"
-import { Controller, useFormContext } from "react-hook-form"
-import DateRangePicker from '@mui/lab/DateRangePicker';
+import { AnimationDateTimePicker, AnimationDateTimePickerProps } from "../DateTimePicker/AnimationDateTimePicker"
 
 export interface AnimationDateTimeRangePickerProps{
-    labelName:string,
-    name:string,
-    readonly?:boolean
-    maxLength?:number,
-    defaultValue?:Dayjs
+    from:AnimationDateTimePickerProps
+    to:AnimationDateTimePickerProps
 }
-export function AnimationDateTimeRangePicker({name,labelName,readonly,maxLength,defaultValue}:AnimationDateTimeRangePickerProps){
-    const {control} = useFormContext()
+
+export function AnimationDateTimeRangePicker({from,to}:AnimationDateTimeRangePickerProps){
     return(
-        <Controller
-            name={name}
-            control={control}
-            render={({field})=>(
-                <DateRangePicker
-                    defaultValue={defaultValue}
-                    // slots={{
-                    //     textField:(params)=><AnimationDatePickerInput
-                    //                     labelName={labelName}
-                    //                     type={type}
-                    //                     name={name}
-                    //                     readonly={readonly}
-                    //                     maxLength={maxLength}
-                    //                     params={params}
-                    //                     error={error}
-                    //                     />
-                    //     }}
-                    viewRenderers={{
-                        hours:renderTimeViewClock,
-                        minutes:renderTimeViewClock,
-                        seconds:renderTimeViewClock
-                    }}
-                    {...field}
-                />
-            )}
-            
-        />
+        <div className="max-w-max flex flex-row justify-center items-center gap-x-5">
+            <AnimationDateTimePicker {...from}/>
+            <AnimationDateTimePicker {...to}/>
+        </div>
     )
 }

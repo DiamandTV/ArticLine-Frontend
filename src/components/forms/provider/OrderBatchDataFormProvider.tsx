@@ -3,7 +3,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 
 const schema = z.object({
-    "date_range":z.any()
+    "from_date_time":z.any(),
+    "to_date_time":z.any()
 })
 
 type OrderBatchDataRangeDataField = z.infer<typeof schema>

@@ -43,6 +43,9 @@ export const useOrderBatchService = {
             pickup_time:dayjs(orderBatch.pickup_time)
         } 
     },
+    async getOrderBatch({orderBatchId}:{orderBatchId:string|number}){
+        return api.get(`/order/batch/${orderBatchId}`)
+    },
     async createOrderBatch(data:OrderBatchModelRequest){
        return api.post('/order/batch/',data) 
     },
