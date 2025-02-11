@@ -11,10 +11,10 @@ export function TemperatureGraph(){
             height="100%"
         >
             <LineChart width={500} height={300} data={orderBatchData}>
-                <XAxis  dataKey={"created_at"} tickFormatter={(tick)=>dayjs(tick).format("DD/MM/YYYY HH:mm")}/>
+                <XAxis  dataKey={"created_at"} tickFormatter={(tick)=>dayjs(tick).format("DD/MM/YY")}/>
                 <YAxis min={-40} max={40}/>
                 <Tooltip/>
-                <Line type="monotone" dataKey={"temperature"} stroke='#22d3ee'  strokeWidth={2} />
+                <Line type="monotone" dataKey={"temperature"} stroke='#22d3ee'  strokeWidth={2} dot={false}/>
             </LineChart>
         </ResponsiveContainer>           
     )

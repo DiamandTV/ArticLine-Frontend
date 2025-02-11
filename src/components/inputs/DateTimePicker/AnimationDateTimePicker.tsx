@@ -10,8 +10,8 @@ export interface AnimationDateTimePickerProps{
     maxLength?:number,
     defaultValue?:Dayjs,
     constraints?:{
-        minDateTime:unknown,
-        maxDateTime:unknown
+        minDateTime?:unknown,
+        maxDateTime?:unknown
     }
 }
 export function AnimationDateTimePicker({labelName,name,readonly=false,maxLength,defaultValue,constraints}:AnimationDateTimePickerProps){

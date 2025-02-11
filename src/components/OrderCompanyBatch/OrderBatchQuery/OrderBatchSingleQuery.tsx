@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoaderQuery } from "../../loader/LoaderWithQueryAndChildren";
 import { OrderBatchModel } from "../../../models/Order";
 import { useParams } from "react-router-dom";
@@ -8,10 +8,13 @@ import { OrderBatchProvider } from "../OrderBatchContext/OrderBatchProvider";
 export function OrderBatchSingleQuery({children,orderBatchId}:{children:React.ReactNode,orderBatchId?:string|number}){
     const params = useParams()
     const [orderBatch,setOrderBatch] = useState<OrderBatchModel|null>(null)
-    if(!orderBatch){
+    console.log(orderBatch)
+    if(!orderBatchId){
         orderBatchId = params['order-batch-id']
     }
     if(!orderBatchId) return
+    console.log(orderBatch)
+    
     return(
         <LoaderQuery
             queryKey={['get-order-batch-detail',orderBatchId]}

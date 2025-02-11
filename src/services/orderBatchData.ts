@@ -6,8 +6,8 @@ export const useOrderBatchDataService = {
       if(!from || !to){
         return await api.get(`orders/batch/data/${orderBatchID}/?page=${page}`)  
       }
-      const fromStr = from.format()
-      const toStr = to.format()
+      const fromStr = from.format('YYYY-MM-DD HH:MM')
+      const toStr = to.format('YYYY-MM-DD HH:MM')
       
       return await api.get(`orders/batch/data/${orderBatchID}/?page=${page}&from=${fromStr}&to=${toStr}`)  
     }

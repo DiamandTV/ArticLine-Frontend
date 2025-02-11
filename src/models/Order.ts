@@ -56,6 +56,8 @@ export interface OrderBatchModel {
     device?:DeviceModel,
     courier?:CourierProfileModel,
     pickup_time?:Dayjs|string,
+    pickedup_time?:string,
+    finished_time?:string,
     created_at?:Dayjs|string,
 }
 

@@ -10,11 +10,10 @@ export function HumidityGraph(){
             height="100%"
         >
             <LineChart width={500} height={300} data={orderBatchData}>
-                <XAxis  dataKey={"created_at"} tickFormatter={(tick)=>dayjs(tick).format("DD/MM/YYYY HH:mm")}/>
+                <XAxis  dataKey={"created_at"} tickFormatter={(tick)=>dayjs(tick).format("DD/MM/YYYY")}/>
                 <YAxis min={0} max={100}/>
-                <Tooltip/>
-                              
-                <Line type="monotone" dataKey={"humidity"} stroke={"#FF5722"} strokeWidth={2} />
+                <Tooltip/>          
+                <Line type="monotone" dataKey={"humidity"} stroke={"#FF5722"} strokeWidth={2} dot={false}/>
             </LineChart>
         </ResponsiveContainer>           
     )
