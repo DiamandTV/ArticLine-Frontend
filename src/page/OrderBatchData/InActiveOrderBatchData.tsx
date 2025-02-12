@@ -1,10 +1,7 @@
-import { OrderBatchData } from "../../components/OrderBatchData/OrderBatchData";
-import { OrderBatchDataQuery } from "../../components/OrderBatchData/OrderBatchDataQuery/OrderBatchDataQuery";
+import { OrderBatchDataView } from "../../components/OrderBatchData/OrderBatchDataView";
 
 export function InActiveOrderBatchData(){
     return(
-        <OrderBatchDataQuery>
-            <OrderBatchData/>
-        </OrderBatchDataQuery>
+        <OrderBatchDataView active={false} />
     )
 }
