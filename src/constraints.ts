@@ -39,3 +39,18 @@ export function checkForError(error:unknown){
     }
     return null
 }
+
+// Order Batch Data size
+export const FIFO_QUEUE_SIZE = 200
+
+
+export const tabeleStyleHeaders = {
+    flex:1,
+    autoHeight: true,
+    wrapText:true,
+    resizable: true,
+    wrapHeaderText: true, // Wrap Text
+    autoHeaderHeight: true, // Adj
+    cellClassName:"font-thin text-white text-md",
+    headerClassName:"text-md font-bold text-black"
+}

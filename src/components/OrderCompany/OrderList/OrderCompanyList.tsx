@@ -6,18 +6,10 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { StatusCard } from "../../cards/StatusCard";
 import { OrderStatus } from "../../../models/Order";
 import dayjs from "dayjs";
+import { tabeleStyleHeaders } from "../../../constraints";
 
 
-const styleHeaders = {
-    flex:1,
-    autoHeight: true,
-    wrapText:true,
-    resizable: true,
-    wrapHeaderText: true, // Wrap Text
-    autoHeaderHeight: true, // Adj
-    cellClassName:"font-thin text-white text-md",
-    headerClassName:"text-md font-bold text-black"
-}
+
 
 
 const columns:Array<GridColDef> = [
@@ -26,28 +18,28 @@ const columns:Array<GridColDef> = [
         headerName:'ORDER ID',
         headerAlign:'center',
         align:'center',
-        ...styleHeaders,    
+        ...tabeleStyleHeaders,    
     },
     {
         field:'store_name',
         headerName:'STORE NAME',
         headerAlign:'center',
         align:'center',
-        ...styleHeaders,
+        ...tabeleStyleHeaders,
     },
     {
         field:'buyer_name',
         headerName:'BUYER NAME',
         headerAlign:'center',
         align:'center',
-        ...styleHeaders,
+        ...tabeleStyleHeaders,
     },
     {
         field:'status',
         headerName:'STATUS',
         headerAlign:'center',
         align:'center',
-        ...styleHeaders,
+        ...tabeleStyleHeaders,
         renderCell:(params)=> {
             return <StatusCard status={params.value as OrderStatus}/>
         },
@@ -57,28 +49,28 @@ const columns:Array<GridColDef> = [
         headerName:'TOTAL',
         headerAlign:'center',
         align:'center',
-        ...styleHeaders,
+        ...tabeleStyleHeaders,
     },
     {
         field:'created',
         headerName:'CREATED',
         headerAlign:'center',
         align:'center',
-        ...styleHeaders,
+        ...tabeleStyleHeaders,
     },
     {
         field:'delivery_time',
         headerName:'DELIVERY TIME',
         headerAlign:'center',
         align:'center',
-        ...styleHeaders,
+        ...tabeleStyleHeaders,
     },
     {
         field:'delivered_time',
         headerName:'DELIVERED TIME',
         headerAlign:'center',
         align:'center',
-        ...styleHeaders,
+        ...tabeleStyleHeaders,
     }
 ]
 

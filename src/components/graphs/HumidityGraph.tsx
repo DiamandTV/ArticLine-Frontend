@@ -9,7 +9,7 @@ export function HumidityGraph(){
             width="100%"
             height="100%"
         >
-            <LineChart width={500} height={300} data={orderBatchData}>
+            <LineChart width={500} height={300} data={orderBatchData.queue}>
                 <XAxis  dataKey={"created_at"} tickFormatter={(tick)=>dayjs(tick).format("DD/MM/YYYY")}/>
                 <YAxis min={0} max={100}/>
                 <Tooltip/>          

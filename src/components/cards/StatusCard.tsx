@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import { OrderStatus } from "../../models/Order";
+import { OrderBatchStatus, OrderStatus } from "../../models/Order";
 
 export function StatusCard({status,className = ""}:{status:OrderStatus,className?:string}){
     
@@ -19,6 +19,30 @@ export function StatusCard({status,className = ""}:{status:OrderStatus,className
                 return { color: 'bg-green-600' }; // Verde per indicare che è stato consegnato
             case 'CANCELED':
                 return {color: 'bg-red-600'}
+            default:
+                return { color: 'bg-gray-400' }; // Grigio per gli stati sconosciuti o predefiniti
+        }
+    };
+    
+    return(
+        <div className={twMerge(`h-full flex justify-center items-center text-gray-200 ${className}`)}>
+            <h6 className={`text-sm p-1.5 rounded-xl max-h-max text-ellipsis ${getData().color}` }>{status}</h6>
+        </div>
+    )
+}
+
+export function StatusOrderBatchCard({status,className = ""}:{status:OrderBatchStatus,className?:string}){
+    
+    const getData = (): { color: string } => {
+        switch (status) {
+            case 'PENDING':
+                return { color: 'bg-orange-red' }; // Rosso per indicare che non è accettato
+            case 'PICKED UP':
+                return {color:  'bg-green-400'};
+            case 'IN PROGRESS':
+                return { color: 'bg-orange-400' }; // Arancione per indicare che è stato inviato
+            case 'COMPLETED':
+                return { color: 'bg-green-600' }; // Verde per indicare che è stato consegnato
             default:
                 return { color: 'bg-gray-400' }; // Grigio per gli stati sconosciuti o predefiniti
         }

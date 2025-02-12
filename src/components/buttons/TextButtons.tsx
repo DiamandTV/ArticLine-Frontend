@@ -8,7 +8,7 @@ export interface TextButtonProps{
 export function TextButton({text,children,onClick,className,type="button"}:TextButtonProps){
     return(
         <button            
-            className={` hover:cursor-pointer hover:bg-sky-300 box-border p-4 bg-sky-500 rounded-xl text-md w-full ${className} text_button_all`}
+            className={`flex flex-row justify-center items-center hover:cursor-pointer hover:bg-sky-300 box-border p-4 bg-sky-500 rounded-xl text-md w-full ${className} text_button_all`}
             onClick={(e:React.MouseEvent<HTMLButtonElement>)=>{
                 e.stopPropagation()
                 e.nativeEvent.stopImmediatePropagation()

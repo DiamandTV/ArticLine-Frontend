@@ -48,5 +48,8 @@ export const useOrderService = {
     async getActiveCompanyOrdersBatch({page='1'}:{page?:string|number|null}){
         return api.get(`/orders/batch/active/?page=${page}`)
     },
+    async getInActiveCompanyOrdersBatch({page='1'}:{page?:string|number|null}){
+        return api.get(`/orders/batch/inactive/?page=${page}`)
+    }
     
 }

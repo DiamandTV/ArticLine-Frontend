@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { OrderBatchDataContext } from "../components/OrderBatchData/OrderBatchDataContext/OrderBatchDataContext"
 import { useEventSource, useEventSourceListener } from "@react-nano/use-event-source"
 import { HOST_URL } from "../constraints"
-
+import { OrderBatchDataModel } from "../models/Order"
 interface OrderBatchDataSEEViewProps{
     orderBatchDataId:string|number,
     children:React.ReactNode
@@ -16,7 +16,11 @@ export function OrderBatchDataSEEView({orderBatchDataId,children}:OrderBatchData
         eventSource,
         ['NEW ORDER BATCH DATA'],
         (evt)=>{
-            setOrderBatchData(evt)
+            setOrderBatchData((queue)=>{
+                const data:OrderBatchDataModel = JSON.parse(evt.data)
+                queue.addFIFO(data)
+                return queue.clone()
+            })
         }
     )
 

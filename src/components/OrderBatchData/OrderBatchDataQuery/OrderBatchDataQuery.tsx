@@ -7,6 +7,8 @@ import { OrderBatchDataModel } from "../../../models/Order"
 import { useFormContext } from "react-hook-form"
 import { PaginationContext } from "../../Pagination/PaginationContext"
 import { PaginationModel } from "../../../models/pagination"
+import { FIFOQueue } from "../../../utlis/moduls/fifo"
+import { FIFO_QUEUE_SIZE } from "../../../constraints"
 interface OrderBatchDataQueryProps{
     children:React.ReactNode
 }
@@ -15,7 +17,7 @@ export function OrderBatchDataQuery({children}:OrderBatchDataQueryProps){
     const first = useRef(true)
     const {watch} = useFormContext()
     console.log(watch('to_date_time'))
-    const [orderBatchData,setOrderBatchData] = useState<OrderBatchDataModel[]>([])
+    const [orderBatchData,setOrderBatchData] = useState<FIFOQueue<OrderBatchDataModel>>(new FIFOQueue<OrderBatchDataModel>(FIFO_QUEUE_SIZE))
     const params = useParams()
     const {page,setPage,setPageData} = useContext(PaginationContext)
     //const activeOrderBatches = useSelector((state:RootState)=>state.orderReducer.companyActiveOrdersBatch)
@@ -39,7 +41,7 @@ export function OrderBatchDataQuery({children}:OrderBatchDataQueryProps){
                     const pagination = structuredClone(data.data)
                     delete pagination.results
                     setPageData!(pagination as PaginationModel)
-                    setOrderBatchData(data.data.results)
+                    setOrderBatchData(new FIFOQueue(FIFO_QUEUE_SIZE,data.data.results))
                 }
             }}
             onError={()=>{
