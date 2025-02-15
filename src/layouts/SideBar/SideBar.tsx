@@ -64,7 +64,6 @@ export function SideBarApp(){
                 collapsedWidth={getCollapsedWidth()}
                 // onMouseEnter={()=>setCollapsed(false)}
                 // onMouseLeave={()=>setCollapsed(true)}
-
             >
             <Menu
                 menuItemStyles={{

@@ -15,7 +15,7 @@ export function StoresCompany(){
                 <div className="flex flex-col gap-y-4"> 
                     <PaginationButtonWithContext/>
                     <div className="w-full h-full @container">
-                        <GridView className="">
+                        <GridView className=" @2xl:grid-cols-4">
                             {stores.map((store)=>{
                                 return (
                                     <StoreCard store={store}/>
