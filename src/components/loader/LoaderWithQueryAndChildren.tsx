@@ -37,10 +37,11 @@ interface LoaderQueryProps{
     onError:(error:unknown)=>void
     queryKey:Array<unknown>,
     queryFn:()=>Promise<AxiosResponse>,
-    children:React.ReactNode
+    children:React.ReactNode,
+    loading?:boolean
 }
 
-export function LoaderQuery({onSuccess,onError,queryFn,queryKey,children}:LoaderQueryProps){
+export function LoaderQuery({onSuccess,onError,queryFn,queryKey,children,loading=true}:LoaderQueryProps){
     //const [searchParams] = useSearchParams()
     const {isSuccess,isError,isLoading,refetch} = useQuery({
         refetchOnMount:false,
@@ -55,7 +56,7 @@ export function LoaderQuery({onSuccess,onError,queryFn,queryKey,children}:Loader
     },[])
 
     return (
-            isSuccess ? children : 
+            (isSuccess || (!loading && !isError)) ? children : 
             (
                 <div className="w-full h-screen min-h-5 flex justify-center items-center">
                     <BlurCard className="h-full flex justify-center items-center">

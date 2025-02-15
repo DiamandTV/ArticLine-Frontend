@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import { tabeleStyleHeaders } from "../../../constraints";
 import { TextButton } from "../../Buttons/TextButtons";
 import { useNavigate } from "react-router-dom";
+import { OrderDataButton } from "../../buttons/OrderDataButton";
 
 
 
@@ -98,7 +99,7 @@ const columns:Array<GridColDef> = [
         align:'center',
         //...tabeleStyleHeaders,
         renderCell:(params)=>{
-            return <OrderBatchList.DataButton orderBatchId={params.value}/>
+            return <OrderDataButton orderBatchId={params.value}/>
         }
     },
 ]
@@ -152,18 +153,3 @@ export function OrderBatchList(){
         )
 }
 
-OrderBatchList.DataButton = function DataButton({orderBatchId}:{orderBatchId:string|number}){
-    const navigate = useNavigate()
-    return (
-        <div className="h-full flex flex-row justify-center items-center">
-             <TextButton
-                 text="DATA"
-                 className="h-10 flex flex-row text-white"
-                 onClick={()=>{
-                    navigate(`/order/batch/${orderBatchId}/inactive/data`)
-                 }}
-             />
-         </div>
-         
-     )
-}

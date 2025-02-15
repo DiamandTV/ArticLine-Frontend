@@ -2,8 +2,13 @@ import { Dialog } from "@mui/material";
 import { useContext } from "react";
 import { DialogContext } from "../Dialog/DialogContext";
 
-export function DialogApp({children}:{children:React.ReactNode}){
-    const {open,setOpen} = useContext(DialogContext)
+interface DialogAppProps{
+    open:boolean,
+    setOpen:(state:boolean)=>void,
+    children:React.ReactNode
+}
+
+export function DialogApp({open,setOpen,children}:DialogAppProps){
     return(
         <>
             <Dialog 
@@ -30,5 +35,12 @@ export function DialogApp({children}:{children:React.ReactNode}){
                {children}
             </Dialog>
         </>
+    )
+}
+
+export function DialogAppContext({children}:{children:React.ReactNode}){
+    const {open,setOpen} = useContext(DialogContext)
+    return(
+        <DialogApp open={open} setOpen={setOpen}>{children}</DialogApp>
     )
 }

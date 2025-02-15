@@ -1,7 +1,7 @@
 //!!! START USING ALWAYS REACT COMPOUND COMPONENTS
 
 import { Avatar, Button, Tooltip } from "@mui/material"
-import { OrderModel, STATUS_INDEX } from "../../models/Order"
+import { ORDER_BATCH_STATUS_INDEX, OrderModel, STATUS_INDEX } from "../../models/Order"
 import { BlurCard } from "./BlurCard"
 import { CartProvider } from "../Cart/CartProvider/CartProvider"
 import dayjs from "dayjs"
@@ -16,7 +16,7 @@ import { TOOLKIT_EARLY_MESSAGE } from "../../constraints"
 import { DialogProvider } from "../Dialog/DialogProvider"
 import { DialogContext } from "../Dialog/DialogContext"
 import { DeliveryForm } from "../forms/DeliveryForm"
-import { DialogApp } from "../Dialog/Dialog"
+import { DialogAppContext } from "../Dialog/Dialog"
 import { useOrderService } from "../../services/orderService"
 import { useDispatch } from "react-redux"
 import { OrderType, updateOrder } from "../../store/orderSlice"
@@ -39,6 +39,8 @@ import { DelayForm } from "../forms/DelayForm"
 //import { AccountAvatar } from "../AccountAvatar/AccountAvatar"
 import { StatusCard } from "./StatusCard"
 import { twMerge } from "tailwind-merge"
+import { OrderBatchCard } from "./OrderBatchCard"
+import { useNavigate } from "react-router-dom"
 
 interface OrderCardProps{
     order:OrderModel,
@@ -106,9 +108,9 @@ OrderCard.DeliveryTime = function OrderCardDeliveryTime(){
                                     ) 
                             }
                         </DialogContext.Consumer>
-                        <DialogApp>
+                        <DialogAppContext>
                             <DeliveryForm/>
-                        </DialogApp>
+                        </DialogAppContext>
                     </DialogProvider>
                     <Tooltip title={TOOLKIT_EARLY_MESSAGE} arrow style={{position:"absolute"}} className="right-0"  sx={{m:0,p:0}}>
                         <Button sx={{m:0.5,p:0,minWidth:"max-content"}}>
@@ -148,9 +150,9 @@ OrderCard.DelayTime = function OrderCardDelayTime(){
                         ) 
                 }
             </DialogContext.Consumer>
-            <DialogApp>
+            <DialogAppContext>
                 <DelayForm/>
-            </DialogApp>
+            </DialogAppContext>
         </DialogProvider>
     )
 }
@@ -238,6 +240,20 @@ OrderCard.ChooseCourier = function OrderCartChooseCourier(){
                 />
             }
         </BlurCard>
+    )
+}
+
+OrderCard.OrderDataButton = function OrderDataButton(){
+    const navigate = useNavigate()
+    const {order} = useContext(OrderContext)
+    if(!order?.status /*|| STATUS_INDEX[order!.status!] < STATUS_INDEX['SENDED']*/  || !order?.order_batch) return
+    return(
+        <TextButton
+            text="ORDER DATA"
+            onClick={()=>{
+                navigate(`/order/batch/${order.order_batch}/active/data`)
+            }}
+        />
     )
 }
 
@@ -377,7 +393,7 @@ export function OrderCompleteCard({order}:{order:OrderModel}){
                     order={order!}
                 />
                 */}
-                
+                <OrderCard.OrderDataButton/>
             </div>
         </OrderCard>
     )

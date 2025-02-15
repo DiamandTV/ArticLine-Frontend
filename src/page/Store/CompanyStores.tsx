@@ -14,13 +14,15 @@ export function StoresCompany(){
             <StoresQueryCompany>
                 <div className="flex flex-col gap-y-4"> 
                     <PaginationButtonWithContext/>
-                    <GridView>
-                        {stores.map((store)=>{
-                            return (
-                                <StoreCard store={store}/>
-                            )
-                        })}
-                    </GridView>
+                    <div className="w-full h-full @container">
+                        <GridView className="">
+                            {stores.map((store)=>{
+                                return (
+                                    <StoreCard store={store}/>
+                                )
+                            })}
+                        </GridView>
+                    </div>
                 </div>
             </StoresQueryCompany>
         </PaginationProvider>

@@ -5,7 +5,7 @@ import { FaUser } from "react-icons/fa";
 import { BiSolidCategory } from "react-icons/bi";
 import { IoChatbubbleEllipses } from "react-icons/io5";
 import { IoMdSettings } from "react-icons/io";
-import { useState } from "react";
+import { useContext, } from "react";
 import { Link } from "react-router-dom";
 import { SIDEBAR_ICON_SIZE } from "../../constraints";
 import { StoreSection } from "./Sections/StoreSection";
@@ -13,6 +13,10 @@ import { StoreSection } from "./Sections/StoreSection";
 import { CartSection } from "./Sections/CartSection";
 import { OrderSection } from "./Sections/OrderSection";
 import { DeviceSection } from "./Sections/DeviceSection";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { SiderBarContext } from "./context/SiderBarContext";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
+
 //import { OrderBatchSection } from "./Sections/OrderBatchSection";
 /*
 const useProfile:UserProfileModel = {
@@ -38,16 +42,28 @@ const useProfile:UserProfileModel = {
 */
 
 export function SideBarApp(){
-    const [collapsed,setCollapsed] = useState(true)
+    const isMD = useMediaQuery({query:'(min-width:48rem)'})
+    const {open,setOpen} = useContext(SiderBarContext)
+
+    const getCollapsedWidth = ()=>{
+        if(!isMD){
+            return '0px'
+        } 
+        return undefined
+    }
     return (
-        <div className="h-screen">
+        <div className={`h-screen z-50 absolute bg-slate-900  md:relative md:bg-transparent` }>
             <Sidebar 
                 className="h-full flex flex-col"    
                 backgroundColor="transparent"
-                style={{borderColor:"rgb(75 85 99)",borderRightWidth:"2px"}}
-                collapsed={collapsed}
-                onMouseEnter={()=>setCollapsed(false)}
-                onMouseLeave={()=>setCollapsed(true)}
+                style={
+                    (isMD || !open) ? {
+                        borderColor:"rgb(75 85 99)",borderRightWidth:"2px"} : {borderWidth:'0px'}
+                }
+                collapsed={open}
+                collapsedWidth={getCollapsedWidth()}
+                // onMouseEnter={()=>setCollapsed(false)}
+                // onMouseLeave={()=>setCollapsed(true)}
 
             >
             <Menu
@@ -67,6 +83,9 @@ export function SideBarApp(){
                     }),
                 }}
             >
+                <MenuItem className="hidden lg:block" icon={<RxHamburgerMenu size={SIDEBAR_ICON_SIZE}/>} onClick={()=>{
+                    setOpen(!open)
+                }}/>
                 <Link to={"/"}>
                     <MenuItem id="HOME" icon={<IoHome size={SIDEBAR_ICON_SIZE}/>} >HOME</MenuItem>
                 </Link>

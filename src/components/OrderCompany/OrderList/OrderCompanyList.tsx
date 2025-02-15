@@ -7,10 +7,7 @@ import { StatusCard } from "../../cards/StatusCard";
 import { OrderStatus } from "../../../models/Order";
 import dayjs from "dayjs";
 import { tabeleStyleHeaders } from "../../../constraints";
-
-
-
-
+import { OrderDataButton } from "../../buttons/OrderDataButton";
 
 const columns:Array<GridColDef> = [
     {
@@ -71,6 +68,14 @@ const columns:Array<GridColDef> = [
         headerAlign:'center',
         align:'center',
         ...tabeleStyleHeaders,
+    },
+    {
+        field:'data',
+        headerAlign:'center',
+        align:'center',
+        renderCell:(params)=>{
+            return <OrderDataButton orderBatchId={params.value}/>
+        }
     }
 ]
 
@@ -88,7 +93,8 @@ export function OrderCompanyList(){
                     total:order.total_price!,
                     created:dayjs(order.created_at).format('DD/MM/YY hh:mm'),
                     delivery_time:order.delivery_time ? dayjs(order.delivery_time).format('DD/MM/YY hh:mm') : 'NOT YET',
-                    delivered_time:order.delivered_time ? dayjs(order.delivered_time).format('DD/MM/YY hh:mm') : 'NOT YET'
+                    delivered_time:order.delivered_time ? dayjs(order.delivered_time).format('DD/MM/YY hh:mm') : 'NOT YET',
+                    data:order.order_batch
                 }
         })
         },[companyNoActiveOrders])

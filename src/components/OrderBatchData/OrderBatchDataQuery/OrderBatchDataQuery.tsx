@@ -33,6 +33,7 @@ export function OrderBatchDataQuery({children}:OrderBatchDataQueryProps){
     
     return(
         <LoaderQuery
+            loading={false}
             queryKey={['get-order-batch-data',page,watch('from_date_time'),watch('to_date_time')]}
             queryFn={async()=>await useOrderBatchDataService.getOrderBatchData({page, orderBatchID,from:watch('from_date_time'),to:watch('to_date_time')})}
             onSuccess={(data)=>{
