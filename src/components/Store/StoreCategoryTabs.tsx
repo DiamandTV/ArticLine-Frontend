@@ -51,7 +51,7 @@ export function StoreCategoryTabs(){
 
     return (
         store && store.store_categories ? 
-        <div className="w-full max-h-max flex flex-row gap-y-4 gap-x-2">
+        <div className="w-full max-h-max flex flex-col md:flex-row gap-y-4 gap-x-2 ">
             <DndContext modifiers={[restrictToParentElement]} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                 <SortableContext items={store.store_categories.map((cate)=>cate.id!.toString())}
                         //strategy={verticalListSortingStrategy}
@@ -59,7 +59,7 @@ export function StoreCategoryTabs(){
                     <CategoryTabs/>
                 </SortableContext>
             </DndContext>
-            <StoreCategoryEditPopUpWithButton/>
+            <StoreCategoryEditPopUpWithButton buttonClassName="w-full md:max-w-min"/>
         </div> 
          : null
     )

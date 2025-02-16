@@ -11,9 +11,9 @@ export function StoreHeader(){
     const store = useSelector((state:RootState)=>state.storeReducer.store)
     return(
         store ? 
-        <div className="w-full grid grid-cols-5 gap-x-8 items-stretch">
+        <div className="w-full flex flex-col justify-center items-center md:grid md:grid-cols-5 md:items-stretch gap-x-2 lg:gap-x-8 gap-y-4">
             <StoreImages/>
-            <BlurCard className=" col-span-3 h-full flex flex-row gap-y-4">
+            <BlurCard className=" col-span-3 h-full flex flex-col sm:flex-row gap-y-4 px-4 lg:px-8 gap-x-2">
                 <StoreDetails/>
                 <StoreSettings/>
             </BlurCard>

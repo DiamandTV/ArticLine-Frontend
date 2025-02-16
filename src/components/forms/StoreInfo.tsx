@@ -192,48 +192,48 @@ export function StoreInfo({indexStepper}:{indexStepper?:number}){
 
 
     return (
-    
-            <div className="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-y-10  gap-x-4  pb-8" >
-              
-                    <AnimationPlaceholderInput
-                        labelName="TITLE"
-                        name="title"
-                        type="text"
-                        register={register('title')}
-                        error={errors.title}
-                        defaultValue={getValues('title')}
-                    /> 
-                    <div className="w-full flex flex-row justify-center items-center">
-                        
-                        <FixedSizeDropdown
-                            closeOnClick={false}
-                            labelName="CATEGORIES"
-                            name="categories"
-                            list={categories.list}
-                            showFunction={(item)=>(item as CategoryModel).name.toUpperCase() as string}
-                            filterFunction={(e)=>{
-                                const value = e.target.value
-                                const regex = new RegExp(value, "i");
-                                console.log("FITLER FUNCTION")
-                                console.log(getValues('categories'))
-                                if (value.trim() === "" || !value) return categories.list;
-                                return categories.list.filter((item) => item.name.match(regex));
-                            }}
-                            error={errors.categories}
-                            onItemClick={(item)=>{
-                                console.log(item)
-                                const value = getValues('categories')
-                                if(value) setValue('categories',[...getValues('categories'),(item as CategoryModel).id.toString()])
-                                else setValue('categories',[(item as CategoryModel).id.toString()])
-                                setCategories({
-                                    list:storeCategories!.filter(category=>!getValues('categories').includes(category.id.toString())) as Array<CategoryModel>,
-                                    tags:[...categories.tags,item as CategoryModel]})
-                                console.log(storeCategories!.filter((category)=>!getValues('categories').includes(category)))
-                                console.log(getValues())
-                                
-                            }}
+            <div className="w-full grid grid-cols-1  justify-center items-center gap-y-10  gap-x-4  pb-8" >
+                    <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 gap-y-10  gap-x-4 ">
+                        <AnimationPlaceholderInput
+                            labelName="TITLE"
+                            name="title"
+                            type="text"
+                            register={register('title')}
+                            error={errors.title}
+                            defaultValue={getValues('title')}
                         /> 
-                        
+                        <div className="w-full flex flex-row justify-center items-center">
+                            
+                            <FixedSizeDropdown
+                                closeOnClick={false}
+                                labelName="CATEGORIES"
+                                name="categories"
+                                list={categories.list}
+                                showFunction={(item)=>(item as CategoryModel).name.toUpperCase() as string}
+                                filterFunction={(e)=>{
+                                    const value = e.target.value
+                                    const regex = new RegExp(value, "i");
+                                    console.log("FITLER FUNCTION")
+                                    console.log(getValues('categories'))
+                                    if (value.trim() === "" || !value) return categories.list;
+                                    return categories.list.filter((item) => item.name.match(regex));
+                                }}
+                                error={errors.categories}
+                                onItemClick={(item)=>{
+                                    console.log(item)
+                                    const value = getValues('categories')
+                                    if(value) setValue('categories',[...getValues('categories'),(item as CategoryModel).id.toString()])
+                                    else setValue('categories',[(item as CategoryModel).id.toString()])
+                                    setCategories({
+                                        list:storeCategories!.filter(category=>!getValues('categories').includes(category.id.toString())) as Array<CategoryModel>,
+                                        tags:[...categories.tags,item as CategoryModel]})
+                                    console.log(storeCategories!.filter((category)=>!getValues('categories').includes(category)))
+                                    console.log(getValues())
+                                    
+                                }}
+                            /> 
+                            
+                        </div>
                     </div>
                     <ChipsContainer
                         title="CATEGORIES"

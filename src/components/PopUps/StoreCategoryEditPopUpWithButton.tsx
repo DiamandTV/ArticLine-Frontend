@@ -10,7 +10,11 @@ import { useParams } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { RootState } from "../../store/store"
 
-export function StoreCategoryEditPopUpWithButton(){
+interface StoreCategoryEditPopUpWithButtonProps{
+    buttonClassName?:string,
+}
+
+export function StoreCategoryEditPopUpWithButton({buttonClassName=""}:StoreCategoryEditPopUpWithButtonProps){
     const params = useParams()
     const store = useSelector((state:RootState)=>state.storeReducer.store)
     
@@ -18,11 +22,12 @@ export function StoreCategoryEditPopUpWithButton(){
     return (
         store && store_categories ?
         <Can I="update" a="STORE" this={store!}>
+        
         <DrawerProvider>
             <DrawerContext.Consumer>
                 {({setOpen})=>
                     <IconTextButton
-                        className="max-w-min"
+                        className={buttonClassName}
                         label={"EDIT"}
                         icon={<BiEdit/>}
                         onClick={()=>{
@@ -33,7 +38,7 @@ export function StoreCategoryEditPopUpWithButton(){
             </DrawerContext.Consumer>
             <DrawerApp>
                 <BlurCard className="max-w-lg w-full h-full max-h-screen text-white">
-                        <StoreCategoryEdit storeCategory={store_categories}/>
+                    <StoreCategoryEdit storeCategory={store_categories}/>
                 </BlurCard>
             </DrawerApp>
         </DrawerProvider>

@@ -12,15 +12,17 @@ import { StoreFromEdit } from "../../Forms/StoreEdit";
 
 export function StoreSettings(){
     const store = useSelector((state:RootState)=>state.storeReducer.store)
+    const  classNamePopIconButton = ""
     return(
         store ? 
         <Can I="update" a="STORE" this={store}>
-            <div className="tranparent h-full flex flex-col justify-center items-center gap-y-3">
+            <div className="tranparent h-full flex flex-col justify-start items-center gap-y-3  sm:text-xl">
                 <DrawerProvider>
                     <PopupIconButton
+                        className={classNamePopIconButton}
                         iconData={{
                             label:"SETTINGS",
-                            icon:<IoIosSettings size={30}/>
+                            icon:<IoIosSettings />
                         }}
                     >
                         <BlurCard className=" w-[600px] max-w-4xl max-h-max text-white pt-4">
@@ -31,9 +33,10 @@ export function StoreSettings(){
                 
                 <DrawerProvider>
                     <PopupIconButton
+                        className={classNamePopIconButton}
                         iconData={{
                             label:"CATEGORIES",
-                            icon:<FaPlus size={30}/>
+                            icon:<FaPlus />
                         }}
                     >
                         <BlurCard className="max-w-lg w-full h-full max-h-screen text-white">
@@ -44,9 +47,10 @@ export function StoreSettings(){
                 
                 <DrawerProvider>
                     <PopupIconButton
+                        className={classNamePopIconButton}
                         iconData={{
                             label:"PRODUCTS",
-                            icon:<FaPlus size={30}/>
+                            icon:<FaPlus />
                         }}
 
                     >

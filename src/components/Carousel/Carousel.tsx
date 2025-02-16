@@ -4,10 +4,11 @@ import "react-multi-carousel/lib/styles.css";
 import {v4 as uuid} from "uuid"
 //import "../../App.css"
 interface CarouselProps{
+    height?:number,
     images:Array<ImageModel>
 }
 
-export function CarouselImages({images}:CarouselProps){
+export function CarouselImages({height,images}:CarouselProps){
 
     return ( 
         <Carousel
@@ -16,12 +17,12 @@ export function CarouselImages({images}:CarouselProps){
             autoPlay
             autoPlaySpeed={5000}
             centerMode={false}
-            containerClass="container-with-dots"
+            containerClass="container-with-dots h-full"
             dotListClass=""
             draggable
             focusOnSelect={false}
             infinite
-            itemClass="h-[325px] itemClass"
+            itemClass={`h-[200px] md:h-[400px] lg:h-[350px] l itemClass`}
             keyBoardControl
             minimumTouchDrag={80}
             pauseOnHover
@@ -50,10 +51,11 @@ export function CarouselImages({images}:CarouselProps){
                 max: 1024,
                 min: 464
                 },
-                items: 2,
+                items: 1,
                 partialVisibilityGutter: 30
                 }
             }}
+            
             rewind={false}
             rewindWithAnimation={false}
             rtl={false}
@@ -62,10 +64,11 @@ export function CarouselImages({images}:CarouselProps){
             sliderClass=""
             slidesToSlide={1}
             swipeable
+        
             
         >
             {images.map((image)=>(
-                 <img key={uuid()} className='w-full h-full rounded-xl' src={image.image!}/>
+                 <img key={uuid()} className='w-full h-full rounded-xl object-fill' src={image.image!}/>
             ))}
         </Carousel>
     )

@@ -27,16 +27,18 @@ export function ProductPage(){
                 page={pageForCategories![storeCategoryId]}
                 onChange={(page)=>dispatch(setPageForCategory({storeCategoryId,page}))}
                 />
-            <GridView className="grid-cols-2 @md:grid-cols-2 @lg:grid-cols-3">
-                {products?.map((product)=>{
-                    return(
-                        <DialogProvider  key={uuid()}>
-                            <DialogProductCard 
-                                product={product}/>
-                        </DialogProvider>
-                    )
-                })}
-            </GridView>
+            <div className="w-full h-full @container">
+                <GridView >
+                    {products?.map((product)=>{
+                        return(
+                            <DialogProvider  key={uuid()}>
+                                <DialogProductCard 
+                                    product={product}/>
+                            </DialogProvider>
+                        )
+                    })}
+                </GridView>
+            </div>
         </div> : null
     )
 }

@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { DrawerContext } from "../Drawer/DrawerContext";
 
 export interface PopupIconButtonProps{
+    className?:string,
     children:React.ReactNode
     iconData:{
         label:string,
@@ -11,12 +12,13 @@ export interface PopupIconButtonProps{
     }
 }
 
-export function PopupIconButton({children,iconData:{label,icon}}:PopupIconButtonProps){
+export function PopupIconButton({className="",children,iconData:{label,icon}}:PopupIconButtonProps){
     //const [open,setOpen] = useState(false)
     const {open,setOpen} = useContext(DrawerContext)
     return(
         <>
             <IconTextButton
+                className={className}
                 label={label}
                 icon={icon}
                 onClick={()=>{

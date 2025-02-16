@@ -7,7 +7,7 @@ import { StoreFormCreate } from "../../components/Forms/StoreCreate"
 export function StoreCreate(){
     //const ability = useSelector((state:RootState)=>state.authReducer.ability)
     return(
-        <BlurCard className="mb-2 ">
+        <BlurCard className="mb-2 px-4 sm:px-8">
             <StoreFormCreate/>
         </BlurCard>
     )

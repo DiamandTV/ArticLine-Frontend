@@ -8,7 +8,7 @@ interface IconTextButtonProps{
 export function IconTextButton({label,icon,className,onClick}:IconTextButtonProps){
     return(
         <div
-            className={twMerge("p-2 hover:bg-slate-900 w-full flex flex-row justify-center items-center gap-x-3 text-xl border-2 border-slate-300 rounded-xl hover:cursor-pointer " +className)}
+            className={twMerge("p-2  hover:bg-slate-900 w-full flex flex-row justify-center items-center gap-x-3 border-2 border-slate-300 rounded-xl hover:cursor-pointer " +className)}
             onClick={()=>onClick()}>
             <span>{label}</span>
             {icon}
