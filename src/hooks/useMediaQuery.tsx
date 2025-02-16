@@ -6,7 +6,7 @@ export interface useMediaQueryProps{
     afterChange?:(isMatched:boolean)=>void
 }
 export function useMediaQuery({query,beforeChange,afterChange}:useMediaQueryProps){
-    const [isMatched,setMatched] = useState(window.matchMedia(query))
+    const [isMatched,setMatched] = useState(window.matchMedia(query).matches)
     useEffect(()=>{
         const matchQueryList = window.matchMedia(query)
         const handleChange = (e:MediaQueryListEvent)=>{

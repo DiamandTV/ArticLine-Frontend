@@ -42,25 +42,25 @@ const useProfile:UserProfileModel = {
 */
 
 export function SideBarApp(){
-    const isMD = useMediaQuery({query:'(min-width:48rem)'})
+    const isSM = useMediaQuery({query:'(min-width:40rem)'})
     const {open,setOpen} = useContext(SiderBarContext)
 
     const getCollapsedWidth = ()=>{
-        if(!isMD){
+        if(!isSM){
             return '0px'
         } 
         return undefined
     }
     return (
-        <div className={`h-screen z-50 absolute bg-slate-900  md:relative md:bg-transparent` }>
+        <div className={`h-screen z-50 absolute bg-slate-900  sm:relative sm:bg-transparent` }>
             <Sidebar 
                 className="h-full flex flex-col"    
                 backgroundColor="transparent"
                 style={
-                    (isMD || !open) ? {
+                    (isSM || open) ? {
                         borderColor:"rgb(75 85 99)",borderRightWidth:"2px"} : {borderWidth:'0px'}
                 }
-                collapsed={open}
+                collapsed={!open}
                 collapsedWidth={getCollapsedWidth()}
                 // onMouseEnter={()=>setCollapsed(false)}
                 // onMouseLeave={()=>setCollapsed(true)}
@@ -82,7 +82,7 @@ export function SideBarApp(){
                     }),
                 }}
             >
-                <MenuItem className="hidden lg:block" icon={<RxHamburgerMenu size={SIDEBAR_ICON_SIZE}/>} onClick={()=>{
+                <MenuItem className="hidden sm:block" icon={<RxHamburgerMenu size={SIDEBAR_ICON_SIZE}/>} onClick={()=>{
                     setOpen(!open)
                 }}/>
                 <Link to={"/"}>

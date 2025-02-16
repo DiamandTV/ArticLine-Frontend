@@ -19,7 +19,7 @@ export function NavBarTitle(){
                 <img src={Title} alt="" />
             </div>
             <div className='w-full order-last lg:order-none  col-span-2 flex flex-row justify-center items-center gap-x-4'>
-                <RxHamburgerMenu size={SIDEBAR_ICON_SIZE} className='md:hidden' onClick={()=>{
+                <RxHamburgerMenu size={SIDEBAR_ICON_SIZE} className='sm:hidden' onClick={()=>{
                     setOpen(!open)
                 }}/>
                 

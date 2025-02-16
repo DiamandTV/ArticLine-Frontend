@@ -6,6 +6,6 @@ interface SiderBarContextModel{
 }
 
 export const SiderBarContext = createContext<SiderBarContextModel>({
-    open:true,
+    open:false,
     setOpen:()=>{}
 })
