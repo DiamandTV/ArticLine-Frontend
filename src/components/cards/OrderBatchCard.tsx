@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 
 export function OrderBatchCard({orderBatch}:{orderBatch:OrderBatchModel}){
     return(
-        <BlurCard className="h-full max-h-full py-2 bg-slate-600 flex flex-col gap-y-6 p-4 px-6">     
+        <BlurCard className="w-full h-full max-h-full py-2 bg-slate-600 flex flex-col gap-y-6 p-4 px-6">     
             <OrderBatchProvider orderBatch={orderBatch}>
                 <OrderBatchCard.TopBar/>
                 <div className="w-full flex flex-row gap-x-2">

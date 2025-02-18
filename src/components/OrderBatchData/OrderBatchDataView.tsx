@@ -17,8 +17,8 @@ export function OrderBatchDataView({active}:OrderBatchDataViewProps){
                 <OrderBatchDataFormProvider>
                     <OrderBatchDataQuery>
                         {active &&  <OrderBatchDataSEEView/>}
-                        <div className="w-full h-full flex flex-col gap-y-2 justify-center">
-                            <div className="w-full flex flex-row gap-x-2 justify-between items-top">
+                        <div className="w-full  flex flex-col gap-y-2 justify-center">
+                            <div className="w-full flex flex-col-reverse gap-2 justify-between items-center md:items-top md:flex-row">
                                 <PaginationButtonWithContext/>
                                 <OrderBatchDataRangeDataCard/>
                             </div>

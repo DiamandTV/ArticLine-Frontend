@@ -9,7 +9,7 @@ export default {
       colors:{
         'dark-blue':'#071923',
         'orange-red': 'orangered'
-      }
+      },
     },
   },
   plugins: [

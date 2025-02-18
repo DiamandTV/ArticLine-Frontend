@@ -12,9 +12,10 @@ export function PaginationProvider({children}:{children:React.ReactNode}){
         page_size:0,
     })
     const [page,setPage] = useState(1)
+    const [page_size,setPageSize] = useState<number>(1000)
     const [loading,setLoading] = useState(false)
     return(
-        <PaginationContext.Provider value={{pageData,setPageData,page,setPage,loading,setLoading}}>
+        <PaginationContext.Provider value={{pageData,setPageData,page,setPage,loading,setLoading,page_size,setPageSize}}>
             {children}
         </PaginationContext.Provider>
     )

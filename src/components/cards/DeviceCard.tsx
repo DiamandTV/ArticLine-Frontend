@@ -3,6 +3,8 @@ import { DeviceModel } from "../../models/Device"
 import { BlurCard } from "./BlurCard"
 import { FaBatteryFull } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
+import { Button, Tooltip } from "@mui/material";
+import { IoIosInformationCircle } from "react-icons/io";
 
 interface DeviceCardProp{
     device:DeviceModel,
@@ -38,6 +40,13 @@ export function Battery({ battery ,size}: { battery: number,size:number }) {
         case battery <= 100:
             return <FaBatteryFull size={size} className="text-green-600" />;
         default:
+            return (
+                <Tooltip title={"BATTERY"} arrow>
+                    <Button sx={{m:0.5,p:0,minWidth:"max-content"}}>
+                        <IoIosInformationCircle size={40}/>
+                    </Button>
+                </Tooltip>
+            )
             // can't be possible
             return null;
     }

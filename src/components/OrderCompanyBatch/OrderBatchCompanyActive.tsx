@@ -60,7 +60,7 @@ export function OrderBatchCompanyActive(){
                         </DrawerApp>
                     </DrawerProvider>
                 </div>
-                <GridView className="grid-cols-1 @md:grid-cols-1 @lg:grid-cols-1 @xl:grid-cols-2 @2xl:grid-cols-3">
+                <GridView className="grid-cols-1 @md:grid-cols-1 @lg:grid-cols-1 @xl:grid-cols-1 @2xl:grid-cols-1 @5xl:grid-cols-2 @7xl:grid-cols-3 gap-4">
                     {
                         activeOrdersBatch.map((orderBatch)=>{
                             return <OrderBatchCard orderBatch={orderBatch}/>

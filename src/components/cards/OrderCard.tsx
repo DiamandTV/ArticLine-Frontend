@@ -50,7 +50,7 @@ interface OrderCardProps{
 
 export function OrderCard({order,children}:OrderCardProps){
     return (
-       <BlurCard className="h-full max-h-full py-2 bg-slate-600 flex flex-col gap-y-6 p-4 px-6">      
+       <BlurCard className="h-full max-h-full py-2 bg-slate-600 flex flex-col gap-y-6 p-4 px-4 ">      
             <OrderProvider order={order}>
                 {children}
             </OrderProvider>

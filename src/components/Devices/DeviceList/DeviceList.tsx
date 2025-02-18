@@ -6,7 +6,7 @@ import { DeviceCard } from "../../cards/DeviceCard";
 export function DeviceList(){
     const devices = useSelector((state:RootState)=>state.profileReduce.devices)
     return(
-        <GridView className="grid-cols-4">
+        <GridView className="">
             {devices.map((device)=>{
                 return(
                     <DeviceCard device={device}/>
