@@ -1,4 +1,4 @@
-import { OrderBatchDataSEEView } from "../../router/OrderBatchDataSEEView"
+import { OrderBatchDetailSEEView } from "../../router/OrderBatchDataSEEView"
 import { OrderBatchDataFormProvider } from "../forms/provider/OrderBatchDataFormProvider"
 import { OrderBatchSingleQuery } from "../OrderCompanyBatch/OrderBatchQuery/OrderBatchSingleQuery"
 import { PaginationProvider } from "../Pagination/PaginationProvider"
@@ -16,7 +16,7 @@ export function OrderBatchDataView({active}:OrderBatchDataViewProps){
             <PaginationProvider>
                 <OrderBatchDataFormProvider>
                     <OrderBatchDataQuery>
-                        {active &&  <OrderBatchDataSEEView/>}
+                        {active &&  <OrderBatchDetailSEEView/>}
                         <div className="w-full  flex flex-col gap-y-2 justify-center">
                             <div className="w-full flex flex-col-reverse gap-2 justify-between items-center md:items-top md:flex-row">
                                 <PaginationButtonWithContext/>

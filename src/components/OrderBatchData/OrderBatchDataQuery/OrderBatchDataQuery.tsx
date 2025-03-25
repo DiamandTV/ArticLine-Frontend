@@ -10,6 +10,7 @@ import { PaginationModel } from "../../../models/pagination"
 import { FIFOQueue } from "../../../utlis/moduls/fifo"
 import { FIFO_QUEUE_SIZE } from "../../../constraints"
 import { useMediaQuery } from "../../../hooks/useMediaQuery"
+import dayjs from "dayjs"
 interface OrderBatchDataQueryProps{
     children:React.ReactNode
 }
@@ -18,8 +19,9 @@ export function OrderBatchDataQuery({children}:OrderBatchDataQueryProps){
     const first = useRef(true)
     const params = useParams()
     const {watch} = useFormContext()
-    const [orderBatchData,setOrderBatchData] = useState<FIFOQueue<OrderBatchDataModel>>(new FIFOQueue<OrderBatchDataModel>(FIFO_QUEUE_SIZE))
     const {page,setPage,page_size,setPageData} = useContext(PaginationContext)
+    const [orderBatchData,setOrderBatchData] = useState<FIFOQueue<OrderBatchDataModel>>(new FIFOQueue<OrderBatchDataModel>(page_size ?? FIFO_QUEUE_SIZE))
+    
     //const activeOrderBatches = useSelector((state:RootState)=>state.orderReducer.companyActiveOrdersBatch)
     useEffect(()=>{
         if(setPage && !first.current){
@@ -27,6 +29,7 @@ export function OrderBatchDataQuery({children}:OrderBatchDataQueryProps){
         }
         first.current = false
     },[watch('from_date_time'),watch('to_date_time')])
+    //alert(watch('to_date_time'))
     const orderBatchID = params['order-batch-id']
     if(!orderBatchID) return null
     //const orderBatch = activeOrderBatches.find((orderBatch)=>orderBatch.id?.toString() === orderBatchID)

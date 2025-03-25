@@ -21,6 +21,7 @@ export function OrderBatchDataRangeDataCard(){
                 to={{
                     labelName:"END",
                     name:"to_date_time",
+                    defaultValue:dayjs(),
                     constraints:{
                         minDateTime:null,
                         maxDateTime:orderBatch?.finished_time ? dayjs(orderBatch?.finished_time) : dayjs()
