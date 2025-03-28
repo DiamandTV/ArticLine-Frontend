@@ -10,14 +10,45 @@ import { PaginationModel } from "../../../models/pagination"
 import { FIFOQueue } from "../../../utlis/moduls/fifo"
 import { FIFO_QUEUE_SIZE } from "../../../constraints"
 import { useMediaQuery } from "../../../hooks/useMediaQuery"
-import dayjs from "dayjs"
+import { Dayjs } from "dayjs"
+import { AxiosResponse } from "axios"
+import { useOrderDataService } from "../../../services/orderData"
 interface OrderBatchDataQueryProps{
-    children:React.ReactNode
+    id:string|number,
+    queryFn:(params:{id:number|string,page_size?:number,page?:string|number,from?:Dayjs,to?:Dayjs}) => Promise<AxiosResponse>,
+    children:React.ReactNode,
 }
 
-export function OrderBatchDataQuery({children}:OrderBatchDataQueryProps){
-    const first = useRef(true)
+export function OrderDataQuery({children}:{children:React.ReactNode}){
     const params = useParams()
+    const orderId = params['order-id']
+    if(!orderId) return null
+    return (
+        <OrderBatchDataQueryDef 
+            id={orderId} 
+            queryFn={ async({id,page,page_size,from,to})=> await useOrderDataService.getOrderData({orderID:id,page,page_size,from,to})}
+            >
+            {children}
+        </OrderBatchDataQueryDef>
+    )
+}
+
+export function OrderBatchDataQuery({children}:{children:React.ReactNode}){
+    const params = useParams()
+    const orderBatchId = params['order-batch-id']
+    if(!orderBatchId) return null
+    return (
+        <OrderBatchDataQueryDef 
+            id={orderBatchId} 
+            queryFn={ async({id,page,page_size,from,to})=> await useOrderBatchDataService.getOrderBatchData({orderBatchID:id,page,page_size,from,to})}
+            >
+            {children}
+        </OrderBatchDataQueryDef>
+    )
+}
+
+function OrderBatchDataQueryDef({id,queryFn,children}:OrderBatchDataQueryProps){
+    const first = useRef(true)
     const {watch} = useFormContext()
     const {page,setPage,page_size,setPageData} = useContext(PaginationContext)
     const [orderBatchData,setOrderBatchData] = useState<FIFOQueue<OrderBatchDataModel>>(new FIFOQueue<OrderBatchDataModel>(page_size ?? FIFO_QUEUE_SIZE))
@@ -29,15 +60,13 @@ export function OrderBatchDataQuery({children}:OrderBatchDataQueryProps){
         }
         first.current = false
     },[watch('from_date_time'),watch('to_date_time')])
-    //alert(watch('to_date_time'))
-    const orderBatchID = params['order-batch-id']
-    if(!orderBatchID) return null
+    
     //const orderBatch = activeOrderBatches.find((orderBatch)=>orderBatch.id?.toString() === orderBatchID)
     return(
         <LoaderQuery
             loading={false}
             queryKey={['get-order-batch-data',page,page_size,watch('from_date_time'),watch('to_date_time')]}
-            queryFn={async()=>await useOrderBatchDataService.getOrderBatchData({page,page_size,orderBatchID,from:watch('from_date_time'),to:watch('to_date_time')})}
+            queryFn={async()=>await queryFn({id,page,page_size,from:watch('from_date_time'),to:watch('to_date_time')})}
             onSuccess={(data)=>{
                 if(data.data){
                     console.log(data)
@@ -51,16 +80,16 @@ export function OrderBatchDataQuery({children}:OrderBatchDataQueryProps){
 
             }}
         >
-            <OrderBatchDataQuery.PageSizeChanger>
+            <OrderBatchDataQueryDef.PageSizeChanger>
                 <OrderBatchDataProvider orderBatchData={orderBatchData} setOrderBatchData={setOrderBatchData}>
                     {children}
                 </OrderBatchDataProvider>
-            </OrderBatchDataQuery.PageSizeChanger>
+            </OrderBatchDataQueryDef.PageSizeChanger>
         </LoaderQuery>
     )    
 }
 
-OrderBatchDataQuery.PageSizeChanger = function PageSizeChanger({children}:{children:React.ReactNode }){
+OrderBatchDataQueryDef.PageSizeChanger = function PageSizeChanger({children}:{children:React.ReactNode }){
     //todo: migliorare gli cambiamenti del page size. NON CARICARE OGNI VOLTA I DATI DAL SERVER QUANDO SI HA UN CAMBIO DI MEDIA QUERY
     const isMD = useMediaQuery({query:'(40rem < width < 64rem)'})
     const isLG = useMediaQuery({query:'(width > 64rem)'})  

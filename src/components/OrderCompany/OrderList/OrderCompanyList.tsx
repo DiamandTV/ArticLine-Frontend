@@ -7,7 +7,8 @@ import { StatusCard } from "../../cards/StatusCard";
 import { OrderStatus } from "../../../models/Order";
 import dayjs from "dayjs";
 import { tabeleStyleHeaders } from "../../../constraints";
-import { OrderDataButton } from "../../buttons/OrderDataButton";
+import { OrderDataButton, OrderDataButtonLink } from "../../buttons/OrderDataButton";
+import { Link } from "react-router-dom";
 
 const columns:Array<GridColDef> = [
     {
@@ -74,7 +75,9 @@ const columns:Array<GridColDef> = [
         headerAlign:'center',
         align:'center',
         renderCell:(params)=>{
-            return <OrderDataButton orderBatchId={params.value}/>
+            return (
+                <OrderDataButtonLink link={`/order/batch/${params.value}/inactive/data`}/>
+            )
         }
     }
 ]

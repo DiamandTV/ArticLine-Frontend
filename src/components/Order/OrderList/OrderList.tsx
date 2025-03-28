@@ -6,6 +6,8 @@ import { StatusCard } from "../../cards/StatusCard";
 import { OrderStatus } from "../../../models/Order";
 import { PaginationContext } from "../../Pagination/PaginationContext";
 import dayjs from "dayjs";
+import { OrderDataButton, OrderDataButtonLink } from "../../buttons/OrderDataButton";
+import { Link } from "react-router-dom";
 
 
 interface OrderTableModel{
@@ -90,6 +92,23 @@ const columns:Array<GridColDef> = [
         headerAlign:'center',
         align:'center',
         ...styleHeaders,
+    },
+    {
+        field:'data',
+        headerName:"",
+        headerAlign:'center',
+        align:'center',
+        renderCell:(params)=>{
+            if(!params.value.id) return <div></div>
+            return (
+                <OrderDataButtonLink 
+                        link={
+                            params.value.active ? `/order/${params.value.id}/active/data` 
+                            : `/order/${params.value.id}/inactive/data`
+                        }
+                    />
+            )
+        },
     }
 ]
 
@@ -108,7 +127,11 @@ export function OrderList(){
                 total:order.total_price!,
                 created:dayjs(order.created_at).format('DD/MM/YY hh:mm'),
                 delivery_time:order.delivery_time ? dayjs(order.delivery_time).format('DD/MM/YY hh:mm') : 'NOT YET',
-                delivered_time:order.delivered_time ? dayjs(order.delivered_time).format('DD/MM/YY hh:mm') : 'NOT YET'
+                delivered_time:order.delivered_time ? dayjs(order.delivered_time).format('DD/MM/YY hh:mm') : 'NOT YET',
+                data:{
+                    id:order.id,
+                    active:order.status !== 'DELIVERED' && order.status !== 'CANCELED'
+                }
             }
     })
     },[orders])

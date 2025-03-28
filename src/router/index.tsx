@@ -26,6 +26,8 @@ import { Devices } from "../page/Devices/Devices";
 import { OrdersCompanyBatch } from "../page/OrderBatch/OrdersCompanyBatch";
 import { ActiveOrderBatchData } from "../page/OrderBatchData/ActiveOrderBatchData";
 import { InActiveOrderBatchData } from "../page/OrderBatchData/InActiveOrderBatchData";
+import { InActiveOrderData } from "../page/Order/InActiveOrderData";
+import { ActiveOrderData } from "../page/Order/ActiveOrderData";
 const router = createBrowserRouter([
     //{path:"/product",element:<ProductCreate/>},
     // main app routes
@@ -77,6 +79,14 @@ const router = createBrowserRouter([
                     {
                         path:"/order/batch/:order-batch-id/inactive/data",
                         element:<InActiveOrderBatchData/>
+                    },
+                    {
+                         path:"/order/:order-id/inactive/data",
+                         element:<InActiveOrderData/>
+                     },
+                     {
+                         path:"/order/:order-id/active/data",
+                         element:<ActiveOrderData/>
                     },
                     {
                         path:"devices/list/company",

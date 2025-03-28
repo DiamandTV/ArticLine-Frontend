@@ -42,6 +42,7 @@ export interface OrderModel{
     delay_time?:string | Dayjs | null,
     delivery_time?:string | Dayjs | null,
     request_earliest_delivery:boolean,
+    pickedup_time?:string | Dayjs,
     delivered_time?:string | Dayjs,
     created_at?:string | Dayjs,
     canceled_at?:string | Dayjs,

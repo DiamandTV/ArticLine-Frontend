@@ -28,7 +28,10 @@ export function OrderBatchCompanyNoActive(){
                 }
             }}
             onError={()=>{
-
+                dispatch(setOrders({
+                    type:OrderType.COMPANY_NO_ACTIVE_BATCH,
+                    orders:[]
+                }))
             }}
         >
             <BlurCard className="w-full @container flex flex-col gap-y-4">

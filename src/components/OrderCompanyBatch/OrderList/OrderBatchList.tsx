@@ -8,8 +8,8 @@ import { OrderBatchStatus } from "../../../models/Order";
 import dayjs from "dayjs";
 import { tabeleStyleHeaders } from "../../../constraints";
 import { TextButton } from "../../Buttons/TextButtons";
-import { useNavigate } from "react-router-dom";
-import { OrderDataButton } from "../../buttons/OrderDataButton";
+import { Link, useNavigate } from "react-router-dom";
+import { OrderDataButton, OrderDataButtonLink } from "../../buttons/OrderDataButton";
 
 
 
@@ -99,13 +99,15 @@ const columns:Array<GridColDef> = [
         align:'center',
         //...tabeleStyleHeaders,
         renderCell:(params)=>{
-            return <OrderDataButton orderBatchId={params.value}/>
+            return (
+                <OrderDataButtonLink link={`/order/batch/${params.value}/inactive/data`}/>
+            )
         }
     },
 ]
 
 export function OrderBatchList(){
-    const noActiveOrderBatches = useSelector((state:RootState)=>state.orderReducer.companyActiveOrdersBatch)
+    const noActiveOrderBatches = useSelector((state:RootState)=>state.orderReducer.companyNoActiveOrdersBatch)
     const {pageData,setPage} = useContext(PaginationContext)
     console.log(noActiveOrderBatches[0])
         const rows = useMemo(()=>{  
