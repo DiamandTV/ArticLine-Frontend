@@ -1,9 +1,9 @@
 import { useContext, useEffect, useRef } from "react"
 import { CategoryModel } from "../../models/category"
 import { CardListContext } from "../List/CardListContext"
-import { StoreCategoriesModel } from "../../models/StoreCategories"
+//import { StoreCategoriesModel } from "../../models/StoreCategories"
 export interface CategoryCardProps extends React.HTMLAttributes<HTMLAllCollection>{
-    category:CategoryModel | StoreCategoriesModel
+    category:CategoryModel 
 }
 
 export function CategoryCard({category:{image,name},style,className}:CategoryCardProps){
@@ -14,6 +14,24 @@ export function CategoryCard({category:{image,name},style,className}:CategoryCar
     })
     return (
         <div className={`w-full h-full min-h-1 hover:cursor-pointer ${className} rounded-xl`} style={{...style}} ref={divRef}>
+            {/* IMAGE OF THE CATEFORY CARD */}
+            {/*
+            <div className="w-full h-32 bg-transparent bg-no-repeat bg-center bg-cover rounded-t-lg" style={{backgroundImage:`url(${image})`}}>
+            </div>
+            */}
+            {
+            <div className="w-full h-30 bg-transparent">
+                <img className="w-full h-40 bg-transparent bg-no-repeat bg-center bg-cover rounded-t-lg" src={image} loading="lazy"/>
+            </div>
+            }
+            <p className=" px-2 py-3 text-center text-lg bg-slate-300 bg-opacity-30 backdrop-blur-lg rounded-b-lg">{name.toUpperCase()}</p>
+        </div>
+    )
+}
+
+export function CategoryDetailedCard({category:{image,name},style,className}:CategoryCardProps){
+    return (
+        <div className={`w-full h-full min-h-1 hover:cursor-pointer ${className} rounded-xl`} style={{...style}}>
             {/* IMAGE OF THE CATEFORY CARD */}
             {/*
             <div className="w-full h-32 bg-transparent bg-no-repeat bg-center bg-cover rounded-t-lg" style={{backgroundImage:`url(${image})`}}>

@@ -22,7 +22,6 @@ export function OrderDataView({active}:{active:boolean}){
                             </div>
                             <OrderBatchData/>
                         </div>
-                    
                     </OrderDataQuery>
                 </OrderDataFormProvider>
             </PaginationProvider>

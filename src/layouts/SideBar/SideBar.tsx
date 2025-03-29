@@ -52,14 +52,15 @@ export function SideBarApp(){
         return undefined
     }
     return (
-        <div className={`h-screen z-50 absolute bg-slate-900  sm:relative sm:bg-transparent` }>
+        <div className={`h-screen  z-50 absolute bg-slate-900  sm:relative sm:bg-transparent ` }>
             <Sidebar 
-                className="h-full flex flex-col"    
+                className="h-full flex flex-col "
                 backgroundColor="transparent"
                 style={
                     (isSM || open) ? {
                         borderColor:"rgb(75 85 99)",borderRightWidth:"2px"} : {borderWidth:'0px'}
-                }
+                        
+                    }
                 collapsed={!open}
                 collapsedWidth={getCollapsedWidth()}
                 // onMouseEnter={()=>setCollapsed(false)}
@@ -88,12 +89,14 @@ export function SideBarApp(){
                 <Link to={"/"}>
                     <MenuItem id="HOME" icon={<IoHome size={SIDEBAR_ICON_SIZE}/>} >HOME</MenuItem>
                 </Link>
-                <SubMenu id="CATEGORIES" icon={<BiSolidCategory size={SIDEBAR_ICON_SIZE}/>} label="CATEGORIES"></SubMenu>
-                
+                <Link to={"/categories"}>
+                    <SubMenu id="CATEGORIES" icon={<BiSolidCategory size={SIDEBAR_ICON_SIZE}/>} label="CATEGORIES"></SubMenu>
+                </Link>
                 
                 <CartSection/>
-                <SubMenu id="DASHBOARDS" icon={<IoBarChartSharp size={SIDEBAR_ICON_SIZE}/>} label="DASHBOARDS"></SubMenu>
-                
+                {
+                //    <SubMenu id="DASHBOARDS" icon={<IoBarChartSharp size={SIDEBAR_ICON_SIZE}/>} label="DASHBOARDS"></SubMenu>
+                }
                 
                 <StoreSection/>
                 

@@ -17,7 +17,7 @@ export function OrderBatchDetailSEEView({orderBatchDataId,children}:OrderBatchDe
         orderBatchDataId = params['order-batch-id']
     }
     const {setOrderBatchData} = useContext(OrderBatchDataContext)
-    const {page_size} = useContext(PaginationContext)
+    const {page,pageData,page_size} = useContext(PaginationContext)
     const [eventSource/*,eventSourceStatus*/] = useEventSource(`${HOST_URL}/events/listener/order_batch_${orderBatchDataId}`,true)
     
 
@@ -26,10 +26,14 @@ export function OrderBatchDetailSEEView({orderBatchDataId,children}:OrderBatchDe
         ['NEW ORDER BATCH DATA'],
         (evt)=>{
             console.warn(evt)
-            setOrderBatchData((queue)=>{
-                const data:OrderBatchDataModel = JSON.parse(evt.data)
-                return new FIFOQueue(page_size ?? FIFO_QUEUE_SIZE,[...queue.queue,data]);
-            })
+            if(page == pageData?.number_of_pages){
+                setOrderBatchData((queue)=>{
+                    const data:OrderBatchDataModel = JSON.parse(evt.data)
+                    return new FIFOQueue(page_size ?? FIFO_QUEUE_SIZE,[...queue.queue,data]);
+                })
+            } else{
+                // todo : set a notifier to notify new data arrive
+            }
         }
     )
 

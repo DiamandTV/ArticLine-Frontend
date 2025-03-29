@@ -28,6 +28,7 @@ import { ActiveOrderBatchData } from "../page/OrderBatchData/ActiveOrderBatchDat
 import { InActiveOrderBatchData } from "../page/OrderBatchData/InActiveOrderBatchData";
 import { InActiveOrderData } from "../page/Order/InActiveOrderData";
 import { ActiveOrderData } from "../page/Order/ActiveOrderData";
+import { Categories } from "../page/Categories/Categories";
 const router = createBrowserRouter([
     //{path:"/product",element:<ProductCreate/>},
     // main app routes
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
                 element:<Main/>,
                 children:[
                     {path:"/",element:<Home/>},
+                    {path:"/categories",element:<Categories/>},
                     {path:'store/create',element:<StoreCreate/>},
                     {path:'/store/list/company',element:<StoresCompany/>},
                     {
