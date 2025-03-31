@@ -6,6 +6,8 @@ export function Categories(){
     const categories = useSelector((state:RootState)=>state.categoryReducer.categories)
     if(!categories) return null
     return (
-        <CategoryCardGrid categories={categories}/>
+        <div className="w-full h-full @container">
+            <CategoryCardGrid categories={categories}/>
+        </div>
     )
 }

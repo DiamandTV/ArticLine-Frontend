@@ -89,10 +89,11 @@ export function SideBarApp(){
                 <Link to={"/"}>
                     <MenuItem id="HOME" icon={<IoHome size={SIDEBAR_ICON_SIZE}/>} >HOME</MenuItem>
                 </Link>
-                <Link to={"/categories"}>
-                    <SubMenu id="CATEGORIES" icon={<BiSolidCategory size={SIDEBAR_ICON_SIZE}/>} label="CATEGORIES"></SubMenu>
-                </Link>
-                
+                {
+                    // <Link to={"/categories"}>
+                    //     <MenuItem id="CATEGORIES" icon={<BiSolidCategory size={SIDEBAR_ICON_SIZE}/>}>CATEGORIES</MenuItem>
+                    // </Link>
+                }
                 <CartSection/>
                 {
                 //    <SubMenu id="DASHBOARDS" icon={<IoBarChartSharp size={SIDEBAR_ICON_SIZE}/>} label="DASHBOARDS"></SubMenu>
