@@ -3,7 +3,7 @@ import { AxiosError } from "axios"
 export const ACCESS_TOKEN  =   'ARTICLINE-ACCESS-JWT-TOKEN'
 export const REFRESH_TOKEN =   'ARTICLINE-REFRESH-JWT-TOKEN'
 
-export const HOST_URL = "http://127.0.0.1:8000";
+export const HOST_URL = "http://192.168.1.140:8000";
 
 export const SERVER_INTERNAL_ERROR_CODE = 500
 

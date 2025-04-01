@@ -128,7 +128,7 @@ OrderPickerInput.OrdersSortable = function OrdersSortable(props:Omit<DropdownPro
                 
             >   
                 <DndContext modifiers={[restrictToParentElement]} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                    <SortableContext items={orders.map((id)=>id.toString())}>
+                    <SortableContext items={orders ? orders.map((id)=>id.toString()) : []}>
                         <div className="w-full grid grid-cols-2 justify-between items-center gap-x-2"> 
                             {orders ? orders.map((orderId)=>{
                                 return(

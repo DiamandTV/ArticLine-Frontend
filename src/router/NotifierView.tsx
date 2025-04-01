@@ -20,6 +20,7 @@ import { addOrder, OrderType, updateOrder, } from '../store/orderSlice';
 import { NotifyCard } from '../components/cards/NotifyCard';
 import { addNotification } from '../store/notificationsSlice';
 import { HOST_URL } from '../constraints';
+import { ORDER_COMPANY_ORDER_NOTIFICATION_EVENT_TYPE, ORDER_DELIVERY_BATCH_COMPANY_PARAMS_EVENT_TYPE, ORDER_DELIVERY_BATCH_COMPANY_STATUS_EVENT_TYPE, ORDER_USER_NOTIFICATION_EVENT_TYPE, ORDER_USER_PARAMS_NOTIFICATION_EVENT_TYPE, ORDER_USER_PIN_CODE_NOTIFICATION_EVENT_TYPE } from '../models/eventType';
 
 export function NotifierView({children}:{children:React.ReactNode}){
     const auth = useSelector((state:RootState)=>state.authReducer.auth)
@@ -40,9 +41,10 @@ export function NotifierView({children}:{children:React.ReactNode}){
     //     toast(<NotifyCard notification={notification}/>)
     // })
 
+    // ? COMPANY ORDER
     useEventSourceListener(
         eventSource,
-        ['NEW ORDER'],
+        ORDER_COMPANY_ORDER_NOTIFICATION_EVENT_TYPE,
         (evt)=>{
             const notification:NotificationEventModel = JSON.parse(evt.data)
             dispatch(addOrder({
@@ -54,9 +56,10 @@ export function NotifierView({children}:{children:React.ReactNode}){
         },
     )    
 
+    // ? USER ORDER
     useEventSourceListener(
         eventSource,
-        ['ORDER ACCEPTED','ORDER WORKING ON','ORDER SENDED','ORDER CANCELED'],
+        [...ORDER_USER_NOTIFICATION_EVENT_TYPE,...ORDER_USER_PIN_CODE_NOTIFICATION_EVENT_TYPE],
         (evt)=>{
             const notification:NotificationEventModel = JSON.parse(evt.data)
             dispatch(updateOrder({
@@ -67,6 +70,45 @@ export function NotifierView({children}:{children:React.ReactNode}){
             toast(<NotifyCard notification={notification.notification}/>)
         },
     )    
+
+    // ? USER ORDER PARAMS
+    useEventSourceListener(
+        eventSource,
+        ORDER_USER_PARAMS_NOTIFICATION_EVENT_TYPE,
+        (evt)=>{
+            const notification:NotificationEventModel = JSON.parse(evt.data)
+            dispatch(addNotification(notification.notification))
+            toast(<NotifyCard notification={notification.notification}/>)
+        }
+    )
+
+    // ? COMPANY ORDER BATCH PARAMS
+    useEventSourceListener(
+        eventSource,
+        ORDER_DELIVERY_BATCH_COMPANY_PARAMS_EVENT_TYPE,
+        (evt)=>{
+            const notification:NotificationEventModel = JSON.parse(evt.data)
+            dispatch(addNotification(notification.notification))
+            toast(<NotifyCard notification={notification.notification}/>)
+        }
+    )
+
+    // ? COMPANY ORDER BATCH STATUS
+    useEventSourceListener(
+        eventSource,
+        ORDER_DELIVERY_BATCH_COMPANY_STATUS_EVENT_TYPE,
+        (evt)=>{
+            const notification:NotificationEventModel = JSON.parse(evt.data)
+            dispatch(addOrder({
+                order:notification.sender,
+                type:OrderType.COMPANY_ACTIVE_BATCH
+            }))
+            dispatch(addNotification(notification.notification))
+            toast(<NotifyCard notification={notification.notification}/>)
+        }
+    )
+
+   
 
     return children
 }

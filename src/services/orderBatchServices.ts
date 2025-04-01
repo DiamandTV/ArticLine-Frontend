@@ -5,6 +5,7 @@ import { OrderBatchModel } from "../models/Order"
 
 export interface OrderBatchModelRequest {
     id?:number,
+    title:string,
     orders?:Array<number>,
     device?:number,
     courier?:number,
@@ -15,8 +16,10 @@ export interface OrderBatchModelRequest {
 export const useOrderBatchService = {
     serializeFromOrderBatchForm(orderBatchInfo:OrderBatchFormFields):OrderBatchModelRequest{
         // going to serialize the order batch form and return the Order Batch Model to make the http requests
+        
         return {
             id:orderBatchInfo.id,
+            title:orderBatchInfo.title,
             orders:orderBatchInfo.orders.ids ?? [],
             device:orderBatchInfo.device.id,
             courier:orderBatchInfo.courier.id,
@@ -47,6 +50,7 @@ export const useOrderBatchService = {
         return api.get(`/order/batch/${orderBatchId}`)
     },
     async createOrderBatch(data:OrderBatchModelRequest){
+        console.log(data)
        return api.post('/order/batch/',data) 
     },
     async updateOrderBatch(data:OrderBatchModelRequest){
