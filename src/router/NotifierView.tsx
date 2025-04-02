@@ -107,8 +107,6 @@ export function NotifierView({children}:{children:React.ReactNode}){
             toast(<NotifyCard notification={notification.notification}/>)
         }
     )
-
-   
-
+    
     return children
 }

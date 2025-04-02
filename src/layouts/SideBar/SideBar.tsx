@@ -16,6 +16,7 @@ import { DeviceSection } from "./Sections/DeviceSection";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { SiderBarContext } from "./context/SiderBarContext";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { ProfileSection } from "./Sections/ProfileSection";
 
 //import { OrderBatchSection } from "./Sections/OrderBatchSection";
 /*
@@ -107,8 +108,7 @@ export function SideBarApp(){
                 <OrderSection/>
 
                 <SubMenu id="CHARTS" icon={<IoChatbubbleEllipses size={SIDEBAR_ICON_SIZE}/>} label="CHATS" ></SubMenu>
-                <MenuItem id="ACCOUNT" icon ={<FaUser size={SIDEBAR_ICON_SIZE}/>}>ACCOUNT</MenuItem>
-                
+                <ProfileSection/>
                 {/*<MenuItem icon={<IoMdnotifications size={SIDEBAR_ICON_SIZE}/>} >NOTIFICATIONS</MenuItem>*/}
                 <MenuItem icon={<IoMdSettings size={SIDEBAR_ICON_SIZE}/>} >SETTINGS</MenuItem>
                 </Menu>    

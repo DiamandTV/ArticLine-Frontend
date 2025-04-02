@@ -29,6 +29,7 @@ import { InActiveOrderBatchData } from "../page/OrderBatchData/InActiveOrderBatc
 import { InActiveOrderData } from "../page/Order/InActiveOrderData";
 import { ActiveOrderData } from "../page/Order/ActiveOrderData";
 import { Categories } from "../page/Categories/Categories";
+import { Profile } from "../page/Profile/Profile";
 const router = createBrowserRouter([
     //{path:"/product",element:<ProductCreate/>},
     // main app routes
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
                     {
                         path:"devices/list/company",
                         element:<Devices/>
+                    },
+                    {
+                        path:"/profile",
+                        element:<Profile/>
                     }
                     
                 ]
