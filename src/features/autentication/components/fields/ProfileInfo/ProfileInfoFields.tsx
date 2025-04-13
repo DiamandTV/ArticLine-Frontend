@@ -101,7 +101,7 @@ export function ProfileInfoFields(props:ProfileInfoFieldsProps){
 
             <Row className="w-full gap-2" >
                 <Col className="p-0" xs={12} md={6}>
-                    <FloatingLabel label="USERNAME NAME">
+                    <FloatingLabel label="USERNAME">
                         <Form.Control type="text" {...register('username')} isInvalid={!!errors.username}/>
                         <Form.Control.Feedback type="invalid">
                             {errors.username?.message}

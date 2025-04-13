@@ -28,7 +28,7 @@ const getStepFormData = (step:number):{schema:ZodObject<ZodRawShape>,children:Re
 
 export function SigninFields(/*props:SigninFieldsProps*/){
     const className = "w-full flex flex-col items-center justify-center gap-2"
-    const {previousStep,nextStep,children} = useMultiFormStepper({
+    const {canPrevious,canNext,previousStep,nextStep,children} = useMultiFormStepper({
         totalSteps,
         getStepFormData
     })
@@ -50,10 +50,12 @@ export function SigninFields(/*props:SigninFieldsProps*/){
             <div className="w-full flex flex-row justify-between items-center pt-2">
                 <Button 
                     size="lg"
+                    disabled={!canPrevious}
                     onClick={onPreviousClick}>
                         PREVIOUS
                 </Button>
                 <Button size="lg"
+                disabled={!canNext}
                 onClick={onNextClick}>
                     NEXT
                 </Button>

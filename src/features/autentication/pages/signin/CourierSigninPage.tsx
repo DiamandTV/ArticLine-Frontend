@@ -1,5 +1,9 @@
+import { AuthenticationView } from "@features/autentication/view/AuthenticationView/AuthenticationView";
+
 export function CourierSigninPage(){
-    return (
-        <div></div>
+    return(
+        <AuthenticationView>
+            <div></div>
+        </AuthenticationView>
     )
 }

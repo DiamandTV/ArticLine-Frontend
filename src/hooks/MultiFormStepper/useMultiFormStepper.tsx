@@ -13,6 +13,8 @@ interface useMultiFormStepperReturnType{
     setStep:React.Dispatch<React.SetStateAction<number>>,
     nextStep:()=>Promise<boolean>,
     previousStep:()=>Promise<boolean>,
+    canNext:boolean,
+    canPrevious:boolean,
     reset:()=>void,
     children:React.ReactNode|null
 }
@@ -50,6 +52,8 @@ export function useMultiFormStepper({initialStep=0,totalSteps,getStepFormData}:u
         setStep,
         nextStep,
         previousStep,
+        canPrevious:step > initialStep,
+        canNext: step <= totalSteps,
         reset,
         children
     }

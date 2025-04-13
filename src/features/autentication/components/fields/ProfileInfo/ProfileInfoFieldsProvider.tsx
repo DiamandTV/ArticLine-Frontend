@@ -1,19 +1,20 @@
 import { FieldsProviderProps } from "@features/autentication/models/FieldsProviderProps/FieldsProviderProps"
-import { profileInfoFieldsSchema, ProfileInfoFieldsType } from "@features/autentication/models/ProfileInfoFields/ProfileInfoFieldsType"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { FormProvider, useForm } from "react-hook-form"
+import { FieldValues, FormProvider, useForm } from "react-hook-form"
+import {  ZodSchema } from "zod"
 
+interface ProfileInfoFieldsProviderProps<T extends FieldValues> extends FieldsProviderProps<T>{
+    schema:ZodSchema<T>
+}
 
-
-export function ProfileInfoFieldsProvider(props:FieldsProviderProps<ProfileInfoFieldsType>){
-    const context = useForm<ProfileInfoFieldsType>({
+export function ProfileInfoFieldsProvider<T extends FieldValues>(props:ProfileInfoFieldsProviderProps<T>){
+    const context = useForm<T>({
         ...props,
-        resolver:  zodResolver(profileInfoFieldsSchema)
+        resolver:zodResolver(props.schema)
     })
     return (
         <FormProvider {...context}>
             {props.children}
         </FormProvider>
     )
-    
 }
