@@ -1,9 +1,9 @@
 import { autenticationFeatureRoutes } from "./router/router";
-import { ProtectedView } from "./view/ProtectedView"; 
-import { UnProtectedView } from "./view/UnProtectedView";
+import { ProtectedRoute } from "./router/ProtectedRoute"; 
+import { UnProtectedRoute } from "./router/UnProtectedRoute";
 export {
     autenticationFeatureRoutes,
-    ProtectedView,
-    UnProtectedView
+    ProtectedRoute,
+    UnProtectedRoute
 }
 

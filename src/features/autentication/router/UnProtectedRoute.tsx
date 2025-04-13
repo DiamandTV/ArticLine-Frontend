@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
 
-export function ProtectedView(){
+export function UnProtectedRoute(){
     return(
         <Outlet/>
     )

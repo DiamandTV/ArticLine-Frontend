@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import { BackgroundView } from "@views/BackgroundView";
-import {autenticationFeatureRoutes,ProtectedView,UnProtectedView} from "@features/autentication"
+import {autenticationFeatureRoutes,UnProtectedRoute,ProtectedRoute} from "@features/autentication"
 export const router = createBrowserRouter([
     {
         path:'/',
@@ -9,7 +9,7 @@ export const router = createBrowserRouter([
             // PROTECTED ROUTES
             {
                 path:"",
-                element:<ProtectedView/>,
+                element:<ProtectedRoute/>,
                 children:[
                     ...autenticationFeatureRoutes.protectedRoutes
                 ]
@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
             // UN PROTECTED ROUTES
             {
                 path:"",
-                element:<UnProtectedView/>,
+                element:<UnProtectedRoute/>,
                 children:[
                     ...autenticationFeatureRoutes.unProtectedRoutes
                 ]

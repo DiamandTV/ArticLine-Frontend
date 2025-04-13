@@ -1,5 +1,6 @@
 import { RouteObject } from "react-router"
 import FeatureRouteReturnType from "@models/routes/routes"
+import { UserSigninPage } from "../pages/signin/UserSigninPage"
 
 const protectedRoutes:RouteObject[] = [
     {
@@ -14,7 +15,7 @@ const unProtectedRoutes:RouteObject[] = [
     },
     {
         path:"user/signin/",
-        element:<div></div>
+        element:<UserSigninPage/>
     },
     {
         path:"courier/signin/",
