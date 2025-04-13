@@ -56,7 +56,7 @@ export function ProfileInfoFields(props:ProfileInfoFieldsProps){
     const className = tailwindMerge("w-full items-center justify-center gap-2 "+props.className)
     const {register,watch,formState:{errors},getValues,resetField} = useFormContext<ProfileInfoFieldsType>()
     console.log(errors)
-    console.log(getValues())
+    console.log(getValues('image'))
     return(
         <Form 
             {...props}

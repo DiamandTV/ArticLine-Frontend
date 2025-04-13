@@ -1,6 +1,10 @@
 import { RouteObject } from "react-router"
 import FeatureRouteReturnType from "@models/routes/routes"
 import { UserSigninPage } from "../pages/signin/UserSigninPage"
+import { LoginPage } from "../pages/login/Login"
+import { SelectProfileTypePage } from "../pages/selectProfileType/SelectProfileType"
+import { CourierSigninPage } from "../pages/signin/CourierSigninPage"
+import { CompanySigninPage } from "../pages/signin/CompanySigninPage"
 
 const protectedRoutes:RouteObject[] = [
     {
@@ -10,8 +14,8 @@ const protectedRoutes:RouteObject[] = [
 
 const unProtectedRoutes:RouteObject[] = [
     {
-        path:"choose/signin/",
-        element:<div></div>
+        path:"select/signin/",
+        element:<SelectProfileTypePage/>
     },
     {
         path:"user/signin/",
@@ -19,15 +23,15 @@ const unProtectedRoutes:RouteObject[] = [
     },
     {
         path:"courier/signin/",
-        element:<div></div>
+        element:<CourierSigninPage/>
     },
     {
         path:"company/signin/",
-        element:<div></div>
+        element:<CompanySigninPage/>
     },
     {
         path:"login/",
-        element:<div></div>
+        element:<LoginPage/>
     },
     {
         path:"email/verification/:id/:token/",
