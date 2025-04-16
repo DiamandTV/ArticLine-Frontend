@@ -1,14 +1,34 @@
 import { z } from "zod";
-import { authInfoFieldsSchema } from "../AuthInfoFields/AuthInfoFieldsType";
-import { profileInfoFieldsSchema } from "../ProfileInfoFields/ProfileInfoFieldsType";
+import { authInfoFieldsSchema } from "../Auth/AuthInfoFields/AuthInfoFieldsType";
+import { userProfileInfoFieldsSchema } from "../Profile/InfoFields/UserProfileInfoFields/UserProfileInfoFieldsType";
+import { courierProfileInfoFieldsSchema } from "../Profile/InfoFields/CourierProfileInfoFields/CourierProfileInfoFieldsType";
+import { companyInfoFieldsSchema } from "../Profile/InfoFields/CompanyProfileInfoFields/CompanyProfileInfoFieldsType";
 
-export const signinFieldsSchema = z.object({
+export const userSigninFieldsSchema = z.object({
 }).merge(
-    profileInfoFieldsSchema
+    userProfileInfoFieldsSchema
 ).merge(
     authInfoFieldsSchema
 )
 
+export type UserSigninFieldsType = z.infer<typeof userSigninFieldsSchema>
+
+export const courierSigninFieldsSchema = z.object({
+}).merge(
+    courierProfileInfoFieldsSchema
+).merge(
+    authInfoFieldsSchema
+)
+
+export type CourierSigninFieldsType = z.infer<typeof courierProfileInfoFieldsSchema>
+
+export const companySigninFieldsSchema = z.object({    
+}).merge(
+    companyInfoFieldsSchema
+).merge(
+    authInfoFieldsSchema
+)
+
+export type CompanySigninFieldsType = z.infer<typeof companyInfoFieldsSchema>
 
 
-export type SigninFieldsType = z.infer<typeof signinFieldsSchema>

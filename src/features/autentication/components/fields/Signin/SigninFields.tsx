@@ -1,37 +1,12 @@
 import { Button  } from "react-bootstrap"
-import { ProfileInfoFields } from "../ProfileInfo/ProfileInfoFields"
-import { AuthInfoFields } from "../AuthInfo/AuthInfoFields"
-import { profileInfoFieldsSchema } from "@features/autentication/models/ProfileInfoFields/ProfileInfoFieldsType"
-import { authInfoFieldsSchema } from "@features/autentication/models/AuthInfoFields/AuthInfoFieldsType"
-import { ZodObject, ZodRawShape } from "zod"
 import { useMultiFormStepper } from "@hooks/MultiFormStepper/useMultiFormStepper"
 import { cloneElement, isValidElement } from "react"
+import { FieldsProps } from "@features/autentication/models/Fields/FieldsProps"
+import { tailwindMerge } from "@lib/tsMerge/tsMerge"
 
-const totalSteps = 2
-
-const getStepFormData = (step:number):{schema:ZodObject<ZodRawShape>,children:React.ReactNode}|null=>{
-    switch(step){
-        case 0:
-            return {
-                schema:profileInfoFieldsSchema,
-                children:<ProfileInfoFields />
-            }
-        case 1:
-            return {
-                schema:authInfoFieldsSchema,
-                children:<AuthInfoFields />
-            }
-        default:
-            return null
-    }
-}
-
-export function SigninFields(/*props:SigninFieldsProps*/){
-    const className = "w-full flex flex-col items-center justify-center gap-2"
-    const {canPrevious,canNext,previousStep,nextStep,children} = useMultiFormStepper({
-        totalSteps,
-        getStepFormData
-    })
+export function SigninFields(props:FieldsProps){
+    const className = tailwindMerge("w-full flex flex-col items-center justify-center gap-2 "+props.className)
+    const {canPrevious,canNext,previousStep,nextStep,children} = useMultiFormStepper()
 
     const onPreviousClick = (/*event:React.MouseEvent*/)=>{
         previousStep()
@@ -40,12 +15,12 @@ export function SigninFields(/*props:SigninFieldsProps*/){
     const onNextClick = (/*event:React.MouseEvent*/)=>{
         nextStep()
     }
-    
+        
     return(
         <div>
             {
                 isValidElement(children) ?
-                cloneElement(children as React.ReactElement<React.HTMLAttributes<HTMLElement>>,{className}) : null
+                cloneElement(children as React.ReactElement<React.HTMLAttributes<HTMLElement>>,{...props,className}) : null
             }
             <div className="w-full flex flex-row justify-between items-center pt-2">
                 <Button 

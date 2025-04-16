@@ -14,7 +14,7 @@ export function UserSigninPage(){
                     </AuthInfoFieldsProvider>
                     */
                 }
-                <SigninForm.Create/>
+                <SigninForm.Create profileType="USER"/>
         </AuthenticationView>
     )
 }

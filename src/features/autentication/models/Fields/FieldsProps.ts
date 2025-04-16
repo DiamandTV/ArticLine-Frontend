@@ -1,0 +1,1 @@
+export type FieldsProps = React.HTMLAttributes<HTMLElement>

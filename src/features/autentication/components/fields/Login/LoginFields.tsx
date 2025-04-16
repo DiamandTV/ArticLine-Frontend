@@ -1,13 +1,22 @@
-import { LoginFieldsType } from "@features/autentication/models/LoginFields/LoginFieldsType";
+import { FieldsProvider } from "@features/autentication/context/FieldsProvider/FieldsProvider";
+import { FieldsProps } from "@features/autentication/models/Fields/FieldsProps";
+import { FieldsProviderProps } from "@features/autentication/models/Fields/FieldsProviderProps";
+import { loginFieldsSchema, LoginFieldsType } from "@features/autentication/models/LoginFields/LoginFieldsType";
 import { tailwindMerge } from "@lib/tsMerge/tsMerge";
 import { Col, FloatingLabel, Form, Row } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
 
-interface LoginFieldsProps extends React.HTMLAttributes<HTMLElement>{
-    onChange?:()=>void
-}
-export function LoginFields(props:LoginFieldsProps){
-    const className = tailwindMerge("w-full items-center justify-center gap-2 "+props.className)
+export function LoginFieldsProvider(props:FieldsProviderProps<LoginFieldsType>){
+    return(
+        <FieldsProvider<LoginFieldsType> {...props} schema={loginFieldsSchema}>
+            {props.children}
+        </FieldsProvider>
+    )
+} 
+
+
+export function LoginFields(props:FieldsProps){
+    const className = tailwindMerge("w-full flex items-center justify-center gap-2 "+props.className)
     const {register,formState:{errors}} = useFormContext<LoginFieldsType>()
     return(
         <Form
@@ -24,7 +33,7 @@ export function LoginFields(props:LoginFieldsProps){
                     </FloatingLabel>
                 </Col >
 
-                <Col  className="p-0" >
+                <Col className="p-0" >
                     <FloatingLabel label="PASSWORD">
                         <Form.Control type="password" {...register('password')} isInvalid={!!errors.password}/>
                         <Form.Control.Feedback type="invalid">

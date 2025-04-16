@@ -1,10 +1,7 @@
-import { SigninFields } from "../../fields/Signin/SigninFields";
-import { SigninFieldsProvider } from "../../fields/Signin/SigninFieldsProvider";
-
-export function _Update(){
+import { SigninFieldsFactory } from "../../fields/Signin/SigninFieldsFactory";
+import { SigninFormProps } from "./SigninForm";
+export function _Update(props:SigninFormProps){
     return(
-        <SigninFieldsProvider>
-            <SigninFields/>
-        </SigninFieldsProvider>
+        <SigninFieldsFactory {...props}/>
     )
 }

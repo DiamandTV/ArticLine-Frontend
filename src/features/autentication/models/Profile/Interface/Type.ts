@@ -1,0 +1,1 @@
+export type ProfileType = 'USER' | 'COMPANY' | 'COURIER'

@@ -1,13 +1,20 @@
-import { AuthInfoFieldsType } from "@features/autentication/models/AuthInfoFields/AuthInfoFieldsType";
+import { FieldsProvider } from "@features/autentication/context/FieldsProvider/FieldsProvider";
+import { authInfoFieldsSchema, AuthInfoFieldsType } from "@features/autentication/models/Auth/AuthInfoFields/AuthInfoFieldsType";
+import { FieldsProps } from "@features/autentication/models/Fields/FieldsProps";
+import { FieldsProviderProps } from "@features/autentication/models/Fields/FieldsProviderProps";
 import { tailwindMerge } from "@lib/tsMerge/tsMerge";
 import { Col, FloatingLabel, Form, Row } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
 
-interface AuthInfoFieldsProps extends React.HTMLAttributes<HTMLElement>{
-    onChange?:()=>void,
-}
+export function AuthInfoFieldsProvider(props:FieldsProviderProps<AuthInfoFieldsType>){
+    return (
+        <FieldsProvider<AuthInfoFieldsType> {...props} schema={authInfoFieldsSchema}>
+            {props.children}
+        </FieldsProvider>
+    )
+} 
 
-export function AuthInfoFields(props:AuthInfoFieldsProps){
+export function AuthInfoFields(props:FieldsProps){
     const className = tailwindMerge("w-full items-center justify-center gap-2 "+props.className)
     const {register,formState:{errors}} = useFormContext<AuthInfoFieldsType>()
     
