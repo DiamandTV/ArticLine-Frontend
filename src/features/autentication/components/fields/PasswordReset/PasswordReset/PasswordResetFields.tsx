@@ -1,43 +1,42 @@
 import { FieldsProvider } from "@features/autentication/context/FieldsProvider/FieldsProvider";
 import { FieldsProps } from "@features/autentication/models/Fields/FieldsProps";
 import { FieldsProviderProps } from "@features/autentication/models/Fields/FieldsProviderProps";
-import { loginFieldsSchema, LoginFieldsType } from "@features/autentication/models/LoginFields/LoginFieldsType";
+import { passwordResetFieldsSchema, PasswordResetFieldsType } from "@features/autentication/models/PasswordReset/PasswordResetFields";
 import { tailwindMerge } from "@lib/tsMerge/tsMerge";
 import { Col, FloatingLabel, Form, Row } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
 
-export function LoginFieldsProvider(props:FieldsProviderProps<LoginFieldsType>){
+export function PasswordResetFieldsProvider(props:FieldsProviderProps<PasswordResetFieldsType>){
     return(
-        <FieldsProvider<LoginFieldsType> {...props} schema={loginFieldsSchema}>
+        <FieldsProvider<PasswordResetFieldsType> {...props} schema={passwordResetFieldsSchema}>
             {props.children}
         </FieldsProvider>
     )
-} 
+}
 
-
-export function LoginFields(props:FieldsProps){
+export function PasswordResetFields(props:FieldsProps){
     const className = tailwindMerge("w-full flex items-center justify-center gap-2 "+props.className)
-    const {register,formState:{errors}} = useFormContext<LoginFieldsType>()
+    const {register,formState:{errors}} = useFormContext<PasswordResetFieldsType>()
     return(
         <Form
             {...props}
             className={className}
         >
-            <Row className="w-full gap-2" >
+            <Row className="w-full gap-2">
                 <Col className="p-0" xs={12} md={6}>
-                    <FloatingLabel label="EMAIL">
-                        <Form.Control type="email" {...register('email')} isInvalid={!!errors.email}/>
+                    <FloatingLabel label="NEW PASSWORD">
+                        <Form.Control type="password" {...register('new_password')} isInvalid={!!errors.new_password}/>
                         <Form.Control.Feedback type="invalid">
-                            {errors.email?.message}
+                            {errors.new_password?.message}
                         </Form.Control.Feedback>
                     </FloatingLabel>
-                </Col >
+                </Col>
 
                 <Col className="p-0" >
-                    <FloatingLabel label="PASSWORD">
-                        <Form.Control type="password" {...register('password')} isInvalid={!!errors.password}/>
+                    <FloatingLabel label="CONFERM PASSWORD">
+                        <Form.Control type="password" {...register('conferm_password')} isInvalid={!!errors.conferm_password}/>
                         <Form.Control.Feedback type="invalid">
-                            {errors.password?.message}
+                            {errors.conferm_password?.message}
                         </Form.Control.Feedback>
                     </FloatingLabel>
                 </Col>

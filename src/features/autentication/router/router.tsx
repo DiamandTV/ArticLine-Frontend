@@ -5,6 +5,8 @@ import { LoginPage } from "../pages/login/Login"
 import { SelectProfileTypePage } from "../pages/selectProfileType/SelectProfileType"
 import { CourierSigninPage } from "../pages/signin/CourierSigninPage"
 import { CompanySigninPage } from "../pages/signin/CompanySigninPage"
+import { PasswordResetRequestPage } from "../pages/passwordReset/PasswordResetRequestPage"
+import { PasswordResetPage } from "../pages/passwordReset/PasswordResetPage"
 
 const protectedRoutes:RouteObject[] = [
     {
@@ -39,15 +41,15 @@ const unProtectedRoutes:RouteObject[] = [
     },
     {
         path:"password/reset/",
-        element:<div></div>
+        element:<PasswordResetRequestPage/>
     },
-    {
-        path:"password/reset-sended/",
-        element:<div></div>
-    },
+    // {
+    //     path:"password/reset-sended/",
+    //     element:<div></div>
+    // },
     {
         path:"password/reset/:token/",
-        element:<div></div>
+        element:<PasswordResetPage/>
     }
 ]
 

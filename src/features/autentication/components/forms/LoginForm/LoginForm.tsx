@@ -5,14 +5,27 @@ export function LoginForm(){
         <div className="flex flex-col gap-2 w-full">
             <LoginFieldsProvider>
                 <LoginFields/>          
-                <LoginFormButton/>  
+                <LoginFormButton/>
+                <LoginFormLostPassword/>  
             </LoginFieldsProvider>
         </div>
     )
 }
 
-export function LoginFormButton(){
+function LoginFormButton(){
+    // const {} = useMutation({
+
+    // })
     return(
         <Button>LOGIN</Button>
+    )
+}
+
+function LoginFormLostPassword(){
+    return(
+        <div className="w-full flex flex-row items-center justify-end gap-1 text-sm">
+            <span>Lost password?</span>
+            <b className="italic">CLICK HERE!</b>
+        </div>
     )
 }

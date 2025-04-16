@@ -1,3 +1,5 @@
+import { ProfileType } from "../../Profile/Interface/Type";
+
 export interface AuthInterface{
     id:number,
     email:string,
