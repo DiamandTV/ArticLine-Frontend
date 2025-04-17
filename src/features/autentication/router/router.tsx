@@ -7,6 +7,9 @@ import { CourierSigninPage } from "../pages/signin/CourierSigninPage"
 import { CompanySigninPage } from "../pages/signin/CompanySigninPage"
 import { PasswordResetRequestPage } from "../pages/passwordReset/PasswordResetRequestPage"
 import { PasswordResetPage } from "../pages/passwordReset/PasswordResetPage"
+import { PasswordResetRequestSendedPage } from "../pages/passwordReset/PasswordResetRequestSendedPage"
+import { PasswordResetDonePage } from "../pages/passwordReset/PasswordResetDonePage"
+import { AuthVerificationStatusPage } from "../pages/authVerifiication/AuthVerificationStatusPage"
 
 const protectedRoutes:RouteObject[] = [
     {
@@ -37,19 +40,27 @@ const unProtectedRoutes:RouteObject[] = [
     },
     {
         path:"email/verification/:id/:token/",
-        element:<div></div>        
+        element:<AuthVerificationStatusPage/>,
+        loader:()=>{
+            // todo: verify the code
+        },
+        
     },
     {
         path:"password/reset/",
         element:<PasswordResetRequestPage/>
     },
-    // {
-    //     path:"password/reset-sended/",
-    //     element:<div></div>
-    // },
+    {
+        path:"password/reset-sended/",
+        element:<PasswordResetRequestSendedPage/>
+    },
     {
         path:"password/reset/:token/",
         element:<PasswordResetPage/>
+    },
+    {
+        path:"password/reset/done/",
+        element:<PasswordResetDonePage/>
     }
 ]
 
