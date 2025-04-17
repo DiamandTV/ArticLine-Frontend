@@ -4,7 +4,7 @@ export function PasswordResetDonePage(){
     return(
         <AuthenticationView>
             <div>
-                
+                               
             </div>
         </AuthenticationView>
     )
