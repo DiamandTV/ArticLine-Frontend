@@ -1,5 +1,5 @@
-import { AddressInterface } from "@features/autentication/models/Address/Interface/AddressInterface";
-import { AuthInterface } from "@features/autentication/models/Auth/AuthInterface/AuthInterface";
+import { AddressRequestInterface } from "@features/autentication/models/Address/Interface/AddressInterface";
+import { AuthInterface, AuthSigninRequestInterface } from "@features/autentication/models/Auth/AuthInterface/AuthInterface";
 
 export interface UserProfileInterface{
     id:number,
@@ -9,5 +9,10 @@ export interface UserProfileInterface{
     username:string,
     date_of_birth:string,
     auth:AuthInterface,
-    address:AddressInterface,
+    address:AddressRequestInterface,
 }
+
+export type UserProfileSigninRequestInterface = Omit<UserProfileInterface,'id'|'auth'|'address'> & {
+    auth:AuthSigninRequestInterface,
+    address:string
+} 

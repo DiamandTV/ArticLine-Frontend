@@ -1,5 +1,4 @@
 import { CoordinateInterface } from "../../Coordinate/CoordinateInterface";
-
 export interface AddressInterface{
     id:number,
     recipient_name:string,
@@ -10,3 +9,5 @@ export interface AddressInterface{
     country:string,
     coordinate:CoordinateInterface
 }
+
+export type AddressRequestInterface = string

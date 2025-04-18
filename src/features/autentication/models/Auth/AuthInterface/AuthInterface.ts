@@ -8,3 +8,10 @@ export interface AuthInterface{
     is_superuser:boolean,
     type:ProfileType
 }
+
+export type AuthSigninRequestInterface = {
+    email:string,
+    phone_number:string,
+    password:string,
+    conferm_password:string
+}

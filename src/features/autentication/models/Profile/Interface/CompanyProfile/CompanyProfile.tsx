@@ -2,7 +2,7 @@ import { AddressInterface } from "@features/autentication/models/Address/Interfa
 import { AuthInterface } from "@features/autentication/models/Auth/AuthInterface/AuthInterface";
 
 export interface CompanyProfileInterface{
-    id?:number,
+    id:number,
     image:string,
     first_name:string,
     last_name:string,
@@ -12,3 +12,6 @@ export interface CompanyProfileInterface{
     address:AddressInterface,
     is_certificated:boolean,
 }
+
+export type CompanyProfileSigninRequestInterface = Omit<CompanyProfileInterface,'id'>
+

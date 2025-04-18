@@ -11,3 +11,5 @@ export interface CourierProfileInterface{
     auth:AuthInterface,
     address:AddressInterface
 }
+
+export type CourierProfileSigninRequestInterface = Omit<CourierProfileInterface,'id'>

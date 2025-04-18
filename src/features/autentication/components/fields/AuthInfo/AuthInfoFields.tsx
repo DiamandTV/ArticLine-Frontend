@@ -17,7 +17,7 @@ export function AuthInfoFieldsProvider(props:FieldsProviderProps<AuthInfoFieldsT
 export function AuthInfoFields(props:FieldsProps){
     const className = tailwindMerge("w-full items-center justify-center gap-2 "+props.className)
     const {register,formState:{errors}} = useFormContext<AuthInfoFieldsType>()
-    
+    console.log(errors)
     return(
         <Form
             {...props}

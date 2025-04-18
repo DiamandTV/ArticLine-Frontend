@@ -5,7 +5,7 @@ export const userProfileInfoFieldsSchema = z.object({
     first_name:z.string().min(1),
     last_name:z.string().min(1),
     username:z.string().min(1),
-    birth_of_date:z.string().min(1),
+    date_of_birth:z.string().min(1),
     address:z.string().min(1)
 })
 export type UserProfileInfoFieldsType = z.infer<typeof userProfileInfoFieldsSchema>

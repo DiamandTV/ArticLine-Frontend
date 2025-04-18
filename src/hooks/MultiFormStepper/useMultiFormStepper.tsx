@@ -1,26 +1,27 @@
 import { MultiFormStepperContext } from "@context/MultiFormStepper/MutliFormStepperContext"
 import {  useMultiFormStepperReturnType } from "@models/multiFormStep/mutliFormStep"
-import { useContext, useState } from "react"
+import { useContext, useMemo } from "react"
 import { useFormContext } from "react-hook-form"
 import { useMutation } from "react-query"
 
 
 export function useMultiFormStepper():useMultiFormStepperReturnType{
-    const {initialStep,totalSteps,getStepFormData,mutationOptions} = useContext(MultiFormStepperContext)
+    const {step,setStep, initialStep,totalSteps,getStepFormData,mutationOptions} = useContext(MultiFormStepperContext)
     const mutationResult = useMutation<unknown,unknown,unknown,unknown>({...mutationOptions})
     const {trigger,getValues} = useFormContext()
+    const stepFormData = useMemo(()=>getStepFormData(step),[step,getStepFormData])
+    const children = stepFormData?.children
+    const schema = stepFormData?.schema
 
 
-    const [step,setStep] = useState(initialStep)
-    const stepformData = getStepFormData(step)
-    const children = stepformData?.children
-    const schema = stepformData?.schema
     const nextStep = async()=>{
         if(!schema) return false
         const isNotErrors = await trigger(schema.keyof().options,{shouldFocus:true})
         if(isNotErrors){
             if(step + 1 < totalSteps){
-                setStep(step+1)
+                setStep((oldStep)=>{
+                    return oldStep+1
+                })
                 return true
             }
         }
@@ -34,7 +35,9 @@ export function useMultiFormStepper():useMultiFormStepperReturnType{
     }
     const previousStep = async()=>{
         if(step > initialStep){
-            setStep(step-1)
+            setStep((oldStep)=>{
+                return oldStep-1
+            })
             return true
         }
         return false

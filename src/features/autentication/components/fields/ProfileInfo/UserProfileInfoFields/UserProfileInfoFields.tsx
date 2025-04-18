@@ -78,9 +78,9 @@ export function UserProfileInfoFields(props:FieldsProps){
 
                 <Col className="p-0">
                     <FloatingLabel label="DATE OF BIRTH">
-                        <Form.Control type="date" {...register('birth_of_date')} isInvalid={!!errors.birth_of_date}/>
+                        <Form.Control type="date" {...register('date_of_birth')} isInvalid={!!errors.date_of_birth}/>
                         <Form.Control.Feedback type="invalid">
-                            {errors.birth_of_date?.message}
+                            {errors.date_of_birth?.message}
                         </Form.Control.Feedback>
                     </FloatingLabel>
                 </Col>
