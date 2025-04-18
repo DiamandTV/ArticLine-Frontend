@@ -1,5 +1,5 @@
 import { Button } from "react-bootstrap";
-import { PasswordResetRequestFields, PasswordResetRequestFieldsProvider } from "../../fields/PasswordResetRequest/PasswordResetRequest";
+import { PasswordResetRequestFields, PasswordResetRequestFieldsProvider } from "../../../fields/PasswordReset/PasswordResetRequest/PasswordResetRequest";
 
 export function PasswordResetRequestForm(){
     return(

@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
 import { LoginFields, LoginFieldsProvider } from "../../fields/Login/LoginFields";
-import { LoginPasswordForgotText } from "../../texts/LoginText/LoginBottomText/LoginPasswordForgotText";
+import { LoginPasswordForgotText } from "../../texts/LoginText/LoginFooterText/LoginPasswordForgotText";
 export function LoginForm(){
     return(
         <div className="flex flex-col gap-2 w-full">

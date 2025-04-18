@@ -8,6 +8,7 @@ import { authInfoFieldsSchema } from "@features/autentication/models/Auth/AuthIn
 import { UserProfileInfoFields } from "../../ProfileInfo/UserProfileInfoFields/UserProfileInfoFields";
 import { userProfileInfoFieldsSchema } from "@features/autentication/models/Profile/InfoFields/UserProfileInfoFields/UserProfileInfoFieldsType";
 import { GetStepFormDataReturnType } from "@models/multiFormStep/mutliFormStep";
+import { siginMutationOptions } from "@features/autentication/utils/signin/mutationOptions";
 
 export const UserSigninFieldsProvider = FieldsProvider<UserSigninFieldsType>
 
@@ -37,6 +38,12 @@ export function UserSigninFields(props:FieldsProps){
                 initialStep={0}
                 totalSteps={2}
                 getStepFormData={getStepFormData}
+                mutationOptions={siginMutationOptions({
+                    mutationKey:["user"],
+                    mutationFn:async()=>{
+
+                    }
+                })}
             >
                 <SigninFields {...props}/>
             </MultiFormStepperProvider>

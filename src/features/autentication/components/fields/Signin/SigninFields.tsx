@@ -1,4 +1,4 @@
-import { Button  } from "react-bootstrap"
+import { Button, Spinner  } from "react-bootstrap"
 import { useMultiFormStepper } from "@hooks/MultiFormStepper/useMultiFormStepper"
 import { cloneElement, isValidElement } from "react"
 import { FieldsProps } from "@features/autentication/models/Fields/FieldsProps"
@@ -6,39 +6,61 @@ import { tailwindMerge } from "@lib/tsMerge/tsMerge"
 
 export function SigninFields(props:FieldsProps){
     const className = tailwindMerge("w-full flex flex-col items-center justify-center gap-2 "+props.className)
-    const {canPrevious,canNext,previousStep,nextStep,children} = useMultiFormStepper()
-
-    const onPreviousClick = (/*event:React.MouseEvent*/)=>{
-        previousStep()
-    }
-
-    const onNextClick = (/*event:React.MouseEvent*/)=>{
-        nextStep()
-    }
-        
+    const {children} = useMultiFormStepper()
     return(
-        <div>
+        <div className="flex flex-col gap-2">
             {
                 isValidElement(children) ?
                 cloneElement(children as React.ReactElement<React.HTMLAttributes<HTMLElement>>,{...props,className}) : null
             }
-            <div className="w-full flex flex-row justify-between items-center pt-2">
-                <Button 
-                    size="lg"
-                    disabled={!canPrevious}
-                    onClick={onPreviousClick}>
-                        PREVIOUS
-                </Button>
-                <Button size="lg"
-                disabled={!canNext}
-                onClick={onNextClick}>
-                    NEXT
-                </Button>
-            </div>
+            <SigninActions/>
         </div>
     )
 }
 
+function SigninActions(){
+    const {mutationResult} = useMultiFormStepper()
+    if(mutationResult.isLoading){
+        return <SigninLoadingIndicator/>
+    }
+    return <SigninButtons/>
+}   
+
+function SigninLoadingIndicator(){
+    return(
+        <div className="w-full flex flex-row justify-center items-center gap-2">
+            <Spinner animation="grow"/>
+            <h3>FETCHING...</h3>
+        </div>
+    )
+}
+
+
+function SigninButtons(){
+    const {canPrevious,canNext,previousStep,nextStep} = useMultiFormStepper()
+    const onPreviousClick = async(/*event:React.MouseEvent*/)=>{
+        await previousStep()
+    }
+
+    const onNextClick = async(/*event:React.MouseEvent*/)=>{
+        await nextStep()
+    }
+    return(
+        <div className="w-full flex flex-row justify-between items-center">
+            <Button 
+                size="lg"
+                disabled={!canPrevious}
+                onClick={onPreviousClick}>
+                    PREVIOUS
+            </Button>
+            <Button size="lg"
+            disabled={!canNext}
+            onClick={onNextClick}>
+                NEXT
+            </Button>
+        </div>
+    )
+}
 
 // export function SigninFields(/*props:SigninFieldsProps*/){
 //     const [step,setStep] = useState(0)

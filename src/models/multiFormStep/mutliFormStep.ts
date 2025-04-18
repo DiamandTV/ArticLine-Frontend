@@ -1,11 +1,20 @@
+import { UseMutationOptions, UseMutationResult } from "react-query"
 import { ZodObject, ZodRawShape } from "zod"
 
-export type GetStepFormDataReturnType = {schema:ZodObject<ZodRawShape>,children:React.ReactNode}|null
+export type GetStepFormDataReturnType = {
+    title?:string,
+    schema:ZodObject<ZodRawShape>,
+    children:React.ReactNode,
+
+}|null
+
+//interface useMultiFormStepperFetchProps export 
 
 export interface useMultiFormStepperProps{
     initialStep:number,
     totalSteps:number,
-    getStepFormData:(step:number)=>GetStepFormDataReturnType
+    getStepFormData:(step:number)=>GetStepFormDataReturnType,
+    mutationOptions?:UseMutationOptions<unknown, unknown, unknown, unknown>
 }
 
 export interface useMultiFormStepperReturnType{
@@ -16,5 +25,7 @@ export interface useMultiFormStepperReturnType{
     canNext:boolean,
     canPrevious:boolean,
     reset:()=>void,
-    children:React.ReactNode|null
+    children:React.ReactNode|null,
+    mutationResult:UseMutationResult<unknown, unknown, unknown, unknown>
+
 }

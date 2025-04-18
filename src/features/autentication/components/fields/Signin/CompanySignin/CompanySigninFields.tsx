@@ -7,6 +7,7 @@ import { authInfoFieldsSchema } from "@features/autentication/models/Auth/AuthIn
 import { AuthInfoFields } from "../../AuthInfo/AuthInfoFields";
 import { MultiFormStepperProvider } from "@context/MultiFormStepper/MultiFormStepperProvider";
 import { CompanyProfileInfoFields } from "../../ProfileInfo/CompanyProfileInfoFields/CompanyProfileInfoFields";
+import { siginMutationOptions } from "@features/autentication/utils/signin/mutationOptions";
 
 export const CompanySigninFieldsProvider = FieldsProvider<CompanyProfileInfoFieldsType>
 
@@ -35,6 +36,12 @@ export function CompanySigninFields(props:FieldsProps){
                 initialStep={0}
                 totalSteps={2}
                 getStepFormData={getStepFormData}
+                mutationOptions={siginMutationOptions({
+                    mutationKey:['company'],
+                    mutationFn:async()=>{
+                        
+                    }
+                })}
             >
                 <SigninFields {...props}/>
             </MultiFormStepperProvider>

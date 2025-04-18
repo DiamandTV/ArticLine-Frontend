@@ -1,4 +1,5 @@
 import { NavigationLoader } from "@components/loaders/NavigationLoader/NavigationLoader"
+import { AuthenticationView } from "@features/autentication/view/AuthenticationView/AuthenticationView"
 import { useLoaderData } from "react-router"
 
 export function AuthVerificationStatusPage(){
@@ -7,13 +8,15 @@ export function AuthVerificationStatusPage(){
     console.log(result)
     return(
         <NavigationLoader>
-            <div>
-                {
-                    /*
-                        todo: set the message of the password reset based on the status return byt the route loader
-                    */
-                }                
-            </div>
+            <AuthenticationView>
+                <div>
+                    {
+                        /*
+                            todo: set the message of the password reset based on the status return byt the route loader
+                        */
+                    }                
+                </div>
+            </AuthenticationView>
         </NavigationLoader>
     )
 }

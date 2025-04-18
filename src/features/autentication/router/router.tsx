@@ -10,6 +10,7 @@ import { PasswordResetPage } from "../pages/passwordReset/PasswordResetPage"
 import { PasswordResetRequestSendedPage } from "../pages/passwordReset/PasswordResetRequestSendedPage"
 import { PasswordResetDonePage } from "../pages/passwordReset/PasswordResetDonePage"
 import { AuthVerificationStatusPage } from "../pages/authVerifiication/AuthVerificationStatusPage"
+import { PasswordResetErrorPage } from "../pages/passwordReset/PasswordResetErrorPage"
 
 const protectedRoutes:RouteObject[] = [
     {
@@ -57,6 +58,10 @@ const unProtectedRoutes:RouteObject[] = [
     {
         path:"password/reset/:token/",
         element:<PasswordResetPage/>
+    },
+    {
+        path:"password/reset/error/",
+        element:<PasswordResetErrorPage/>
     },
     {
         path:"password/reset/done/",
