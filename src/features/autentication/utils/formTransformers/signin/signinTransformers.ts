@@ -21,7 +21,6 @@ export const userSigninTransformer:FormTransformers<UserSigninFieldsType,UserPro
         return {
             auth,
             image:"",
-
             ...rest
         }
     },
