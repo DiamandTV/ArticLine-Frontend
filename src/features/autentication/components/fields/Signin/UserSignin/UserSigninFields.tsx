@@ -9,6 +9,7 @@ import { UserProfileInfoFields } from "../../ProfileInfo/UserProfileInfoFields/U
 import { userProfileInfoFieldsSchema } from "@features/autentication/models/Profile/InfoFields/UserProfileInfoFields/UserProfileInfoFieldsType";
 import { GetStepFormDataReturnType } from "@models/multiFormStep/mutliFormStep";
 import { siginMutationOptions } from "@features/autentication/utils/signin/mutationOptions";
+//import { userSigninService } from "@features/autentication/services/signinServices";
 
 export const UserSigninFieldsProvider = FieldsProvider<UserSigninFieldsType>
 
@@ -41,7 +42,7 @@ export function UserSigninFields(props:FieldsProps){
                 mutationOptions={siginMutationOptions({
                     mutationKey:["user"],
                     mutationFn:async()=>{
-                        
+                        //return await userSigninService(formData)
                     }
                 })}
             >

@@ -26,18 +26,18 @@ export function AuthInfoFields(props:FieldsProps){
             <Row className="w-full gap-2" >
                 <Col  className="p-0" xs={12} md={6}>
                     <FloatingLabel label="PHONE NUMBER">
-                        <Form.Control type="text" {...register('phone_number')} isInvalid={!!errors.phone_number}/>
+                        <Form.Control type="text" {...register('auth.phone_number')} isInvalid={!!errors.auth?.phone_number}/>
                         <Form.Control.Feedback type="invalid">
-                            {errors.phone_number?.message}
+                            {errors.auth?.phone_number?.message}
                         </Form.Control.Feedback>
                     </FloatingLabel>
                 </Col >
 
                 <Col  className="p-0" >
                     <FloatingLabel label="EMAIL">
-                        <Form.Control type="email" {...register('email')} isInvalid={!!errors.email}/>
+                        <Form.Control type="email" {...register('auth.email')} isInvalid={!!errors.auth?.email}/>
                         <Form.Control.Feedback type="invalid">
-                            {errors.email?.message}
+                            {errors.auth?.email?.message}
                         </Form.Control.Feedback>
                     </FloatingLabel>
                 </Col>
@@ -46,18 +46,18 @@ export function AuthInfoFields(props:FieldsProps){
             <Row className="w-full gap-2" >
                 <Col  className="p-0" xs={12} md={6}>
                     <FloatingLabel label="PASSWORD">
-                        <Form.Control type="password" {...register('password')} isInvalid={!!errors.password}/>
+                        <Form.Control type="password" {...register('auth.password')} isInvalid={!!errors.auth?.password}/>
                         <Form.Control.Feedback type="invalid">
-                            {errors.password?.message}
+                            {errors.auth?.password?.message}
                         </Form.Control.Feedback>
                     </FloatingLabel>
                 </Col >
 
                 <Col  className="p-0" >
                     <FloatingLabel label="CONFERM PASSWORD">
-                        <Form.Control type="password" {...register('conferm_password')} isInvalid={!!errors.conferm_password}/>
+                        <Form.Control type="password" {...register('auth.conferm_password')} isInvalid={!!errors.auth?.conferm_password}/>
                         <Form.Control.Feedback type="invalid">
-                            {errors.conferm_password?.message}
+                            {errors.auth?.conferm_password?.message}
                         </Form.Control.Feedback>
                     </FloatingLabel>
                 </Col>
