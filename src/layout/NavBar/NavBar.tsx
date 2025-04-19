@@ -6,7 +6,6 @@ import {
   FaShoppingCart,
   FaHeart,
   FaReceipt,
-  FaMapMarkerAlt,
   FaUserCircle,
   FaSignOutAlt,
 } from "react-icons/fa";
