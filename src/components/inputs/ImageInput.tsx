@@ -77,10 +77,13 @@ export function ImageInput(props:ImageInputProps)  {
             className={className} >
             <div  className="flex flex-col justify-content-center">
                 <img  
-                ref={imageRef}
-                //src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
-                src={DEFAULT_BACKGROUND_IMAGE_INPUT}
-                alt="example placeholder" className={"rounded-xl "} />
+                    ref={imageRef}
+                    //src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
+                    src={DEFAULT_BACKGROUND_IMAGE_INPUT}
+                    alt="example placeholder" 
+                    className={"rounded-xl "} 
+                    
+                />
                 {
                     isValidElement(props.inputElement) ? 
                     cloneElement(props.inputElement as React.ReactElement<React.DetailedHTMLProps<React.HTMLAttributes<HTMLInputElement>,HTMLInputElement>>,{ref:mergedRef}) : null

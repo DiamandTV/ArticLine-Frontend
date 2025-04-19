@@ -20,7 +20,7 @@ export function UserProfileInfoFieldsProvider(props:FieldsProviderProps<UserProf
 // }
 
 export function UserProfileInfoFields(props:FieldsProps){
-    const className = tailwindMerge("w-full items-center justify-center gap-2 "+props.className)
+    const className = tailwindMerge("w-full items-center justify-center gap-2"+props.className)
     const {register,watch,formState:{errors},getValues,resetField} = useFormContext<UserProfileInfoFieldsType>()
     console.log(errors)
     console.log(getValues('image'))
@@ -47,8 +47,8 @@ export function UserProfileInfoFields(props:FieldsProps){
 
             />
             <Row className="w-full gap-2" >
-                <Col  className="p-0" xs={12} md={6}>
-                    <FloatingLabel label="FIRST NAME">
+                <Col className="p-0" xs={12} md={6}>
+                    <FloatingLabel label="FIRST NAME" className="bg-surface-a10">
                         <Form.Control type="text" {...register('first_name')} isInvalid={!!errors.first_name }/>
                         <Form.Control.Feedback type="invalid" >
                             {errors.first_name?.message}
@@ -97,5 +97,6 @@ export function UserProfileInfoFields(props:FieldsProps){
                 </Col>            
             </Row>
         </Form>
+    
     )
 }
