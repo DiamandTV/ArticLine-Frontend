@@ -35,6 +35,8 @@
       "@models/*":["src/models/*"],
       "@pages/*":["src/pages/*"],
       "@router/*":["src/router/*"],
+      "@repository/*":["src/respository/*"],
+      "@store/*":["src/store/*"],
       "@services/*":["src/services/*"],
       "@utils/*":["src/utils/*"],
       "@views/*":["src/views/*"]

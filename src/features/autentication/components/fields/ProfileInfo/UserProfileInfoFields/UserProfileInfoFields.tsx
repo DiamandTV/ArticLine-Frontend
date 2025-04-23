@@ -7,6 +7,7 @@ import { ImageInput } from "@components/inputs/ImageInput";
 import { FieldsProps } from "@features/autentication/models/Fields/FieldsProps";
 import { FieldsProvider } from "@features/autentication/context/FieldsProvider/FieldsProvider";
 import { FieldsProviderProps } from "@features/autentication/models/Fields/FieldsProviderProps";
+import { AddressInput } from "@components/inputs/AddressInput";
 export function UserProfileInfoFieldsProvider(props:FieldsProviderProps<UserProfileInfoFieldsType>){
     return(
         <FieldsProvider<UserProfileInfoFieldsType> {...props} schema={userProfileInfoFieldsSchema}>
@@ -88,12 +89,18 @@ export function UserProfileInfoFields(props:FieldsProps){
 
             <Row className="w-full">
                 <Col as={Col} className="p-0" >
-                    <FloatingLabel label="ADDRESS">
-                        <Form.Control type="text" {...register('address')} isInvalid={!!errors.address}/>
-                        <Form.Control.Feedback type="invalid">
-                            {errors.address?.message}
-                        </Form.Control.Feedback>
-                    </FloatingLabel>
+                    <AddressInput
+                        label="ADDRESS"
+                        inputElement={
+                            <Form.Control type="text" {...register('address.full_address')} isInvalid={!!errors.address}/>
+                        }
+                        errorElement={
+                            <Form.Control.Feedback type="invalid">
+                                {errors.address?.full_address?.message }
+                            </Form.Control.Feedback>
+                        }
+                    />
+       
                 </Col>            
             </Row>
         </Form>

@@ -8,7 +8,8 @@ import { authInfoFieldsSchema } from "@features/autentication/models/Auth/AuthIn
 import { UserProfileInfoFields } from "../../ProfileInfo/UserProfileInfoFields/UserProfileInfoFields";
 import { userProfileInfoFieldsSchema } from "@features/autentication/models/Profile/InfoFields/UserProfileInfoFields/UserProfileInfoFieldsType";
 import { GetStepFormDataReturnType } from "@models/multiFormStep/mutliFormStep";
-import { siginMutationOptions } from "@features/autentication/utils/signin/mutationOptions";
+import { userSigninService } from "@features/autentication/services/signinServices";
+import {  useNavigate } from "react-router";
 //import { userSigninService } from "@features/autentication/services/signinServices";
 
 export const UserSigninFieldsProvider = FieldsProvider<UserSigninFieldsType>
@@ -33,19 +34,29 @@ const getStepFormData = (step:number):GetStepFormDataReturnType=>{
 
 
 export function UserSigninFields(props:FieldsProps){
+    const navigator = useNavigate()
     return(
         <UserSigninFieldsProvider schema={userSigninFieldsSchema}>
             <MultiFormStepperProvider
                 initialStep={0}
                 totalSteps={2}
                 getStepFormData={getStepFormData}
-                mutationOptions={siginMutationOptions({
+                mutationOptions={{
                     mutationKey:["user"],
-                    mutationFn:async()=>{
-                        //return await userSigninService(formData)
-                    }
-                })}
+                    mutationFn:async(formData:UserSigninFieldsType)=>{
+                        const data = await userSigninService(formData)
+                        console.log(data)
+                        return data
+                    },
+
+                    onSuccess:(data)=>{
+                        console.log(data)
+                        navigator('/signin/done/',{state:{didSignin:true},replace:true})
+                    },
+                   
+                }}
             >
+                
                 <SigninFields {...props}/>
             </MultiFormStepperProvider>
         </UserSigninFieldsProvider>

@@ -1,3 +1,4 @@
+import { PhoneInput } from "@components/inputs/PhoneInput";
 import { FieldsProvider } from "@features/autentication/context/FieldsProvider/FieldsProvider";
 import { authInfoFieldsSchema, AuthInfoFieldsType } from "@features/autentication/models/Auth/AuthInfoFields/AuthInfoFieldsType";
 import { FieldsProps } from "@features/autentication/models/Fields/FieldsProps";
@@ -24,16 +25,8 @@ export function AuthInfoFields(props:FieldsProps){
             className={className}
         >
             <Row className="w-full gap-2" >
-                <Col  className="p-0" xs={12} md={6}>
-                    <FloatingLabel label="PHONE NUMBER">
-                        <Form.Control type="text" {...register('auth.phone_number')} isInvalid={!!errors.auth?.phone_number}/>
-                        <Form.Control.Feedback type="invalid">
-                            {errors.auth?.phone_number?.message}
-                        </Form.Control.Feedback>
-                    </FloatingLabel>
-                </Col >
-
-                <Col  className="p-0" >
+                
+                <Col className="p-0" xs={12} md={6}>
                     <FloatingLabel label="EMAIL">
                         <Form.Control type="email" {...register('auth.email')} isInvalid={!!errors.auth?.email}/>
                         <Form.Control.Feedback type="invalid">
@@ -41,6 +34,20 @@ export function AuthInfoFields(props:FieldsProps){
                         </Form.Control.Feedback>
                     </FloatingLabel>
                 </Col>
+            
+                <Col  className="p-0" >
+                    <PhoneInput
+                        inputElement={
+                            <Form.Control className="pb-2 mb-0" type="text" {...register('auth.phone_number')} isInvalid={!!errors.auth?.phone_number}/>
+                            
+                        }
+                        errorElement={
+                            <Form.Control.Feedback type="invalid">
+                                {errors.auth?.phone_number?.message}
+                            </Form.Control.Feedback>
+                        }
+                    />
+                </Col >
             </Row>
 
             <Row className="w-full gap-2" >

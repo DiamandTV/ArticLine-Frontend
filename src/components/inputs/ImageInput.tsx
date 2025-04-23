@@ -80,8 +80,9 @@ export function ImageInput(props:ImageInputProps)  {
                     ref={imageRef}
                     //src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
                     src={DEFAULT_BACKGROUND_IMAGE_INPUT}
-                    alt="example placeholder" 
-                    className={"rounded-xl "} 
+                    //alt="example placeholder" 
+                    className={"rounded-xl max-h-80"} 
+                
                     
                 />
                 {

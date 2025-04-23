@@ -10,7 +10,7 @@ export type GetStepFormDataReturnType = {
 
 //interface useMultiFormStepperFetchProps export 
 
-export interface useMultiFormStepperProps<T>{
+export interface useMultiFormStepperProps<TData = unknown, TError = unknown , TVariables = never, TContext = unknown >{
     initialStep:number,
     totalSteps:number,
 
@@ -18,7 +18,7 @@ export interface useMultiFormStepperProps<T>{
     setStep:React.Dispatch<React.SetStateAction<number>>,
 
     getStepFormData:(step:number)=>GetStepFormDataReturnType,
-    mutationOptions?:UseMutationOptions<T, T, T, T>
+    mutationOptions?:UseMutationOptions<TData,TError,TVariables,TContext>
 }
 
 export interface useMultiFormStepperReturnType{
@@ -30,5 +30,5 @@ export interface useMultiFormStepperReturnType{
     canPrevious:boolean,
     reset:()=>void,
     children:React.ReactNode|null,
-    mutationResult:UseMutationResult
+    mutationResult:UseMutationResult<unknown,unknown,never,unknown>
 }

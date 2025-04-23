@@ -12,7 +12,8 @@ export interface UserProfileInterface{
     address:AddressRequestInterface,
 }
 
-export type UserProfileSigninRequestInterface = Omit<UserProfileInterface,'id'|'auth'|'address'> & {
+export type UserProfileSigninRequestInterface = Omit<UserProfileInterface,'id'|'image'|'auth'|'address'> & {
+    image:FileList,
     auth:AuthSigninRequestInterface,
-    address:string
+    address:AddressRequestInterface
 } 

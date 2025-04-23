@@ -25,9 +25,9 @@ export function PasswordResetFields(props:FieldsProps){
             <Row className="w-full gap-2">
                 <Col className="p-0" xs={12} md={6}>
                     <FloatingLabel label="NEW PASSWORD">
-                        <Form.Control type="password" {...register('new_password')} isInvalid={!!errors.new_password}/>
+                        <Form.Control type="password" {...register('password')} isInvalid={!!errors.password}/>
                         <Form.Control.Feedback type="invalid">
-                            {errors.new_password?.message}
+                            {errors.password?.message}
                         </Form.Control.Feedback>
                     </FloatingLabel>
                 </Col>

@@ -43,7 +43,7 @@ export function CompanySigninFields(props:FieldsProps){
                     }
                 })}
             >
-                <SigninFields {...props}/>
+                <SigninFields<CompanyProfileInfoFieldsType> {...props}/>
             </MultiFormStepperProvider>
         </CompanySigninFieldsProvider>
     )

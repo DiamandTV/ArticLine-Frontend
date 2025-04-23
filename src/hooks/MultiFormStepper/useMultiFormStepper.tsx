@@ -1,5 +1,7 @@
 import { MultiFormStepperContext } from "@context/MultiFormStepper/MutliFormStepperContext"
+import { ServerErrorsAndTypeInterface } from "@models/ApiResponse/ErrorResponse/ServerErrorResponseInterface"
 import {  useMultiFormStepperReturnType } from "@models/multiFormStep/mutliFormStep"
+import { AxiosError } from "axios"
 import { useContext, useMemo } from "react"
 import { useFormContext } from "react-hook-form"
 import { useMutation } from "react-query"
@@ -7,8 +9,22 @@ import { useMutation } from "react-query"
 
 export function useMultiFormStepper():useMultiFormStepperReturnType{
     const {step,setStep, initialStep,totalSteps,getStepFormData,mutationOptions} = useContext(MultiFormStepperContext)
-    const mutationResult = useMutation<unknown,unknown,unknown,unknown>({...mutationOptions})
-    const {trigger,getValues} = useFormContext()
+    const {trigger,getValues,setError} = useFormContext()
+    const mutationResult = useMutation({...mutationOptions,onError:(error, variables, context)=>{
+        if(mutationOptions){
+            (mutationOptions).onError?.(error, variables, context) 
+            console.log(error)
+            if(error instanceof AxiosError &&  error.response){
+                const errors:ServerErrorsAndTypeInterface = error.response?.data as ServerErrorsAndTypeInterface
+                errors.errors.forEach((_err)=>{
+                    // todo: check the error before setting the error
+                    setError(_err.attr,{message:_err.detail,type:"custom"})
+                })
+                
+            }
+        }
+    }})
+    
     const stepFormData = useMemo(()=>getStepFormData(step),[step,getStepFormData])
     const children = stepFormData?.children
     const schema = stepFormData?.schema
@@ -28,7 +44,7 @@ export function useMultiFormStepper():useMultiFormStepperReturnType{
         if(step === totalSteps -1 ){
             const multiFormValues = getValues()
         
-            await mutationResult.mutateAsync(multiFormValues)
+            await mutationResult.mutateAsync(multiFormValues as never)
             return true
         }
         return false 

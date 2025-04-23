@@ -5,6 +5,7 @@ import { useState } from "react";
 interface MultiFormStepperProviderProps<T> extends Omit<useMultiFormStepperProps<T>,'step'|'setStep'>{
     children:React.ReactNode
 }
+
 export function MultiFormStepperProvider<T>(props:MultiFormStepperProviderProps<T>){
     const [step,setStep] = useState(props.initialStep)
     return(
