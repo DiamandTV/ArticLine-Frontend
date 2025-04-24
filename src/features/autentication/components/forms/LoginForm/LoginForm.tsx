@@ -14,6 +14,7 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { AlertCard } from "@components/cards/AlertCard/AlertCard";
 import { AuthVerificationResendAlert } from "../../alerts/AuthVerificationResendAlert/AuthVerificationResendAlert";
+import { JWTInterface } from "@features/autentication/models/Jwt/JwtInterfaces";
 export function LoginForm(){
     return(
         <div className="flex flex-col gap-2 w-full">
@@ -38,9 +39,10 @@ function LoginFormButton(){
         mutationFn:async(params:LoginFieldsType)=>{
             return await loginServices.login(params)
         },
-        onSuccess:(data)=>{
-            if(data.data){
-                const result = dispatch(authSliceActions.setSession(data.data))
+        onSuccess:(response)=>{
+            if(response.data){
+                const data:{jwt:JWTInterface} = response.data
+                const result = dispatch(authSliceActions.setSession(data.jwt))
                 if(result){
                     navigator('/',{replace:true})
                 }

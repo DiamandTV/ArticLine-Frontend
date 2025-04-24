@@ -17,7 +17,12 @@ export function LoginFieldsProvider(props:FieldsProviderProps<LoginFieldsType>){
 
 export function LoginFields(props:FieldsProps){
     const className = tailwindMerge("w-full flex items-center justify-center gap-2 "+props.className)
-    const {register,formState:{errors}} = useFormContext<LoginFieldsType>()
+    const {register,/*handleSubmit,*/formState:{errors}} = useFormContext<LoginFieldsType>()
+    
+    
+    // const onSubmit:SubmitHandler<LoginFieldsType> = (fields)=>{
+    // }
+
     return(
         <Form
             {...props}
