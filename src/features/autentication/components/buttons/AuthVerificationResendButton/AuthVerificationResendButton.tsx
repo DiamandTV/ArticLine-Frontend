@@ -1,25 +1,24 @@
 import { AlertCard } from "@components/cards/AlertCard/AlertCard";
 import { VerificationResendResponseMapStatusType, VerificationResendResponseStatus, VerificationResendResponseType } from "@features/autentication/models/VerificationResponse/VerificationResendResponse";
 import { verificationServices } from "@features/autentication/services/verificationService";
+import { useGlobalNavigate } from "@hooks/useNavigateCopy/useNavigate";
 import { tailwindMerge } from "@lib/tsMerge/tsMerge";
 import { AxiosError } from "axios";
 import { Button, Spinner } from "react-bootstrap";
 import { useMutation } from "react-query";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import {  toast } from "react-toastify";
 
-type AuthVerificationResendButtonProps = React.HTMLAttributes<HTMLElement>
-export function AuthVerificationResendButton(props:AuthVerificationResendButtonProps){
-
-
-    const params = useParams()
-    const navigator = useNavigate()
-    const profileID = params['id']
+interface ResendButtonProps extends React.HTMLAttributes<HTMLElement>{
+    authID?:string
+}
+function ResendButton({authID,...props}:ResendButtonProps){
+    const navigator = useGlobalNavigate()
     const {isLoading,mutateAsync} = useMutation({
         mutationKey:['request-verification-link'],
         mutationFn:async()=>{
-            if(profileID){
-                return  await verificationServices.verificationResendLink(profileID)
+            if(authID){
+                return  await verificationServices.verificationResendLink(authID)
             }
         },
         onError:(error)=>{
@@ -32,7 +31,7 @@ export function AuthVerificationResendButton(props:AuthVerificationResendButtonP
                         switch(VerificationResendResponseMapStatusType[message as VerificationResendResponseType]){
                             case VerificationResendResponseStatus.EMAIL_ERROR:
                                 // redirect to Verification Resend Status with !!!"ERROR STATUS"!!!
-                                navigator(`/email/verification/${profileID}/status/`,{state:{didVerificationResend:false}})
+                                navigator(`/email/verification/${authID}/status/`,{state:{didVerificationResend:false}})
                                 return
                             case VerificationResendResponseStatus.EMAIL_REQUEST_LIMIT:
                                 toast(
@@ -53,27 +52,41 @@ export function AuthVerificationResendButton(props:AuthVerificationResendButtonP
                         }
                     } 
                 }
-                navigator(`/email/verification/${profileID}/status/`,{state:{didVerificationResend:false}})
+                navigator(`/email/verification/${authID}/status/`,{state:{didVerificationResend:false}})
             }
         },
         onSuccess:()=>{
-            navigator(`/email/verification/${profileID}/status/`,{replace:true,state:{didVerificationResend:true}})
+            navigator(`/email/verification/${authID}/status/`,{replace:true,state:{didVerificationResend:true}})
         }
     })
+
+    
     if(isLoading){
         return <RequestLoadingButton {...props}/>
     }
 
     return (
         <RequestLinkButton {...props} onClick={
-            async()=>{
+            async(event:React.MouseEvent<HTMLElement>)=>{
+                props.onClick?.(event)
                 await mutateAsync()
             }}
         />
     )
 }
 
-function RequestLinkButton(props:AuthVerificationResendButtonProps){
+
+export function AuthVerificationResendButton(props:Omit<ResendButtonProps,'authID'> & {authID?:string}){
+    const params = useParams()
+    let authID = params['id']
+    if(!authID){
+        authID = props.authID 
+    }
+    return <ResendButton {...props} authID={authID} />
+}
+
+
+function RequestLinkButton(props:Omit<ResendButtonProps,'id'>){
     const className = tailwindMerge("w-full "+props.className)
     return(
         <Button {...props} className={className} size="lg" >
@@ -82,7 +95,7 @@ function RequestLinkButton(props:AuthVerificationResendButtonProps){
     )
 }
 
-function RequestLoadingButton(props:AuthVerificationResendButtonProps){
+function RequestLoadingButton(props:Omit<ResendButtonProps,'id'>){
     const className = tailwindMerge("w-full flex flex-row justify-center items-center gap-2 "+props.className)
     return(
         <Button {...props} className={className} size="lg" >

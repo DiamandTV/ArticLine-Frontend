@@ -16,7 +16,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-          <ToastContainer/>
+          <ToastContainer autoClose={2000}/>
           <RouterProvider router={router}/>
       </QueryClientProvider>
     </Provider>

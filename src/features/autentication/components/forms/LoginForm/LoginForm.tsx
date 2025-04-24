@@ -8,12 +8,12 @@ import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { authSliceActions } from "@features/autentication/slices/authSlice";
 import { AxiosError } from "axios";
-import { decodeServerPayloadMsg } from "@features/autentication/utils/serverErrorDecode/errorDecode";
+import { decodeServerPayloadMsg, get_IER_from_SPM } from "@features/autentication/utils/serverErrorDecode/errorDecode";
 import { AccountResponseMapStatusType, AccountResponseType } from "@features/autentication/models/AccountResponse/AccountResponse";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { AlertCard } from "@components/cards/AlertCard/AlertCard";
-import { AuthVerificationResendButton } from "../../buttons/AuthVerificationResendButton/AuthVerificationResendButton";
+import { AuthVerificationResendAlert } from "../../alerts/AuthVerificationResendAlert/AuthVerificationResendAlert";
 export function LoginForm(){
     return(
         <div className="flex flex-col gap-2 w-full">
@@ -30,7 +30,8 @@ function LoginFormButton(){
     const dispatch = useDispatch()
 
     const navigator = useNavigate()
-    
+
+
     const {trigger,getValues} = useFormContext<LoginFieldsType>()
     const {isLoading,mutateAsync} = useMutation({
         mutationKey:['login'],
@@ -49,24 +50,30 @@ function LoginFormButton(){
             if(error instanceof AxiosError){
                 const messages = decodeServerPayloadMsg(error)
                 if(messages.length > 0 && Object.keys(AccountResponseMapStatusType).includes(messages[0])){
-                    messages.forEach((message)=>{
+                    messages.forEach((message,index)=>{
                         switch(message as AccountResponseType){
                             case 'NOT-VERIFIED':
-                                    // show an alert to request another verification link 
-                                    toast(
-                                        <AlertCard
-                                            variant="warning"
-                                            title="⚠️ Email verification required"
-                                            message="You need to verify your email before you can log in. Please check your inbox for the verification link, or request a new one if needed."
-                                            action={<Button className="w-full">RESEND LINK</Button>}
-                                        />,
-                                        {
-                                            className:"w-full",
-                                            position:'top-center',
-                                            hideProgressBar:true
-                                        }
-                                    )
-                                    return
+                                    { const serverResponse = get_IER_from_SPM(error,index)
+                                    if(serverResponse){
+                                        const authID = serverResponse.kwargs.userID as string
+                                        // show an alert to request another verification link 
+                                        toast(
+                                            (props)=>(
+                                                <AuthVerificationResendAlert 
+                                                    authID={authID}
+                                                    navigator={navigator}
+                                                    {...props}
+                                                />
+                                            ),
+                                            {
+                                                className:"w-full",
+                                                position:'top-center',
+                                                hideProgressBar:true
+                                            }
+                                        )
+                                        return
+                                    }
+                                    break }
                             case 'no_active_account':
                                 toast(
                                     <AlertCard

@@ -28,12 +28,12 @@ export function AuthVerificationResendStatusPage(){
   const location = useLocation()
   const state = location.state
 
-  //   useEffect(()=>{
-  //     //navigator(location,/*{replace:true}*/)
-  //     window.history.replaceState({},'')
+  // useEffect(()=>{
+  // //     //navigator(location,/*{replace:true}*/)
+  //      window.history.replaceState({},'')
   // },[])
 
-  if(!state || !!state['didVerificationResend']) return <Navigate to={"/login/"} replace/> 
+  if(!state || !!state['didVerificationResend'] === false) return <Navigate to={"/login/"} replace/> 
   const verificationResended = state && state['didVerificationResend'] === true ? true  : false
 
   return(

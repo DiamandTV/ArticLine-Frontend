@@ -31,3 +31,15 @@ export function setServerValidationErrors<T extends FieldValues>(axiosError:Axio
         }
     }
 }
+
+// GET INDEX ERROR RESPONSE FROM THE SERVER PAYLOAD MSG
+export function get_IER_from_SPM(axiosError:AxiosError,index:number):ServerErrorResponseInterface|null{
+    const data = axiosError?.response?.data
+    if(data && typeof data === 'object' && "errors" in data && Array.isArray(data.errors)){
+        const errors = data.errors as Array<ServerErrorResponseInterface> | undefined
+        if(errors && errors?.length > index){
+            return errors[index]
+        }       
+    }
+    return null
+}
