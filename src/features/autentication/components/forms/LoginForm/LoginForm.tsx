@@ -8,7 +8,7 @@ import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { authSliceActions } from "@features/autentication/slices/authSlice";
 import { AxiosError } from "axios";
-import { decodeServerPayloadMsg, get_IER_from_SPM } from "@features/autentication/utils/serverErrorDecode/errorDecode";
+import { decodeServerPayloadMsg, get_IER_from_SPM } from "@utils/serverErrorDecode/errorDecode";
 import { AccountResponseMapStatusType, AccountResponseType } from "@features/autentication/models/AccountResponse/AccountResponse";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";

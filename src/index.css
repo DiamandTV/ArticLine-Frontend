@@ -10,6 +10,14 @@
   font-variation-settings:
     "wdth" 100;
 } */
+@layer base{
+  @font-face{
+    font-family: 'Liondales';
+    src:url('./assets/fonts/Liondales/Liondales.otf');
+    font-weight:normal;
+    font-style:normal;
+  }
+}
 
 .fascinate-regular {
   font-family: "Fascinate", system-ui;

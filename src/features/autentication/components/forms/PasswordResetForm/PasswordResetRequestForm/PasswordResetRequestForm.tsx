@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form";
 import { passwordResetRequestFieldsSchema, PasswordResetRequestFieldsType } from "@features/autentication/models/PasswordResetRequestFields/PasswordResetRequestFields";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router";
-import { decodeServerPayloadMsg } from "@features/autentication/utils/serverErrorDecode/errorDecode";
+import { decodeServerPayloadMsg } from "@utils/serverErrorDecode/errorDecode";
 import { PasswordResetRequestResponseMapStatusType, PasswordResetRequestResponseStatus, PasswordResetRequestResponseType } from "@features/autentication/models/PasswordResetResponse/PasswordResetRequestResponse";
 import { toast } from "react-toastify";
 import { AlertCard } from "@components/cards/AlertCard/AlertCard";

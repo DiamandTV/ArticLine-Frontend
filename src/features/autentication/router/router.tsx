@@ -17,7 +17,7 @@ import { AxiosError } from "axios"
 import { AuthVerificationResendStatusPage } from "../pages/authVerifiication/AuthVerificationResendStatusPage"
 import { passwordResetServices } from "../services/passwordResetServices"
 import { PasswordResetCheckResponseMapStatusType, PasswordResetCheckResponseStatus, PasswordResetCheckResponseType } from "../models/PasswordResetResponse/PasswordResetCheckResponse"
-import { decodeServerPayloadMsg } from "../utils/serverErrorDecode/errorDecode"
+import { decodeServerPayloadMsg } from "../../../utils/serverErrorDecode/errorDecode"
 
 const protectedRoutes:RouteObject[] = [
     {

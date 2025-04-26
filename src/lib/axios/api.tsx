@@ -1,8 +1,9 @@
 import { HOST_URL } from "@data/server";
-import { toast, } from 'react-toastify';
-import axios, { AxiosError } from "axios";
-import { ServerErrorsAndTypeInterface } from "@models/ApiResponse/ErrorResponse/ServerErrorResponseInterface";
-import { Alert } from "react-bootstrap";
+
+import axios from "axios";
+import { defaultErrorInterceptor, getErrorInterceptor } from "./interceptors/responseInterceptors";
+import { tokenErrorInterceptor } from "@features/autentication";
+
 
 export const api = axios.create({
     baseURL:HOST_URL
@@ -15,38 +16,28 @@ api.interceptors.response.use(
     // },
     null,
     // ? ERROR
-    (error:AxiosError)=>{
-        console.log(error)
-        if(error.response){
-            const statusCode = error.response.status
-            const errorDetail = error.response.data as ServerErrorsAndTypeInterface
-            if(statusCode === 401){
-                // HANDLE UNAUTHORIZED ERRORS
-                // todo: remove to login
-            }
-            
-            if(errorDetail.type === 'server_error'){         
-                toast(
-                    <Alert variant="danger">
-                        SOMETHING WENT WRONG
-                    </Alert>
-                )
-            }
-        } else if (error.request){
-            //  NO RESPONSE RECEIVED (NETWORK ERROR, TIMEOUT , ETC...)
-            toast(
-                <Alert variant="danger">
-                    NETWROK ISSUE
-                </Alert>
-            )
+    getErrorInterceptor([defaultErrorInterceptor])
+)
+
+export const apiBearToken = axios.create({
+    baseURL:HOST_URL
+})
+
+apiBearToken.interceptors.response.use(
+    null,
+    getErrorInterceptor([defaultErrorInterceptor,tokenErrorInterceptor])
+)
+
+apiBearToken.interceptors.request.use(
+    async(config)=>{
+        const store = (await import('@store/store')).store
+        const authReducer = store.getState()?.authReducer
+        
+        if(authReducer && authReducer.jwt){
+            const access = authReducer.jwt.access
+            console.log(access)
+            config.headers.Authorization = `Bearer ${access}`
         }
-        else{
-            toast(
-                <Alert variant="danger">
-                    SOMETHING WENT WRONG
-                </Alert>
-            )
-        }
-        return Promise.reject(error)
+        return config
     }
 )

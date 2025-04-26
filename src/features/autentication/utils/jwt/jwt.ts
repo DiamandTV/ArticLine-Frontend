@@ -9,7 +9,7 @@ function getRefreshToken():string|null{
     return localStorage.getItem(REFRESH_TOKEN_STORAGE)
 }
 
-function isJWTValidate(jwt:JWTInterface):boolean{
+export function isJWTValidate(jwt:JWTInterface):boolean{
     const jwtExp = jwtDecode(jwt.access).exp
     if(jwtExp && Date.now() / 1000 < jwtExp) {
         return true
@@ -22,8 +22,8 @@ export function getJWT():JWTInterface|null{
     const refresh = getRefreshToken()
     if(access && refresh){
         const jwt:JWTInterface = {access,refresh}
-        if(isJWTValidate(jwt)) {
-            return jwt
+        if(isJWTValidate(jwt)) {  
+            return jwt       
         }
         
     }

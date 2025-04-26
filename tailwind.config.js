@@ -10,6 +10,7 @@ export default {
       fontFamily: {
         orbitron: ['Orbitron', 'sans-serif'],
         roboto: ['Roboto Condensed', 'sans-serif'],
+        liondales:['Liondales','sans-serif']
       },
       backgroundColor: {
         'primary-a0': 'var(--clr-primary-a0)',

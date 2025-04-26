@@ -1,9 +1,10 @@
 import { Container, Spinner } from "react-bootstrap";
 
-export function SimpleLoader(){
+type SimpleLoaderProps = React.HTMLAttributes<HTMLElement>
+export function SimpleLoader(props:SimpleLoaderProps){
     return(
-        <Container>
-            <Spinner variant="grow"/>
+        <Container {...props}>
+            <Spinner variant="grow" {...props} size="sm"/>
         </Container>
     )
 }

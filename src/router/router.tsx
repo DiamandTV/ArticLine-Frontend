@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router";
 import { BackgroundView } from "@views/BackgroundView";
-import {autenticationFeatureRoutes,UnProtectedRoute,ProtectedRoute} from "@features/autentication"
+import {autenticationFeatureRoutes,UnProtectedRoute,ProtectedRoute, authenticationLoader} from "@features/autentication"
 import { homeFeatureRoutes } from "@features/home";
+import { NavigationLoader } from "@components/loaders/NavigationLoader/NavigationLoader";
 export const router = createBrowserRouter([
     {
         path:'/',
@@ -11,6 +12,8 @@ export const router = createBrowserRouter([
             {
                 path:"",
                 element:<ProtectedRoute/>,
+                loader:authenticationLoader,
+                hydrateFallbackElement:<NavigationLoader/>,
                 children:[
                     ...autenticationFeatureRoutes.protectedRoutes,
                     ...homeFeatureRoutes.protectedRoutes 

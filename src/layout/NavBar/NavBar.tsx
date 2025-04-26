@@ -12,7 +12,7 @@ import {
 
 export function NavigationBar() {
   return (
-    <Navbar expand={false} className="bg-surface-a0 text-surface-a0 shadow-md" fixed="top">
+    <Navbar expand={false} className="bg-surface-a0 text-surface-a0 shadow-md h-max p-0" fixed="top">
       <Container fluid>
         <Navbar.Brand>
           <LogoTitle />

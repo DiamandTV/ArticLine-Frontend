@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router";
 import { useFormContext } from "react-hook-form";
 import { PasswordResetResponseMapStatusType, PasswordResetResponseStatus, PasswordResetResponseType } from "@features/autentication/models/PasswordResetResponse/PasswordResetResponse";
 import { AxiosError } from "axios";
-import { decodeServerPayloadMsg, setServerValidationErrors } from "@features/autentication/utils/serverErrorDecode/errorDecode";
+import { decodeServerPayloadMsg, setServerValidationErrors } from "@utils/serverErrorDecode/errorDecode";
 
 export function PasswordResetForm(){
     return(
