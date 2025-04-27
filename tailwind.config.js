@@ -6,6 +6,10 @@ export default {
   ],
   darkMode: 'class', // ⬅️ supporta `.dark` class
   theme: {
+    boxShadow:{
+      //'store-button-box-shadow-right': '1px -10px 0 red',
+      // 'store-button-box-shadow-left': '-1px -10px 0 red'
+    },
     extend: {
       fontFamily: {
         orbitron: ['Orbitron', 'sans-serif'],
@@ -36,6 +40,8 @@ export default {
 
         'dark-a0': 'var(--clr-dark-a0)',
         'light-a0': 'var(--clr-light-a0)',
+
+        'orange-red':'#Ff4500'
       },
       textColor: {
         'primary-a0': 'var(--clr-primary-a0)',
@@ -61,6 +67,8 @@ export default {
 
         'dark-a0': 'var(--clr-dark-a0)',
         'light-a0': 'var(--clr-light-a0)',
+
+        'orange-red':'#Ff4500'
       },
       borderColor: {
         'primary-a0': 'var(--clr-primary-a0)',
@@ -86,6 +94,8 @@ export default {
 
         'dark-a0': 'var(--clr-dark-a0)',
         'light-a0': 'var(--clr-light-a0)',
+
+        'orange-red':'#Ff4500'
       },
     },
   },
