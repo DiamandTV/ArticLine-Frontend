@@ -1,5 +1,8 @@
 import { cloneElement, useState } from "react";
-import { BottomNavigation as ButtonNavigationComponent } from "src/layout/BottomBar/component/BottomBar";
+import { BottomNavigation as ButtonNavigationComponent
+
+    
+ } from "src/layout/BottomBar/component/BottomBar";
 import { IoHome, IoSearch, IoBag, IoPerson,IoStorefront } from "react-icons/io5";
 import { getKey } from "@lib/kegGenerator/keyGenerator";
 
