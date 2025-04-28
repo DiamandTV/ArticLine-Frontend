@@ -3,6 +3,7 @@ import { BackgroundView } from "@views/BackgroundView";
 import {autenticationFeatureRoutes,UnProtectedRoute,ProtectedRoute, authenticationLoader} from "@features/autentication"
 import { homeFeatureRoutes } from "@features/home";
 import { NavigationLoader } from "@components/loaders/NavigationLoader/NavigationLoader";
+import { businessFeatureRoutes } from "@features/business";
 export const router = createBrowserRouter([
     {
         path:'/',
@@ -16,7 +17,8 @@ export const router = createBrowserRouter([
                 hydrateFallbackElement:<NavigationLoader/>,
                 children:[
                     ...autenticationFeatureRoutes.protectedRoutes,
-                    ...homeFeatureRoutes.protectedRoutes 
+                    ...homeFeatureRoutes.protectedRoutes ,
+                    ...businessFeatureRoutes.protectedRoutes
                 ]
             },
 
@@ -26,7 +28,8 @@ export const router = createBrowserRouter([
                 element:<UnProtectedRoute/>,
                 children:[
                     ...autenticationFeatureRoutes.unProtectedRoutes,
-                    ...homeFeatureRoutes.unProtectedRoutes
+                    ...homeFeatureRoutes.unProtectedRoutes,
+                    ...businessFeatureRoutes.unProtectedRoutes
                 ]
             }
         ]
