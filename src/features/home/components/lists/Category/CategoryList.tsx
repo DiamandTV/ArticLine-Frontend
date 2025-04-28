@@ -1,7 +1,9 @@
-import { CategoryCard } from "../../cards/Category/CategoryCard";
+import { useLoaderData } from "react-router";
 
 export function CategoryList(){
+    const result = useLoaderData()
+    if(!result) return null
     return(
-        <CategoryCard/>
+                
     )
 }
