@@ -16,7 +16,7 @@ interface BottomNavigationProps extends React.HTMLAttributes<HTMLElement>{
 export function BottomNavigation({state,setState,children}:BottomNavigationProps){
     return(
         <BottomNavigationContext.Provider value={{state,setState}}>
-            <nav className="w-full min-h-14 max-h-40 flex flex-row justify-between items-center fixed bottom-0 rounded-t-2xl px-4 py-2 bg-surface-a0">
+            <nav className="w-full min-h-14 max-h-40 flex flex-row justify-between items-center fixed z-50 bottom-0 rounded-t-2xl px-4 py-2 bg-surface-a0 ">
                 {children}
             </nav>
         </BottomNavigationContext.Provider>

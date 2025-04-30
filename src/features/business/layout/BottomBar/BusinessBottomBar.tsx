@@ -17,6 +17,7 @@ export function BusinessBottomNavigation() {
         <ButtonNavigationComponent 
             state={state}
             setState={setState}
+            
         >
             {ICONS.map((icon, index) => {
                 const iconClassName = `transition-all ease-linear duration-150 ${state === index ? 'text-3xl' : 'text-xl'}`;
@@ -27,7 +28,7 @@ export function BusinessBottomNavigation() {
                             <ButtonNavigationComponent.ImportantItem
                                 key={getKey()}
                                 index={4} // l'importante sarà al centro (index 4)
-                                icon={<IoCompass className="transition-all ease-linear duration-150 text-4xl" />}
+                                icon={<IoCompass key={getKey()} className="transition-all ease-linear duration-150 text-4xl" />}
                                 onClick={() => {
                                     // Qui puoi gestire il ritorno alla Home principale
                                     window.location.href = '/'; 

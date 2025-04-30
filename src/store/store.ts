@@ -2,7 +2,7 @@ import { authReducer } from "@features/autentication"
 import { configureStore } from "@reduxjs/toolkit"
 export const store = configureStore({
     reducer:{
-        authReducer
+        authReducer,
     }
 })
 

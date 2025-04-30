@@ -13,7 +13,9 @@ export const router = createBrowserRouter([
             {
                 path:"",
                 element:<ProtectedRoute/>,
-                loader:authenticationLoader,
+                loader:async()=>{
+                    return authenticationLoader()
+                },
                 hydrateFallbackElement:<NavigationLoader/>,
                 children:[
                     ...autenticationFeatureRoutes.protectedRoutes,
