@@ -33,7 +33,7 @@ export function AuthVerificationResendStatusPage(){
   //      window.history.replaceState({},'')
   // },[])
 
-  if(!state || !!state['didVerificationResend'] === false) return <Navigate to={"/login/"} replace/> 
+  if(!state || (state['didVerificationResend'] === undefined ||  state['didVerificationResend'] === null)) return <Navigate to={"/login/"} replace/> 
   const verificationResended = state && state['didVerificationResend'] === true ? true  : false
 
   return(

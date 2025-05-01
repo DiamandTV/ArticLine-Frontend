@@ -57,8 +57,12 @@ function PasswordResetRequestFormButton(){
                                 }
                               )   
                             return     
+                        default:
+                            
                     }
                 }
+                navigator('/password/reset-sended/status/',{state:{passwordResetRequestSended:false},replace:true}) 
+                return
             }
         },
     })

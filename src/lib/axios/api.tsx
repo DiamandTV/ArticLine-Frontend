@@ -3,6 +3,7 @@ import { HOST_URL } from "@data/server";
 import axios from "axios";
 import { defaultErrorInterceptor, getErrorInterceptor } from "./interceptors/responseInterceptors";
 import { tokenErrorInterceptor } from "@features/autentication";
+import { permissionErrorInterceptor } from "@features/autentication/utils/interceptors/responseInterceptors";
 
 
 export const api = axios.create({
@@ -25,7 +26,7 @@ export const apiBearToken = axios.create({
 
 apiBearToken.interceptors.response.use(
     null,
-    getErrorInterceptor([defaultErrorInterceptor,tokenErrorInterceptor])
+    getErrorInterceptor([defaultErrorInterceptor,permissionErrorInterceptor,tokenErrorInterceptor])
 )
 
 apiBearToken.interceptors.request.use(

@@ -15,7 +15,7 @@ export function PasswordResetRequestSendedStatusPage(){
     //     window.history.replaceState({},'')
     // },[])
 
-    if(!state || !!state.passwordResetRequestSended === false) {
+    if(!state || (state.passwordResetRequestSended === undefined || state.passwordResetRequestSended === null) ) {
         return <Navigate to={'/password/reset/'} replace/>
     }
     return(

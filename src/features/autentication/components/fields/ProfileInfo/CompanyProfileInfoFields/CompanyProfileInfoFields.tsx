@@ -6,6 +6,7 @@ import { ImageInput } from "@components/inputs/ImageInput";
 import { FieldsProps } from "@features/autentication/models/Fields/FieldsProps";
 import { FieldsProvider } from "@features/autentication/context/FieldsProvider/FieldsProvider";
 import { FieldsProviderProps } from "@features/autentication/models/Fields/FieldsProviderProps";
+import { AddressInput } from "@components/inputs/AddressInput";
 
 export function CompanyProfileInfoFieldsProvider(props:FieldsProviderProps<CompanyProfileInfoFieldsType>){
     return(
@@ -84,14 +85,20 @@ export function CompanyProfileInfoFields(props:FieldsProps){
                 </Col>
             </Row>
 
-            <Row className="w-full">
+           <Row className="w-full">
                 <Col as={Col} className="p-0" >
-                    <FloatingLabel label="ADDRESS">
-                        <Form.Control type="text" {...register('address')} isInvalid={!!errors.address}/>
-                        <Form.Control.Feedback type="invalid">
-                            {errors.address?.message}
-                        </Form.Control.Feedback>
-                    </FloatingLabel>
+                    <AddressInput
+                        label="ADDRESS"
+                        inputElement={
+                            <Form.Control type="text" {...register('address.full_address')} isInvalid={!!errors.address}/>
+                        }
+                        errorElement={
+                            <Form.Control.Feedback type="invalid">
+                                {errors.address?.full_address?.message }
+                            </Form.Control.Feedback>
+                        }
+                    />
+        
                 </Col>            
             </Row>
         </Form>

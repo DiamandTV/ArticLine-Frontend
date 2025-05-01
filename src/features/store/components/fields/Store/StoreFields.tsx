@@ -65,7 +65,7 @@ export function StoreInfoFields(props:FieldsProps){
 
             <Row className="w-full">
                 <Col as={Col} className="p-0" >
-                    <CategoryMultiSelect id="category" label="CATEGORY" />
+                    <CategoryMultiSelect id="categories" label="CATEGORY" />
                 </Col>            
             </Row>
 

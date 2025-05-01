@@ -1,18 +1,21 @@
 import { AlertCard } from "@components/cards/AlertCard/AlertCard"
 import { ServerErrorsAndTypeInterface } from "@models/ApiResponse/ErrorResponse/ServerErrorResponseInterface"
-import { AxiosError, AxiosResponse } from "axios"
+import {  AxiosError, AxiosResponse } from "axios"
 import { Alert } from "react-bootstrap"
 import { toast } from "react-toastify"
 
-type ErrorInterceptorType = (error:AxiosError)=>Promise<AxiosError|AxiosResponse>|undefined
+type ErrorInterceptorType = (error:AxiosError)=>Promise<AxiosError|AxiosResponse|undefined>
 export function getErrorInterceptor(errorFn:Array<ErrorInterceptorType>){
-    return (error:AxiosError)=>{
-        const responseInterceptors = errorFn.map((fn)=>fn(error))
-        return responseInterceptors[responseInterceptors.length-1]
+    return (error:unknown)=>{
+        if(error instanceof AxiosError){
+            const responseInterceptors = errorFn.map((fn)=>fn(error))
+            return responseInterceptors[responseInterceptors.length-1]
+        }
     }
 }
 
-export function defaultErrorInterceptor(error:AxiosError):undefined{
+export function defaultErrorInterceptor(error:AxiosError):Promise<AxiosError>{
+
     if(error.response){
         const statusCode = error.response.status
         const errorDetail = error.response.data as ServerErrorsAndTypeInterface
@@ -56,6 +59,7 @@ export function defaultErrorInterceptor(error:AxiosError):undefined{
             </Alert>
         )
     }
+    return Promise.reject(error)
 }
 
 // export function tokenErrorInterceptor(error:AxiosError){

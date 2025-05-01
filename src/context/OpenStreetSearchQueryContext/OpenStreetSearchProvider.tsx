@@ -11,6 +11,9 @@ export function OpenStreetSearchProvider({children}:OpenStreetSearchProviderProp
         mutationKey:['address'],
         mutationFn:async(address:string)=>{
             return await openStreetMapRepository.search(address)
+        },
+        onError:(error)=>{
+            console.log(error)
         }
     })
     return(

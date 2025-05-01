@@ -1,5 +1,5 @@
-import { AddressInterface } from "@features/autentication/models/Address/Interface/AddressInterface";
-import { AuthInterface } from "@features/autentication/models/Auth/AuthInterface/AuthInterface";
+import { AddressInterface, AddressRequestInterface } from "@features/autentication/models/Address/Interface/AddressInterface";
+import { AuthInterface, AuthSigninRequestInterface } from "@features/autentication/models/Auth/AuthInterface/AuthInterface";
 
 export interface CompanyProfileInterface{
     id:number,
@@ -13,5 +13,8 @@ export interface CompanyProfileInterface{
     is_certificated:boolean,
 }
 
-export type CompanyProfileSigninRequestInterface = Omit<CompanyProfileInterface,'id'>
-
+export type CompanyProfileSigninRequestInterface = Omit<CompanyProfileInterface,'id'|'image'|'auth'|'address' |'is_certificated'> & {
+    image:FileList,
+    auth:AuthSigninRequestInterface,
+    address:AddressRequestInterface
+} 

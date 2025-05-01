@@ -1,7 +1,7 @@
 import { api } from "@lib/axios/api"
 import { UserProfileSigninRequestInterface } from "../models/Profile/Interface/UserProfile/UserProfile";
 import { CourierProfileInterface } from "../models/Profile/Interface/CourierProfile/CourierProfile";
-import { CompanyProfileInterface } from "../models/Profile/Interface/CompanyProfile/CompanyProfile";
+import { CompanyProfileSigninRequestInterface } from "../models/Profile/Interface/CompanyProfile/CompanyProfile";
 
 import { COMPANY_SIGIN_URL, COURIER_SIGNIN_URL, USER_SIGNIN_URL } from "../data/endpoints";
 import { objToFormData } from "@utils/objToFormData/objToFormData";
@@ -27,8 +27,15 @@ export async function userSigninService(data:UserProfileSigninRequestInterface){
 export async function courierSigninService(data:CourierProfileInterface){
     return (await api.post(COURIER_SIGNIN_URL,data)).data
 }
-export async function companySigninService(data:CompanyProfileInterface){
-    return (await api.post(COMPANY_SIGIN_URL,data)).data
+export async function companySigninService(data:CompanyProfileSigninRequestInterface){
+    let formData = new FormData()
+    formData = objToFormData(formData,{...data,image:data.image[0]},"")
+
+    return await api.post(COMPANY_SIGIN_URL,formData,{
+        headers:{
+            'Content-Type':'multipart/form-data'
+        }
+    })
 }
 
 // interface SigninServiceParams{

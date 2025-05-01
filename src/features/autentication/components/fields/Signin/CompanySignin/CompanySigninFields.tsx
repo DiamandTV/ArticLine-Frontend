@@ -7,7 +7,9 @@ import { authInfoFieldsSchema } from "@features/autentication/models/Auth/AuthIn
 import { AuthInfoFields } from "../../AuthInfo/AuthInfoFields";
 import { MultiFormStepperProvider } from "@context/MultiFormStepper/MultiFormStepperProvider";
 import { CompanyProfileInfoFields } from "../../ProfileInfo/CompanyProfileInfoFields/CompanyProfileInfoFields";
-import { siginMutationOptions } from "@features/autentication/utils/signin/mutationOptions";
+import { companySigninService } from "@features/autentication/services/signinServices";
+import { CompanySigninFieldsType } from "@features/autentication/models/SigninFields/SigninFieldsType";
+import { useNavigate } from "react-router";
 
 export const CompanySigninFieldsProvider = FieldsProvider<CompanyProfileInfoFieldsType>
 
@@ -30,20 +32,27 @@ const getStepFormData = (step:number):GetStepFormDataReturnType=>{
 
 
 export function CompanySigninFields(props:FieldsProps){
+    const navigator = useNavigate()
     return(
         <CompanySigninFieldsProvider schema={companyInfoFieldsSchema}>
             <MultiFormStepperProvider
                 initialStep={0}
                 totalSteps={2}
                 getStepFormData={getStepFormData}
-                mutationOptions={siginMutationOptions({
+                mutationOptions={{
                     mutationKey:['company'],
-                    mutationFn:async()=>{
-                        
+                    mutationFn:async(formData:CompanySigninFieldsType)=>{
+                        const data = await companySigninService(formData)
+                        console.log(data)
+                        return data
+                    },
+                    onSuccess:(data)=>{
+                        console.log(data)
+                        navigator('/signin/done/',{state:{didSignin:true},replace:true})
                     }
-                })}
+                }}
             >
-                <SigninFields<CompanyProfileInfoFieldsType> {...props}/>
+                <SigninFields {...props}/>
             </MultiFormStepperProvider>
         </CompanySigninFieldsProvider>
     )

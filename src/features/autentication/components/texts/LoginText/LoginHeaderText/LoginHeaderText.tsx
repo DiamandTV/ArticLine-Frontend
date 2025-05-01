@@ -6,7 +6,7 @@ export function LoginHeaderText(){
             <h1 className="text-5xl">LOGIN</h1>
             <div className="w-full flex flex-row items-center justify-center gap-1">
                 <span>Don't have account?</span>
-                <Link to={"/user/signin/"}>
+                <Link to={"/select/signin/"}>
                     <b>SIGN IN</b>
                 </Link>
             </div>

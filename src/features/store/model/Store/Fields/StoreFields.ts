@@ -11,7 +11,7 @@ export const storeInfoFieldsSchema = z.object({
     image:singleImageValidator,
     title:z.string().min(1),
     description:z.string().min(1),
-    category:z.array(categorySelectInfoFieldsSchema).
+    categories:z.array(categorySelectInfoFieldsSchema).
     transform((categoriesSelect):number[]=>categoriesSelect.map((category)=>category.value)),
     address:addressInfoFieldsSchema
 })

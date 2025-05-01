@@ -1,8 +1,11 @@
 import { useFormContext } from "react-hook-form";
 import { StoreInfoFields, StoreInfoFieldsProvider } from "../../fields/Store/StoreFields";
 import { storeInfoFieldsSchema, StoreInfoFieldsType } from "@features/store/model/Store/Fields/StoreFields";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import { useMutation } from "react-query";
+import { storeBusinessServices } from "@features/store/services/storeBusinessServices";
+import { AxiosError } from "axios";
+import { ServerErrorsAndTypeInterface } from "@models/ApiResponse/ErrorResponse/ServerErrorResponseInterface";
 
 export function _Create(){
     return(
@@ -16,10 +19,27 @@ export function _Create(){
 }
 
 function CreateButton(){
-    const {trigger,getValues} = useFormContext<StoreInfoFieldsType>()
-    const {} = useMutation({
+    const {trigger,getValues,setError} = useFormContext<StoreInfoFieldsType>()
+    const {isLoading,mutateAsync} = useMutation({
         mutationKey:['create-store'],
-        mutationFn:async(params:StoreInfoFieldsType)=>{}
+        mutationFn:async(params:StoreInfoFieldsType)=>await storeBusinessServices.create(params),
+        onSuccess:(data)=>{
+            // todo:send to the list of pages
+        },
+        onError:(err)=>{
+            if(err instanceof AxiosError){
+                const errorReponse = err.response?.data as ServerErrorsAndTypeInterface
+                if(errorReponse && errorReponse?.type === 'validation_error'){
+                    const errors = errorReponse.errors
+                    errors.forEach((err)=>{
+                        const attr = err.attr as string
+                       
+                        setError(attr as keyof StoreInfoFieldsType,{message:err.detail,type:'custom'},{shouldFocus:true})
+                        
+                    })
+                }
+            }
+        }
     })
     const onClick = async(event:React.MouseEvent)=>{
         event.stopPropagation()
@@ -28,13 +48,14 @@ function CreateButton(){
             //
             const values = storeInfoFieldsSchema.parse(getValues())
             console.log(values)
+            await mutateAsync(values)
         }else{
             alert("ERROR")
         }
     }
     return(
         <Button className="w-full" onClick={onClick}>
-            CREATE
+            {isLoading ? <Spinner/> : "CREATE"}
         </Button>
     )
 }

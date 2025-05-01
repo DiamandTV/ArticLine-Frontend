@@ -2,7 +2,6 @@ import { NavigationBar } from "src/layout/NavBar/NavBar";
 import { BusinessBottomNavigation } from "../layout/BottomBar/BusinessBottomBar";
 import { Outlet } from "react-router";
 import { PaddingView } from "@views/PaddingView";
-import { Container } from "react-bootstrap";
 export function BusinessPage() {
     return (
         <div className="flex flex-col h-screen">
@@ -11,9 +10,9 @@ export function BusinessPage() {
             {/* Contenuto che si espande tra le due barre */}
             <div className="flex-1 overflow-auto">
                 <PaddingView>
-                    <Container className="p-2 sm:p-4 md:p-6 lg:!p-10 rounded-xl bg-surface-a0">
+                    <div className="w-full h-full p-0 sm:p-4 md:p-6 lg:!p-10 rounded-xl">
                         <Outlet />
-                    </Container>
+                    </div>
                 </PaddingView>
             </div>
 

@@ -67,12 +67,18 @@ const unProtectedRoutes:RouteObject[] = [
                         return VerificationResponseStatus.ALREADY_VERIFIED
                     }
                 }catch(error){
+                    
                     if(error instanceof AxiosError){
-                        const messageWithPayload = error.response?.data.errors[0].code
-                        if(messageWithPayload){
-                            // todo:remove hardcode message
-                            const message = (messageWithPayload as string).replace(/^.*]-/,'')
-                            return VerificationResponseMapStatusType[message as VerificationResponseType]
+                        const messages = decodeServerPayloadMsg(error)
+                        if(messages.length > 0){
+                            for(let ii=0;ii<messages.length;ii++){   
+                                const msg = messages[ii]
+                                if(Object.keys(VerificationResponseMapStatusType).includes(msg)){
+                                    console.log(VerificationResponseMapStatusType[msg as VerificationResponseType])
+                                    
+                                    return VerificationResponseMapStatusType[msg as VerificationResponseType]
+                                }
+                            }
                         }
                     }
                     

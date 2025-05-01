@@ -9,6 +9,7 @@
 //     return []
 // }
 
+
 function getNewKey(prevKey:string,actualKey:string){
     if(prevKey){
         return `${prevKey}[${actualKey}]`
@@ -18,38 +19,75 @@ function getNewKey(prevKey:string,actualKey:string){
 }
 
 
-export function objToFormData(formData:FormData,obj:Record<string,unknown> | Array<Record<string,unknown>>,prevKey:string=""):FormData{
-    if(typeof obj === 'object'){
-        Object.entries(obj).forEach(([key,value])=>{
-            switch(true){
-                // case Array.isArray(value):{
-                //         const array:Array<Record<string,unknown>> = value
-                //         formData.append(preKey+key,JSON.stringify(
-                //             Array.from(
-                //                 arrayToFormData(array)
-                //             )
-                //         ))
-                //     }
-                //     break;
-                case value instanceof File:{
-                        const file = value as File
-                        formData.append(key,file,file.name)
-                    }
-                    break;
-                case typeof value === 'object' && value !== null:{
+// export function objToFormData(formData:FormData,obj:Record<string,unknown> | Array<Record<string,unknown>> ,prevKey:string=""):FormData{
+//     if(typeof obj === 'object'){
+//         Object.entries(obj).forEach(([key,value])=>{
+//             switch(true){
+//                 case Array.isArray(value):{
+//                         const array:Array<Record<string,unknown>> = value
+//                         array.forEach((element)=>{
+                            
+//                             objToFormData(formData,element,`${getNewKey(prevKey,key)}[]`)
+//                         })
+//                     }
+//                     break;
+//                 case value instanceof File:{
+//                         const file = value as File
+//                         formData.append(key,file,file.name)
+//                     }
+//                     break;
+//                 case typeof value === 'object' && value !== null:{
                     
-                    objToFormData(formData,value as Record<string,unknown>,getNewKey(prevKey,key))
-                        //formData.append(key,JSON.stringify(value))
-                    }
-                    break;
-                default:
-                    if(typeof value === 'string'){
-                        formData.append(getNewKey(prevKey,key),value as string)
-                    }
-                    break;
+//                     objToFormData(formData,value as Record<string,unknown>,getNewKey(prevKey,key))
+//                         //formData.append(key,JSON.stringify(value))
+//                     }
+//                     break;
+//                 default:
+//                     if(typeof value !== 'function' && typeof value !== 'symbol' && typeof value !== 'undefined'){
+//                         formData.append(getNewKey(prevKey,key),value as string)
+//                     }
+//                     break;
+//             }
+//         })
+//     }
+//     console.log(Array.from(formData))
+//     return formData
+// }
+
+
+
+export function objToFormData(formData:FormData,obj:Record<string,unknown> | Array<Record<string,unknown>> ,prevKey:string=""):FormData{
+    switch(true){
+        case Array.isArray(obj):{
+                const array:Array<Record<string,unknown>> = obj
+                array.forEach((element)=>{
+                    objToFormData(formData,element,`${getNewKey(prevKey,'')}`)
+                })
             }
-        })
+            break;
+        case obj instanceof File:{
+                const file = obj as File
+                
+                formData.append(prevKey,file,file.name)
+            }
+            break;
+        case typeof obj === 'object' && obj !== null:{
+            Object.entries(obj).forEach(([_key,value])=>{
+                console.log(prevKey ? getNewKey(prevKey,_key) : _key)
+                objToFormData(formData,value as Record<string,unknown>,prevKey ? getNewKey(prevKey,_key) : _key)
+            })
+            
+                //formData.append(key,JSON.stringify(value))
+            }
+            break;
+        default:
+            if(typeof obj !== 'function' && typeof obj !== 'symbol' && typeof obj !== 'undefined'){
+                formData.append(prevKey,obj as string)
+            }
+            break;
     }
+
+   
     console.log(Array.from(formData))
     return formData
 }

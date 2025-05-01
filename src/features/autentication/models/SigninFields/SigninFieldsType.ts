@@ -29,6 +29,6 @@ export const companySigninFieldsSchema = z.object({
     authInfoFieldsSchema
 )
 
-export type CompanySigninFieldsType = z.infer<typeof companyInfoFieldsSchema>
+export type CompanySigninFieldsType = z.infer<typeof companySigninFieldsSchema>
 
 

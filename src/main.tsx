@@ -10,7 +10,13 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ToastContainer } from 'react-toastify';
 import { store } from '@store/store'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions:{
+    queries:{
+      retry:false,
+    }
+  }
+})
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

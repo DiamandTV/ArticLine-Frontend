@@ -62,7 +62,7 @@ export function PasswordResetStatusPage(){
   //     window.history.replaceState({},'')
   // },[])
     
-    if(!state || !!state.status === false){
+    if(!state || (state.status === undefined || state.status === null)){
       return <Navigate to={'/password/reset/'} replace/>
     }
 

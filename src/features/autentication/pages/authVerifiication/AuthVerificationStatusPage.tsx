@@ -1,4 +1,3 @@
-import { NavigationLoader } from "@components/loaders/NavigationLoader/NavigationLoader"
 import { AuthVerificationResendButton } from "@features/autentication/components/buttons/AuthVerificationResendButton/AuthVerificationResendButton"
 import { VerificationResponseStatus } from "@features/autentication/models/VerificationResponse/VerificationResponse"
 import { AuthenticationView } from "@features/autentication/view/AuthenticationView/AuthenticationView"
@@ -71,20 +70,19 @@ function getStatusPageInfo(responseStatus: VerificationResponseStatus): AuthVeri
 export function AuthVerificationStatusPage(){
     // typeof verification account type
     const result = useLoaderData()
+    console.log(result)
     //if(!result) return null
     const { alertColor, title, message, action } = getStatusPageInfo(result)
     return(
-        <NavigationLoader>
-            <AuthenticationView>
-                <Alert variant={alertColor} className="w-full flex flex-col justify-center items-center border-2">
-                    <h1 className="text-2xl">{title}</h1>
-                    <p>
-                        {message}
-                    </p>
-                    
-                </Alert>
-                {action}
-            </AuthenticationView>
-        </NavigationLoader>
+      <AuthenticationView>
+          <Alert variant={alertColor} className="w-full flex flex-col justify-center items-center border-2">
+              <h1 className="text-2xl">{title}</h1>
+              <p>
+                  {message}
+              </p>
+              
+          </Alert>
+          {action}
+      </AuthenticationView>
     )
 }
