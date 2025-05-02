@@ -14,7 +14,7 @@ export function CategoryCard({...attr}:CategoryCardProps) {
         <Card {...attr} className={className}>
             <div className="h-full w-full bg-cover bg-center" style={{backgroundImage:`url(${image})`}}></div>
             <Card.Body className="p-1 flex flex-col justify-center items-center">
-                <Card.Title className="text-lg font-normal font-roboto p-0 m-0">{name.toUpperCase()}</Card.Title>
+                <Card.Title className="text-lg font-normal font-sans p-0 m-0">{name.toUpperCase()}</Card.Title>
                 {
                 //   <Card.Text>{description}</Card.Text>
                 }

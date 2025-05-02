@@ -1,7 +1,6 @@
 import { NavigationBar } from "src/layout/NavBar/NavBar";
 import { BusinessBottomNavigation } from "../layout/BottomBar/BusinessBottomBar";
 import { Outlet } from "react-router";
-import { PaddingView } from "@views/PaddingView";
 export function BusinessPage() {
     return (
         <div className="flex flex-col h-screen">
@@ -9,11 +8,11 @@ export function BusinessPage() {
             
             {/* Contenuto che si espande tra le due barre */}
             <div className="flex-1 overflow-auto">
-                <PaddingView>
+               
                     <div className="w-full h-full p-0 sm:p-4 md:p-6 lg:!p-10 rounded-xl">
                         <Outlet />
                     </div>
-                </PaddingView>
+               
             </div>
 
             {/* Spazio riservato per la barra fissa in basso */}

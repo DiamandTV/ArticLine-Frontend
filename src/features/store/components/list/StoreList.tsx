@@ -1,9 +1,11 @@
 import { StoreProvider } from "@features/store/context/StoreContext/StoreProvider"
-import { useGetBusinessStoreQuery } from "@features/store/hooks/useGetBusinessStoreQuery/useGetBusinessStoreQuery"
+import { useGetBusinessStoreListQuery } from "@features/store/hooks/useGetBusinessStoreQuery/useGetBusinessStoreListQuery"
 import { StoreBusinessCard } from "../cards/StoreCard/StoreCard"
+import { useNavigate } from "react-router"
 
 export function StoreList(){
-    const {isLoading,isSuccess,data,ref} = useGetBusinessStoreQuery()
+    const navigator = useNavigate()
+    const {isLoading,isSuccess,data,ref} = useGetBusinessStoreListQuery()
     if(isLoading || !isSuccess) return null
     console.log(data)
     return(
@@ -12,7 +14,7 @@ export function StoreList(){
                 return(
                     <StoreProvider store={store}>
                         <StoreBusinessCard onClick={()=>{
-                            alert("CLICK")
+                            navigator(`${store.id}/`)
                         }}/>
                     </StoreProvider>
                 )

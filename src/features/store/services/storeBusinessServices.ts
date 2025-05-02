@@ -2,8 +2,8 @@ import { apiBearToken } from "@lib/axios/api"
 import { StoreInfoFieldsType } from "../model/Store/Fields/StoreFields"
 import { objToFormData } from "@utils/objToFormData/objToFormData"
 
-export async function retrieve(){
-    return await apiBearToken.get()
+export async function retrieve(id:number){
+    return await apiBearToken.get(`/store/company/${id}/retrieve/`)
 }
 
 export async function list(page:string|number = 1){
@@ -15,19 +15,19 @@ export async function create(storeInfo:StoreInfoFieldsType){
     let formData = new FormData()
     formData = objToFormData(formData,{...storeInfo,image:storeInfo.image[0]},'')
     console.log(formData)
-    return await apiBearToken.post('/store/create/',formData,{
+    return await apiBearToken.post('/store/company/create/',formData,{
         headers:{
             'Content-Type':'multipart/form-data'
         }
     })
 }
 
-export async function update(){
-    return await apiBearToken.patch()
+export async function update(id:number,storeInfo:StoreInfoFieldsType){
+    return await apiBearToken.patch(`store/company/${id}/update/`,storeInfo)
 }
 
-export async function _delete(){
-    return await apiBearToken.delete()
+export async function _delete(id:number){
+    return await apiBearToken.delete(`store/company/${id}/delete/`)
 }
 
 

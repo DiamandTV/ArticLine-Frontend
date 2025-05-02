@@ -23,8 +23,8 @@ export function SelectProfileTypePage() {
 
     return (
         <AuthenticationView>
-            <div className="font-roboto flex flex-col items-center gap-6 p-8">
-                <h1 className="font-roboto text-2xl font-bold mb-4">SELECT THE ACCOUNT TYPE</h1>
+            <div className="font-sans flex flex-col items-center gap-6 p-8">
+                <h1 className="font-sans text-2xl font-bold mb-4">SELECT THE ACCOUNT TYPE</h1>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-6xl justify-between items-center">
                     <Button

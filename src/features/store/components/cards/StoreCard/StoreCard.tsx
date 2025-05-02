@@ -46,7 +46,7 @@ StoreCard.Title = function Title(){
     const {store} = useContext(StoreContext)
     if(!store) return
     return(
-        <h3 className="text-xl font-semibold font-roboto truncate">{store.title}</h3>
+        <h3 className="text-xl font-semibold font-sans truncate">{store.title}</h3>
     )
 }
 
@@ -125,7 +125,7 @@ export function StoreBusinessCard({...attr}:StoreBusinessCardProps){
       />
       <StoreCard.Favourite/>
       <Card.Body className="p-2 flex flex-col ">
-        <h3 className="text-xl font-semibold font-roboto truncate">{store.title}</h3>
+        <h3 className="text-xl font-semibold font-sans truncate">{store.title}</h3>
         <div className=" flex justify-between text-sm text-gray-600">
           <StoreCard.Rating />
           <StoreCard.Views />

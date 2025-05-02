@@ -1,31 +1,22 @@
+import { CACHE_TIME, STATE_TIME } from "@data/query";
 import { StoreInterface } from "@features/store/model/Store/Interface/StoreInterface";
 import { storeBusinessServices } from "@features/store/services/storeBusinessServices";
-import { usePaginationInfiniteScroll } from "@hooks/PaginationInfiniteScroll/usePaginationInfiniteScroll";
-import { PaginationInterface } from "@models/ApiResponse/PaginationResponse/PaginationInterface";
-import { AxiosResponse } from "axios";
-import { InfiniteData } from "react-query";
+import { useQuery } from "react-query";
 
-
-function getDataFromPage<T>(data:InfiniteData<AxiosResponse<unknown, unknown>>){
-    const dataArr:Array<T> = []
-    data.pages.map((page)=>{
-        return (page.data as PaginationInterface).results?.map((res)=>{
-            if(res){
-                dataArr.push(res as T)
-            }
-        })
-    })
-    return dataArr
+interface useGetBusinessStoreQuery{
+    id:number
 }
-
-export function useGetBusinessStoreQuery(){
-    const paginationOptions = usePaginationInfiniteScroll({
-        queryKey:['business-fetch-store'], // stores
-        queryFn:async({pageParam})=>await storeBusinessServices.list(pageParam)
+export function useGetBusinessStoreQuery({id}:useGetBusinessStoreQuery){
+    const queryOptions = useQuery({
+        queryKey:['business-fetch-store'],
+        queryFn:async()=>await storeBusinessServices.retrieve(id),
+        staleTime:STATE_TIME,
+        cacheTime:CACHE_TIME
     })
 
-    if(paginationOptions.isSuccess){
-        return {...paginationOptions,data:getDataFromPage<StoreInterface>(paginationOptions.data)}
+    if(queryOptions.isSuccess){
+        return {...queryOptions,data:queryOptions.data.data as StoreInterface}
     }
-    return paginationOptions
+
+    return queryOptions
 }

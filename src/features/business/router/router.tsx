@@ -28,7 +28,7 @@ const protectedRoutes:RouteObject[] = [
             },
             
             {
-                path:'store/:id/',
+                path:'store/:store-id/',
                 element:<BusinessStorePage/>
             }
         ]

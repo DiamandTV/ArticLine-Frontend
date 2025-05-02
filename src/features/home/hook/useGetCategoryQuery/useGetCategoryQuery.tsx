@@ -1,3 +1,4 @@
+import { CategoryInterface } from "@features/home/model/Category/CategoryInterface";
 import { categoryService } from "@features/home/services/categoryService";
 import { AxiosResponse } from "axios";
 import { useQuery } from "react-query";
@@ -21,7 +22,7 @@ export function useGetCategoryQuery(){
 
     if(queryOptions.isSuccess){
         const data = queryOptions.data as AxiosResponse|undefined
-        return {...queryOptions,data:data?.data}
+        return {...queryOptions,data:data?.data as Array<CategoryInterface>}
     }
     return queryOptions
 }

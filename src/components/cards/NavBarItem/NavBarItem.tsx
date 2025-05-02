@@ -7,7 +7,7 @@ interface NavBarItemProps extends React.HTMLAttributes<HTMLDivElement>{
     
 }
 export function NavBarItem(props:NavBarItemProps){
-    const className = tailwindMerge("w-full flex flex-row items-center justify-start gap-2 font-roboto text-xl")
+    const className = tailwindMerge("w-full flex flex-row items-center justify-start gap-2 font-sans text-xl")
     return(
         <Button className={className} variant="outline-dark">
             {props.icon}
