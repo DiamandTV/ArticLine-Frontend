@@ -57,14 +57,15 @@ export function StoreCategoryAdd(){
           <FaPlus />
         </div>
       </StoreCategory>
-      <Sheet isOpen={isOpen} onClose={() => setOpen(false)}>
+      <Sheet isOpen={isOpen} onClose={()=>setOpen(false)} detent="content-height">
         <Sheet.Container>
           <Sheet.Header />
-          <Sheet.Content>{/* Your sheet content goes here */}HELO</Sheet.Content>
+          <Sheet.Content>
+            
+          </Sheet.Content>
         </Sheet.Container>
         <Sheet.Backdrop />
       </Sheet>
-
     </>
   )
 }

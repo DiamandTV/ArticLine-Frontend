@@ -107,10 +107,10 @@ function LoginFormButton(){
     }
 
     return(
-        <Button onClick={onClick}>
+        <Button onClick={onClick} variant="primary">
             {
                 isLoading ? 
-                <Spinner/> : "LOGIN"
+                <Spinner animation="border"/> : "LOGIN"
             }
         </Button>
     )

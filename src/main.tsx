@@ -19,12 +19,12 @@ const queryClient = new QueryClient({
 })
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+  //<StrictMode>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
           <ToastContainer autoClose={2000}/>
           <RouterProvider router={router}/>
       </QueryClientProvider>
     </Provider>
-  </StrictMode>,
+  //</StrictMode>,
 )
