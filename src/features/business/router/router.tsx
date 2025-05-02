@@ -2,6 +2,7 @@ import FeatureRouteReturnType from "@models/routes/routes";
 import { RouteObject } from "react-router";
 import { BusinessPage } from "../page/BusinessPage";
 import { CreateStore } from "@features/store";
+import { BusinessStoreListPage } from "@features/store/page/BusinessStore/BusinessStoreListPage";
 import { BusinessStorePage } from "@features/store/page/BusinessStore/BusinessStorePage";
 
 const protectedRoutes:RouteObject[] = [
@@ -11,7 +12,7 @@ const protectedRoutes:RouteObject[] = [
         children:[
             {
                 path:'store/',
-                element:<BusinessStorePage/>
+                element:<BusinessStoreListPage/>
             },
             {
                 path:'order/',
@@ -26,6 +27,10 @@ const protectedRoutes:RouteObject[] = [
                 element:<CreateStore/>
             },
             
+            {
+                path:'store/:id/',
+                element:<BusinessStorePage/>
+            }
         ]
     }
 ]

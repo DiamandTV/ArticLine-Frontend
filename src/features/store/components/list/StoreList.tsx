@@ -1,6 +1,6 @@
 import { StoreProvider } from "@features/store/context/StoreContext/StoreProvider"
 import { useGetBusinessStoreQuery } from "@features/store/hooks/useGetBusinessStoreQuery/useGetBusinessStoreQuery"
-import { StoreCard } from "../cards/StoreCard/StoreCard"
+import { StoreBusinessCard } from "../cards/StoreCard/StoreCard"
 
 export function StoreList(){
     const {isLoading,isSuccess,data,ref} = useGetBusinessStoreQuery()
@@ -11,7 +11,9 @@ export function StoreList(){
             {data.map((store)=>{
                 return(
                     <StoreProvider store={store}>
-                        <StoreCard/>
+                        <StoreBusinessCard onClick={()=>{
+                            alert("CLICK")
+                        }}/>
                     </StoreProvider>
                 )
             })}
