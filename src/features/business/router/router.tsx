@@ -4,6 +4,7 @@ import { BusinessPage } from "../page/BusinessPage";
 import { CreateStore } from "@features/store";
 import { BusinessStoreListPage } from "@features/store/page/BusinessStore/BusinessStoreListPage";
 import { BusinessStorePage } from "@features/store/page/BusinessStore/BusinessStorePage";
+import { BusinessStoreProductListPage } from "@features/store/page/BusinessStore/BusinessStoreProductListPage";
 
 const protectedRoutes:RouteObject[] = [
     {
@@ -30,6 +31,10 @@ const protectedRoutes:RouteObject[] = [
             {
                 path:'store/:store-id/',
                 element:<BusinessStorePage/>
+            },
+            {
+                path:'store/:store-id/:store-category-id/',
+                element:<BusinessStoreProductListPage/>
             }
         ]
     }

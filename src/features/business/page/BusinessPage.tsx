@@ -7,12 +7,10 @@ export function BusinessPage() {
             <NavigationBar />
             
             {/* Contenuto che si espande tra le due barre */}
-            <div className="flex-1 overflow-auto">
-               
-                    <div className="w-full h-full p-0 sm:p-4 md:p-6 lg:!p-10 rounded-xl">
-                        <Outlet />
-                    </div>
-               
+            <div className="flex-1 overflow-auto ">
+                <div className="w-full h-full p-0 sm:p-4 md:p-6 lg:!p-10 rounded-xl box-content ">
+                    <Outlet />
+                </div>         
             </div>
 
             {/* Spazio riservato per la barra fissa in basso */}

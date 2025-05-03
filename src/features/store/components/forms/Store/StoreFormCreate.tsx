@@ -25,6 +25,7 @@ function CreateButton(){
         mutationFn:async(params:StoreInfoFieldsType)=>await storeBusinessServices.create(params),
         onSuccess:(data)=>{
             // todo:send to the list of pages
+            console.log(data)
         },
         onError:(err)=>{
             if(err instanceof AxiosError){
@@ -32,10 +33,8 @@ function CreateButton(){
                 if(errorReponse && errorReponse?.type === 'validation_error'){
                     const errors = errorReponse.errors
                     errors.forEach((err)=>{
-                        const attr = err.attr as string
-                       
-                        setError(attr as keyof StoreInfoFieldsType,{message:err.detail,type:'custom'},{shouldFocus:true})
-                        
+                        const attr = err.attr as string                      
+                        setError(attr as keyof StoreInfoFieldsType,{message:err.detail,type:'custom'},{shouldFocus:true})   
                     })
                 }
             }
@@ -49,13 +48,11 @@ function CreateButton(){
             const values = storeInfoFieldsSchema.parse(getValues())
             console.log(values)
             await mutateAsync(values)
-        }else{
-            alert("ERROR")
         }
     }
     return(
         <Button className="w-full" onClick={onClick}>
-            {isLoading ? <Spinner/> : "CREATE"}
+            {isLoading ? <Spinner animation="border" /> : "CREATE"}
         </Button>
     )
 }

@@ -1,7 +1,10 @@
 import { StoreCategoryContext } from "@features/store/context/StoreCategoryContext/StoreCategoryContext"
-import { useContext, useState } from "react"
-import { Sheet } from 'react-modal-sheet';
+import { useContext } from "react"
 import { FaPlus } from "react-icons/fa"
+import { StoreCategoryForm } from "../../forms/StoreCategory/StoreCategoryForm";
+import { PaddingView } from "@views/PaddingView";
+import { BottomSheetModalContext } from "@context/BottomSheetModal/BottomSheetModalContext";
+import { SimpleBottomSheetModal } from "@components/modal/BottomSheetModal/SimpleBottomSheetModal";
 
 interface StoreCategoryProps extends React.HTMLAttributes<HTMLElement>{
   children:React.ReactNode
@@ -35,9 +38,10 @@ StoreCategory.Title = function Title(){
   )
 }
 
-export function StoreCategoryCard(){
+type StoreCategoryCardProps = React.HTMLAttributes<HTMLElement>
+export function StoreCategoryCard(attr:StoreCategoryCardProps){
   return(
-    <StoreCategory>
+    <StoreCategory {...attr}>
       <StoreCategory.Image/>
       <div className="px-2 py-1 flex flex-col justify-center items-center">
         <StoreCategory.Title/>
@@ -47,7 +51,7 @@ export function StoreCategoryCard(){
 }
 
 export function StoreCategoryAdd(){
-  const [isOpen,setOpen] = useState(false)
+  const {setOpen} = useContext(BottomSheetModalContext)
   return(
     <>
       <StoreCategory>
@@ -57,15 +61,11 @@ export function StoreCategoryAdd(){
           <FaPlus />
         </div>
       </StoreCategory>
-      <Sheet isOpen={isOpen} onClose={()=>setOpen(false)} detent="content-height">
-        <Sheet.Container>
-          <Sheet.Header />
-          <Sheet.Content>
-            
-          </Sheet.Content>
-        </Sheet.Container>
-        <Sheet.Backdrop />
-      </Sheet>
+      <SimpleBottomSheetModal detent="content-height">
+        <PaddingView>
+          <StoreCategoryForm.Create/>
+        </PaddingView>
+      </SimpleBottomSheetModal>
     </>
   )
 }

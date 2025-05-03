@@ -1,4 +1,4 @@
-import { StrictMode } from 'react'
+//import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router'
 import { router } from '@router/router'
@@ -9,6 +9,7 @@ import './index.css'
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ToastContainer } from 'react-toastify';
 import { store } from '@store/store'
+import { BottomSheetModalProvider } from '@context/BottomSheetModal/BottomSheetModalProvider'
 
 const queryClient = new QueryClient({
   defaultOptions:{
@@ -22,9 +23,12 @@ createRoot(document.getElementById('root')!).render(
   //<StrictMode>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-          <ToastContainer autoClose={2000}/>
-          <RouterProvider router={router}/>
+        <BottomSheetModalProvider>
+            <ToastContainer autoClose={2000}/>    
+            <RouterProvider router={router}/>
+          </BottomSheetModalProvider>
       </QueryClientProvider>
+      
     </Provider>
   //</StrictMode>,
 )
