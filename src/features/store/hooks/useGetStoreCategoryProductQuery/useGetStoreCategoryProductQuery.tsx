@@ -18,7 +18,7 @@ export function useGetStoreCategoryProductQuery({storeId,storeCategoryId}:useGet
         }
     })    
     if(paginationOptions.isSuccess){
-        return {...paginationOptions,data:getDataFromPage<ProductInterface>(paginationOptions.data)}
+       return {...paginationOptions,data:getDataFromPage<ProductInterface>(paginationOptions.data)}
     }
     return paginationOptions
 }

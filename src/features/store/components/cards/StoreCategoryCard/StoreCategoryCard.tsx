@@ -9,9 +9,9 @@ import { SimpleBottomSheetModal } from "@components/modal/BottomSheetModal/Simpl
 interface StoreCategoryProps extends React.HTMLAttributes<HTMLElement>{
   children:React.ReactNode
 }
-export function StoreCategory({children}:StoreCategoryProps) {
+export function StoreCategory({children,...attr}:StoreCategoryProps) {
   return (
-    <div className="w-full shadow-xl sm:w-64 rounded-lg shadow hover:shadow-md transition-all duration-300 bg-white overflow-hidden cursor-pointer">
+    <div {...attr}  className="w-full shadow-xl sm:w-64 rounded-lg shadow hover:shadow-md transition-all duration-300 bg-white overflow-hidden cursor-pointer">
       {children}
     </div>
   )

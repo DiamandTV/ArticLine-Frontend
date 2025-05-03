@@ -11,6 +11,7 @@ export function ProductList(){
             storeCategoryId:Number(params['store-category-id'])
         })
     if(isLoading || !isSuccess) return null
+    alert(data.length)
     return(
         <div className="grid grid-cols-3 px-3 gap-2">
             {
