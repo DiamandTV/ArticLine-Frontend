@@ -1,4 +1,4 @@
-import { StoreCategoryList } from "@features/store/components/list/StoreCategoryList";
+import { StoreCategory } from "@features/store/components/list/StoreCategoryList";
 import { StoreBusinessHeader } from "@features/store/components/store/StoreHeader";
 import { StoreProvider } from "@features/store/context/StoreContext/StoreProvider";
 import { useGetBusinessStoreQuery } from "@features/store/hooks/useGetBusinessStoreQuery/useGetBusinessStoreQuery";
@@ -16,7 +16,7 @@ export function BusinessStorePage(){
             <StoreProvider store={data}>
                 <StoreBusinessHeader/>
                 <hr className="mx-2"/>
-                <StoreCategoryList/>
+                <StoreCategory.Grid/>
             </StoreProvider>
         </div>
     )

@@ -9,7 +9,7 @@ import './index.css'
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ToastContainer } from 'react-toastify';
 import { store } from '@store/store'
-import { BottomSheetModalProvider } from '@context/BottomSheetModal/BottomSheetModalProvider'
+
 
 const queryClient = new QueryClient({
   defaultOptions:{
@@ -23,10 +23,10 @@ createRoot(document.getElementById('root')!).render(
   //<StrictMode>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <BottomSheetModalProvider>
+
             <ToastContainer autoClose={2000}/>    
             <RouterProvider router={router}/>
-          </BottomSheetModalProvider>
+
       </QueryClientProvider>
       
     </Provider>

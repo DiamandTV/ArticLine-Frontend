@@ -9,7 +9,7 @@ export interface AlertCardProps extends React.HTMLAttributes<HTMLElement>{
     action?:React.ReactNode
 }
 export function AlertCard({title,message,action,...props}:AlertCardProps){
-    const className = tailwindMerge("w-full flex flex-col justify-center items-center text-center "+props.className)
+    const className = tailwindMerge("w-full flex flex-col justify-center items-center text-center ",props.className)
     return(
         <Alert className={className} {...props}>
             <h1 className="text-2xl font-semibold">{title}</h1>

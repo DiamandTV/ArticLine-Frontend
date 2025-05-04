@@ -9,7 +9,7 @@ export function CategoryCard({...attr}:CategoryCardProps) {
     const {category} = useContext(CategoryContext)
     if(!category) return null
     const {image,name} = category
-    const className = tailwindMerge("w-40 h-40 flex-shrink-0 "+attr.className)
+    const className = tailwindMerge("w-40 h-40 flex-shrink-0 ",attr.className)
     return (
         <Card {...attr} className={className}>
             <div className="h-full w-full bg-cover bg-center" style={{backgroundImage:`url(${image})`}}></div>

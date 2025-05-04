@@ -14,7 +14,7 @@ export function StoreCard({ children,className, ...attr }: StoreCardProps) {
   const { store } = useContext(StoreContext)
   if (!store) return null
 
-  const mergedClass = tailwindMerge("rounded-md overflow-hidden shadow-md bg-white "+ className)
+  const mergedClass = tailwindMerge("rounded-md overflow-hidden shadow-md bg-white ",className)
 
   return (
     <Card {...attr} className={mergedClass}>

@@ -87,7 +87,7 @@ export function AuthVerificationResendButton(props:Omit<ResendButtonProps,'authI
 
 
 function RequestLinkButton(props:Omit<ResendButtonProps,'id'>){
-    const className = tailwindMerge("w-full "+props.className)
+    const className = tailwindMerge("w-full ",props.className)
     return(
         <Button {...props} className={className} size="lg" >
             RESEND LINK
@@ -96,7 +96,7 @@ function RequestLinkButton(props:Omit<ResendButtonProps,'id'>){
 }
 
 function RequestLoadingButton(props:Omit<ResendButtonProps,'id'>){
-    const className = tailwindMerge("w-full flex flex-row justify-center items-center gap-2 "+props.className)
+    const className = tailwindMerge("w-full flex flex-row justify-center items-center gap-2 ",props.className)
     return(
         <Button {...props} className={className} size="lg" >
             <Spinner/>

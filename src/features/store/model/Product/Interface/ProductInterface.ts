@@ -1,3 +1,5 @@
+import { StoreCategoryInterface } from "../../StoreCategory/Interface/StoreCategoryInterface";
+
 export interface ProductInterface{
     id:number,
 
@@ -7,7 +9,7 @@ export interface ProductInterface{
 
     price:number,
     store:number,
-    store_category:number,
+    store_category:StoreCategoryInterface,
 
     temperature_start_range:string,
     temperature_end_range:string

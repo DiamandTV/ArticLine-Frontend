@@ -18,7 +18,7 @@ export function StoreInfoFieldsProvider(props:FieldsProviderProps<StoreInfoField
 }
 
 export function StoreInfoFields(props:FieldsProps){
-    const className = tailwindMerge("w-full flex flex-col items-center justify-center gap-2 "+props.className)
+    const className = tailwindMerge("w-full flex flex-col items-center justify-center gap-2 ",props.className)
     const {register,formState:{errors},resetField,watch} = useFormContext<StoreInfoFieldsType>()
     console.log(errors)     
     return (

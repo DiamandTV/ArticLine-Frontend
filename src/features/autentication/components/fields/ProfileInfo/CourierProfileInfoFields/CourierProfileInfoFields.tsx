@@ -21,7 +21,7 @@ export function CourierProfileInfoFieldsProvider(props:FieldsProviderProps<Couri
 // }
 
 export function CourierProfileInfoFields(props:FieldsProps){
-    const className = tailwindMerge("w-full items-center justify-center gap-2 "+props.className)
+    const className = tailwindMerge("w-full items-center justify-center gap-2 ",props.className)
     const {register,watch,formState:{errors},getValues,resetField} = useFormContext<CourierProfileInfoFieldsType>()
     console.log(errors)
     console.log(getValues('image'))

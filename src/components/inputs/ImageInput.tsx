@@ -16,7 +16,7 @@ interface ImageInputProps extends React.HTMLAttributes<HTMLElement>{
 }
 
 export function ImageInput(props:ImageInputProps)  {
-    const className = tailwindMerge("w-[300px] flex flex-col gap-4 "+props.className)
+    const className = tailwindMerge("w-[300px] flex flex-col gap-4 ",props.className)
 
     const inputRef = useRef<HTMLInputElement|null>(null)
     const imageRef = useRef<HTMLImageElement|null>(null)

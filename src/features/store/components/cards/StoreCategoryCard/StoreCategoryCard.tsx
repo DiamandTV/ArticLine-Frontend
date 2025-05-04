@@ -5,6 +5,7 @@ import { StoreCategoryForm } from "../../forms/StoreCategory/StoreCategoryForm";
 import { PaddingView } from "@views/PaddingView";
 import { BottomSheetModalContext } from "@context/BottomSheetModal/BottomSheetModalContext";
 import { SimpleBottomSheetModal } from "@components/modal/BottomSheetModal/SimpleBottomSheetModal";
+import { tailwindMerge } from "@lib/tsMerge/tsMerge";
 
 interface StoreCategoryProps extends React.HTMLAttributes<HTMLElement>{
   children:React.ReactNode
@@ -50,17 +51,17 @@ export function StoreCategoryCard(attr:StoreCategoryCardProps){
   )
 }
 
-export function StoreCategoryAdd(){
+
+export function StoreCategoryAdd({...attr}:React.HTMLAttributes<HTMLElement>){
   const {setOpen} = useContext(BottomSheetModalContext)
+  const className = tailwindMerge("rounded-lg w-full h-full flex flex-col justify-center items-center text-surface-tonal-a10 text-4xl bg-primary-a50 hover:bg-primary-a40 ",attr.className)
   return(
     <>
-      <StoreCategory>
-        <div 
-          onClick={()=>{setOpen(true)}}
-        className="w-full h-full flex flex-col justify-center items-center text-surface-tonal-a10 text-4xl bg-primary-a50 hover:bg-primary-a40" >
+      <div 
+        onClick={()=>{setOpen(true)}}
+        className={className}>    
           <FaPlus />
-        </div>
-      </StoreCategory>
+      </div>
       <SimpleBottomSheetModal detent="content-height">
         <PaddingView>
           <StoreCategoryForm.Create/>

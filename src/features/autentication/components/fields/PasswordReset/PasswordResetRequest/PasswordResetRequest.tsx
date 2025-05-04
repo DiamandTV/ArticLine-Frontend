@@ -15,7 +15,7 @@ export function PasswordResetRequestFieldsProvider(props:FieldsProviderProps<Pas
 }
 
 export function PasswordResetRequestFields(props:FieldsProps){
-    const className = tailwindMerge("w-full flex items-center justify-center gap-2 "+props.className)
+    const className = tailwindMerge("w-full flex items-center justify-center gap-2 ",props.className)
     const {register,formState:{errors}} = useFormContext<PasswordResetRequestFieldsType>()
     return(
         <Form 

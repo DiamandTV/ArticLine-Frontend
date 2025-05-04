@@ -3,6 +3,7 @@ import { LoginHeaderText } from "@features/autentication/components/texts/LoginT
 import { AuthenticationView } from "@features/autentication/view/AuthenticationView/AuthenticationView";
 
 export function LoginPage(){
+
     return(
         <AuthenticationView>
             <LoginHeaderText/>

@@ -20,7 +20,7 @@ export function CompanyProfileInfoFieldsProvider(props:FieldsProviderProps<Compa
 // }
 
 export function CompanyProfileInfoFields(props:FieldsProps){
-    const className = tailwindMerge("w-full items-center justify-center gap-2 "+props.className)
+    const className = tailwindMerge("w-full items-center justify-center gap-2 ",props.className)
     const {register,watch,formState:{errors},resetField} = useFormContext<CompanyProfileInfoFieldsType>()
     console.log(errors)
     return(

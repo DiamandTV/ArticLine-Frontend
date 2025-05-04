@@ -30,7 +30,10 @@ export function BusinessBottomNavigation() {
     },[location])
 
     useEffect(()=>{
-        navigator(pathIndexMap[state])
+        if(!location.pathname.includes(pathIndexMap[state])){
+            navigator(pathIndexMap[state])
+        }
+        
     },[state])
 
     return (

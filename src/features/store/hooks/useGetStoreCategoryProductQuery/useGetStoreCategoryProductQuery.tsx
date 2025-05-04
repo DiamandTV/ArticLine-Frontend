@@ -11,7 +11,12 @@ export function useGetStoreCategoryProductQuery({storeId,storeCategoryId}:useGet
     const paginationOptions = usePaginationInfiniteScroll({
         queryKey:['fetch-store-category-product-list'],
         queryFn:async({pageParam})=>{
+            console.log(storeId)
+            console.log(storeCategoryId)
             if(storeId && storeCategoryId){
+                console.log(storeId)
+                console.log(storeCategoryId)
+                
                 return await storeBusinessProductServices.list(storeId,storeCategoryId,pageParam)
             }
             throw Error("Store ID or Store Category ID not provided")

@@ -5,7 +5,7 @@ import { FieldsProps } from "@features/autentication/models/Fields/FieldsProps"
 import { tailwindMerge } from "@lib/tsMerge/tsMerge"
 
 export function SigninFields(props:FieldsProps){
-    const className = tailwindMerge("w-full flex flex-col items-center justify-center gap-2 "+props.className)
+    const className = tailwindMerge("w-full flex flex-col items-center justify-center gap-2 ",props.className)
     const {children} = useMultiFormStepper()
     return(
         <div className="flex flex-col gap-2">

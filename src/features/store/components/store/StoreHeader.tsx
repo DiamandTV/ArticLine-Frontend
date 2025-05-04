@@ -14,7 +14,7 @@ interface StoreHeaderProps extends React.HTMLAttributes<HTMLElement>{
     children:React.ReactNode
 }
 export function StoreHeader({children,...attr}:StoreHeaderProps){
-    const className = tailwindMerge("border-none "+attr.className)
+    const className = tailwindMerge("border-none ",attr.className)
     return(
         <Card {...attr} className={className}>
             {children}

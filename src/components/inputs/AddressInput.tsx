@@ -13,7 +13,7 @@ interface AddressInputInternProps extends FloatingLabelProps{
     errorElement:React.ReactNode,
 }
 function AddressInputIntern(props:AddressInputInternProps){
-    const className = tailwindMerge("relative "+props.className)
+    const className = tailwindMerge("relative ",props.className)
     
     const [focus,setFocus] = useState(false)
 

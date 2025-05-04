@@ -4,7 +4,7 @@ import { NotificationButton } from "@features/notifications";
 import {  Container, Navbar } from "react-bootstrap";
 export function NavigationBar() {
   return (
-    <Navbar expand={false} className="bg-surface-a0 text-surface-a0 shadow-md h-max p-0" sticky="top">
+    <Navbar expand={false} className="bg-surface-a0 text-surface-a0 shadow-md h-max p-0 " sticky="top">
       <Container fluid>
         <Navbar.Brand>
           <LogoTitle />
