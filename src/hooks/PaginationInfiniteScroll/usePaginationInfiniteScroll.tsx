@@ -4,7 +4,8 @@ import { useEffect, useRef } from "react"
 import {  QueryFunction, useInfiniteQuery} from 'react-query'
 
 interface usePaginationInfiniteScrollProps{
-    queryKey:Array<string>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    queryKey:any[],
     queryFn: QueryFunction<AxiosResponse<unknown, unknown>, string[]>
 }
 

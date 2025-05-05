@@ -5,18 +5,13 @@ import { getDataFromPage } from "@utils/getDataFromPage/getDataFromPaginationRes
 
 interface useGetStoreCategoryProductQueryProps{
     storeId?:number,
-    storeCategoryId?:number
+    storeCategoryId?:number,
 }
 export function useGetStoreCategoryProductQuery({storeId,storeCategoryId}:useGetStoreCategoryProductQueryProps){
     const paginationOptions = usePaginationInfiniteScroll({
-        queryKey:['fetch-store-category-product-list'],
+        queryKey:['fetch-store-category-product-list',storeId,storeCategoryId],
         queryFn:async({pageParam})=>{
-            console.log(storeId)
-            console.log(storeCategoryId)
-            if(storeId && storeCategoryId){
-                console.log(storeId)
-                console.log(storeCategoryId)
-                
+            if(storeId && storeCategoryId){     
                 return await storeBusinessProductServices.list(storeId,storeCategoryId,pageParam)
             }
             throw Error("Store ID or Store Category ID not provided")

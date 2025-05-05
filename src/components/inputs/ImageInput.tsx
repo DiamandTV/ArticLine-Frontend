@@ -8,7 +8,7 @@ const DEFAULT_BACKGROUND_IMAGE_INPUT = 'https://mdbootstrap.com/img/Photos/Other
 
 
 interface ImageInputProps extends React.HTMLAttributes<HTMLElement>{
-    image?:FileList | null | undefined,
+    image?:File | null | undefined,
     onDelete:()=>void,
     isInvalid:boolean,
     inputElement:React.ReactNode,
@@ -49,10 +49,10 @@ export function ImageInput(props:ImageInputProps)  {
         }
     }
 
-    const getImage = (fileList:FileList|null|undefined)=>{
-        if(fileList?.length){
+    const getImage = (file:File|null|undefined)=>{
+        if(file){
             const reader = new FileReader()
-            reader.readAsDataURL(fileList[0])
+            reader.readAsDataURL(file)
             reader.onload = (e)=>{
                 if(imageRef.current ){
                     if(e.target?.result){
@@ -61,9 +61,9 @@ export function ImageInput(props:ImageInputProps)  {
                         resetImage()
                     }
                 }
-                
             }
         }
+        
         resetImage()
     }
 
@@ -96,7 +96,7 @@ export function ImageInput(props:ImageInputProps)  {
                     CHOOSE
                 </Button>
                 {
-                    props.image?.length && props.image[0].name ?
+                    props.image?.name ?
                     <Button variant="danger" onClick={()=>{
                         props.onDelete()
                     }}>

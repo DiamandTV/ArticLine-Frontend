@@ -3,8 +3,8 @@ import { RouteObject } from "react-router";
 import { BusinessPage } from "../page/BusinessPage";
 import { CreateStore } from "@features/store";
 import { BusinessStoreListPage } from "@features/store/page/BusinessStore/BusinessStoreListPage";
-import { BusinessStorePage } from "@features/store/page/BusinessStore/BusinessStorePage";
-import { BusinessStoreProductListPage } from "@features/store/page/BusinessStore/BusinessStoreProductListPage";
+import { BusinessStorePage } from "@features/store/page/BusinessStore/StorePage";
+import { BusinessStoreProductListPage } from "@features/store/page/BusinessStore/StoreProductListPage";
 
 const protectedRoutes:RouteObject[] = [
     {

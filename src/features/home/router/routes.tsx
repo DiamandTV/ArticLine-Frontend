@@ -1,28 +1,32 @@
-import FeatureRouteReturnType from "@models/routes/routes";
-import { RouteObject } from "react-router";
+import  { FeatureRoutes, RouteGroup } from "@models/routes/routes";
+
 import { HomePage } from "../pages/HomePage";
 import { categoryService } from "../services/categoryService";
 
-const protectedRoutes:RouteObject[] = [
-    {
-        path:'/',
-        element:<HomePage/>,
-        loader:async()=>{
-            try{
-                return await categoryService.list()
-            }catch(e){
-                console.log(e)
-                return null
+const protectedRoutes:RouteGroup = {
+    routesWithLayout:[
+        {
+            path:'/',
+            element:<HomePage/>,
+            loader:async()=>{
+                try{
+                    return await categoryService.list()
+                }catch(e){
+                    console.log(e)
+                    return null
+                }
             }
         }
-    }
-]
+    ]   ,
+    standaloneRoutes:[]
+}
 
-const unProtectedRoutes:RouteObject[] = [
-    {}
-]
-
-export const homeFeatureRoutes:FeatureRouteReturnType = {
-    protectedRoutes,
-    unProtectedRoutes
+const unProtectedRoutes:RouteGroup = {
+    routesWithLayout:[],
+    standaloneRoutes:[]
+}
+    
+export const homeFeatureRoutes:FeatureRoutes = {
+    protected:protectedRoutes,
+    public:unProtectedRoutes
 }

@@ -1,5 +1,5 @@
 import { apiBearToken } from "@lib/axios/api"
-import { StoreInfoFieldsType } from "../model/Store/Fields/StoreFields"
+import { StoreInfoFieldsTransformedType } from "../model/Store/Fields/StoreFields"
 import { objToFormData } from "@utils/objToFormData/objToFormData"
 
 export async function retrieve(id:number){
@@ -10,10 +10,10 @@ export async function list(page:string|number = 1){
     return await apiBearToken.get(`/store/company/list/?page=${page}`)
 }
 
-export async function create(storeInfo:StoreInfoFieldsType){
+export async function create(storeInfo:StoreInfoFieldsTransformedType){
     console.log(storeInfo)
     let formData = new FormData()
-    formData = objToFormData(formData,{...storeInfo,image:storeInfo.image[0]},'')
+    formData = objToFormData(formData,storeInfo,'')
     console.log(formData)
     return await apiBearToken.post('/store/company/create/',formData,{
         headers:{
@@ -22,7 +22,7 @@ export async function create(storeInfo:StoreInfoFieldsType){
     })
 }
 
-export async function update(id:number,storeInfo:StoreInfoFieldsType){
+export async function update(id:number,storeInfo:StoreInfoFieldsTransformedType){
     return await apiBearToken.patch(`store/company/${id}/update/`,storeInfo)
 }
 

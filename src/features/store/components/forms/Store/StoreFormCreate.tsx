@@ -1,13 +1,13 @@
 import { useFormContext } from "react-hook-form";
 import { StoreInfoFields, StoreInfoFieldsProvider } from "../../fields/Store/StoreFields";
-import { storeInfoFieldsSchema, StoreInfoFieldsType } from "@features/store/model/Store/Fields/StoreFields";
+import { storeInfoFieldsSchema, storeInfoFieldsTransformedSchema, StoreInfoFieldsType } from "@features/store/model/Store/Fields/StoreFields";
 import { Button, Spinner } from "react-bootstrap";
 import { useMutation } from "react-query";
 import { storeBusinessServices } from "@features/store/services/storeBusinessServices";
 import { AxiosError } from "axios";
 import { ServerErrorsAndTypeInterface } from "@models/ApiResponse/ErrorResponse/ServerErrorResponseInterface";
 
-export function _Create(){
+export function Create(){
     return(
         <div className="w-full flex flex-col gap-2 ">
             <StoreInfoFieldsProvider>
@@ -22,7 +22,9 @@ function CreateButton(){
     const {trigger,getValues,setError} = useFormContext<StoreInfoFieldsType>()
     const {isLoading,mutateAsync} = useMutation({
         mutationKey:['create-store'],
-        mutationFn:async(params:StoreInfoFieldsType)=>await storeBusinessServices.create(params),
+        mutationFn:async(params:StoreInfoFieldsType)=>{
+            await storeBusinessServices.create(storeInfoFieldsTransformedSchema.parse(params))
+        },
         onSuccess:(data)=>{
             // todo:send to the list of pages
             console.log(data)

@@ -1,5 +1,7 @@
 import { Product } from "@features/store/components/cards/ProductCard/ProductCard";
 import { PaddingView } from "@views/PaddingView";
+
+
 export function BusinessStoreProductPage() {
   return (
     <PaddingView>
@@ -26,7 +28,7 @@ export function BusinessStoreProductPage() {
         <h1></h1>
     </div>
     <hr className="w-full px-4 mt-3 pt-3"/>
-    <Product.Add/>
+    <Product.AddItem/>
     </PaddingView>
   );
 }

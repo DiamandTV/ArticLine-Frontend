@@ -11,6 +11,6 @@ export interface ProductInterface{
     store:number,
     store_category:StoreCategoryInterface,
 
-    temperature_start_range:string,
-    temperature_end_range:string
+    temperature_start_range:number,
+    temperature_end_range:number
 }

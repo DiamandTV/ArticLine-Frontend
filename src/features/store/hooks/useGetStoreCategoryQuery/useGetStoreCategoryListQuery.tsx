@@ -2,13 +2,13 @@ import { StoreCategoryInterface } from "@features/store/model/StoreCategory/Inte
 import { storeBusinessCategoryServices } from "@features/store/services/storeBusinessCategoryService";
 import { usePaginationInfiniteScroll } from "@hooks/PaginationInfiniteScroll/usePaginationInfiniteScroll";
 import { getDataFromPage } from "@utils/getDataFromPage/getDataFromPaginationResponse";
-import { useParams } from "react-router";
 
-export function useGetStoreCategoryListQuery(){
-    const params = useParams()
-    const storeId = params['store-id']
+interface useGetStoreCategoryListQueryProps{
+    storeId?:number
+}
+export function useGetStoreCategoryListQuery({storeId}:useGetStoreCategoryListQueryProps){
     const paginationOptions = usePaginationInfiniteScroll({
-        queryKey:['fetch-store-category-list'],
+        queryKey:['fetch-store-category-list',storeId],
         queryFn:async({pageParam})=>{
             if(storeId ){
                return await storeBusinessCategoryServices.list(Number(storeId),pageParam)

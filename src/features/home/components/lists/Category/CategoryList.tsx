@@ -38,7 +38,7 @@ export function CategoryList(){
     if(isLoading || !isSuccess) return
     console.log(categories)
     return(
-        <div className="w-screen flex flex-row items-center gap-x-4 relative overflow-x-scroll scrollbar-hide">
+        <div className="w-screen flex flex-row items-center gap-x-2 relative overflow-x-scroll scrollbar-hide">
             {categories.map((category)=>{
                 return(
                     <CategoryProvider key={getKey()} category={category}>

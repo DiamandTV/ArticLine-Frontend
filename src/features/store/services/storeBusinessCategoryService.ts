@@ -4,7 +4,7 @@ import { objToFormData } from "@utils/objToFormData/objToFormData"
 
 function getFormDataFromStoreCategoryInfo(storeCategoryInfo:StoreCategoryInfoFieldsType){
     let formData = new FormData()
-    formData = objToFormData(formData,{...storeCategoryInfo,image:storeCategoryInfo.image[0]},'')
+    formData = objToFormData(formData,storeCategoryInfo,'')
     console.log(formData)
     return formData
 }

@@ -1,15 +1,12 @@
 
-import { BottomNavigation } from "src/layout/BottomBar/BottomNavigation";
-import { NavigationBar } from "../../../layout/NavBar/NavBar";
+import { PaddingView } from "@views/PaddingView";
 import { CategoryList } from "../components/lists/Category/CategoryList";;
 
 
 export function HomePage() {
     return (
-        <div>
-            <NavigationBar />
-                <CategoryList />
-            <BottomNavigation/>
-        </div>
+        <PaddingView>
+            <CategoryList />
+        </PaddingView>
     );
 }

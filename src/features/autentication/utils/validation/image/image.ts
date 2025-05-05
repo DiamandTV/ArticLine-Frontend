@@ -10,3 +10,7 @@ refine((file)=>{
     }
     return true
 },'File too big')
+.transform((fileList)=>fileList[0])
+.refine((file) => file instanceof File, {
+    message: 'Invalid file',
+})

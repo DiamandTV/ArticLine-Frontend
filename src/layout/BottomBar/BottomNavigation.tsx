@@ -16,7 +16,7 @@ export function BottomNavigation(){
     const pathIndexMap = [
         '/',
         '/search',
-        '/business/store/',
+        '/store/',
         '/order',
         '/profile'
     ]

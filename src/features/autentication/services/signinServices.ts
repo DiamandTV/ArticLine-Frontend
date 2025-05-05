@@ -14,7 +14,7 @@ import { objToFormData } from "@utils/objToFormData/objToFormData";
 export async function userSigninService(data:UserProfileSigninRequestInterface){
     console.log(data)
     const formDatas = new FormData()
-    const formData = objToFormData(formDatas,{...data,image:data.image[0]},"")
+    const formData = objToFormData(formDatas,data,"")
     console.log(Array.from(formData))
     //const _data:Omit<UserProfileSigninRequestInterface,'image'> = {...data}
     //formData.append('data',JSON.stringify(_data))
@@ -29,7 +29,7 @@ export async function courierSigninService(data:CourierProfileInterface){
 }
 export async function companySigninService(data:CompanyProfileSigninRequestInterface){
     let formData = new FormData()
-    formData = objToFormData(formData,{...data,image:data.image[0]},"")
+    formData = objToFormData(formData,data,"")
 
     return await api.post(COMPANY_SIGIN_URL,formData,{
         headers:{

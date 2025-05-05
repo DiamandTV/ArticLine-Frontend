@@ -1,8 +1,9 @@
 import { FormOperationInterface } from "@models/forms/FormOperationType";
-import {_Create} from "./StoreCategoryFormCreate"
+import {Create} from "./StoreCategoryFormCreate"
+import { Update } from "./StoreCategoryFormUpdat";
 export const StoreCategoryForm:FormOperationInterface<unknown> = {
     Create:()=>{
-        return <_Create/>
+        return <Create/>
     },
-    Update:()=><div></div>
+    Update:()=><Update/>
 }

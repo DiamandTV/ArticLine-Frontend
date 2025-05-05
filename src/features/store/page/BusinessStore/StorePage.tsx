@@ -4,7 +4,11 @@ import { StoreProvider } from "@features/store/context/StoreContext/StoreProvide
 import { useGetBusinessStoreQuery } from "@features/store/hooks/useGetBusinessStoreQuery/useGetBusinessStoreQuery";
 import { useParams } from "react-router";
 
-export function BusinessStorePage(){
+export function StorePage(){
+    return <BusinessStorePage/>
+}
+
+function BusinessStorePage(){
     const params = useParams()
     const storeId = params['store-id']
     const {data,isLoading,isSuccess} = useGetBusinessStoreQuery({id:Number(storeId)})

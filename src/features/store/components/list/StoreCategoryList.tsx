@@ -1,7 +1,7 @@
 import { StoreCategoryProvider } from "@features/store/context/StoreCategoryContext/StoreCategoryProvider"
 import { useGetStoreCategoryListQuery } from "@features/store/hooks/useGetStoreCategoryQuery/useGetStoreCategoryListQuery"
 import { StoreCategoryAdd, StoreCategoryCard } from "../cards/StoreCategoryCard/StoreCategoryCard"
-import { useNavigate } from "react-router"
+import { useNavigate, useParams } from "react-router"
 import React from "react"
 import { tailwindMerge } from "@lib/tsMerge/tsMerge"
 import { Chip } from "@components/Chip/Chip"
@@ -13,8 +13,9 @@ export function StoreCategory(){
 
 type Props = React.HTMLAttributes<HTMLElement>;
 StoreCategory.Grid = function Grid({...attr}:Props){
+    const params = useParams()
     const navigator = useNavigate()
-    const paginationOptions = useGetStoreCategoryListQuery()
+    const paginationOptions = useGetStoreCategoryListQuery({storeId:Number(params['store-id'])})
     if(paginationOptions.isLoading || !paginationOptions.isSuccess) return
     const className = tailwindMerge("grid grid-cols-3 px-2 gap-2 ",attr.className)
     return(
@@ -27,7 +28,7 @@ StoreCategory.Grid = function Grid({...attr}:Props){
                             <StoreCategoryProvider storeCategory={storeCategory}>
                                 <StoreCategoryCard onClick={()=>{
                                     // navigate to the products page
-                                    navigator(`${storeCategory.id}/`)
+                                    navigator(`/store/${storeCategory.store}/category/${storeCategory.id}/`)
                                 }}/>
                             </StoreCategoryProvider>
                         </>
@@ -39,8 +40,9 @@ StoreCategory.Grid = function Grid({...attr}:Props){
 }
 
 StoreCategory.List = function List({...attr}:Props){
-   // const navigator = useNavigate()
-    const paginationOptions = useGetStoreCategoryListQuery()
+    const params = useParams()
+    const navigator = useNavigate()
+    const paginationOptions = useGetStoreCategoryListQuery({storeId:Number(params['store-id'])})
     if(paginationOptions.isLoading || !paginationOptions.isSuccess) return
     const className = tailwindMerge("w-full flex flex-row justify-start items-center gap-2 overflow-x-scroll scrollbar-hide ",attr.className)
     return(
@@ -51,7 +53,12 @@ StoreCategory.List = function List({...attr}:Props){
                     return(
                         <>
                             <StoreCategoryProvider storeCategory={storeCategory}>
-                                <Chip className="flex-shrink-0 ">
+                                <Chip 
+                                    className={`flex-shrink-0 ${storeCategory}`} 
+                                    onClick={()=>{
+                                        navigator(`/business/store/${storeCategory.store}/${storeCategory.id}/`)
+                                    }}
+                                >
                                     {storeCategory.name}
                                 </Chip>
                             </StoreCategoryProvider>

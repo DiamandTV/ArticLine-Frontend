@@ -12,7 +12,7 @@ export function CategoryCard({...attr}:CategoryCardProps) {
     const className = tailwindMerge("w-40 h-40 flex-shrink-0 ",attr.className)
     return (
         <Card {...attr} className={className}>
-            <div className="h-full w-full bg-cover bg-center" style={{backgroundImage:`url(${image})`}}></div>
+            <div className="h-full w-full bg-cover bg-center rounded-t-md" style={{backgroundImage:`url(${image})`}}></div>
             <Card.Body className="p-1 flex flex-col justify-center items-center">
                 <Card.Title className="text-lg font-normal font-sans p-0 m-0">{name.toUpperCase()}</Card.Title>
                 {

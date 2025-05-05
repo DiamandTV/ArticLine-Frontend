@@ -1,13 +1,18 @@
+import { SimpleBottomSheetModal } from "@components/modal/BottomSheetModal/SimpleBottomSheetModal";
+import { BottomSheetModalContext } from "@context/BottomSheetModal/BottomSheetModalContext";
+import { BottomSheetModalProvider } from "@context/BottomSheetModal/BottomSheetModalProvider";
 import { useGetCategoryQuery } from "@features/home/hook/useGetCategoryQuery/useGetCategoryQuery";
 import { CategoryInterface } from "@features/home/model/Category/CategoryInterface";
 import { StoreContext } from "@features/store/context/StoreContext/StoreContext";
 import { tailwindMerge } from "@lib/tsMerge/tsMerge";
+import { PaddingView } from "@views/PaddingView";
 import { useContext, useState } from "react";
 import { Accordion, Card } from "react-bootstrap";
 import { AiFillHeart, AiFillStar, AiOutlineHeart } from "react-icons/ai";
-import { FiEye } from "react-icons/fi";
+import { FiEye, FiSettings } from "react-icons/fi";
 import { GoLocation } from "react-icons/go";
 import { IoMdInformationCircleOutline } from "react-icons/io";
+import { StoreForm } from "../forms/Store/StoreForm";
 
 
 interface StoreHeaderProps extends React.HTMLAttributes<HTMLElement>{
@@ -204,12 +209,43 @@ StoreHeader.Distance = function Distance() {
     );
 };
 
+StoreHeader.Settings = function Settings(){
+    return (
+        <BottomSheetModalProvider>
+            <BottomSheetModalContext.Consumer>
+                {
+                    ({setOpen})=>{
+                        return(
+                            <>
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setOpen(true)
+                                    }}
+                                    className="absolute top-0 left-0 p-1 m-2 rounded-full bg-black/50 hover:bg-black/70 transition"
+                                    >
+                                    <FiSettings className="text-white" size={22} />
+                                </button>
+                                <SimpleBottomSheetModal >
+                                    <PaddingView>
+                                        <StoreForm.Update/>
+                                    </PaddingView>
+                                </SimpleBottomSheetModal>
+                            </>
+                        )
+                    }
+                }
+            </BottomSheetModalContext.Consumer>
+        </BottomSheetModalProvider>
+      );
+}
 
 type StoreBusinessHeaderProps = React.HTMLAttributes<HTMLElement> 
 export function StoreBusinessHeader({...attr}:StoreBusinessHeaderProps){
     return(
         <StoreHeader {...attr}>
             <StoreHeader.Image/>
+            <StoreHeader.Settings/>
             <StoreHeader.Favourite/>
             <Card.Body className="w-full flex flex-col gap-2 pb-0">
                 <StoreHeader.Title/>

@@ -3,7 +3,8 @@ import { BackgroundView } from "@views/BackgroundView";
 import {autenticationFeatureRoutes,UnProtectedRoute,ProtectedRoute, authenticationLoader} from "@features/autentication"
 import { homeFeatureRoutes } from "@features/home";
 import { NavigationLoader } from "@components/loaders/NavigationLoader/NavigationLoader";
-import { businessFeatureRoutes } from "@features/business";
+import { LayoutView } from "@views/LayoutView";
+import { storeRoutes } from "@features/store/router/router";
 export const router = createBrowserRouter([
     {
         path:'/',
@@ -18,9 +19,22 @@ export const router = createBrowserRouter([
                 },
                 hydrateFallbackElement:<NavigationLoader/>,
                 children:[
-                    ...autenticationFeatureRoutes.protectedRoutes,
-                    ...homeFeatureRoutes.protectedRoutes ,
-                    ...businessFeatureRoutes.protectedRoutes
+                    {
+                        path:"",
+                        element:<LayoutView/>,
+                        children:[
+                            ...autenticationFeatureRoutes.protected.routesWithLayout,
+                            ...homeFeatureRoutes.protected.routesWithLayout,
+                            ...storeRoutes.protected.routesWithLayout
+                            //...businessFeatureRoutes.protected.routesWithLayout
+                        ]
+                    },
+
+
+                    ...autenticationFeatureRoutes.protected.standaloneRoutes,
+                    ...homeFeatureRoutes.protected.standaloneRoutes ,
+                    ...storeRoutes.protected.standaloneRoutes
+                    //...businessFeatureRoutes.protected.standaloneRoutes
                 ]
             },
 
@@ -29,9 +43,21 @@ export const router = createBrowserRouter([
                 path:"",
                 element:<UnProtectedRoute/>,
                 children:[
-                    ...autenticationFeatureRoutes.unProtectedRoutes,
-                    ...homeFeatureRoutes.unProtectedRoutes,
-                    ...businessFeatureRoutes.unProtectedRoutes
+                    {
+                        path:"",
+                        element:<LayoutView/>,
+                        children:[
+                            ...autenticationFeatureRoutes.public.routesWithLayout,
+                            ...homeFeatureRoutes.public.routesWithLayout,
+                            ...storeRoutes.public.routesWithLayout
+                            //...businessFeatureRoutes.public.routesWithLayout
+                        ]
+                    },
+
+                    ...autenticationFeatureRoutes.public.standaloneRoutes,
+                    ...homeFeatureRoutes.public.standaloneRoutes,
+                    ...storeRoutes.public.standaloneRoutes,
+                    //...businessFeatureRoutes.public.standaloneRoutes
                 ]
             }
         ]

@@ -17,11 +17,11 @@ export function BusinessBottomNavigation() {
     const [state, setState] = useState(0);
 
     const pathIndexMap = [
-        '/business/store/',
-        '/business/order/',
+        '/store/',
+        '/order/',
         '/',
-        '/business/order-batch/',
-        '/business/store/create/'
+        '/order-batch/',
+        '/store/create/'
     ]
 
     useEffect(()=>{

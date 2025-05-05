@@ -1,12 +1,12 @@
 import { FormOperationInterface } from "@models/forms/FormOperationType"
-import { _Create } from "./StoreFormCreate"
+import { Create } from "./StoreFormCreate"
+import { Update } from "./StoreFormUpdate"
 
-
-export const StoreForm:FormOperationInterface<{}> = {
-    Create:(props:{})=>{
-        return <_Create  {...props}/>
+export const StoreForm:FormOperationInterface<unknown> = {
+    Create:()=>{
+        return <Create/>
     },
-    Update:(props:StoreFormProps)=>{
-        return <div></div>
+    Update:()=>{
+        return <Update/>
     }
 }

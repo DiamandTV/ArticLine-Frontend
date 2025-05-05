@@ -1,5 +1,4 @@
-import { RouteObject } from "react-router"
-import FeatureRouteReturnType from "@models/routes/routes"
+import  { FeatureRoutes, RouteGroup } from "@models/routes/routes"
 import { UserSigninPage } from "../pages/signin/UserSigninPage"
 import { LoginPage } from "../pages/login/Login"
 import { SelectProfileTypePage } from "../pages/selectProfileType/SelectProfileType"
@@ -19,119 +18,121 @@ import { passwordResetServices } from "../services/passwordResetServices"
 import { PasswordResetCheckResponseMapStatusType, PasswordResetCheckResponseStatus, PasswordResetCheckResponseType } from "../models/PasswordResetResponse/PasswordResetCheckResponse"
 import { decodeServerPayloadMsg } from "../../../utils/serverErrorDecode/errorDecode"
 
-const protectedRoutes:RouteObject[] = [
-    {
+const _protected:RouteGroup = {
+    routesWithLayout:[],
+    standaloneRoutes:[]
+}
 
-    }
-]
+const _public:RouteGroup = {
+    routesWithLayout:[],
+    standaloneRoutes:[
+        {
+            path:"select/signin/",
+            element:<SelectProfileTypePage/>
+        },
+        {
+            path:"user/signin/",
+            element:<UserSigninPage/>
+        },
+        {
+            path:"courier/signin/",
+            element:<CourierSigninPage/>
+        },
+        {
+            path:"company/signin/",
+            element:<CompanySigninPage/>
+        },
+        {
+            path:"signin/done/",
+            element:<SigninDone/>
+        },
 
-const unProtectedRoutes:RouteObject[] = [
-    {
-        path:"select/signin/",
-        element:<SelectProfileTypePage/>
-    },
-    {
-        path:"user/signin/",
-        element:<UserSigninPage/>
-    },
-    {
-        path:"courier/signin/",
-        element:<CourierSigninPage/>
-    },
-    {
-        path:"company/signin/",
-        element:<CompanySigninPage/>
-    },
-    {
-        path:"signin/done/",
-        element:<SigninDone/>
-    },
-
-    {
-        path:"login/",
-        element:<LoginPage/>
-    },
-    {
-        path:"email/verification/:id/:token/",
-        element:<AuthVerificationStatusPage/>,
-        loader: async({params})=>{
-            // todo: verify the code
-            const profileID:string|undefined = params.id
-            const token:string|undefined = params.token
-            if(profileID && token){
-                try{
-                    const response = await verificationServices.verification(profileID,token)
-                    if(response.status === 200){
-                        return VerificationResponseStatus.VERIFIED
-                    } else{
-                        return VerificationResponseStatus.ALREADY_VERIFIED
-                    }
-                }catch(error){
-                    
-                    if(error instanceof AxiosError){
-                        const messages = decodeServerPayloadMsg(error)
-                        if(messages.length > 0){
-                            for(let ii=0;ii<messages.length;ii++){   
-                                const msg = messages[ii]
-                                if(Object.keys(VerificationResponseMapStatusType).includes(msg)){
-                                    console.log(VerificationResponseMapStatusType[msg as VerificationResponseType])
-                                    
-                                    return VerificationResponseMapStatusType[msg as VerificationResponseType]
+        {
+            path:"login/",
+            element:<LoginPage/>
+        },
+        {
+            path:"email/verification/:id/:token/",
+            element:<AuthVerificationStatusPage/>,
+            loader: async({params})=>{
+                // todo: verify the code
+                const profileID:string|undefined = params.id
+                const token:string|undefined = params.token
+                if(profileID && token){
+                    try{
+                        const response = await verificationServices.verification(profileID,token)
+                        if(response.status === 200){
+                            return VerificationResponseStatus.VERIFIED
+                        } else{
+                            return VerificationResponseStatus.ALREADY_VERIFIED
+                        }
+                    }catch(error){
+                        
+                        if(error instanceof AxiosError){
+                            const messages = decodeServerPayloadMsg(error)
+                            if(messages.length > 0){
+                                for(let ii=0;ii<messages.length;ii++){   
+                                    const msg = messages[ii]
+                                    if(Object.keys(VerificationResponseMapStatusType).includes(msg)){
+                                        console.log(VerificationResponseMapStatusType[msg as VerificationResponseType])
+                                        
+                                        return VerificationResponseMapStatusType[msg as VerificationResponseType]
+                                    }
                                 }
                             }
                         }
+                        
                     }
-                    
                 }
-            }
-            return VerificationResponseStatus.BAD_REQUEST
+                return VerificationResponseStatus.BAD_REQUEST
+            },
+            
         },
-        
-    },
-    {
-        path:'email/verification/:id/status/',
-        element:<AuthVerificationResendStatusPage/>
-    },
+        {
+            path:'email/verification/:id/status/',
+            element:<AuthVerificationResendStatusPage/>
+        },
 
-    {
-        path:"password/reset/",
-        element:<PasswordResetRequestPage/>
-    },
-    {
-        path:"password/reset-sended/status/",
-        element:<PasswordResetRequestSendedStatusPage/>
-    },
+        {
+            path:"password/reset/",
+            element:<PasswordResetRequestPage/>
+        },
+        {
+            path:"password/reset-sended/status/",
+            element:<PasswordResetRequestSendedStatusPage/>
+        },
 
-    {
-        path:"password/reset/:token/",
-        element:<PasswordResetPage/>,
-        loader:async({params})=>{
-            const token = params['token']
-            if(token){
-                try{    
-                    await passwordResetServices.passwordResetCheckToken(token)
-                    return PasswordResetCheckResponseStatus.TOKEN_VERIFIED
-                }catch(error){
-                    console.log(error)
-                    if(error instanceof AxiosError){
-                        const messages = decodeServerPayloadMsg(error)
-                        if(messages.length > 0 && Object.keys(VerificationResponseMapStatusType).includes(messages[0])){
-                            const message = messages[0] as PasswordResetCheckResponseType
-                            return PasswordResetCheckResponseMapStatusType[message]
+        {
+            path:"password/reset/:token/",
+            element:<PasswordResetPage/>,
+            loader:async({params})=>{
+                const token = params['token']
+                if(token){
+                    try{    
+                        await passwordResetServices.passwordResetCheckToken(token)
+                        return PasswordResetCheckResponseStatus.TOKEN_VERIFIED
+                    }catch(error){
+                        console.log(error)
+                        if(error instanceof AxiosError){
+                            const messages = decodeServerPayloadMsg(error)
+                            if(messages.length > 0 && Object.keys(VerificationResponseMapStatusType).includes(messages[0])){
+                                const message = messages[0] as PasswordResetCheckResponseType
+                                return PasswordResetCheckResponseMapStatusType[message]
+                            }
                         }
                     }
                 }
             }
+        },
+        {
+            path:"password/reset/status/",
+            element:<PasswordResetStatusPage/>
         }
-    },
-    {
-        path:"password/reset/status/",
-        element:<PasswordResetStatusPage/>
-    }
-]
+    ]
+}
 
-export const autenticationFeatureRoutes:FeatureRouteReturnType  =  {
-    protectedRoutes,
-    unProtectedRoutes
+export const autenticationFeatureRoutes:FeatureRoutes  =  {
+    protected:_protected,
+    public:_public
 } 
 

@@ -1,5 +1,8 @@
+import { SimpleBottomSheetModal } from "@components/modal/BottomSheetModal/SimpleBottomSheetModal";
+import { BottomSheetModalContext } from "@context/BottomSheetModal/BottomSheetModalContext";
 import { ProductContext } from "@features/store/context/ProductContext/ProductContext";
 import { tailwindMerge } from "@lib/tsMerge/tsMerge";
+import { PaddingView } from "@views/PaddingView";
 import { useContext, useState } from "react";
 import { Card } from "react-bootstrap";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
@@ -57,7 +60,7 @@ Product.Title = function Title(attr:React.HTMLAttributes<HTMLElement>) {
   return <h3 className={className}>{product.name}</h3>;
 };
 
-Product.Description = function Description(attr:React.HTMLAttributes<HTMLElement>) {
+Product.Description = function Description(/*attr:React.HTMLAttributes<HTMLElement>*/) {
   const { product } = useContext(ProductContext);
   if (!product) return null;
 
@@ -67,9 +70,9 @@ Product.Description = function Description(attr:React.HTMLAttributes<HTMLElement
 Product.Category = function Category(attr:React.HTMLAttributes<HTMLElement>) {
   const { product } = useContext(ProductContext);
   if (!product) return null;
-
+  const className = tailwindMerge("w-max h-max flex flex-row justify-center items-center text-xs text-white bg-blue-500 px-2 py-0.5 rounded-full",attr.className)
   return (
-    <span className="w-max h-max flex flex-row justify-center items-center text-xs text-white bg-blue-500 px-2 py-0.5 rounded-full">
+    <span className={className}>
       {product.store_category.name}
     </span>
   );
@@ -91,7 +94,7 @@ Product.Price = function Price(attr:React.HTMLAttributes<HTMLElement>) {
 
 
 
-Product.TemperatureStart = function TemperatureStart(attr:React.HTMLAttributes<HTMLElement>) {
+Product.TemperatureStart = function TemperatureStart(/*attr:React.HTMLAttributes<HTMLElement>*/) {
   const { product } = useContext(ProductContext);
   if (!product?.temperature_start_range) return null;
 
@@ -103,7 +106,7 @@ Product.TemperatureStart = function TemperatureStart(attr:React.HTMLAttributes<H
   );
 };
 
-Product.TemperatureEnd = function TemperatureEnd(attr:React.HTMLAttributes<HTMLElement>) {
+Product.TemperatureEnd = function TemperatureEnd(/*attr:React.HTMLAttributes<HTMLElement>*/) {
   const { product } = useContext(ProductContext);
   if (!product?.temperature_end_range) return null;
 
@@ -115,7 +118,7 @@ Product.TemperatureEnd = function TemperatureEnd(attr:React.HTMLAttributes<HTMLE
   );
 };
 
-Product.TemperatureRange = function TemperatureRange(attr:React.HTMLAttributes<HTMLElement>) {
+Product.TemperatureRange = function TemperatureRange(/*attr:React.HTMLAttributes<HTMLElement>*/) {
   const { product } = useContext(ProductContext);
   if (
     product?.temperature_start_range === undefined ||
@@ -135,8 +138,11 @@ Product.TemperatureRange = function TemperatureRange(attr:React.HTMLAttributes<H
 
 
 import { FaPlus, FaMinus, FaShoppingCart } from "react-icons/fa";
+import { ProductForm } from "../../forms/Product/ProductForm";
+import { FiSettings } from "react-icons/fi";
+import { BottomSheetModalProvider } from "@context/BottomSheetModal/BottomSheetModalProvider";
 
-Product.Add = function Add(attr:React.HTMLAttributes<HTMLElement>) {
+Product.AddItem = function AddItem(/*attr:React.HTMLAttributes<HTMLElement>*/) {
   const {product} = useContext(ProductContext)
   const [quantity, setQuantity] = useState(1);
 
@@ -174,6 +180,55 @@ Product.Add = function Add(attr:React.HTMLAttributes<HTMLElement>) {
   );
 };
 
+Product.BusinessAddButton = function BusinessAddButton({...attr}:React.HTMLAttributes<HTMLElement>){
+  const {setOpen} = useContext(BottomSheetModalContext)
+    const className = tailwindMerge("rounded-lg w-full h-full flex flex-col justify-center items-center text-surface-tonal-a10 text-4xl bg-primary-a50 hover:bg-primary-a40 ",attr.className)
+    return(
+      <>
+        <div 
+          onClick={()=>{setOpen(true)}}
+          className={className}>    
+            <FaPlus />
+        </div>
+         <SimpleBottomSheetModal detent="content-height">
+            <PaddingView>
+              <ProductForm.Create/>
+            </PaddingView>
+          </SimpleBottomSheetModal>
+      </>
+    )
+}
+
+Product.Settings = function Settings(){
+  return (
+    <BottomSheetModalProvider>
+      <BottomSheetModalContext.Consumer>
+        {
+          ({setOpen})=>{
+            return(
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setOpen(true)
+                  }}
+                  className="absolute top-0 left-0 p-1 m-2 rounded-full bg-black/50 hover:bg-black/70 transition"
+                >
+                  <FiSettings className="text-white" size={22} />
+                </button>
+                <SimpleBottomSheetModal detent="content-height">
+                  <PaddingView>
+                   <ProductForm.Update/> 
+                  </PaddingView>
+                </SimpleBottomSheetModal>
+              </>
+            )
+          }
+        }
+      </BottomSheetModalContext.Consumer>
+    </BottomSheetModalProvider>
+  );
+}
 
 export function ProductCard({...attr}:React.HTMLAttributes<HTMLElement>) {
     return (
@@ -181,6 +236,7 @@ export function ProductCard({...attr}:React.HTMLAttributes<HTMLElement>) {
         <div className="w-full relative">
           <Product.Image />
           <Product.Favourite />
+          <Product.Settings/>
         </div>
         <Card.Body className="px-2 py-1 flex flex-col ">
             <Product.Title />

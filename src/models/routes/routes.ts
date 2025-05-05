@@ -1,8 +1,12 @@
 import { RouteObject } from "react-router";
 
-interface FeatureRouteReturnType{
-    protectedRoutes:RouteObject[],
-    unProtectedRoutes:RouteObject[]
+export interface RouteGroup {
+    routesWithLayout: RouteObject[];
+    standaloneRoutes: RouteObject[];
 }
 
-export default FeatureRouteReturnType
+export interface FeatureRoutes {
+    protected: RouteGroup;
+    public: RouteGroup;
+}
+  

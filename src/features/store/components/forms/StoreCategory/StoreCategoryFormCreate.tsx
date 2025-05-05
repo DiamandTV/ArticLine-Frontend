@@ -10,7 +10,7 @@ import { ServerErrorsAndTypeInterface } from "@models/ApiResponse/ErrorResponse/
 import { useContext } from "react";
 import { BottomSheetModalContext } from "@context/BottomSheetModal/BottomSheetModalContext";
 
-export function _Create(){
+export function Create(){
     return(
         <div className="w-full flex flex-col gap-2 ">
             <StoreCategoryInfoFieldsProvider>
