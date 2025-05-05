@@ -7,6 +7,7 @@ import { useParams } from "react-router";
 import { Button, Spinner } from "react-bootstrap";
 import { AxiosError } from "axios";
 import { ServerErrorsAndTypeInterface } from "@models/ApiResponse/ErrorResponse/ServerErrorResponseInterface";
+import { FormCreateButton } from "@components/buttons/FormCreateButton/FormCreateButton";
 
 export function Create(){
     return(
@@ -23,8 +24,7 @@ function CreateButton(){
     const params = useParams()
     const storeId = params['store-id']
     const storeCategoryId = params['store-category-id']
-    const {trigger,getValues,setError} = useFormContext<ProductInfoFieldsType>()
-    const {isLoading,mutateAsync} = useMutation({
+    const mutationResults = useMutation({
         mutationKey:['create-product'],
         mutationFn:async(productInfo:ProductInfoFieldsType)=>{
             console.log(storeId)
@@ -35,35 +35,78 @@ function CreateButton(){
             return Promise.reject()
         },
         onError:(err)=>{
-            if(err instanceof AxiosError){
-                const errorReponse = err.response?.data as ServerErrorsAndTypeInterface
-                if(errorReponse && errorReponse?.type === 'validation_error'){
-                    const errors = errorReponse.errors
-                    errors.forEach((err)=>{
-                        const attr = err.attr as string                      
-                        setError(attr as keyof ProductInfoFieldsType,{message:err.detail,type:'custom'},{shouldFocus:true})   
-                    })
-                }
-            }
+            // if(err instanceof AxiosError){
+            //     const errorReponse = err.response?.data as ServerErrorsAndTypeInterface
+            //     if(errorReponse && errorReponse?.type === 'validation_error'){
+            //         const errors = errorReponse.errors
+            //         errors.forEach((err)=>{
+            //             const attr = err.attr as string                      
+            //             setError(attr as keyof ProductInfoFieldsType,{message:err.detail,type:'custom'},{shouldFocus:true})   
+            //         })
+            //     }
+            // }
+            
         },
         onSuccess:(data)=>{
             // todo:send to the list of pages
             console.log(data)
         }
     })
-    const onClick = async(event:React.MouseEvent)=>{
-        event.stopPropagation()
-        const isNotError = await trigger(productInfoFieldsSchema.keyof().options,{shouldFocus:true})
-        if(isNotError){
-            //
-            const values = productInfoFieldsSchema.parse(getValues())
-            console.log(values)
-            await mutateAsync(values)
-        }
-    }
     return(
-        <Button className="w-full" onClick={onClick}>
-            {isLoading ? <Spinner animation="border" /> : "CREATE"}
-        </Button>
+        <FormCreateButton<ProductInfoFieldsType>
+            mutationResult={mutationResults}
+            schema={productInfoFieldsSchema}
+        />
     )
 }
+
+// function CreateButton(){
+//     const params = useParams()
+//     const storeId = params['store-id']
+//     const storeCategoryId = params['store-category-id']
+//     const {trigger,getValues,setError} = useFormContext<ProductInfoFieldsType>()
+//     const {isLoading,mutateAsync} = useMutation({
+//         mutationKey:['create-product'],
+//         mutationFn:async(productInfo:ProductInfoFieldsType)=>{
+//             console.log(storeId)
+//             console.log(storeCategoryId)
+//             if(storeId && storeCategoryId){
+//                 return await storeBusinessProductServices.create(Number(storeId),Number(storeCategoryId),productInfo)
+//             }
+//             return Promise.reject()
+//         },
+//         onError:(err)=>{
+//             if(err instanceof AxiosError){
+//                 const errorReponse = err.response?.data as ServerErrorsAndTypeInterface
+//                 if(errorReponse && errorReponse?.type === 'validation_error'){
+//                     const errors = errorReponse.errors
+//                     errors.forEach((err)=>{
+//                         const attr = err.attr as string                      
+//                         setError(attr as keyof ProductInfoFieldsType,{message:err.detail,type:'custom'},{shouldFocus:true})   
+//                     })
+//                 }
+//             }
+//         },
+//         onSuccess:(data)=>{
+//             // todo:send to the list of pages
+//             console.log(data)
+//         }
+//     })
+//     const onClick = async(event:React.MouseEvent)=>{
+//         event.stopPropagation()
+//         const isNotError = await trigger(productInfoFieldsSchema.keyof().options,{shouldFocus:true})
+//         if(isNotError){
+//             //
+//             const values = productInfoFieldsSchema.parse(getValues())
+//             console.log(values)
+//             await mutateAsync(values)
+//         }
+//     }
+
+//     return(
+//         <Button className="w-full" onClick={onClick}>
+//             {isLoading ? <Spinner animation="border" /> : "CREATE"}
+//         </Button>
+//     )
+
+// }

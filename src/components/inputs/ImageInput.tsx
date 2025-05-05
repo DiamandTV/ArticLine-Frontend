@@ -49,8 +49,9 @@ export function ImageInput(props:ImageInputProps)  {
         }
     }
 
-    const getImage = (file:File|null|undefined)=>{
+    const getImage = async (file:File|null|undefined)=>{
         if(file){
+            console.log(file)
             const reader = new FileReader()
             reader.readAsDataURL(file)
             reader.onload = (e)=>{
@@ -63,7 +64,6 @@ export function ImageInput(props:ImageInputProps)  {
                 }
             }
         }
-        
         resetImage()
     }
 
@@ -82,8 +82,6 @@ export function ImageInput(props:ImageInputProps)  {
                     src={DEFAULT_BACKGROUND_IMAGE_INPUT}
                     //alt="example placeholder" 
                     className={"rounded-xl max-h-80"} 
-                
-                    
                 />
                 {
                     isValidElement(props.inputElement) ? 

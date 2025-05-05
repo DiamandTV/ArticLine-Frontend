@@ -22,7 +22,22 @@ async function create(storeId:number,storeCategoryInfo:StoreCategoryInfoFieldsTy
     })
 }
 
+async function update(storeId:number,storeCategoryId:number,storeCategoryInfo:StoreCategoryInfoFieldsType){
+    const formData = getFormDataFromStoreCategoryInfo(storeCategoryInfo)
+    return await apiBearToken.patch(`/store/${storeId}/category/${storeCategoryId}/create/`,formData,{
+        headers:{
+            'Content-Type':'multipart/form-data'
+        }
+    })
+}
+
+async function _delete(storeId:number,storeCategoryId:number){
+    return await apiBearToken.delete(`/store/${storeId}/category/${storeCategoryId}/delete/`)
+}
+
 export const storeBusinessCategoryServices = {
     list,
-    create
+    create,
+    update,
+    delete:_delete
 }
