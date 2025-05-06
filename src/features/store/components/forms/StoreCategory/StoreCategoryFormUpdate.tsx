@@ -8,7 +8,7 @@ import { StoreCategoryFormProps } from "./StoreCategoryForm";
 import { BottomSheetModalContext } from "@context/BottomSheetModal/BottomSheetModalContext";
 import { useMutation } from "react-query";
 import { storeBusinessCategoryServices } from "@features/store/services/storeBusinessCategoryService";
-import { FormCreateButton } from "@components/buttons/FormCreateButton/FormCreateButton";
+import { FormUpdateButton } from "@components/buttons/FormUpdateButton/FormUpdateButton";
 
 export function Update(params:StoreCategoryFormProps){
     const {storeCategory} = useContext(StoreCategoryContext)
@@ -40,7 +40,7 @@ function UpdateButton(params:StoreCategoryFormProps){
         }
     })
     return(
-        <FormCreateButton<StoreCategoryInfoFieldsType>
+        <FormUpdateButton<StoreCategoryInfoFieldsType>
             mutationResult={mutationResults}
             schema={storeCategoryInfoFieldsSchema}
         />

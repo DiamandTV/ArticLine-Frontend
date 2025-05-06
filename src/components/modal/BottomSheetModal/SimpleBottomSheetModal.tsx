@@ -8,10 +8,10 @@ interface SimpleBottomSheetModalProps extends Omit<SheetProps,'isOpen'|'onClose'
 export function SimpleBottomSheetModal({children,...attr}:SimpleBottomSheetModalProps){
     const {isOpen,setOpen} = useContext(BottomSheetModalContext)
     return(
-        <Sheet {...attr} isOpen={isOpen} onClose={()=>{setOpen(false)}} className="relative z-50" onClick={(e)=>{
+        <Sheet {...attr} isOpen={isOpen} onClose={()=>{setOpen(false)}} className="relative " onClick={(e)=>{
             e.stopPropagation()
         }}>
-            <Sheet.Container className="relative z-50">
+            <Sheet.Container className="relative ">
             <Sheet.Header />
             <Sheet.Content>
                 {children}

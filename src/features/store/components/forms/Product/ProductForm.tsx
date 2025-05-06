@@ -4,6 +4,7 @@ import { Update } from "./ProductFormUpdate"
 import { useParams } from "react-router"
 import { useContext } from "react"
 import { ProductContext } from "@features/store/context/ProductContext/ProductContext"
+import { Delete } from "./ProductFormDelete"
 
 export interface ProductFormProps {
     storeId:number,
@@ -23,7 +24,12 @@ function ProductParamsWrapper({operation,children}:FormOperationWrapperProps<Pro
                 return children({storeId,storeCategoryId,productId})
             }
             break
-        case 'Update':
+        case 'Update' :
+            if(storeId && storeCategoryId && productId){
+                return children({storeId,storeCategoryId,productId})
+            }
+            break
+        case 'Delete':
             if(storeId && storeCategoryId && productId){
                 return children({storeId,storeCategoryId,productId})
             }
@@ -49,6 +55,15 @@ export const ProductForm:FormOperationInterface<unknown> = {
                 operation="Update"
             >
                 {(params:ProductFormProps)=><Update {...params} />}
+            </ProductParamsWrapper>
+        )
+    },
+    Delete:()=>{
+        return(
+            <ProductParamsWrapper
+                operation="Delete"
+            >
+                {(params:ProductFormProps)=><Delete {...params}/>}
             </ProductParamsWrapper>
         )
     }

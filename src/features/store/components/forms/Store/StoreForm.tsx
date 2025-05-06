@@ -3,6 +3,7 @@ import { Create } from "./StoreFormCreate"
 import { Update } from "./StoreFormUpdate"
 import { useContext } from "react"
 import { StoreContext } from "@features/store/context/StoreContext/StoreContext"
+import { Delete } from "./StoreFormDelete"
 
 export interface StoreFormProps{
     storeId?:number
@@ -16,6 +17,11 @@ function StoreParamsWrapper({operation,children}:FormOperationWrapperProps<Store
             return children({})
             //break
         case 'Update':
+            if(storeId){
+                return children({storeId})
+            }
+            break
+        case 'Delete':
             if(storeId){
                 return children({storeId})
             }
@@ -40,6 +46,15 @@ export const StoreForm:FormOperationInterface<unknown> = {
                 operation="Update"
             >
                 {(param:StoreFormProps)=><Update {...param}/>}
+            </StoreParamsWrapper>
+        )
+    },
+    Delete:()=>{
+        return(
+            <StoreParamsWrapper
+                operation="Delete"
+            >
+                {(params:StoreFormProps)=><Delete {...params}/>}
             </StoreParamsWrapper>
         )
     }

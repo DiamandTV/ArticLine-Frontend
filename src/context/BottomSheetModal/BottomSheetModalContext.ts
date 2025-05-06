@@ -1,6 +1,6 @@
-import { createContext } from "react"
+import { createContext, } from "react"
 
-interface BottomSheetModalContextInterface{
+export interface BottomSheetModalContextInterface{
     isOpen:boolean,
     setOpen:(state:boolean)=>void
 }

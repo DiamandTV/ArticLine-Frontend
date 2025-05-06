@@ -4,7 +4,8 @@ import { Update } from "./StoreCategoryFormUpdate";
 import { useParams } from "react-router";
 import { useContext } from "react";
 import { StoreCategoryContext } from "@features/store/context/StoreCategoryContext/StoreCategoryContext";
-export interface StoreCategoryFormProps{
+import { Delete } from "./StoreCategoryFormDelete";
+export interface StoreCategoryFormProps extends React.HTMLAttributes<HTMLElement>{
     storeId:number,
     storeCategoryId?:number
 }
@@ -21,6 +22,11 @@ function StoreCategoryParamsWrapper({operation,children}:FormOperationWrapperPro
             }
             break
         case 'Update':
+            if(storeId && storeCategoryId){
+                return children({storeId,storeCategoryId})
+            }
+            break
+        case 'Delete':
             if(storeId && storeCategoryId){
                 return children({storeId,storeCategoryId})
             }
@@ -45,6 +51,15 @@ export const StoreCategoryForm:FormOperationInterface<unknown> = {
                 operation="Update"
             >
                 {(params:StoreCategoryFormProps)=><Update {...params}/>}
+            </StoreCategoryParamsWrapper>
+        )
+    },
+    Delete:()=>{
+        return(
+            <StoreCategoryParamsWrapper
+                operation="Delete"
+            >
+                {(params:StoreCategoryFormProps)=><Delete {...params}/>}
             </StoreCategoryParamsWrapper>
         )
     }

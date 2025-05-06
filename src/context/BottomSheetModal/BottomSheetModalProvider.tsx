@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BottomSheetModalContext } from "./BottomSheetModalContext";
 
-interface BottomSheetModalProviderProps{
+export interface BottomSheetModalProviderProps{
     children:React.ReactNode
 }
 export function BottomSheetModalProvider({children}:BottomSheetModalProviderProps){

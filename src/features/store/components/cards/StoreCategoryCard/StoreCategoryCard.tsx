@@ -1,13 +1,16 @@
 import { StoreCategoryContext } from "@features/store/context/StoreCategoryContext/StoreCategoryContext"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { FaPlus } from "react-icons/fa"
 import { StoreCategoryForm } from "../../forms/StoreCategory/StoreCategoryForm";
 import { PaddingView } from "@views/PaddingView";
 import { BottomSheetModalContext } from "@context/BottomSheetModal/BottomSheetModalContext";
 import { SimpleBottomSheetModal } from "@components/modal/BottomSheetModal/SimpleBottomSheetModal";
 import { tailwindMerge } from "@lib/tsMerge/tsMerge";
-import { FiSettings } from "react-icons/fi";
+import { FiEdit2, FiSettings, FiTrash2 } from "react-icons/fi";
 import { BottomSheetModalProvider } from "@context/BottomSheetModal/BottomSheetModalProvider";
+import { DeleteLabelButton } from "@components/buttons/DeleteButton/DeleteLabelButtont";
+import { EditLabelButton } from "@components/buttons/EditButton/EditButton";
+import { BottomSheetModalProviderFn } from "@context/BottomSheetModal/BottomSheetModalProviderFn";
 
 interface StoreCategoryProps extends React.HTMLAttributes<HTMLElement>{
   children:React.ReactNode
@@ -41,10 +44,55 @@ StoreCategory.Title = function Title(){
   )
 }
 
+StoreCategory.OnEdit = function OnEdit(){
+  const {setOpen:setMenuOpen} = useContext(BottomSheetModalContext)
+  return(
+    <BottomSheetModalProviderFn>
+                {
+                  ({setOpen})=>{
+                    return(
+                        <>
+                          <EditLabelButton
+                            text="EDIT"
+                            onClick={()=>{
+                              setOpen(true)
+                              setTimeout(()=>{
+                                setMenuOpen(false)
+                              },300)
+                            }}
+                          />
+                          <SimpleBottomSheetModal detent="content-height">
+                            <PaddingView>
+                              <StoreCategoryForm.Update/>
+                            </PaddingView>
+                          </SimpleBottomSheetModal>
+                        </>
+                    )
+                  }
+                }
+              </BottomSheetModalProviderFn>
+  )
+}
+
+StoreCategory.OnSettings = function OnSettings(){
+  
+  return(
+    <SimpleBottomSheetModal detent="content-height">
+      <PaddingView>
+        <div className="w-full flex gap-2">
+            <StoreCategory.OnEdit/>
+            <DeleteLabelButton
+              text="DELETE"
+            />
+        </div>
+      </PaddingView>
+    </SimpleBottomSheetModal>
+  )
+}
+
 StoreCategory.Settings = function Settings({ onClick }: { onClick?: () => void }) {
   return (
-    <BottomSheetModalProvider>
-      <BottomSheetModalContext.Consumer>
+    <BottomSheetModalProviderFn>
         {
           ({setOpen})=>{
             return(
@@ -59,17 +107,12 @@ StoreCategory.Settings = function Settings({ onClick }: { onClick?: () => void }
                 >
                   <FiSettings className="text-white" size={22} />
                 </button>
-                <SimpleBottomSheetModal detent="content-height">
-                  <PaddingView>
-                    <StoreCategoryForm.Update/>
-                  </PaddingView>
-                </SimpleBottomSheetModal>
+                <StoreCategory.OnSettings/>                
               </>
             )
           }
         }
-      </BottomSheetModalContext.Consumer>
-    </BottomSheetModalProvider>
+    </BottomSheetModalProviderFn>
     
   );
 };
