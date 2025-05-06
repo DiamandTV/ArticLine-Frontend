@@ -14,6 +14,7 @@ interface PhoneInputProps extends React.HTMLAttributes<HTMLElement>{
     errorElement:React.ReactNode
 }
 
+// todo: create a react form hook input
 export function PhoneInput({inputElement,errorElement,...attributes}:PhoneInputProps){
     const inputRef = useRef<HTMLInputElement|null>(null)
     

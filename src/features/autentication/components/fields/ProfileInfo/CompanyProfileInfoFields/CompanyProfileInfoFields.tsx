@@ -28,23 +28,7 @@ export function CompanyProfileInfoFields(props:FieldsProps){
             {...props}
             className={className}
             >
-            <ImageInput
-                className="w-full md:w-[400px]"
-                image={watch('image')}
-                onDelete={()=>{
-                    resetField('image')
-                }}
-                isInvalid={!!errors.image}
-                inputElement={
-                    <Form.Control {...register('image')} isInvalid={!!errors.image} type="file" accept="image/*" hidden/>
-                }
-                errorElement={
-                    <FormControl.Feedback type="invalid">
-                        {errors.image?.message}
-                    </FormControl.Feedback>
-                }
-
-            />
+            <ImageInput id="image"/>
             <Row className="w-full gap-2" >
                 <Col  className="p-0" xs={12} md={6}>
                     <FloatingLabel label="FIRST NAME">

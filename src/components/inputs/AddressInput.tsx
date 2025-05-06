@@ -12,6 +12,7 @@ interface AddressInputInternProps extends FloatingLabelProps{
     inputElement:React.ReactNode,
     errorElement:React.ReactNode,
 }
+// todo: create a react form hook input
 function AddressInputIntern(props:AddressInputInternProps){
     const className = tailwindMerge("relative ",props.className)
     

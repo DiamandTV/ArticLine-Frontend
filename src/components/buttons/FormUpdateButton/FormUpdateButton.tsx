@@ -1,18 +1,19 @@
 import { ServerErrorsAndTypeInterface } from "@models/ApiResponse/ErrorResponse/ServerErrorResponseInterface";
-import {  AxiosError, AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { useEffect } from "react";
 import { Button, Spinner } from "react-bootstrap";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
 import { UseMutationResult } from "react-query";
 import { ZodSchema } from "zod";
-interface FormCreateButtonProps<T extends FieldValues> {
+
+interface FormUpdateButtonProps<T extends FieldValues> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mutationResult:UseMutationResult<AxiosResponse<any,any>,unknown,T,unknown>,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     schema:ZodSchema<any>
 }
-export function FormCreateButton<T extends FieldValues>({mutationResult,schema}:FormCreateButtonProps<T>){
-    const {trigger,getValues,setError} = useFormContext<T>()
+export function FormUpdateButton<T extends FieldValues>({mutationResult,schema}:FormUpdateButtonProps<T>){
+    const {trigger,getValues,setError,formState:{isDirty}} = useFormContext<T>()
     const onClick = async(event:React.MouseEvent)=>{
         event.stopPropagation()
         const isNotError = await trigger(undefined,{shouldFocus:true})
@@ -38,8 +39,8 @@ export function FormCreateButton<T extends FieldValues>({mutationResult,schema}:
     },[mutationResult.error])
 
     return(
-        <Button className="w-full" onClick={onClick}>
-            {mutationResult.isLoading ? <Spinner animation="border" /> : "CREATE"}
+        <Button className="w-full" onClick={onClick} disabled={!isDirty}>
+            {mutationResult.isLoading ? <Spinner animation="border" /> : "SAVE"}
         </Button>
     )   
 }

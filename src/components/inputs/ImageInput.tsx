@@ -1,32 +1,25 @@
 import { tailwindMerge } from "@lib/tsMerge/tsMerge"
 import { mergeRefs } from "@utils/mergeRefs/mergeRefs"
-import { cloneElement, isValidElement, useEffect, useRef } from "react"
-import { Button } from "react-bootstrap"
+import {  useEffect, useRef } from "react"
+import { Button, Form, FormControl } from "react-bootstrap"
+import { useFormContext } from "react-hook-form"
 
 const DEFAULT_BACKGROUND_IMAGE_INPUT = 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg'
 
 
 
 interface ImageInputProps extends React.HTMLAttributes<HTMLElement>{
-    image?:File | null | undefined,
-    onDelete:()=>void,
-    isInvalid:boolean,
-    inputElement:React.ReactNode,
-    errorElement:React.ReactNode,
+    id:string
 }
 
-export function ImageInput(props:ImageInputProps)  {
-    const className = tailwindMerge("w-[300px] flex flex-col gap-4 ",props.className)
-
+export function ImageInput({id,...attr}:ImageInputProps)  {
+    const className = tailwindMerge("max-w-[350px]  flex flex-col gap-4 ",attr.className)
+    const {register,watch,setValue,formState:{errors}} = useFormContext()
     const inputRef = useRef<HTMLInputElement|null>(null)
     const imageRef = useRef<HTMLImageElement|null>(null)
-    
+    const mergeRef = mergeRefs(register(id).ref,inputRef)
     //console.log((props.inputElement as React.ReactElement)?.props?.ref)
     //const inputProps = (props.inputElement as React.ReactElement)
-    
-    const ref = (props.inputElement as React.ReactElement<React.DetailedHTMLProps<React.HTMLAttributes<HTMLInputElement>,HTMLInputElement>>).props.ref
-    const mergedRef = mergeRefs<HTMLInputElement>(inputRef,ref)
-    
     //const image = props.image?.length ? await props.image[0].stream().getReader().read() : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg'
     
     
@@ -36,6 +29,8 @@ export function ImageInput(props:ImageInputProps)  {
             inputRef.current.click()
         }
     }
+
+
     
     const resetImage = ()=>{
         if(imageRef.current){
@@ -49,7 +44,7 @@ export function ImageInput(props:ImageInputProps)  {
         }
     }
 
-    const getImage = async (file:File|null|undefined)=>{
+    const getImage = async (file?:File|null)=>{
         if(file){
             console.log(file)
             const reader = new FileReader()
@@ -68,12 +63,19 @@ export function ImageInput(props:ImageInputProps)  {
     }
 
     useEffect(()=>{
-        getImage(props.image)
-    },[props.image])
-    console.log(props.image)
+        const file: File | null = watch(id);
+        getImage(file) 
+        
+        
+    },[watch(id)])
+
+    const onInputCapture = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0] || null;
+        setValue(id,file); // Passiamo solo il File singolo, non la FileList
+      };
     return(
         <div 
-            {...props}
+            {...attr}
             className={className} >
             <div  className="flex flex-col justify-content-center">
                 <img  
@@ -83,20 +85,21 @@ export function ImageInput(props:ImageInputProps)  {
                     //alt="example placeholder" 
                     className={"rounded-xl max-h-80"} 
                 />
-                {
-                    isValidElement(props.inputElement) ? 
-                    cloneElement(props.inputElement as React.ReactElement<React.DetailedHTMLProps<React.HTMLAttributes<HTMLInputElement>,HTMLInputElement>>,{ref:mergedRef}) : null
-                }
-                {props.errorElement}
+               
+                <Form.Control {...register(id)} onInputCapture={onInputCapture} ref={mergeRef}  isInvalid={!!errors.image} type="file" accept="image/*" hidden/>
+                <FormControl.Feedback type="invalid">
+                    {errors?.[id]?.message as string|undefined}
+                </FormControl.Feedback>
+        
             </div>
             <div className="flex flex-row justify-content-center relative gap-2">
                 <Button variant="primary" className="w-full" onClick={onChooseClick}>
                     CHOOSE
                 </Button>
                 {
-                    props.image?.name ?
+                    watch(id) ?
                     <Button variant="danger" onClick={()=>{
-                        props.onDelete()
+                        setValue(id,'')
                     }}>
                         DELETE
                     </Button> : null

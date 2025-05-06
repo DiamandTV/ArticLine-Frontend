@@ -2,8 +2,6 @@ import { StoreInfoFields, StoreInfoFieldsProvider } from "../../fields/Store/Sto
 import { storeInfoFieldsTransformedSchema, StoreInfoFieldsType } from "@features/store/model/Store/Fields/StoreFields";
 import { useMutation } from "react-query";
 import { storeBusinessServices } from "@features/store/services/storeBusinessServices";
-import { AxiosError } from "axios";
-import { ServerErrorsAndTypeInterface } from "@models/ApiResponse/ErrorResponse/ServerErrorResponseInterface";
 import { FormCreateButton } from "@components/buttons/FormCreateButton/FormCreateButton";
 
 export function Create(){
@@ -21,13 +19,13 @@ function CreateButton(){
     const mutationResults = useMutation({
         mutationKey:['create-store'],
         mutationFn:async(params:StoreInfoFieldsType)=>{
-            await storeBusinessServices.create(storeInfoFieldsTransformedSchema.parse(params))
+            return await storeBusinessServices.create(storeInfoFieldsTransformedSchema.parse(params))
         },
         onSuccess:(data)=>{
             // todo:send to the list of pages
             console.log(data)
         },
-        onError:(err)=>{
+        onError:()=>{
             
         }
     })

@@ -2,13 +2,15 @@ import { useContext } from "react";
 import { StoreInfoFields, StoreInfoFieldsProvider } from "../../fields/Store/StoreFields";
 import { StoreContext } from "@features/store/context/StoreContext/StoreContext";
 import { storeToFields } from "@features/store/utils/formTransformers/store/storeTransformers";
-import { DefaultResetter } from "@components/forms/Updater/DefaultResetter";
-import { StoreInfoFieldsType } from "@features/store/model/Store/Fields/StoreFields";
+import { DefaultResetter } from "@components/forms/Resetter/DefaultResetter";
+import { storeInfoFieldsTransformedSchema, StoreInfoFieldsType } from "@features/store/model/Store/Fields/StoreFields";
 import { useGetCategoryQuery } from "@features/home/hook/useGetCategoryQuery/useGetCategoryQuery";
-import { Button } from "react-bootstrap";
-import { useFormContext } from "react-hook-form";
+import { FormUpdateButton } from "@components/buttons/FormUpdateButton/FormUpdateButton";
+import { storeBusinessServices } from "@features/store/services/storeBusinessServices";
+import { useMutation } from "react-query";
+import { StoreFormProps } from "./StoreForm";
 
-export function Update(){
+export function Update(params:StoreFormProps){
     const {store} = useContext(StoreContext)
     const {data,isLoading,isSuccess} = useGetCategoryQuery()
     if(!store || isLoading || !isSuccess) return
@@ -33,17 +35,31 @@ export function Update(){
             <StoreInfoFieldsProvider>
                 <DefaultResetter<StoreInfoFieldsType> toFields={toFields}/>
                 <StoreInfoFields />
-                <UpdateButton/>
+                <UpdateButton {...params}/>
             </StoreInfoFieldsProvider>
         </div>
     )
 }
 
-function UpdateButton(){
-    const {formState:{isDirty}} = useFormContext<StoreInfoFieldsType>()
-    return(
-        <Button disabled={!isDirty}>
-            SAVE
-        </Button>
+function UpdateButton(params:StoreFormProps){
+    const {storeId} = params
+    const mutationResults = useMutation({
+            mutationKey:['update-store'],
+            mutationFn:async(params:StoreInfoFieldsType)=>{
+                return await storeBusinessServices.update(storeId!,storeInfoFieldsTransformedSchema.parse(params))
+            },
+            onSuccess:(data)=>{
+                // todo:send to the list of pages
+                console.log(data)
+            },
+            onError:()=>{
+                
+            }
+        })
+    return (
+        <FormUpdateButton<StoreInfoFieldsType> 
+            mutationResult={mutationResults}
+            schema={storeInfoFieldsTransformedSchema}
+        />
     )
 }

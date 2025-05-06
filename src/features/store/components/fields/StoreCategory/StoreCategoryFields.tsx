@@ -24,23 +24,7 @@ export function StoreCategoryFields(props:FieldsProps){
             {...props}
             className={className}
             >
-            <ImageInput
-                className="w-full md:w-[400px]"
-                image={watch('image')}
-                onDelete={()=>{
-                    resetField('image')
-                }}
-                isInvalid={!!errors.image}
-                inputElement={
-                    <Form.Control {...register('image')} isInvalid={!!errors.image} type="file" accept="image/*" hidden/>
-                }
-                errorElement={
-                    <Form.Control.Feedback type="invalid">
-                        {errors.image?.message}
-                    </Form.Control.Feedback>
-                }
-
-            />
+                <ImageInput id="image"/>
                 <Col className="p-0" xs={12} md={6}>
                     <FloatingLabel label="TITLE" className="bg-surface-a10">
                         <Form.Control type="text" {...register('name')} isInvalid={!!errors.name }/>
