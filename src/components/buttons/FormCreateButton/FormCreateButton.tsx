@@ -15,6 +15,7 @@ export function FormCreateButton<T extends FieldValues>({mutationResult,schema}:
     const {trigger,getValues,setError} = useFormContext<T>()
     const onClick = async(event:React.MouseEvent)=>{
         event.stopPropagation()
+        console.log(getValues())
         const isNotError = await trigger(undefined,{shouldFocus:true})
         if(isNotError){
             //

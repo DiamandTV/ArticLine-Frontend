@@ -10,8 +10,12 @@ export function StorePage(){
 
 function BusinessStorePage(){
     const params = useParams()
+    const companyId = params['company-id']
     const storeId = params['store-id']
-    const {data,isLoading,isSuccess} = useGetBusinessStoreQuery({id:Number(storeId)})
+    const {data,isLoading,isSuccess} = useGetBusinessStoreQuery({
+        companyId:Number(companyId),
+        storeId:Number(storeId)
+    })
     if(!storeId) return 
     
     if(isLoading || !isSuccess) return

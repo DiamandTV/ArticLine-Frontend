@@ -1,12 +1,12 @@
 import { StoreCategoryProvider } from "@features/store/context/StoreCategoryContext/StoreCategoryProvider"
 import { useGetStoreCategoryListQuery } from "@features/store/hooks/useGetStoreCategoryQuery/useGetStoreCategoryListQuery"
-import { StoreCategoryAdd, StoreCategoryCard } from "../cards/StoreCategoryCard/StoreCategoryCard"
+import {  StoreCategoryCard } from "../cards/StoreCategoryCard/StoreCategoryCard"
 import { useNavigate, useParams } from "react-router"
 import React from "react"
 import { tailwindMerge } from "@lib/tsMerge/tsMerge"
 import { Chip } from "@components/Chip/Chip"
 import { BottomSheetModalProvider } from "@context/BottomSheetModal/BottomSheetModalProvider"
-
+import { StoreCategory as _StoreCategory} from "../../compositions/StoreCategory"
 export function StoreCategory(){
     return null
 }
@@ -15,20 +15,25 @@ type Props = React.HTMLAttributes<HTMLElement>;
 StoreCategory.Grid = function Grid({...attr}:Props){
     const params = useParams()
     const navigator = useNavigate()
-    const paginationOptions = useGetStoreCategoryListQuery({storeId:Number(params['store-id'])})
+    const paginationOptions = useGetStoreCategoryListQuery({
+        companyId:Number(params['company-id']),
+        storeId:Number(params['store-id'])
+    })
     if(paginationOptions.isLoading || !paginationOptions.isSuccess) return
     const className = tailwindMerge("grid grid-cols-3 px-2 gap-2 ",attr.className)
     return(
         <BottomSheetModalProvider>
             <div {...attr} className={className}>
-                <StoreCategoryAdd/>
+                <_StoreCategory.AddButton/>
                 {paginationOptions.data!.map((storeCategory)=>{
+
                     return(
                         <>
                             <StoreCategoryProvider storeCategory={storeCategory}>
-                                <StoreCategoryCard onClick={()=>{
+                                <StoreCategoryCard onClick={(e)=>{
+                                    e.stopPropagation()
                                     // navigate to the products page
-                                    navigator(`/store/${storeCategory.store}/category/${storeCategory.id}/`)
+                                    navigator(`/company/${storeCategory.store.company_profile}/store/${storeCategory.store.id}/category/${storeCategory.id}/`)
                                 }}/>
                             </StoreCategoryProvider>
                         </>
@@ -42,13 +47,16 @@ StoreCategory.Grid = function Grid({...attr}:Props){
 StoreCategory.List = function List({...attr}:Props){
     const params = useParams()
     const navigator = useNavigate()
-    const paginationOptions = useGetStoreCategoryListQuery({storeId:Number(params['store-id'])})
+    const paginationOptions = useGetStoreCategoryListQuery({
+        companyId:Number(params['company-id']),
+        storeId:Number(params['store-id'])
+    })
     if(paginationOptions.isLoading || !paginationOptions.isSuccess) return
     const className = tailwindMerge("w-full flex flex-row justify-start items-center gap-2 overflow-x-scroll scrollbar-hide ",attr.className)
     return(
         <BottomSheetModalProvider>
             <div {...attr} className={className}>
-                <StoreCategoryAdd className="w-max text-xl p-1"/>
+                <_StoreCategory.AddButton className="w-max text-xl p-1"/>
                 {paginationOptions.data!.map((storeCategory)=>{
                     return(
                         <>
@@ -56,7 +64,7 @@ StoreCategory.List = function List({...attr}:Props){
                                 <Chip 
                                     className={`flex-shrink-0 ${storeCategory}`} 
                                     onClick={()=>{
-                                        navigator(`/business/store/${storeCategory.store}/${storeCategory.id}/`)
+                                        navigator(`/business/store/${storeCategory.store.id}/${storeCategory.id}/`)
                                     }}
                                 >
                                     {storeCategory.name}

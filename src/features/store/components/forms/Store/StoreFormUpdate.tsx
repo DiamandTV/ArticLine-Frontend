@@ -9,6 +9,7 @@ import { FormUpdateButton } from "@components/buttons/FormUpdateButton/FormUpdat
 import { storeBusinessServices } from "@features/store/services/storeBusinessServices";
 import { useMutation } from "react-query";
 import { StoreFormProps } from "./StoreForm";
+import { storeCacheKey } from "@features/store/data/query";
 
 export function Update(params:StoreFormProps){
     const {store} = useContext(StoreContext)
@@ -44,7 +45,7 @@ export function Update(params:StoreFormProps){
 function UpdateButton(params:StoreFormProps){
     const {storeId} = params
     const mutationResults = useMutation({
-            mutationKey:['update-store'],
+            mutationKey:[storeCacheKey.update],
             mutationFn:async(params:StoreInfoFieldsType)=>{
                 return await storeBusinessServices.update(storeId!,storeInfoFieldsTransformedSchema.parse(params))
             },

@@ -1,4 +1,4 @@
-import { Product } from "@features/store/components/cards/ProductCard/ProductCard";
+import { Product } from "@features/store/compositions/Product";
 import { PaddingView } from "@views/PaddingView";
 
 

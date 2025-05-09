@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { BottomSheetModalContext } from "@context/BottomSheetModal/BottomSheetModalContext";
 import { FormCreateButton } from "@components/buttons/FormCreateButton/FormCreateButton";
 import { StoreCategoryFormProps } from "./StoreCategoryForm";
+import { storeCategoryCacheKey } from "@features/store/data/query";
 
 export function Create(params:StoreCategoryFormProps){
     if(!params) return null
@@ -23,8 +24,9 @@ function CreateButton(params:StoreCategoryFormProps){
     const {storeId} = params
     const {setOpen} = useContext(BottomSheetModalContext) 
     const mutationResults = useMutation({
-        mutationKey:['create-store-category'],
+        mutationKey:[storeCategoryCacheKey.create],
         mutationFn:async(storeCategoryInfo:StoreCategoryInfoFieldsType)=>{
+            console.log(storeCategoryInfo)
             return await storeBusinessCategoryServices.create(Number(storeId),storeCategoryInfo)
         },
         onSuccess:(data)=>{

@@ -9,6 +9,7 @@ import { BottomSheetModalContext } from "@context/BottomSheetModal/BottomSheetMo
 import { useMutation } from "react-query";
 import { storeBusinessCategoryServices } from "@features/store/services/storeBusinessCategoryService";
 import { FormUpdateButton } from "@components/buttons/FormUpdateButton/FormUpdateButton";
+import { storeCategoryCacheKey } from "@features/store/data/query";
 
 export function Update(params:StoreCategoryFormProps){
     const {storeCategory} = useContext(StoreCategoryContext)
@@ -29,7 +30,7 @@ function UpdateButton(params:StoreCategoryFormProps){
     const {storeId,storeCategoryId} = params
     const {setOpen} = useContext(BottomSheetModalContext) 
     const mutationResults = useMutation({
-        mutationKey:['update-store-category'],
+        mutationKey:[storeCategoryCacheKey.update],
         mutationFn:async(storeCategoryInfo:StoreCategoryInfoFieldsType)=>{
             return await storeBusinessCategoryServices.update(storeId,storeCategoryId!,storeCategoryInfo)
         },

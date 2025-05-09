@@ -24,8 +24,9 @@ function BackToStorePage(){
         <BackButton
             onClick={()=>{
                 const storeId = params['store-id']
+                const companyId = params['company-id']
                 if(storeId){
-                    navigator(`/store/${storeId}/`)
+                    navigator(`/company/${companyId}/store/${storeId}/`)
                 }
             }}
         />

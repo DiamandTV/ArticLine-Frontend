@@ -7,7 +7,7 @@ export interface StoreInterface{
     description:string,
     
     categories:Array<number>,
-    store_categories:Array<number>,
+    //store_categories:Array<number>,
 
     company_profile:number,
     

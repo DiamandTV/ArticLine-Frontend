@@ -1,33 +1,35 @@
 import { FormOperationInterface, FormOperationWrapperProps } from "@models/forms/FormOperationType"
 import { Create } from "./StoreFormCreate"
 import { Update } from "./StoreFormUpdate"
-import { useContext } from "react"
-import { StoreContext } from "@features/store/context/StoreContext/StoreContext"
 import { Delete } from "./StoreFormDelete"
+import { useParams } from "react-router"
 
 export interface StoreFormProps{
     storeId?:number
 }
 
 function StoreParamsWrapper({operation,children}:FormOperationWrapperProps<StoreFormProps>){
-    const {store} = useContext(StoreContext)
-    const storeId = store?.id
+    const params = useParams()
+    const companyId = Number(params['company-id'])
+    const storeId = Number(params['store-id'])
     switch(operation){
         case 'Create':
-            return children({})
-            //break
+            if(companyId && storeId){
+                return children({})
+            }
+            break
         case 'Update':
-            if(storeId){
+            if(companyId && storeId){
                 return children({storeId})
             }
             break
         case 'Delete':
-            if(storeId){
+            if(companyId && storeId){
                 return children({storeId})
             }
             break
     }
-    // todo: handle the error
+    throw new Error("Store Params Wrapper url has got WRONG params")
 }
 
 export const StoreForm:FormOperationInterface<unknown> = {

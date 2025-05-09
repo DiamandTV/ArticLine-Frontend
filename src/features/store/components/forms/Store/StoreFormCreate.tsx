@@ -3,6 +3,7 @@ import { storeInfoFieldsTransformedSchema, StoreInfoFieldsType } from "@features
 import { useMutation } from "react-query";
 import { storeBusinessServices } from "@features/store/services/storeBusinessServices";
 import { FormCreateButton } from "@components/buttons/FormCreateButton/FormCreateButton";
+import { storeCacheKey } from "@features/store/data/query";
 
 export function Create(){
     return(
@@ -17,7 +18,7 @@ export function Create(){
 
 function CreateButton(){
     const mutationResults = useMutation({
-        mutationKey:['create-store'],
+        mutationKey:[storeCacheKey.create],
         mutationFn:async(params:StoreInfoFieldsType)=>{
             return await storeBusinessServices.create(storeInfoFieldsTransformedSchema.parse(params))
         },

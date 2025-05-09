@@ -1,15 +1,17 @@
 import { CACHE_TIME, STATE_TIME } from "@data/query";
+import { storeCacheKey } from "@features/store/data/query";
 import { StoreInterface } from "@features/store/model/Store/Interface/StoreInterface";
 import { storeBusinessServices } from "@features/store/services/storeBusinessServices";
 import { useQuery } from "react-query";
 
 interface useGetBusinessStoreQuery{
-    id:number
+    companyId:number,
+    storeId:number
 }
-export function useGetBusinessStoreQuery({id}:useGetBusinessStoreQuery){
+export function useGetBusinessStoreQuery({companyId,storeId}:useGetBusinessStoreQuery){
     const queryOptions = useQuery({
-        queryKey:['business-fetch-store'],
-        queryFn:async()=>await storeBusinessServices.retrieve(id),
+        queryKey:[storeCacheKey.retrieve],
+        queryFn:async()=>await storeBusinessServices.retrieve(companyId,storeId),
         staleTime:STATE_TIME,
         cacheTime:CACHE_TIME
     })

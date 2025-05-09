@@ -1,0 +1,1 @@
+export type HttpMethod = 'retrieve' | 'create' | 'list' | 'update' | 'delete'

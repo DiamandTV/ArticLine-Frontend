@@ -8,34 +8,34 @@ function getFormDataFromStore(storeInfo:StoreInfoFieldsTransformedType){
     return formData
 }
 
-export async function retrieve(id:number){
-    return await apiBearToken.get(`/store/company/${id}/retrieve/`)
+export async function retrieve(companyId:number,storeId:number){
+    return await apiBearToken.get(`/company/${companyId}/store/company/${storeId}/retrieve/`)
 }
 
-export async function list(page:string|number = 1){
-    return await apiBearToken.get(`/store/company/list/?page=${page}`)
+export async function list(companyId:number,page:string|number = 1){
+    return await apiBearToken.get(`/company/${companyId}/store/company/list/?page=${page}`)
 }
 
-export async function create(storeInfo:StoreInfoFieldsTransformedType){
+export async function create(companyId:number,storeInfo:StoreInfoFieldsTransformedType){
     const formData = getFormDataFromStore(storeInfo)
-    return await apiBearToken.post('/store/company/create/',formData,{
+    return await apiBearToken.post(`/company/${companyId}/store/company/create/`,formData,{
         headers:{
             'Content-Type':'multipart/form-data'
         }
     })
 }
 
-export async function update(id:number,storeInfo:StoreInfoFieldsTransformedType){
+export async function update(companyId:number,storeId:number,storeInfo:StoreInfoFieldsTransformedType){
     const formData = getFormDataFromStore(storeInfo)
-    return await apiBearToken.patch(`store/company/${id}/update/`,formData,{
+    return await apiBearToken.patch(`/company/${companyId}store/company/${storeId}/update/`,formData,{
         headers:{
             'Content-Type':'multipart/form-data'
         }
     })
 }
 
-export async function _delete(id:number){
-    return await apiBearToken.delete(`store/company/${id}/delete/`)
+export async function _delete(companyId:number,storeId:number){
+    return await apiBearToken.delete(`/company/${companyId}store/company/${storeId}/delete/`)
 }
 
 

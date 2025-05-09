@@ -9,6 +9,7 @@ import { useMutation } from "react-query"
 import { storeBusinessProductServices } from "@features/store/services/storeBusinessProductService"
 import { FormUpdateButton } from "@components/buttons/FormUpdateButton/FormUpdateButton"
 import { BottomSheetModalContext } from "@context/BottomSheetModal/BottomSheetModalContext"
+import { productCacheKey } from "@features/store/data/query"
 
 export function Update(params:ProductFormProps){
     const {product} = useContext(ProductContext)
@@ -28,7 +29,7 @@ function UpdateButton(params:ProductFormProps){
     const {storeId,storeCategoryId,productId} = params
     const {setOpen} = useContext(BottomSheetModalContext)
     const mutationResults = useMutation({
-        mutationKey:['update-product'],
+        mutationKey:[productCacheKey.update],
         mutationFn:async(productInfo:ProductInfoFieldsType)=>{
             return await storeBusinessProductServices.update(Number(storeId),Number(storeCategoryId),productId!,productInfo)
         },

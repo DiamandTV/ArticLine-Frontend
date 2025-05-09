@@ -15,27 +15,28 @@ export interface ProductFormProps {
 function ProductParamsWrapper({operation,children}:FormOperationWrapperProps<ProductFormProps>){
     const params = useParams()
     const {product} = useContext(ProductContext)
+    const companyId = Number(params['company-id'])
     const storeId = Number(params['store-id'])
     const storeCategoryId = Number(params['store-category-id'])
     const productId = product?.id
     switch(operation){
         case 'Create':
-            if(storeId && storeCategoryId){
+            if(companyId && storeId && storeCategoryId){
                 return children({storeId,storeCategoryId,productId})
             }
             break
         case 'Update' :
-            if(storeId && storeCategoryId && productId){
+            if(companyId && storeId && storeCategoryId && productId){
                 return children({storeId,storeCategoryId,productId})
             }
             break
         case 'Delete':
-            if(storeId && storeCategoryId && productId){
+            if(companyId && storeId && storeCategoryId && productId){
                 return children({storeId,storeCategoryId,productId})
             }
             break
     }
-    return null
+    throw new Error("Product Params Wrapper url has got the WRONG params")
 }
 
 

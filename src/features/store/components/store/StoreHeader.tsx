@@ -13,6 +13,12 @@ import { FiEye, FiSettings } from "react-icons/fi";
 import { GoLocation } from "react-icons/go";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import { StoreForm } from "../forms/Store/StoreForm";
+import { ActionMenu } from "@components/ActionMenu/ActionMenu";
+import { EditLabelButton } from "@components/buttons/EditButton/EditButton";
+import { DeleteLabelButton } from "@components/buttons/DeleteButton/DeleteLabelButtont";
+import { ModalProvider } from "@context/Modal/ModalProvider";
+import { useStoreContext } from "@features/store/context/StoreContext/StoreProvider";
+import { Can } from "src/config/permissions/can";
 
 
 interface StoreHeaderProps extends React.HTMLAttributes<HTMLElement>{
@@ -139,7 +145,7 @@ StoreHeader.Info = function Info(){
 }
 
 StoreHeader.Rating = function Rating() {
-    const { store } = useContext(StoreContext);
+    const { store } = useStoreContext();
     if (!store) return null;
 
     const rating = 3.6; // rating da 0 a 5
@@ -178,7 +184,7 @@ StoreHeader.Views = function Views(){
 }
 
 StoreHeader.Reviews = function Reviews() {
-    const { store } = useContext(StoreContext);
+    const { store } = useStoreContext();
     if (!store) return null;
 
     const reviewCount =  125;
@@ -192,7 +198,7 @@ StoreHeader.Reviews = function Reviews() {
 };
 
 StoreHeader.Distance = function Distance() {
-    const { store } = useContext(StoreContext);
+    const { store } = useStoreContext();
     if (!store) return null;
 
     const address = store.address ?? "Indirizzo non disponibile";
@@ -209,38 +215,69 @@ StoreHeader.Distance = function Distance() {
     );
 };
 
+StoreHeader.OnSettings = function OnSettings(){
+    const { isOpen, setOpen } = useContext(BottomSheetModalContext);
+
+   return (
+        <ActionMenu
+            isOpen={isOpen}
+            setClose={() => setOpen(false)}
+            items={[
+            {
+                action: <EditLabelButton text="EDIT" />,
+                render: (onClose) => (
+                <SimpleBottomSheetModal isOpen={true} setClose={onClose} detent="content-height">
+                    <PaddingView>
+                    <StoreForm.Update />
+                    </PaddingView>
+                </SimpleBottomSheetModal>
+                ),
+            },
+            {
+                action: <DeleteLabelButton text="DELETE" />,
+                render: (onClose) => (
+                <ModalProvider isOpen={true} setOpen={()=>onClose()}>
+                    <StoreForm.Delete/>
+                </ModalProvider>
+                ),
+            },
+            ]}
+        />
+        );
+}
+
 StoreHeader.Settings = function Settings(){
+    const {store} = useStoreContext()
     return (
-        <BottomSheetModalProvider>
-            <BottomSheetModalContext.Consumer>
-                {
-                    ({setOpen})=>{
-                        return(
-                            <>
-                                <button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        setOpen(true)
-                                    }}
-                                    className="absolute top-0 left-0 p-1 m-2 rounded-full bg-black/50 hover:bg-black/70 transition"
-                                    >
-                                    <FiSettings className="text-white" size={22} />
-                                </button>
-                                <SimpleBottomSheetModal >
-                                    <PaddingView>
-                                        <StoreForm.Update/>
-                                    </PaddingView>
-                                </SimpleBottomSheetModal>
-                            </>
-                        )
+        <Can I="settings" a="Store" this={store}>
+            <BottomSheetModalProvider>
+                <BottomSheetModalContext.Consumer>
+                    {
+                        ({setOpen})=>{
+                            return(
+                                <>
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setOpen(true)
+                                        }}
+                                        className="absolute top-0 left-0 p-1 m-2 rounded-full bg-black/50 hover:bg-black/70 transition"
+                                        >
+                                        <FiSettings className="text-white" size={22} />
+                                    </button>
+                                    <StoreHeader.OnSettings/>
+                                </>
+                            )
+                        }
                     }
-                }
-            </BottomSheetModalContext.Consumer>
-        </BottomSheetModalProvider>
+                </BottomSheetModalContext.Consumer>
+            </BottomSheetModalProvider>
+        </Can>
       );
 }
 
 type StoreBusinessHeaderProps = React.HTMLAttributes<HTMLElement> 
+
 export function StoreBusinessHeader({...attr}:StoreBusinessHeaderProps){
     return(
         <StoreHeader {...attr}>
@@ -249,7 +286,6 @@ export function StoreBusinessHeader({...attr}:StoreBusinessHeaderProps){
             <StoreHeader.Favourite/>
             <Card.Body className="w-full flex flex-col gap-2 pb-0">
                 <StoreHeader.Title/>
-                
                 <div className="w-full flex flex-row justify-between">
                     <div className="w-full flex flex-col gap-y-2">
                         <StoreHeader.Rating/>
@@ -264,4 +300,5 @@ export function StoreBusinessHeader({...attr}:StoreBusinessHeaderProps){
         </StoreHeader>
     )
 }
+
 

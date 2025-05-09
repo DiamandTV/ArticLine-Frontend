@@ -45,6 +45,7 @@ const authSlice = createSlice({
             clearJWT()
         },
         setProfile:(state,action)=>{
+            console.log(action.payload)
             state.profile = action.payload
         },
         clearProfile:(state)=>{
@@ -140,7 +141,7 @@ export const retrieveProfile = createAsyncThunk.withTypes<StoreAsyncThunkConfig>
     async(_,{dispatch})=>{
         const response = await profileServices.retrieve()
         const profile:ProfileInterface = response.data
-        
+        //alert(profile)
         // set the profile in redux
         await dispatch(
             authSliceActions.setProfile(profile)

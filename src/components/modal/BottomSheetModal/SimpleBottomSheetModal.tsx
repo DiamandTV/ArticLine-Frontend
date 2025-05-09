@@ -3,21 +3,26 @@ import { useContext } from "react";
 import { Sheet } from "react-modal-sheet";
 import type {SheetProps} from "react-modal-sheet"
 interface SimpleBottomSheetModalProps extends Omit<SheetProps,'isOpen'|'onClose'|'children'>{
+    isOpen?:boolean,
+    setClose?:()=>void,
     children:React.ReactNode
 }
 export function SimpleBottomSheetModal({children,...attr}:SimpleBottomSheetModalProps){
     const {isOpen,setOpen} = useContext(BottomSheetModalContext)
     return(
-        <Sheet {...attr} isOpen={isOpen} onClose={()=>{setOpen(false)}} className="relative " onClick={(e)=>{
+        <Sheet {...attr} isOpen={attr.isOpen ?? isOpen } onClose={attr.setClose ? attr.setClose : ()=>{setOpen(false)}} className="relative " onClick={(e)=>{
             e.stopPropagation()
-        }}>
-            <Sheet.Container className="relative ">
+  
+        }} >
+            <Sheet.Container className="relative " >
             <Sheet.Header />
             <Sheet.Content>
                 {children}
             </Sheet.Content>
             </Sheet.Container>
-            <Sheet.Backdrop />
+            <Sheet.Backdrop onTap={(e)=>{
+                e.stopPropagation()
+            }}/>
         </Sheet>
     )
 }

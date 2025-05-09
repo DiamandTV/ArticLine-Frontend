@@ -2,13 +2,19 @@ import { useState } from "react"
 import { ModalContext } from "./ModalContext"
 
 interface ModalProviderProps{
-    children:React.ReactNode
+    initialValue?:boolean,
+    children:React.ReactNode,
+    
+    isOpen?:boolean,
+    setOpen?:()=>void
 }
-export function ModalProvider({children}:ModalProviderProps){
-    const [isOpen,setOpen] = useState(false)
+export function ModalProvider({initialValue=false,children,...props}:ModalProviderProps){
+    const [isOpen,setOpen] = useState(initialValue)
     return(
-        <ModalContext.Provider value={{isOpen,setOpen}}>
+        <ModalContext.Provider value={{ isOpen:props.isOpen ?? isOpen,setOpen:props.setOpen ?? setOpen}}>
             {children}
         </ModalContext.Provider>
     )
 }
+
+

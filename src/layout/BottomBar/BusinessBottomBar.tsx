@@ -3,6 +3,8 @@ import { BottomNavigation as ButtonNavigationComponent } from "src/layout/Bottom
 import { IoHome, IoCart, IoLayers, IoAddCircle,IoCompass } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router";
 import { pathMatcher } from "@utils/pathMatcher/pathMatcher";
+import { useSelector } from "react-redux";
+import { RootState } from "@store/store";
 
 
 
@@ -16,8 +18,12 @@ export function BusinessBottomNavigation() {
     const location = useLocation()
     const [state, setState] = useState(0);
 
+    const profile = useSelector((state:RootState)=>state.authReducer.profile)
+
+    console.log(profile)
+
     const pathIndexMap = [
-        '/store/',
+        `/company/${profile?.id}/store/`,
         '/order/',
         '/',
         '/order-batch/',

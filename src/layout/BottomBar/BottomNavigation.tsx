@@ -3,6 +3,8 @@ import { BottomNavigation as ButtonNavigationComponent } from "./component/Botto
 import { IoHome, IoSearch, IoBag, IoPerson,IoStorefront } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router";
 import { pathMatcher } from "@utils/pathMatcher/pathMatcher";
+import { useSelector } from "react-redux";
+import { RootState } from "@store/store";
 
 const getIconClassName = (state:number,index:number)=>{
     return `transition-all ease-linear duration-150 ${state === index ? 'text-3xl' : 'text-xl'}`
@@ -13,10 +15,14 @@ export function BottomNavigation(){
     const location = useLocation()
     const [state,setState] = useState(0)
     
+    const profile = useSelector((state:RootState)=>state.authReducer.profile)
+
+    console.log(profile)
+
     const pathIndexMap = [
         '/',
         '/search',
-        '/store/',
+        `/company/${profile?.id}/store/`,
         '/order',
         '/profile'
     ]

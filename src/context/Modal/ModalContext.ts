@@ -1,6 +1,6 @@
 import { createContext } from "react"
 
-interface ModalContextInterface{
+export interface ModalContextInterface{
     isOpen:boolean,
     setOpen:(state:boolean)=>void
 }

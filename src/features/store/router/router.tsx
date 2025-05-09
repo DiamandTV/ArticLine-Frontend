@@ -7,19 +7,19 @@ import { StoreProductListPage } from "../page/BusinessStore/StoreProductListPage
 const _protected:RouteGroup = {
     routesWithLayout:[
         {
-            path:'store/',
+            path:'company/:company-id/store/',
             element:<BusinessStoreListPage/>
         },
         {
-            path:'store/:store-id/',
+            path:'company/:company-id/store/:store-id/',
             element:<StorePage/>
         },
         {
-            path:'store/:store-id/category/:store-category-id/',
+            path:'company/:company-id/store/:store-id/category/:store-category-id/',
             element:<StoreProductListPage/>
         },
         {
-            path:'store/create/',
+            path:'company/:company-id/store/create/',
             element:<CreateStore/>
         }
     ],

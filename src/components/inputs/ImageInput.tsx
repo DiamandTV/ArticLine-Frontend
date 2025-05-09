@@ -15,6 +15,7 @@ interface ImageInputProps extends React.HTMLAttributes<HTMLElement>{
 export function ImageInput({id,...attr}:ImageInputProps)  {
     const className = tailwindMerge("max-w-[350px]  flex flex-col gap-4 ",attr.className)
     const {register,watch,setValue,formState:{errors}} = useFormContext()
+    const fileImage = watch(id)
     const inputRef = useRef<HTMLInputElement|null>(null)
     const imageRef = useRef<HTMLImageElement|null>(null)
     const mergeRef = mergeRefs(register(id).ref,inputRef)
@@ -63,16 +64,18 @@ export function ImageInput({id,...attr}:ImageInputProps)  {
     }
 
     useEffect(()=>{
-        const file: File | null = watch(id);
+        const file: File | null = fileImage;
         getImage(file) 
-        
-        
-    },[watch(id)])
+        console.log(fileImage)
+    },[fileImage])
 
     const onInputCapture = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
-        setValue(id,file); // Passiamo solo il File singolo, non la FileList
-      };
+        console.warn(file)
+        setValue(id,file,{shouldValidate:true}); // Passiamo solo il File singolo, non la FileList
+    };
+
+
     return(
         <div 
             {...attr}
@@ -86,7 +89,7 @@ export function ImageInput({id,...attr}:ImageInputProps)  {
                     className={"rounded-xl max-h-80"} 
                 />
                
-                <Form.Control {...register(id)} onInputCapture={onInputCapture} ref={mergeRef}  isInvalid={!!errors.image} type="file" accept="image/*" hidden/>
+                <Form.Control {...register(id)} onInputCapture={onInputCapture} onFocusCapture={undefined} onChange={undefined}  ref={mergeRef}  isInvalid={!!errors.image} type="file" accept="image/*" hidden/>
                 <FormControl.Feedback type="invalid">
                     {errors?.[id]?.message as string|undefined}
                 </FormControl.Feedback>

@@ -1,5 +1,6 @@
 import { StoreCategoryInterface } from "@features/store/model/StoreCategory/Interface/StoreCategoryInterface";
 import { StoreCategoryContext } from "./StoreCategoryContext";
+import { useContext } from "react";
 
 interface StoreCategoryProviderProps{
     storeCategory:StoreCategoryInterface,
@@ -11,4 +12,14 @@ export function StoreCategoryProvider({children,storeCategory}:StoreCategoryProv
             {children}
         </StoreCategoryContext.Provider>
     )
+}
+
+export function useStoreCategoryContext(){
+    const context = useContext(StoreCategoryContext)
+    if(context && context.storeCategory){
+        return {
+            storeCategory:context.storeCategory
+        }
+    }
+    throw new Error("useStoreCategoryContext must be used within a StoreCategoryProvider")
 }

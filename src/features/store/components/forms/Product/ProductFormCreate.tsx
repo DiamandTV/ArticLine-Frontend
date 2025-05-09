@@ -6,6 +6,7 @@ import { FormCreateButton } from "@components/buttons/FormCreateButton/FormCreat
 import { ProductFormProps } from "./ProductForm";
 import { useContext } from "react";
 import { BottomSheetModalContext } from "@context/BottomSheetModal/BottomSheetModalContext";
+import { productCacheKey } from "@features/store/data/query";
 
 export function Create(params:ProductFormProps){
     return(
@@ -22,7 +23,7 @@ function CreateButton(params:ProductFormProps){
     const {storeId,storeCategoryId} = params
     const {setOpen} = useContext(BottomSheetModalContext) 
     const mutationResults = useMutation({
-        mutationKey:['create-product'],
+        mutationKey:[productCacheKey.create],
         mutationFn:async(productInfo:ProductInfoFieldsType)=>{
             return await storeBusinessProductServices.create(Number(storeId),Number(storeCategoryId),productInfo)
         },

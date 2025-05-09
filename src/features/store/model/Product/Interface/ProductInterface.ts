@@ -8,7 +8,6 @@ export interface ProductInterface{
     description:string,
 
     price:number,
-    store:number,
     store_category:StoreCategoryInterface,
 
     temperature_start_range:number,

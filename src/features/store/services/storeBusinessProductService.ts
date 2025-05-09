@@ -8,22 +8,22 @@ function getFromDataFromProduct(productInfo:ProductInfoFieldsType){
     return formData
 }
 
-async function list(storeId:number,storeCategoryId:number,page:number=1){
-    return await apiBearToken.get(`/store/${storeId}/category/${storeCategoryId}/product/list/?page=${page}`)
+async function list(companyId:number,storeId:number,storeCategoryId:number,page:number=1){
+    return await apiBearToken.get(`/company/${companyId}/store/${storeId}/category/${storeCategoryId}/product/list/?page=${page}`)
 }
 
-async function create(storeId:number,storeCategoryId:number,productInfo:ProductInfoFieldsType){
+async function create(companyId:number,storeId:number,storeCategoryId:number,productInfo:ProductInfoFieldsType){
     const formData = getFromDataFromProduct(productInfo)
-    return apiBearToken.post(`/store/${storeId}/category/${storeCategoryId}/product/create/`,formData,{
+    return apiBearToken.post(`/company/${companyId}/store/${storeId}/category/${storeCategoryId}/product/create/`,formData,{
         headers:{
             'Content-Type':'multipart/form-data'
         }
     })
 }
 
-async function update(storeId:number,storeCategoryId:number,productId:number,productInfo:ProductInfoFieldsType){
+async function update(companyId:number,storeId:number,storeCategoryId:number,productId:number,productInfo:ProductInfoFieldsType){
     const formData = getFromDataFromProduct(productInfo)
-    return apiBearToken.patch(`/store/${storeId}/category/${storeCategoryId}/product/${productId}/update/`,formData,{
+    return apiBearToken.patch(`/company/${companyId}/store/${storeId}/category/${storeCategoryId}/product/${productId}/update/`,formData,{
         headers:{
             'Content-Type':'multipart/form-data'
         }
@@ -31,8 +31,8 @@ async function update(storeId:number,storeCategoryId:number,productId:number,pro
 }
 
 
-async function _delete(storeId:number,storeCategoryId:number,productId:number){
-    return apiBearToken.patch(`/store/${storeId}/category/${storeCategoryId}/product/${productId}/delete/`)
+async function _delete(companyId:number,storeId:number,storeCategoryId:number,productId:number){
+    return apiBearToken.delete(`/company/${companyId}/store/${storeId}/category/${storeCategoryId}/product/${productId}/delete/`)
 }
 
 export const storeBusinessProductServices = {

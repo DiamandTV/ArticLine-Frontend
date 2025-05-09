@@ -13,6 +13,7 @@ export function DeleteLabelButton({text,iconClassName,textClassName,...attr}:Del
     return(
         <button
             className={className}
+            {...attr}
             >
             <FiTrash2 className={iconClassName}/>
             <span className={textClassName}>{text}</span>

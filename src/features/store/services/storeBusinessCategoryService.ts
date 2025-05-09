@@ -9,30 +9,30 @@ function getFormDataFromStoreCategoryInfo(storeCategoryInfo:StoreCategoryInfoFie
     return formData
 }
 
-async function list(storeId:number,page:number=1){
-    return await apiBearToken.get(`/store/${storeId}/category/list/?page=${page}`)
+async function list(companyId:number,storeId:number,page:number=1){
+    return await apiBearToken.get(`/company/${companyId}/store/${storeId}/category/list/?page=${page}`)
 }
 
-async function create(storeId:number,storeCategoryInfo:StoreCategoryInfoFieldsType){
+async function create(companyId:number,storeId:number,storeCategoryInfo:StoreCategoryInfoFieldsType){
     const formData = getFormDataFromStoreCategoryInfo(storeCategoryInfo)
-    return await apiBearToken.post(`/store/${storeId}/category/create/`,formData,{
+    return await apiBearToken.post(`/company/${companyId}/store/${storeId}/category/create/`,formData,{
         headers:{
             'Content-Type':'multipart/form-data'
         }
     })
 }
 
-async function update(storeId:number,storeCategoryId:number,storeCategoryInfo:StoreCategoryInfoFieldsType){
+async function update(companyId:number,storeId:number,storeCategoryId:number,storeCategoryInfo:StoreCategoryInfoFieldsType){
     const formData = getFormDataFromStoreCategoryInfo(storeCategoryInfo)
-    return await apiBearToken.patch(`/store/${storeId}/category/${storeCategoryId}/create/`,formData,{
+    return await apiBearToken.patch(`/company/${companyId}/store/${storeId}/category/${storeCategoryId}/create/`,formData,{
         headers:{
             'Content-Type':'multipart/form-data'
         }
     })
 }
 
-async function _delete(storeId:number,storeCategoryId:number){
-    return await apiBearToken.delete(`/store/${storeId}/category/${storeCategoryId}/delete/`)
+async function _delete(companyId:number,storeId:number,storeCategoryId:number){
+    return await apiBearToken.delete(`/company/${companyId}/store/${storeId}/category/${storeCategoryId}/delete/`)
 }
 
 export const storeBusinessCategoryServices = {

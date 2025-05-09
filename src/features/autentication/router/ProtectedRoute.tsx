@@ -1,3 +1,4 @@
+import { PermissionView } from "@views/PermissionView";
 import { Navigate, Outlet, useLoaderData } from "react-router";
 
 export function ProtectedRoute(){
@@ -6,9 +7,9 @@ export function ProtectedRoute(){
         // 
         return <Navigate to={"/login/"}/>
     }
-
-
     return(
-        <Outlet/>
+        <PermissionView>
+            <Outlet/>
+        </PermissionView>
     )
 }

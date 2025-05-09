@@ -2,8 +2,6 @@ import { FormOperationInterface, FormOperationWrapperProps } from "@models/forms
 import {Create} from "./StoreCategoryFormCreate"
 import { Update } from "./StoreCategoryFormUpdate";
 import { useParams } from "react-router";
-import { useContext } from "react";
-import { StoreCategoryContext } from "@features/store/context/StoreCategoryContext/StoreCategoryContext";
 import { Delete } from "./StoreCategoryFormDelete";
 export interface StoreCategoryFormProps extends React.HTMLAttributes<HTMLElement>{
     storeId:number,
@@ -12,27 +10,27 @@ export interface StoreCategoryFormProps extends React.HTMLAttributes<HTMLElement
 
 function StoreCategoryParamsWrapper({operation,children}:FormOperationWrapperProps<StoreCategoryFormProps>){
     const params = useParams()
-    const {storeCategory} = useContext(StoreCategoryContext)
+    const companyId = Number(params['company-id'])
     const storeId = Number(params['store-id'])
-    const storeCategoryId = storeCategory?.id
+    const storeCategoryId = Number(params['store-category-id'])
     switch(operation){
         case 'Create':
-            if(storeId){
+            if(companyId && storeId){
                 return children({storeId})
             }
             break
         case 'Update':
-            if(storeId && storeCategoryId){
+            if(companyId && storeId && storeCategoryId){
                 return children({storeId,storeCategoryId})
             }
             break
         case 'Delete':
-            if(storeId && storeCategoryId){
+            if(companyId && storeId && storeCategoryId){
                 return children({storeId,storeCategoryId})
             }
             break
     }
-    // todo: handle the error
+    throw new Error("Store Category Params Wrapper has got WRONG params")
 }
 
 export const StoreCategoryForm:FormOperationInterface<unknown> = {

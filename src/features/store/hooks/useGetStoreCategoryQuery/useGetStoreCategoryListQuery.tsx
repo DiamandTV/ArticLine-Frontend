@@ -1,17 +1,19 @@
+import { storeCategoryCacheKey } from "@features/store/data/query";
 import { StoreCategoryInterface } from "@features/store/model/StoreCategory/Interface/StoreCategoryInterface";
 import { storeBusinessCategoryServices } from "@features/store/services/storeBusinessCategoryService";
 import { usePaginationInfiniteScroll } from "@hooks/PaginationInfiniteScroll/usePaginationInfiniteScroll";
 import { getDataFromPage } from "@utils/getDataFromPage/getDataFromPaginationResponse";
 
 interface useGetStoreCategoryListQueryProps{
+    companyId:number
     storeId?:number
 }
-export function useGetStoreCategoryListQuery({storeId}:useGetStoreCategoryListQueryProps){
+export function useGetStoreCategoryListQuery({companyId,storeId}:useGetStoreCategoryListQueryProps){
     const paginationOptions = usePaginationInfiniteScroll({
-        queryKey:['fetch-store-category-list',storeId],
+        queryKey:[storeCategoryCacheKey.delete,storeId],
         queryFn:async({pageParam})=>{
             if(storeId ){
-               return await storeBusinessCategoryServices.list(Number(storeId),pageParam)
+               return await storeBusinessCategoryServices.list(companyId,storeId,pageParam)
             }
             throw Error("Store ID not provided")
 
