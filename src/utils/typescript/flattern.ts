@@ -1,17 +1,20 @@
-import { ProductInterface } from "@features/store/model/Product/Interface/ProductInterface";
-import { StoreInterface } from "@features/store/model/Store/Interface/StoreInterface";
-
-type _Flattern<T,Prefix extends string = ''> = {
-    [K in keyof T]:T[K] extends object ? _Flattern<T[K],`${Prefix}${K & string}.`> : {
-        [P in `${Prefix}${K & string}`]:T[K]
-    }
-}[keyof T] extends infer O 
-?   { [K in keyof O]:ToRecord<O[K]> } : never
-
-type ToRecord<U> = (U extends any ? (x: U)=>void : never) extends ((x: infer I)=>void) ? I : never
-
-export type Flattern = Extract<_Flattern<ProductInterface>,object>
+import { InterfaceWithKind } from "@models/Permission/permission";
 
 
+type Flatten<T, Prefix extends string = ''> = {
+    [K in keyof T]: T[K] extends object
+      ? Flatten<T[K], `${Prefix}${K & string}.`>
+      : { [P in `${Prefix}${K & string}`]: T[K] }
+  }[keyof T];
+
+type UnionToIntersection<U> = 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (U extends any ? (k: U) => void : never) extends 
+  (k: infer I) => void ? I : never;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type FlatternOverUnions<T> = T extends any ? Flattern<T> : never;
+export type Flattened<T> = UnionToIntersection<Flatten<T>>
+export type FlattenInterfaceWithKind<T> = T extends InterfaceWithKind<infer U, infer K>
+? InterfaceWithKind<Flattened<U>, K>
+: never;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type MapUnion<T> = T extends any ? Flattened<T> : never;

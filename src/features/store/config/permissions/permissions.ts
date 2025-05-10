@@ -1,5 +1,5 @@
 import { ProfileInterface } from "@features/autentication/models/Profile/Interface/Type";
-import { AbilityBuilderParams, FlatternSubjects } from "@models/Permission/permission";
+import { AbilityBuilderParams } from "@models/Permission/permission";
 
 
 export function storePermissions(profile:Exclude<ProfileInterface,null>,{can}:AbilityBuilderParams){
@@ -19,7 +19,7 @@ export function storePermissions(profile:Exclude<ProfileInterface,null>,{can}:Ab
             // can('create','Product Create',{'store_category.store.company_profile':profile.id})
 
             can('create','Store')
-            can<FlatternSubjects>('create','Store Category Create',['store.company_profile'],{''})
+            can('create','Store Category Create',['store.company_profile'],{'store.company_profile':profile.id})
             can('create','Product Create',['store_category.store.company_profile'],{'store_category.store.company_profile':profile.id})
 
             can(['settings','update','delete',],'Store',['company_profile'],{company_profile: profile.id})
