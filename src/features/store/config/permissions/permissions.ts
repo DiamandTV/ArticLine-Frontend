@@ -15,12 +15,16 @@ export function storePermissions(profile:Exclude<ProfileInterface,null>,{can}:Ab
             can('read','Store Category')
             can('read','Product')
 
-            can('create','Store Category Create')
-            can('create','Product Create')
+            // can('create','Store Category Create',{store:{company_profile:profile.id}})
+            // can('create','Product Create',{'store_category.store.company_profile':profile.id})
 
-            can(['settings','update','delete',],'Store',['company_profile'],{company_profile:profile.id})
-            can(['settings','update','delete',],'Store Category',['store.company_profile'],{store:{company_profile:profile.id}})
-            can(['settings','update','delete',],'Product',['store_category.store.company_profile'],{store_category:{store:{company_profile:profile.id}}})
+            can('create','Store')
+            can('create','Store Category Create',['store.company_profile'],{'store.company_profile':profile.id})
+            can('create','Product Create',['store_category.store.company_profile'],{'store_category.store.company_profile':profile.id})
+
+            can(['settings','update','delete',],'Store',['company_profile'],{company_profile: profile.id})
+            can(['settings','update','delete',],'Store Category',['store.company_profile'],{'store.company_profile':profile.id})
+            can(['settings','update','delete',],'Product',['store_category.store.company_profile'],{'store_category.store.company_profile':profile.id})
             break
         case 'COURIER':
             break

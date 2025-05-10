@@ -13,7 +13,7 @@ import { ActionMenu } from "@components/ActionMenu/ActionMenu";
 
 import { ModalProvider } from "@context/Modal/ModalProvider";
 import { useStoreCategoryContext } from "@features/store/context/StoreCategoryContext/StoreCategoryProvider";
-import { Can } from "src/config/permissions/can";
+import { Can, CaslSubject } from "src/config/permissions/can";
 import { useParams } from "react-router";
 
 interface StoreCategoryProps extends React.HTMLAttributes<HTMLElement>{
@@ -85,7 +85,7 @@ StoreCategory.OnSettings = function OnSettings() {
 StoreCategory.Settings = function Settings({ onClick }: { onClick?: () => void }) {
   const {storeCategory} = useStoreCategoryContext()
   return (
-    <Can I={"update"} an="Product" this={storeCategory}>
+    <Can I={"settings"} this={CaslSubject(storeCategory,'Store Category')}>
       <BottomSheetModalProviderFn>
           {
             ({setOpen})=>{
@@ -118,7 +118,7 @@ StoreCategory.AddButton = function AddButton({...attr}:React.HTMLAttributes<HTML
   const className = tailwindMerge("rounded-lg w-full h-full flex flex-col justify-center items-center text-surface-tonal-a10 text-4xl bg-primary-a50 hover:bg-primary-a40 ",attr.className)
   // !!! ONLY THE COMPANY CAN CREATE STORE CATEGORY ON HIS OWN STORE
   return(
-    <Can I="create" a="Store Category Create" this={{store:{company_profile:companyId}}}>
+    <Can I="create" this={CaslSubject({store:{company_profile:companyId}},'Store Category Create')}>
       <div 
         onClick={()=>{setOpen(true)}}
         className={className}>    

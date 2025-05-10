@@ -18,7 +18,8 @@ import { EditLabelButton } from "@components/buttons/EditButton/EditButton";
 import { DeleteLabelButton } from "@components/buttons/DeleteButton/DeleteLabelButtont";
 import { ModalProvider } from "@context/Modal/ModalProvider";
 import { useStoreContext } from "@features/store/context/StoreContext/StoreProvider";
-import { Can } from "src/config/permissions/can";
+import { Can, CaslSubject } from "src/config/permissions/can";
+import { getKey } from "@lib/kegGenerator/keyGenerator";
 
 
 interface StoreHeaderProps extends React.HTMLAttributes<HTMLElement>{
@@ -106,7 +107,7 @@ StoreHeader.Categories = function Categories(){
         <>
             {storeCategories.map((category)=>{
                 return(
-                    <div className="bg-surface-a20 w-max h-max px-4 py-1 rounded-full font-sans font-light text-base">
+                    <div key={getKey()} className="bg-surface-a20 w-max h-max px-4 py-1 rounded-full font-sans font-light text-base">
                         {category.name}
                     </div>
                 )
@@ -249,7 +250,7 @@ StoreHeader.OnSettings = function OnSettings(){
 StoreHeader.Settings = function Settings(){
     const {store} = useStoreContext()
     return (
-        <Can I="settings" a="Store" this={store}>
+        <Can I="settings" this={CaslSubject(store,'Store')}>
             <BottomSheetModalProvider>
                 <BottomSheetModalContext.Consumer>
                     {

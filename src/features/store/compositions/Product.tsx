@@ -83,8 +83,8 @@ Product.Category = function Category(attr:React.HTMLAttributes<HTMLElement>) {
 
 import { FaMoneyBillWave } from "react-icons/fa";
 import { Card } from "react-bootstrap";
-import { Can } from "src/config/permissions/can";
 import { useParams } from "react-router";
+import { Can, CaslSubject } from "src/config/permissions/can";
 
 Product.Price = function Price(attr:React.HTMLAttributes<HTMLElement>) {
   const { product } = useProductContext()
@@ -185,7 +185,7 @@ Product.BusinessAddButton = function BusinessAddButton({...attr}:React.HTMLAttri
   const companyId = Number(useParams()['company-id'])
   const className = tailwindMerge("min-h-44 max-h-52 rounded-lg w-full h-full flex flex-col justify-center items-center text-surface-tonal-a10 text-4xl bg-primary-a50 hover:bg-primary-a40 ",attr.className)
   return(
-    <Can  I="create" an="Product Create" this={{store_category:{store:{company_profile:companyId }}}} >
+    <Can  I="create" this={CaslSubject({store_category:{store:{company_profile:companyId}}},'Product Create')} >
       <div 
         onClick={()=>{setOpen(true)}}
         className={className}>    
@@ -234,7 +234,7 @@ Product.OnSettings = function OnSettings(){
 Product.Settings = function Settings(){
   const {product} = useProductContext()
   return (
-    <Can I='settings' an="Product" this={product}>
+    <Can I='settings'  this={CaslSubject(product,'Product')}>
       <BottomSheetModalProvider>
         <BottomSheetModalContext.Consumer>
           {

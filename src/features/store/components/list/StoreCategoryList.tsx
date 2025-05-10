@@ -7,6 +7,7 @@ import { tailwindMerge } from "@lib/tsMerge/tsMerge"
 import { Chip } from "@components/Chip/Chip"
 import { BottomSheetModalProvider } from "@context/BottomSheetModal/BottomSheetModalProvider"
 import { StoreCategory as _StoreCategory} from "../../compositions/StoreCategory"
+import { getKey } from "@lib/kegGenerator/keyGenerator"
 export function StoreCategory(){
     return null
 }
@@ -28,15 +29,15 @@ StoreCategory.Grid = function Grid({...attr}:Props){
                 {paginationOptions.data!.map((storeCategory)=>{
 
                     return(
-                        <>
-                            <StoreCategoryProvider storeCategory={storeCategory}>
-                                <StoreCategoryCard onClick={(e)=>{
-                                    e.stopPropagation()
-                                    // navigate to the products page
-                                    navigator(`/company/${storeCategory.store.company_profile}/store/${storeCategory.store.id}/category/${storeCategory.id}/`)
-                                }}/>
-                            </StoreCategoryProvider>
-                        </>
+                        
+                        <StoreCategoryProvider key={getKey()} storeCategory={storeCategory}>
+                            <StoreCategoryCard onClick={(e)=>{
+                                e.stopPropagation()
+                                // navigate to the products page
+                                navigator(`/company/${storeCategory.store.company_profile}/store/${storeCategory.store.id}/category/${storeCategory.id}/`)
+                            }}/>
+                        </StoreCategoryProvider>
+                        
                     )
                 })}
             </div>

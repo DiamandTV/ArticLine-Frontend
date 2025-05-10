@@ -30,6 +30,7 @@ export function BusinessBottomNavigation() {
         '/store/create/'
     ]
 
+   
     useEffect(()=>{
         const currentIndex = pathMatcher(pathIndexMap,location.pathname)
         setState(currentIndex)
@@ -39,7 +40,6 @@ export function BusinessBottomNavigation() {
         if(!location.pathname.includes(pathIndexMap[state])){
             navigator(pathIndexMap[state])
         }
-        
     },[state])
 
     return (
