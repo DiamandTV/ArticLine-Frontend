@@ -3,6 +3,7 @@ import { defineAbilityFor } from "@utils/defineAbility/defineAbility"
 import { RootState } from "@store/store"
 import { useSelector } from "react-redux"
 import { AbilityContext } from "src/config/permissions/can"
+import { CartProvider } from "@features/cart"
 
 interface PermissionViewProps{
     children:React.ReactNode
@@ -14,7 +15,9 @@ export function PermissionView({children}:PermissionViewProps){
     }
     return(
         <AbilityContext.Provider value={defineAbilityFor(profile)}>
-            {children}
+            <CartProvider>
+                {children}
+            </CartProvider>
         </AbilityContext.Provider>
     )
 }

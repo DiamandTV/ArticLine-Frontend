@@ -3,6 +3,7 @@ import {Create} from "./StoreCategoryFormCreate"
 import { Update } from "./StoreCategoryFormUpdate";
 import { useParams } from "react-router";
 import { Delete } from "./StoreCategoryFormDelete";
+import { useStoreCategoryContext } from "@features/store/context/StoreCategoryContext/StoreCategoryProvider";
 export interface StoreCategoryFormProps extends React.HTMLAttributes<HTMLElement>{
     storeId:number,
     storeCategoryId?:number
@@ -12,7 +13,7 @@ function StoreCategoryParamsWrapper({operation,children}:FormOperationWrapperPro
     const params = useParams()
     const companyId = Number(params['company-id'])
     const storeId = Number(params['store-id'])
-    const storeCategoryId = Number(params['store-category-id'])
+    const storeCategoryId = useStoreCategoryContext().storeCategory.id
     switch(operation){
         case 'Create':
             if(companyId && storeId){

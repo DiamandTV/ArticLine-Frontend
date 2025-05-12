@@ -5,7 +5,6 @@ export interface CartInterface{
     id:number,
     profile:ProfileInterface,
     store:StoreInterface,
-    cart_items:Array<CartInterface>,
     is_checkout:boolean
 }
 
