@@ -7,6 +7,7 @@ import { ProductContext } from "@features/store/context/ProductContext/ProductCo
 import { Delete } from "./ProductFormDelete"
 
 export interface ProductFormProps {
+    companyId:number,
     storeId:number,
     storeCategoryId:number,
     productId?:number
@@ -22,17 +23,17 @@ function ProductParamsWrapper({operation,children}:FormOperationWrapperProps<Pro
     switch(operation){
         case 'Create':
             if(companyId && storeId && storeCategoryId){
-                return children({storeId,storeCategoryId,productId})
+                return children({companyId,storeId,storeCategoryId,productId})
             }
             break
         case 'Update' :
             if(companyId && storeId && storeCategoryId && productId){
-                return children({storeId,storeCategoryId,productId})
+                return children({companyId,storeId,storeCategoryId,productId})
             }
             break
         case 'Delete':
             if(companyId && storeId && storeCategoryId && productId){
-                return children({storeId,storeCategoryId,productId})
+                return children({companyId,storeId,storeCategoryId,productId})
             }
             break
     }

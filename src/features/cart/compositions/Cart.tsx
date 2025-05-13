@@ -95,21 +95,14 @@ Cart.Header = function Header({ className,children, ...attr }: CartProps & {chil
     );
 };
 
-Cart.Body = function Body({ className, ...attr }: CartProps) {
+Cart.Body = function Body({ className,children, ...attr }: CartProps & {children:React.ReactNode}) {
     const { cart } = useCartContext();
 
     if (!cart) return null;
 
     return (
         <Card.Body {...attr} className={tailwindMerge("p-4", className)}>
-            <Cart.Title />
-            <div className="text-sm text-gray-600">Negozio: {cart.store.title}</div>
-            <div className="text-sm text-gray-600">
-                Utente: {cart.profile?.first_name} {cart.profile?.last_name}
-            </div>
-            {cart.is_checkout && (
-                <div className="mt-2 text-green-600 font-medium">Checkout completato</div>
-            )}
+            {children}
         </Card.Body>
     );
 };

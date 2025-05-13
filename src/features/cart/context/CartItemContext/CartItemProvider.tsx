@@ -37,9 +37,9 @@ export function CartItemQueryProvider({children}:CartItemQueryProviderProps){
 
 export function CartItemProvider({cartItem,children}:CartItemQueryProviderProps & {cartItem:CartItemInterface}){
     return(
-        <CartItemProvider cartItem={cartItem}>
+        <CartItemContext.Provider value={{cartItem}}>
             {children}
-        </CartItemProvider>
+        </CartItemContext.Provider>
     )
 }
 

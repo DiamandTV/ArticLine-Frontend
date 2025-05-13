@@ -20,12 +20,12 @@ export function Create(params:ProductFormProps){
 }
 
 function CreateButton(params:ProductFormProps){
-    const {storeId,storeCategoryId} = params
+    const {companyId,storeId,storeCategoryId} = params
     const {setOpen} = useContext(BottomSheetModalContext) 
     const mutationResults = useMutation({
         mutationKey:[productCacheKey.create],
         mutationFn:async(productInfo:ProductInfoFieldsType)=>{
-            return await storeBusinessProductServices.create(Number(storeId),Number(storeCategoryId),productInfo)
+            return await storeBusinessProductServices.create(companyId,Number(storeId),Number(storeCategoryId),productInfo)
         },
         onError:()=>{
             

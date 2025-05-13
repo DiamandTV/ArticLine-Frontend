@@ -7,15 +7,9 @@ export function CartCard() {
     if(!cart) return null
     return (
         <Cart.Card className="w-full">
-            
-            <Cart.Header>
-                
-                <div className="w-full flex flex-col items-end justify-end" >
-                    <Cart.Store />
-                    <CartItem.List/>
-                </div>
-            </Cart.Header>
-            
+            <Cart.Body className="p-2">
+                <CartItem.List/>
+            </Cart.Body>
         </Cart.Card>
     );
 }

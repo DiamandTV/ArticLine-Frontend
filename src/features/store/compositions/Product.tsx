@@ -86,7 +86,6 @@ import { FaMoneyBillWave } from "react-icons/fa";
 import { Card } from "react-bootstrap";
 import { useParams } from "react-router";
 import { Can, CaslSubject } from "src/config/permissions/can";
-import { CartItemInfoFieldsProvider } from "@features/cart/components/fields/CartItem/CartItemFields";
 import { CartItemForm } from "@features/cart";
 import { CartItemQueryProvider } from "@features/cart/context/CartItemContext/CartItemProvider";
 
@@ -149,9 +148,7 @@ Product.TemperatureRange = function TemperatureRange(/*attr:React.HTMLAttributes
 Product.AddItem = function AddItem(){
   return (
     <CartItemQueryProvider>
-      <CartItemInfoFieldsProvider>
-        <CartItemForm/>
-      </CartItemInfoFieldsProvider>
+      <CartItemForm.Add/>
     </CartItemQueryProvider>
   )
 }
