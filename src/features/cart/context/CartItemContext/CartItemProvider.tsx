@@ -4,11 +4,12 @@ import { RootState } from "@store/store";
 import { useProductContext } from "@features/store/context/ProductContext/ProductProvider";
 import { useGetCartItemQuery } from "@features/cart/hooks/useGetCartItemQuery/useGetCartItemQuery";
 import { useContext, useMemo } from "react";
+import { CartItemInterface } from "@features/cart/model/CartItem/Interface/CartInterface";
 
-interface CartItemProviderProps {
+interface CartItemQueryProviderProps {
     children:React.ReactNode
 }
-export function CartItemProvider({children}:CartItemProviderProps){
+export function CartItemQueryProvider({children}:CartItemQueryProviderProps){
     const {product} = useProductContext()
     const carts = useSelector((state:RootState)=>state.cartReducer.carts)
     
@@ -31,6 +32,14 @@ export function CartItemProvider({children}:CartItemProviderProps){
         <CartItemContext.Provider value={{cartItem:isSuccess ? data?.data : undefined}}>
             {children}
         </CartItemContext.Provider>
+    )
+}
+
+export function CartItemProvider({cartItem,children}:CartItemQueryProviderProps & {cartItem:CartItemInterface}){
+    return(
+        <CartItemProvider cartItem={cartItem}>
+            {children}
+        </CartItemProvider>
     )
 }
 

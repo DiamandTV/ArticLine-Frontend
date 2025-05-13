@@ -1,6 +1,10 @@
 import { tailwindMerge } from "@lib/tsMerge/tsMerge";
 import { Card } from "react-bootstrap";
 import { useCartContext } from "@features/cart/context/CartContext/CartProvider";
+import { StoreIntroCard } from "@features/store/components/cards/StoreCard/StoreIntroCard";
+import { StoreProvider } from "@features/store/context/StoreContext/StoreProvider";
+import { ProfileCard } from "@features/autentication/components/cards/ProfileCard/ProfileCard";
+import { IoCart } from "react-icons/io5";
 
 export const Cart = () => null;
 
@@ -13,14 +17,18 @@ Cart.Card = function _Cart({ children, ...attr }: CartProps) {
     return <Card {...attr} className={className}>{children}</Card>;
 };
 
-Cart.Icon = function Icon({ children, ...attr }: CartProps) {
-    const className = tailwindMerge("text-gray-500 text-2xl p-2", attr.className);
-    return <div {...attr} className={className}>{children}</div>;
+Cart.Icon = function Icon({ ...attr }: Omit<CartProps,'children'>) {
+    const className = tailwindMerge("text-gray-500 text-4xl ", attr.className);
+    return (
+        <div {...attr} className={className}>
+            <IoCart  className={className}/>
+        </div>
+    )
 };
 
 Cart.Title = function Title({ className, ...attr }: CartProps) {
     const { cart } = useCartContext();
-    const title = cart ? `Carrello #${cart.id}` : "Carrello";
+    const title = cart ? `CART #${cart.id}` : "CART";
 
     return (
         <Card.Title {...attr} className={tailwindMerge("text-xl font-semibold", className)}>
@@ -29,20 +37,60 @@ Cart.Title = function Title({ className, ...attr }: CartProps) {
     );
 };
 
-Cart.Header = function Header({ className, ...attr }: CartProps) {
+// Cart.StoreCompany = function StoreCompany({...attr}:CartProps){
+//     const { cart } = useCartContext()
+//     if(!cart) return null
+//     const company = cart.store.company_profile
+//     return(
+//         <div className={className}>
+//             <div>STORE: {cart.store.title}</div>
+//             <div>
+//                 USER: {cart.profile?.first_name} {cart.profile?.last_name}
+//             </div>
+//         </div>
+//     )
+// }
+
+Cart.Store = function StoreCompany({...attr}:CartProps){
+    const { cart } = useCartContext()
+    if(!cart) return null
+    const store = cart.store
+    return(
+        <StoreProvider store={store}>
+            <StoreIntroCard/>
+        </StoreProvider>
+    )
+}
+
+Cart.Profile = function Profile({...attr}:CartProps){
+    const {cart} = useCartContext()
+    const profile = cart?.profile
+    return(
+        <ProfileCard profile={profile ?? null}/>
+    )   
+}
+
+// Cart.Profile = function FromProfile({...attr}:CartProps){
+//     const { cart } = useCartContext()
+//     if(!cart) return null
+//     const className = tailwindMerge('text-sm text-gray-600',attr.className)
+//     return(
+        
+//             <div>
+//                 USER: {cart.profile?.first_name} {cart.profile?.last_name}
+//             </div>
+//         </div>
+//     )
+// }
+
+Cart.Header = function Header({ className,children, ...attr }: CartProps & {children:React.ReactNode}) {
     const { cart } = useCartContext();
 
     if (!cart) return null;
 
     return (
         <Card.Header {...attr} className={tailwindMerge("p-4", className)}>
-            <div className="text-sm text-gray-600">Negozio: {cart.store.title}</div>
-            <div className="text-sm text-gray-600">
-                Utente: {cart.profile?.first_name} {cart.profile?.last_name}
-            </div>
-            {cart.is_checkout && (
-                <div className="mt-2 text-green-600 font-medium">Checkout completato</div>
-            )}
+            {children}
         </Card.Header>
     );
 };

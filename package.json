@@ -23,6 +23,7 @@
     "jwt-decode": "^4.0.0",
     "motion": "^12.9.4",
     "react": "^19.0.0",
+    "react-avatar": "^5.0.3",
     "react-bootstrap": "^2.10.9",
     "react-bootstrap4-modal": "^3.0.10",
     "react-dom": "^19.0.0",

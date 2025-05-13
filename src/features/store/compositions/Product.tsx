@@ -88,7 +88,7 @@ import { useParams } from "react-router";
 import { Can, CaslSubject } from "src/config/permissions/can";
 import { CartItemInfoFieldsProvider } from "@features/cart/components/fields/CartItem/CartItemFields";
 import { CartItemForm } from "@features/cart";
-import { CartItemProvider } from "@features/cart/context/CartItemContext/CartItemProvider";
+import { CartItemQueryProvider } from "@features/cart/context/CartItemContext/CartItemProvider";
 
 Product.Price = function Price(attr:React.HTMLAttributes<HTMLElement>) {
   const { product } = useProductContext()
@@ -148,11 +148,11 @@ Product.TemperatureRange = function TemperatureRange(/*attr:React.HTMLAttributes
 
 Product.AddItem = function AddItem(){
   return (
-    <CartItemProvider>
+    <CartItemQueryProvider>
       <CartItemInfoFieldsProvider>
         <CartItemForm/>
       </CartItemInfoFieldsProvider>
-    </CartItemProvider>
+    </CartItemQueryProvider>
   )
 }
 

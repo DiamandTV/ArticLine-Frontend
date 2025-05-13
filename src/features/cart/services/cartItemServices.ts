@@ -17,8 +17,8 @@ async function retrieve(cartId:number,productItemId:number){
     return apiBearToken.get(`cart/${cartId}/${productItemId}/item/retrieve/`)
 }
 
-async function list(page:number=1){
-    return await apiBearToken.get(`/cart/item/list/?page=${page}`)
+async function list(cartId:number,page:number=1){
+    return await apiBearToken.get(`/cart/${cartId}/item/list/?page=${page}`)
 }
 
 async function _delete(cartId:number){

@@ -1,4 +1,5 @@
 import { AddressInterface } from "@features/autentication/models/Address/Interface/AddressInterface";
+//import { CompanyProfileInterface } from "@features/autentication/models/Profile/Interface/CompanyProfile/CompanyProfile";
 
 export interface StoreInterface{
     id:number,
@@ -9,8 +10,8 @@ export interface StoreInterface{
     categories:Array<number>,
     //store_categories:Array<number>,
 
+    //company_profile:CompanyProfileInterface,
     company_profile:number,
-    
     address:AddressInterface,
     is_certificated:boolean,
     

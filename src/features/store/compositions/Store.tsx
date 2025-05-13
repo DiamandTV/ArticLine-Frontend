@@ -27,11 +27,12 @@ Store.Card = function _Card({ children,className, ...attr }: StoreCardProps) {
   )
 }
 
-Store.Image = function Image(){
+Store.Image = function Image(attr:Omit<StoreCardProps,'children'>){
     const {store} = useStoreContext()
+    const className = tailwindMerge("h-40 w-full bg-cover bg-center transition-transform duration-300 hover:scale-105",attr.className)
     return(
         <div
-            className="h-40 w-full bg-cover bg-center transition-transform duration-300 hover:scale-105"
+            className={className}
             style={{ backgroundImage: `url(${store.image})` }}
         />
     )
@@ -45,10 +46,11 @@ Store.Body = function Body({children}:{children:React.ReactNode}){
     )
 }
 
-Store.Title = function Title(){
+Store.Title = function Title(attr:Omit<StoreCardProps,'children'>){
   const {store} = useStoreContext()
+  const className = tailwindMerge('text-xl font-semibold font-sans truncate',attr.className)
   return(
-      <h3 className="text-xl font-semibold font-sans truncate">{store.title}</h3>
+      <h3 className={className}>{store.title}</h3>
   )
 }
 
