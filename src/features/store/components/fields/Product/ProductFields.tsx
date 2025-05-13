@@ -17,7 +17,7 @@ export function ProductInfoFieldsProvider(props:FieldsProviderProps<ProductInfoF
 
 export function ProductFields(props:FieldsProps){
     const className = tailwindMerge("w-full flex flex-col items-center justify-center gap-2 ",props.className)
-    const {register,formState:{errors},resetField,watch} = useFormContext<ProductInfoFieldsType>()
+    const {register,formState:{errors}} = useFormContext<ProductInfoFieldsType>()
     console.log(errors)     
     return (
         <Form

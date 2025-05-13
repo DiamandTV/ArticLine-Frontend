@@ -1,11 +1,20 @@
 import { apiBearToken } from "@lib/axios/api"
+import { CartItemInfoFieldsType } from "../model/CartItem/Field/CartItemField"
 
-async function create(){
-    return await apiBearToken.post(`/cart/item/create/`)
+// async function create(){
+//     return await apiBearToken.post(`/cart/item/create/`)
+// }
+
+// async function update(cartId:number,cart:unknown){
+//     return await apiBearToken.patch(`/cart/item/${cartId}/update/`,cart)
+// }
+
+async function add(cartItem:CartItemInfoFieldsType){
+    return await apiBearToken.post('/cart/item/add-update/',cartItem)
 }
 
-async function update(cartId:number,cart:unknown){
-    return await apiBearToken.patch(`/cart/item/${cartId}/update/`,cart)
+async function retrieve(cartId:number,productItemId:number){
+    return apiBearToken.get(`cart/${cartId}/${productItemId}/item/retrieve/`)
 }
 
 async function list(page:number=1){
@@ -17,9 +26,11 @@ async function _delete(cartId:number){
 }
 
 export const cartItemServices = {
-    create,
+    //create,
+    add,
+    retrieve,
     list,
-    update,
+    //update,
     delete:_delete
 }
 

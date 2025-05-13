@@ -3,10 +3,10 @@ import { cartSliceActions } from "@features/cart/slice/cartSlice"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 
-interface CartProviderProps{
+interface CartListProviderProps{
     children:React.ReactNode
 }
-export function CartProvider({children}:CartProviderProps){
+export function CartListProvider({children}:CartListProviderProps){
     const dispatch = useDispatch()
     const {data} = useGetCartListQuery()
     useEffect(()=>{

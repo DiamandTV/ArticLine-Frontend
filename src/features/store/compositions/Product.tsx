@@ -5,7 +5,8 @@ import { PaddingView } from "@views/PaddingView";
 import { useContext, useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { FaTemperatureLow, FaTemperatureHigh } from "react-icons/fa";
-import { FaPlus, FaMinus, FaShoppingCart } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
+//import { FaMinus, FaShoppingCart } from "react-icons/fa";
 import { ProductForm } from "../components/forms/Product/ProductForm";
 import { FiSettings } from "react-icons/fi";
 import { BottomSheetModalProvider } from "@context/BottomSheetModal/BottomSheetModalProvider";
@@ -85,6 +86,9 @@ import { FaMoneyBillWave } from "react-icons/fa";
 import { Card } from "react-bootstrap";
 import { useParams } from "react-router";
 import { Can, CaslSubject } from "src/config/permissions/can";
+import { CartItemInfoFieldsProvider } from "@features/cart/components/fields/CartItem/CartItemFields";
+import { CartItemForm } from "@features/cart";
+import { CartItemProvider } from "@features/cart/context/CartItemContext/CartItemProvider";
 
 Product.Price = function Price(attr:React.HTMLAttributes<HTMLElement>) {
   const { product } = useProductContext()
@@ -142,43 +146,51 @@ Product.TemperatureRange = function TemperatureRange(/*attr:React.HTMLAttributes
 };
 
 
-
-
-Product.AddItem = function AddItem(/*attr:React.HTMLAttributes<HTMLElement>*/) {
-  const [quantity, setQuantity] = useState(1);
-
-  const increase = () => setQuantity((prev) => prev + 1);
-  const decrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
-
-  const handleAddToCart = () => {
-    // TODO: implementa logica per aggiungere al carrello
-    console.log(`Aggiunto al carrello: ${quantity} pezzi`);
-  };
-
+Product.AddItem = function AddItem(){
   return (
-    <div className="w-full grid grid-cols-2 items-center justify-between gap-2">
-      {/* Selettore quantità */}
-      <div className="h-full flex items-center border border-gray-300 rounded overflow-hidden">
-        <button onClick={decrease} className="px-3 py-1 text-gray-600 hover:bg-gray-100">
-          <FaMinus />
-        </button>
-        <span className="px-4">{quantity}</span>
-        <button onClick={increase} className="px-3 py-1 text-gray-600 hover:bg-gray-100">
-          <FaPlus />
-        </button>
-      </div>
+    <CartItemProvider>
+      <CartItemInfoFieldsProvider>
+        <CartItemForm/>
+      </CartItemInfoFieldsProvider>
+    </CartItemProvider>
+  )
+}
 
-      {/* Pulsante aggiungi al carrello */}
-      <button
-        onClick={handleAddToCart}
-        className="w-full flex items-center justify-center gap-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
-      >
-        <FaShoppingCart />
-        <span>Aggiungi</span>
-      </button>
-    </div>
-  );
-};
+// Product.AddItem = function AddItem(/*attr:React.HTMLAttributes<HTMLElement>*/) {
+//   const [quantity, setQuantity] = useState(1);
+
+//   const increase = () => setQuantity((prev) => prev + 1);
+//   const decrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+
+//   const handleAddToCart = () => {
+//     // TODO: implementa logica per aggiungere al carrello
+//     console.log(`Aggiunto al carrello: ${quantity} pezzi`);
+//   };
+
+//   return (
+//     <div className="w-full grid grid-cols-2 items-center justify-between gap-2">
+//       {/* Selettore quantità */}
+//       <div className="h-full flex items-center border border-gray-300 rounded overflow-hidden">
+//         <button onClick={decrease} className="px-3 py-1 text-gray-600 hover:bg-gray-100">
+//           <FaMinus />
+//         </button>
+//         <span className="px-4">{quantity}</span>
+//         <button onClick={increase} className="px-3 py-1 text-gray-600 hover:bg-gray-100">
+//           <FaPlus />
+//         </button>
+//       </div>
+
+//       {/* Pulsante aggiungi al carrello */}
+//       <button
+//         onClick={handleAddToCart}
+//         className="w-full flex items-center justify-center gap-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+//       >
+//         <FaShoppingCart />
+//         <span>Aggiungi</span>
+//       </button>
+//     </div>
+//   );
+// };
 
 Product.BusinessAddButton = function BusinessAddButton({...attr}:React.HTMLAttributes<HTMLElement>){
   const {setOpen} = useContext(BottomSheetModalContext)

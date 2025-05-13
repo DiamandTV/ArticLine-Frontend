@@ -4,23 +4,27 @@ import { useMutation } from "react-query";
 import { storeBusinessServices } from "@features/store/services/storeBusinessServices";
 import { FormCreateButton } from "@components/buttons/FormCreateButton/FormCreateButton";
 import { storeCacheKey } from "@features/store/data/query";
+//import { StoreFormProps } from "./StoreForm";
+import { useSelector } from "react-redux";
+import { RootState } from "@store/store";
 
-export function Create(){
+export function Create(/*params:StoreFormProps*/){
     return(
         <div className="w-full flex flex-col gap-2 ">
             <StoreInfoFieldsProvider>
                 <StoreInfoFields />
-                <CreateButton/>
+                <CreateButton />
             </StoreInfoFieldsProvider>
         </div>
     )
 }
 
-function CreateButton(){
+function CreateButton(/*params:StoreFormProps*/){
+    const companyId = useSelector((state:RootState)=>state.authReducer.profile?.id)
     const mutationResults = useMutation({
         mutationKey:[storeCacheKey.create],
         mutationFn:async(params:StoreInfoFieldsType)=>{
-            return await storeBusinessServices.create(storeInfoFieldsTransformedSchema.parse(params))
+            return await storeBusinessServices.create(companyId!,storeInfoFieldsTransformedSchema.parse(params))
         },
         onSuccess:(data)=>{
             // todo:send to the list of pages

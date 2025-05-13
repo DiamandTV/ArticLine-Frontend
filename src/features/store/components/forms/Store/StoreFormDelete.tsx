@@ -10,12 +10,12 @@ import { storeBusinessServices } from "@features/store/services/storeBusinessSer
 import { StoreFormProps } from "./StoreForm";
 import { storeCacheKey } from "@features/store/data/query";
 export function Delete(params:StoreFormProps){
-    const {storeId} = params
+    const {companyId,storeId} = params
     const {store} = useContext(StoreContext)
     const {isOpen,setOpen} = useContext(ModalContext)
     const {mutateAsync} = useMutation({
         mutationKey:[storeCacheKey.delete],
-        mutationFn:async()=>await storeBusinessServices.delete(storeId!) //!!! it can't be null
+        mutationFn:async()=>await storeBusinessServices.delete(companyId!,storeId!) //!!! it can't be null
     })
     if(!store) return
     return(

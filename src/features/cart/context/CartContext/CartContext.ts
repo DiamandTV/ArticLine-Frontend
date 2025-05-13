@@ -1,10 +1,10 @@
 import { CartInterface } from "@features/cart/model/Cart/Interface/CartInterface";
 import { createContext } from "react";
 
-interface CartContextInterface {
-    carts:Array<CartInterface>
+export interface CartContextInterface {
+    cart?:CartInterface 
 }
 
 export const CartContext = createContext<CartContextInterface>({
-    carts:[]
+    cart:undefined
 })

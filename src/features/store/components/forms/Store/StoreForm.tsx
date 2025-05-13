@@ -5,6 +5,7 @@ import { Delete } from "./StoreFormDelete"
 import { useParams } from "react-router"
 
 export interface StoreFormProps{
+    companyId?:number,
     storeId?:number
 }
 
@@ -20,12 +21,12 @@ function StoreParamsWrapper({operation,children}:FormOperationWrapperProps<Store
             break
         case 'Update':
             if(companyId && storeId){
-                return children({storeId})
+                return children({companyId,storeId})
             }
             break
         case 'Delete':
             if(companyId && storeId){
-                return children({storeId})
+                return children({companyId,storeId})
             }
             break
     }
@@ -38,7 +39,7 @@ export const StoreForm:FormOperationInterface<unknown> = {
             <StoreParamsWrapper
                 operation="Create"
             >
-                {()=><Create/>}
+                {()=><Create />}
             </StoreParamsWrapper>
         )
     },
@@ -47,7 +48,7 @@ export const StoreForm:FormOperationInterface<unknown> = {
             <StoreParamsWrapper
                 operation="Update"
             >
-                {(param:StoreFormProps)=><Update {...param}/>}
+                {(params:StoreFormProps)=><Update {...params}/>}
             </StoreParamsWrapper>
         )
     },

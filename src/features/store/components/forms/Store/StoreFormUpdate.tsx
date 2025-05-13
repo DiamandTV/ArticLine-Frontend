@@ -43,11 +43,11 @@ export function Update(params:StoreFormProps){
 }
 
 function UpdateButton(params:StoreFormProps){
-    const {storeId} = params
+    const {companyId,storeId} = params
     const mutationResults = useMutation({
             mutationKey:[storeCacheKey.update],
             mutationFn:async(params:StoreInfoFieldsType)=>{
-                return await storeBusinessServices.update(storeId!,storeInfoFieldsTransformedSchema.parse(params))
+                return await storeBusinessServices.update(companyId!,storeId!,storeInfoFieldsTransformedSchema.parse(params))
             },
             onSuccess:(data)=>{
                 // todo:send to the list of pages

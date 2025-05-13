@@ -35,7 +35,7 @@ export function ProductList(){
                                                     setOpen(true)
                                                 }}
                                             />
-                                            <SimpleBottomSheetModal detent="content-height" >
+                                            <SimpleBottomSheetModal detent="content-height" className="relative z-50">
                                                 <BusinessStoreProductPage/>
                                             </SimpleBottomSheetModal>
                                         </ProductProvider>
