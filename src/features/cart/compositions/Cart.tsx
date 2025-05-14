@@ -5,6 +5,7 @@ import { StoreIntroCard } from "@features/store/components/cards/StoreCard/Store
 import { StoreProvider } from "@features/store/context/StoreContext/StoreProvider";
 import { ProfileCard } from "@features/autentication/components/cards/ProfileCard/ProfileCard";
 import { IoCart } from "react-icons/io5";
+import { useCartItemContext } from "../context/CartItemContext/CartItemProvider";
 
 export const Cart = () => null;
 
@@ -31,11 +32,21 @@ Cart.Title = function Title({ className, ...attr }: CartProps) {
     const title = cart ? `CART #${cart.id}` : "CART";
 
     return (
-        <Card.Title {...attr} className={tailwindMerge("text-xl font-semibold", className)}>
+        <h1 {...attr} className={tailwindMerge("text-xl font-semibold", className)}>
             {title}
-        </Card.Title>
+        </h1>
     );
 };
+
+Cart.ItemsCount = function ItemsCount(){
+    const { cart } = useCartContext()
+    if(!cart) return
+    //const text = `You have ${itemCount} items in your cart`
+    const text = `${cart.cartItems_count} items`
+    return(
+        <span className="text-base font-semibold text-surface-a40">{text}</span>
+    )
+}
 
 // Cart.StoreCompany = function StoreCompany({...attr}:CartProps){
 //     const { cart } = useCartContext()
@@ -95,6 +106,7 @@ Cart.Header = function Header({ className,children, ...attr }: CartProps & {chil
     );
 };
 
+
 Cart.Body = function Body({ className,children, ...attr }: CartProps & {children:React.ReactNode}) {
     const { cart } = useCartContext();
 
@@ -107,13 +119,35 @@ Cart.Body = function Body({ className,children, ...attr }: CartProps & {children
     );
 };
 
-Cart.Footer = function Footer({ className, ...attr }: CartProps) {
+Cart.Footer = function Footer({ className,children, ...attr }: CartProps) {
     return (
         <Card.Footer {...attr} className={tailwindMerge("p-3 bg-gray-100 text-right", className)}>
-            <button className="bg-blue-500 text-white px-3 py-1 rounded-md">Gestisci</button>
+            {children}    
         </Card.Footer>
     );
 };
+
+Cart.PriceDetails = function PriceDetails(){
+    const {cart} = useCartContext()
+    if(!cart) return null
+    const total = cart.subtotal_cost + cart.shipping_cost
+    return(
+        <div className="w-full flex flex-col gap-0.5">
+            <div className="w-full flex flex-row items-center justify-between">
+                <span >Subtotal</span>
+                <span>{`€ ${cart.subtotal_cost}`}</span>
+            </div>
+            <div className="w-full flex flex-row items-center justify-between">
+                <span>Shipping</span>
+                <span>{`€ ${cart.shipping_cost}`}</span>
+            </div>
+            <div className="w-full flex flex-row items-center justify-between">
+                <span>Total</span>
+                <span>{`€ ${total}`}</span>
+            </div>
+        </div>
+    )
+}
 
 // Componente completo
 Cart.Composition = function Composition() {

@@ -7,6 +7,7 @@ import { CartItemForm } from "../components/forms/CartItemForm/CartItemForm"
 
 export const CartItem = ()=>null
 
+
 CartItem.ItemCard = function ItemCard(){
     return(
         <div className="w-full h-full flex flex-row gap-2 justify-between items-center">
@@ -89,15 +90,22 @@ CartItem.List = function List(){
     if(isLoading || !isSuccess) return null
 
     return (
-        <div>
-            {data.map((cartItem)=>{
-                return(
-                    <CartItemProvider key={getKey()} cartItem={cartItem}>
-                        <CartItem.ItemCard/>
-                    </CartItemProvider>
+        <div className="flex flex-col gap-2">
+            
+            {data.map((cartItem,index)=>{
+                return(    
+                    <>
+                        <CartItemProvider key={getKey()} cartItem={cartItem}>
+                                
+                            <CartItem.ItemCard/>
+                            {
+                                index +1 !== data.length ? <hr /> : null
+                            }      
+                        </CartItemProvider>
+                    </>
                 )
             })}
-            <div ref={ref} className="py-1" ></div>
+            <div ref={ref} className="py-0.5" ></div>
         </div>
     )
 }
