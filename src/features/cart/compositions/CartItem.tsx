@@ -8,7 +8,7 @@ import { CartItemForm } from "../components/forms/CartItemForm/CartItemForm"
 export const CartItem = ()=>null
 
 
-CartItem.ItemCard = function ItemCard(){
+CartItem.ItemUpdateCard = function ItemUpdateCard(){
     return(
         <div className="w-full h-full flex flex-row gap-2 justify-between items-center">
             <CartItem.Image/>
@@ -17,6 +17,20 @@ CartItem.ItemCard = function ItemCard(){
                 <CartItem.Category/>
             </div>
             <CartItem.UpdateItem/>
+            <CartItem.Price/>
+            <CartItem.DeleteItem/>
+        </div>
+    )
+}
+
+CartItem.ItemCard = function ItemCard(){
+    return(
+        <div className="w-full h-full flex flex-row gap-2 justify-between items-center">
+            <CartItem.Image/>
+            <div className="w-max flex flex-col items-start justify-center ">
+                <CartItem.Title/>
+                <CartItem.Category/>
+            </div>
             <CartItem.Price/>
             <CartItem.DeleteItem/>
         </div>
@@ -81,6 +95,36 @@ CartItem.DeleteItem = function DeleteItem(){
 }
 
 CartItem.List = function List(){
+    console.log("OK")
+    const {cart} = useCartContext()
+    const {data,isLoading,isSuccess,ref} = useGetCartItemListQuery({
+        cartId:cart!.id
+    })
+
+    if(isLoading || !isSuccess) return null
+
+    return (
+        <div className="flex flex-col gap-2">
+            
+            {data.map((cartItem,index)=>{
+                return(    
+                    <>
+                        <CartItemProvider key={getKey()} cartItem={cartItem}>
+                                
+                            <CartItem.ItemUpdateCard/>
+                            {
+                                index +1 !== data.length ? <hr /> : null
+                            }      
+                        </CartItemProvider>
+                    </>
+                )
+            })}
+            <div ref={ref} className="py-0.5" ></div>
+        </div>
+    )
+}
+
+CartItem.ListReadOnly = function List(){
     console.log("OK")
     const {cart} = useCartContext()
     const {data,isLoading,isSuccess,ref} = useGetCartItemListQuery({

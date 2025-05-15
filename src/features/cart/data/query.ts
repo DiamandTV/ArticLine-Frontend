@@ -4,7 +4,7 @@ export const cartCacheKey = {
 }
 
 export const cartItemCacheKey = {
-    add:'add-cart-item',
+    addUpdate:'add-update-cart-item',
     retrieve:'retrieve-cart-item',
     list:'list-cart-item',
     

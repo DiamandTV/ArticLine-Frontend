@@ -22,7 +22,7 @@ export function UserProfileInfoFieldsProvider(props:FieldsProviderProps<UserProf
 
 export function UserProfileInfoFields(props:FieldsProps){
     const className = tailwindMerge("w-full items-center justify-center gap-2",props.className)
-    const {register,watch,formState:{errors},getValues,resetField} = useFormContext<UserProfileInfoFieldsType>()
+    const {register,formState:{errors},getValues} = useFormContext<UserProfileInfoFieldsType>()
     console.log(errors)
     console.log(getValues('image'))
     return(

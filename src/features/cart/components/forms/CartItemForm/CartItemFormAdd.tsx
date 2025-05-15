@@ -1,13 +1,11 @@
-import { useMutation } from "react-query"
 import { CartItemInfoFields, CartItemInfoFieldsProvider } from "../../fields/CartItem/CartItemFields"
-import { cartItemCacheKey } from "@features/cart/data/query"
 import { CartItemInfoFieldsType } from "@features/cart/model/CartItem/Field/CartItemField"
-import { cartItemServices } from "@features/cart/services/cartItemServices"
 import { useFormContext } from "react-hook-form"
 import { FaShoppingCart } from "react-icons/fa"
 import { useProductContext } from "@features/store/context/ProductContext/ProductProvider"
 import { useCartItemContext } from "@features/cart/context/CartItemContext/CartItemProvider"
 import { useEffect } from "react"
+import { useAddUpdateCartItemMutation } from "@features/cart/hooks/useAddUpdateCartItemMutation/useAddUpdateCartItemMutation"
 
 
 function CartItemInfoAddDefaulFields({children}:{children:React.ReactNode}){
@@ -42,18 +40,7 @@ export function Add(){
 }
 
 export function AddButton(){
-    const {mutateAsync} = useMutation({
-        mutationKey:[cartItemCacheKey.add],
-        mutationFn:async(cartItemInfo:CartItemInfoFieldsType)=>await cartItemServices.add(cartItemInfo),
-        onSuccess:(data)=>{
-            console.log(data)
-            
-        },
-        onError:(error)=>{
-            console.log(error)
-            // todo : handle all the errors
-        }
-    })
+    const {mutateAsync} = useAddUpdateCartItemMutation()
     const {getValues} = useFormContext<CartItemInfoFieldsType>()
     const handleAddToCart = async()=>{
         const cartItemInfo = getValues()

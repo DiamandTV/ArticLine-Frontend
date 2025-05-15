@@ -1,6 +1,6 @@
 import { FieldsProps } from "@features/autentication/models/Fields/FieldsProps";
-import { Add } from "./CartItemFormADd";
 import { Update } from "./CartItemFormUpdate";
+import { Add } from "./CartItemFormAdd";
 
 export const CartItemForm = {
     Add:()=>{

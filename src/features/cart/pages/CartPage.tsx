@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { CartProvider } from "../context/CartContext/CartProvider";
 import { CartCard } from "../components/cards/CartCard";
+import { PaddingView } from "@views/PaddingView";
 
 export function CartPage(){
     const params = useParams()
@@ -15,8 +16,10 @@ export function CartPage(){
                 _cart.store.id === Number(params['store-id']) && _cart.id === Number(params['cart-id']))
     },[carts])
     return (
-        <CartProvider cart={cart}>
-            <CartCard/>
-        </CartProvider>
+        <PaddingView className="p-0">
+            <CartProvider cart={cart}>
+                <CartCard />
+            </CartProvider>
+        </PaddingView>
     )
 }

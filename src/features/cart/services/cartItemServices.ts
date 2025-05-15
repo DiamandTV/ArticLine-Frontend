@@ -9,7 +9,7 @@ import { CartItemInfoFieldsType } from "../model/CartItem/Field/CartItemField"
 //     return await apiBearToken.patch(`/cart/item/${cartId}/update/`,cart)
 // }
 
-async function add(cartItem:CartItemInfoFieldsType){
+async function addUpdate(cartItem:CartItemInfoFieldsType){
     return await apiBearToken.post('/cart/item/add-update/',cartItem)
 }
 
@@ -27,7 +27,7 @@ async function _delete(cartId:number){
 
 export const cartItemServices = {
     //create,
-    add,
+    addUpdate,
     retrieve,
     list,
     //update,

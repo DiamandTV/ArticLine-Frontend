@@ -1,11 +1,13 @@
 import { tailwindMerge } from "@lib/tsMerge/tsMerge";
-import { Card } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { useCartContext } from "@features/cart/context/CartContext/CartProvider";
-import { StoreIntroCard } from "@features/store/components/cards/StoreCard/StoreIntroCard";
-import { StoreProvider } from "@features/store/context/StoreContext/StoreProvider";
-import { ProfileCard } from "@features/autentication/components/cards/ProfileCard/ProfileCard";
 import { IoCart } from "react-icons/io5";
-import { useCartItemContext } from "../context/CartItemContext/CartItemProvider";
+import { BottomSheetModalProvider } from "@context/BottomSheetModal/BottomSheetModalProvider";
+import { BottomSheetModalProviderFn } from "@context/BottomSheetModal/BottomSheetModalProviderFn";
+import { OrderCheckoutPage } from "@features/order/pages/Order/OrderCheckoutPage";
+import { SimpleBottomSheetModal } from "@components/modal/BottomSheetModal/SimpleBottomSheetModal";
+import { PaddingView } from "@views/PaddingView";
+import { OrderForm } from "@features/order/components/forms/Order/OrderForm";
 
 export const Cart = () => null;
 
@@ -62,24 +64,18 @@ Cart.ItemsCount = function ItemsCount(){
 //     )
 // }
 
-Cart.Store = function StoreCompany({...attr}:CartProps){
-    const { cart } = useCartContext()
-    if(!cart) return null
-    const store = cart.store
-    return(
-        <StoreProvider store={store}>
-            <StoreIntroCard/>
-        </StoreProvider>
-    )
-}
+// Cart.Store = function StoreCompany({...attr}:CartProps){
+//     const { cart } = useCartContext()
+//     if(!cart) return null
+//     const store = cart.store
+//     return(
+//         <StoreProvider store={store}>
+//             <StoreIntroCard/>
+//         </StoreProvider>
+//     )
+// }
 
-Cart.Profile = function Profile({...attr}:CartProps){
-    const {cart} = useCartContext()
-    const profile = cart?.profile
-    return(
-        <ProfileCard profile={profile ?? null}/>
-    )   
-}
+
 
 // Cart.Profile = function FromProfile({...attr}:CartProps){
 //     const { cart } = useCartContext()
@@ -132,7 +128,7 @@ Cart.PriceDetails = function PriceDetails(){
     if(!cart) return null
     const total = cart.subtotal_cost + cart.shipping_cost
     return(
-        <div className="w-full flex flex-col gap-0.5">
+        <div className="w-full flex flex-col gap-0.5 text-sm font-medium">
             <div className="w-full flex flex-row items-center justify-between">
                 <span >Subtotal</span>
                 <span>{`€ ${cart.subtotal_cost}`}</span>
@@ -142,22 +138,35 @@ Cart.PriceDetails = function PriceDetails(){
                 <span>{`€ ${cart.shipping_cost}`}</span>
             </div>
             <div className="w-full flex flex-row items-center justify-between">
-                <span>Total</span>
+                <span>Total(incl. taxes)</span>
                 <span>{`€ ${total}`}</span>
             </div>
         </div>
     )
 }
 
-// Componente completo
-Cart.Composition = function Composition() {
-    const { cart } = useCartContext();
-    if (!cart) return null;
 
-    return (
-        <Cart.Card>
-            <Cart.Body />
-            <Cart.Footer />
-        </Cart.Card>
-    );
-};
+Cart.Checkout = function Checkout(){
+    return(
+        <BottomSheetModalProviderFn>
+            {
+                ({setOpen})=>{
+                    return(
+                        <>
+                            <Button className="w-full" onClick={()=>setOpen(true)}>
+                                <h1 className="font-medium text-sm">CHECKOUT</h1>
+                            </Button>
+                               <SimpleBottomSheetModal detent="content-height">
+                                    <PaddingView>
+                                        <OrderForm.Create/>
+                                    </PaddingView>
+                                </SimpleBottomSheetModal>
+                        </>
+                    )
+                }
+            }
+         
+        </BottomSheetModalProviderFn>
+    )
+}
+
