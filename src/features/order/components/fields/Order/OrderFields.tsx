@@ -8,6 +8,7 @@ import { tailwindMerge } from "@lib/tsMerge/tsMerge";
 import { Button, ButtonGroup, Col, FloatingLabel, Form, FormCheck, Row } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
 import { DeliveryTimeInput } from "../../inputs/DeliveryInput/DeliveryTimeInput";
+import { AddressSavedList } from "../../list/AddressSavedList";
 
 export function OrderInfoFieldsProvider(props:FieldsProviderProps<OrderInfoFieldsType>){
     return(
@@ -52,6 +53,7 @@ export function OrderInfoFields(props:FieldsProps){
             <Row className="w-full gap-2" >
                 <Col className="p-0">
                     <DeliveryTimeInput />
+                    <AddressSavedList/>
                 </Col>
             </Row>
 
