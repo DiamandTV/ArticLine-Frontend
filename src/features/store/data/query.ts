@@ -1,7 +1,7 @@
 import { HttpMethod } from "@models/Http/HttpMethods";
 
 export const storeCacheKey:Record<HttpMethod,string> = {
-    retrieve:'retrive-store',
+    retrieve:'retreive-store',
     create:'create-store',
     list:'list-store',
     update:'update-store',

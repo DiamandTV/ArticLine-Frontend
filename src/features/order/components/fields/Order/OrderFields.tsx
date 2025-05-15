@@ -7,6 +7,7 @@ import { orderInfoFieldsSchema, OrderInfoFieldsType } from "@features/order/mode
 import { tailwindMerge } from "@lib/tsMerge/tsMerge";
 import { Button, ButtonGroup, Col, FloatingLabel, Form, FormCheck, Row } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
+import { DeliveryTimeInput } from "../../inputs/DeliveryInput/DeliveryTimeInput";
 
 export function OrderInfoFieldsProvider(props:FieldsProviderProps<OrderInfoFieldsType>){
     return(
@@ -50,12 +51,7 @@ export function OrderInfoFields(props:FieldsProps){
             
             <Row className="w-full gap-2" >
                 <Col className="p-0">
-                    <FloatingLabel label="DELIVERY DAYTIME">
-                        <Form.Control type="date" {...register('delivery_time')} isInvalid={!!errors.delivery_time}/>
-                        <Form.Control.Feedback type="invalid">
-                            {errors.delivery_time?.message}
-                        </Form.Control.Feedback>
-                    </FloatingLabel>
+                    <DeliveryTimeInput />
                 </Col>
             </Row>
 
