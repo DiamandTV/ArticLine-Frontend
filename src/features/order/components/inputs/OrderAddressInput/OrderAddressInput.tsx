@@ -11,7 +11,6 @@ export function OrderAddressInput(){
         <div className="w-full flex flex-col gap-2 px-2">
             <EntityAddressList/>
             <AddButton/>
-            
         </div>
     )
 }
