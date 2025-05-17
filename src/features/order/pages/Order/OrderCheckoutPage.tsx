@@ -19,8 +19,10 @@ export function OrderCheckoutPage(){
     },[carts])
     
     return(
-        <PaddingView>
-            <OrderForm.Create/>
+        <PaddingView className="px-0 ">
+            <div className="bg-surface-a0 p-2">
+                <OrderForm.Create/>
+            </div>
 
         </PaddingView>
     )

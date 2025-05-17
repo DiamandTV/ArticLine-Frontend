@@ -1,49 +1,106 @@
-import { OrderInfoFieldsType } from "@features/order/models/Order/Field/OrderField";
-import { tailwindMerge } from "@lib/tsMerge/tsMerge";
-import { useFormContext } from "react-hook-form";
-import { FaShippingFast } from "react-icons/fa";
-import { MdAccessTime } from "react-icons/md";
+import { FloatingLabel, Form, Modal } from "react-bootstrap"
+import { Controller, useFormContext } from "react-hook-form"
+import Datetime from 'react-datetime';
+import "react-datetime/css/react-datetime.css";
+import classNames from "classnames";
+import { useRef } from "react";
+import { ModalContext } from "@context/Modal/ModalContext";
+import { ModalProvider } from "@context/Modal/ModalProvider";
+interface DeliveryTimeInputProps{
+    id:string,
+    label:string
+}
+// export function DeliveryTimeInput(){
+//     const {register,formState:{errors}} = useFormContext()
+//     return(
+//         <FloatingLabel label="Date">
+//             <Datetime className="h-[58px]"/>
+//             <Form.Control.Feedback type="invalid">
+                
+//             </Form.Control.Feedback>
 
-interface DeliveryTimeInputProps {
-  id: string;
+//         </FloatingLabel>   
+//     )
+// }
+
+export function DeliveryTimeInput({id,label}:DeliveryTimeInputProps){
+    const ref = useRef(null)
+     const {
+        control,
+        formState: { errors },
+      } = useFormContext();
+    
+      const errorMessage = errors?.[id]?.message as string | undefined;
+    
+      return (
+        <div ref={ref}>
+          <Controller
+            control={control}
+            name={id}
+            render={({ field }) => (
+              <ModalProvider>
+                <Datetime
+               
+                  {...field}
+                  renderView={(mode,renderDefault)=>{
+                    console.log(renderDefault)
+                    return(
+                      <div className="w-0 h-0 p-0 m-0 overflow-hidden">
+                        <ModalContext.Consumer>
+                          {
+                            ({isOpen,setOpen})=>{
+                              return(
+                                <Modal 
+                                  show={isOpen}
+                                  onHide={()=>setOpen(false)} 
+                                  container={ref} 
+                                  centered
+                                  >
+                                  <div className="w-full">
+                                    {renderDefault()}
+                                  </div>
+                                </Modal>
+                              )
+                            }
+                          }
+                        </ModalContext.Consumer>
+                      </div>
+                    )
+                  }}
+                  
+                
+                  className={classNames("", { "is-invalid": errorMessage })}
+                  renderInput={(props)=>{
+                    console.log(props)
+                      return(
+                        <ModalContext.Consumer>
+                          {
+                            ({isOpen,setOpen})=>{
+                         
+                              return(
+                                <FloatingLabel label={label}>
+                                    <Form.Control {...props} onClick={(e)=>{
+                                      setOpen(!isOpen)        
+                                      props.onClick(e)
+                                      }}  
+                                    type="text" readOnly isInvalid={!!errorMessage}/>
+                                    <Form.Control.Feedback type="invalid">
+                                        errorMessage
+                                    </Form.Control.Feedback>
+                                </FloatingLabel>
+                              )
+                            }
+                          }
+                        </ModalContext.Consumer>
+                      )
+                  }}
+                />
+              </ModalProvider>
+            )}
+          />
+          
+        </div>
+         
+      );
 }
 
-export function DeliveryTimeInput({ id }: DeliveryTimeInputProps) {
-  const { setValue, watch } = useFormContext<OrderInfoFieldsType>();
-  const request_earliest_delivery = watch("request_earliest_delivery");
-
-  const cardBase =
-    "cursor-pointer rounded-2xl border p-2 px-3 flex flex-row items-center justify-center gap-4 shadow-sm transition-colors hover:shadow-md hover:bg-blue-50";
-  const selectedCard = " ring-2 ring-blue-500 border-blue-500";
-
-  return (
-    <div className="grid grid-cols-2 gap-4">
-      <div
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => e.key === "Enter" && setValue("request_earliest_delivery", false)}
-        className={tailwindMerge(
-          `${cardBase} ${!request_earliest_delivery ? selectedCard : "border-gray-300"}`
-        )}
-        onClick={() => setValue("request_earliest_delivery", false)}
-      >
-        <FaShippingFast className="text-4xl text-blue-600" />
-        <span className="text-sm font-medium">As soon as possible</span>
-      </div>
-
-      <div
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => e.key === "Enter" && setValue("request_earliest_delivery", true)}
-        className={tailwindMerge(
-          `${cardBase} ${request_earliest_delivery ? selectedCard : "border-gray-300"}`
-        )}
-        onClick={() => setValue("request_earliest_delivery", true)}
-      >
-        <MdAccessTime className="text-4xl text-blue-600" />
-        <span className="text-sm font-medium">Schedule delivery time</span>
-      </div>
-      
-    </div>
-  );
-}

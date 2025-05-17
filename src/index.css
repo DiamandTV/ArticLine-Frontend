@@ -114,3 +114,9 @@
   --text-surface-a50: #b6b6b6;
 }
 
+.rdtPicker{
+  height:0px !important;
+  margin-top:0px;
+  padding:0px;
+  position:status !important
+}
