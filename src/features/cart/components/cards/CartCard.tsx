@@ -47,3 +47,11 @@ export function OnlyCartDetailCard(){
         </Cart.Card>
     );
 }
+
+export function CartIntroCard(){
+    return(
+        <Cart.Card className="w-full flex flex-row">        
+           
+        </Cart.Card>
+    )
+}

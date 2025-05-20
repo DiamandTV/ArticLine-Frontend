@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from "react-router";
 import { pathMatcher } from "@utils/pathMatcher/pathMatcher";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/store";
+import { Can } from "src/config/permissions/can";
 
 const getIconClassName = (state:number,index:number)=>{
     return `transition-all ease-linear duration-150 ${state === index ? 'text-3xl' : 'text-xl'}`
@@ -44,7 +45,9 @@ export function BottomNavigation(){
         >
             <ButtonNavigationComponent.Item index={0} icon={<IoHome className={getIconClassName(state,0)}/>}/>
             <ButtonNavigationComponent.Item index={1} icon={<IoCart className={getIconClassName(state,1)}/>}/>
-            <ButtonNavigationComponent.ImportantItem index={2} icon={<IoStorefront className={`transition-all ease-linear duration-150 text-4xl`}/>}/>
+            <Can I="read" a="Business">
+                <ButtonNavigationComponent.ImportantItem index={2} icon={<IoStorefront className={`transition-all ease-linear duration-150 text-4xl`}/>}/>
+            </Can>
             <ButtonNavigationComponent.Item index={3} icon={<IoBag className={getIconClassName(state,3)}/>}/>
             <ButtonNavigationComponent.Item index={4} icon={<IoPerson className={getIconClassName(state,4)}/>}/>      
         </ButtonNavigationComponent>

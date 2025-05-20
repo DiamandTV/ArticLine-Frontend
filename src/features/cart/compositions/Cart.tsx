@@ -3,6 +3,8 @@ import { Button, Card } from "react-bootstrap";
 import { useCartContext } from "@features/cart/context/CartContext/CartProvider";
 import { IoCart } from "react-icons/io5";
 import { useNavigate } from "react-router";
+import { StoreProvider } from "@features/store/context/StoreContext/StoreProvider";
+import { Store } from "@features/store/compositions/Store";
 
 export const Cart = () => null;
 
@@ -151,6 +153,26 @@ Cart.Checkout = function Checkout(){
             }}>
             <h1 className="font-medium text-sm">CHECKOUT</h1>
         </Button>
+    )
+}
+
+Cart.StoreImage = function StoreImage(){
+    const store = useCartContext().cart?.store
+    if(!store) return
+    return(
+        <StoreProvider store={store}>
+            <Store.Image/>
+        </StoreProvider>
+    )
+}
+
+Cart.StoreTitle = function StoreTitle(){
+    const store = useCartContext().cart?.store
+    if(!store) return
+    return(
+        <StoreProvider store={store}>
+            <Store.Title/>
+        </StoreProvider>
     )
 }
 

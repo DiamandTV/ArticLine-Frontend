@@ -19,7 +19,8 @@ export type Actions = 'read' | 'create' | 'update' | 'delete' | 'settings'
 type InterfaceSubjects = 
     InterfaceWithKind<StoreInterface,'Store'> | 
     InterfaceWithKind<StoreCategoryInterface,'Store Category'> | InterfaceWithKind<{store:{company_profile:number}},'Store Category Create'> |
-    InterfaceWithKind<ProductInterface,'Product'> | InterfaceWithKind<{store_category:{store:{company_profile:number}}},'Product Create'>
+    InterfaceWithKind<ProductInterface,'Product'> | InterfaceWithKind<{store_category:{store:{company_profile:number}}},'Product Create'> |
+    InterfaceWithKind<unknown,'Business'>
 
 type FlatternInterfaceSubjects = FlattenInterfaceWithKind<InterfaceSubjects>;
 
