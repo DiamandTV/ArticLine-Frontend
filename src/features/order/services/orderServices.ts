@@ -1,7 +1,8 @@
 import { apiBearToken } from "@lib/axios/api"
+import { OrderInfoFieldsType } from "../models/Order/Field/OrderField"
 
-async function create(){
-    return await apiBearToken.post('/order/create/')
+async function create(orderInfo:OrderInfoFieldsType){
+    return await apiBearToken.post('/order/create/',orderInfo)
 }
 
 async function list(page:number=1){
@@ -12,8 +13,11 @@ async function retrieve(orderId:number){
     return await apiBearToken.get(`/order/${orderId}/retrieve/`)
 }
 
-async function update(orderId:number){
-    return await apiBearToken.patch(`/order/${orderId}/retrieve/`)
+async function update(orderId:number,orderInfo:OrderInfoFieldsType){
+    return await apiBearToken.patch(`/order/${orderId}/retrieve/`,orderInfo
+
+        
+    )
 }
 
 async function _delete(orderId:number){

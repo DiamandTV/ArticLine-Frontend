@@ -8,7 +8,7 @@ import { CartItemForm } from "../components/forms/CartItemForm/CartItemForm"
 export const CartItem = ()=>null
 
 
-CartItem.ItemUpdateCard = function ItemUpdateCard(){
+CartItem.ItemUpdateDetailedCard = function ItemUpdateDetailedCard(){
     return(
         <div className="w-full h-full flex flex-row gap-2 justify-between items-center">
             <CartItem.Image/>
@@ -23,23 +23,27 @@ CartItem.ItemUpdateCard = function ItemUpdateCard(){
     )
 }
 
-CartItem.ItemCard = function ItemCard(){
+CartItem.ItemDetailedCard = function ItemDetailedCard(){
     return(
-        <div className="w-full h-full flex flex-row gap-2 justify-between items-center">
-            <CartItem.Image/>
-            <div className="w-max flex flex-col items-start justify-center ">
-                <CartItem.Title/>
-                <CartItem.Category/>
+        <div className="w-full h-full flex flex-row gap-2  items-center">
+            <CartItem.Image className="w-40" />
+            <div className="w-full flex flex-row justify-between items-center px-2">
+                <div className="w-max flex flex-col items-start justify-center ">
+                    <CartItem.Title/>
+                    
+                    <CartItem.Category/>
+                </div>
+                <CartItem.ItemCount/>
+                <CartItem.Price/>
             </div>
-            <CartItem.Price/>
-            <CartItem.DeleteItem/>
         </div>
     )
 }
 
-CartItem.Image = function Image(){
+
+CartItem.Image = function Image(attr:React.HTMLAttributes<HTMLDivElement>){
     const {cartItem} = useCartItemContext()
-    const className = 'h-16 w-20 rounded-lg bg-cover bg-center transition-transform duration-300 hover:scale-105'
+    const className = tailwindMerge('h-16 w-20 rounded-lg bg-cover bg-center transition-transform duration-300 hover:scale-105',attr.className)
     return(
         <div
             className={className}
@@ -83,7 +87,16 @@ CartItem.UpdateItem = function UpdateItem(){
         </div>
     )
 }
+
+CartItem.ItemCount = function ItemCount(){
+    const {cartItem} = useCartItemContext()
+    return(
+        <span className="text-base font-mono">{`${cartItem?.product_quantity}x`}</span>
+    )
+}
+
 import { DeleteLabelButton } from "@components/buttons/DeleteButton/DeleteLabelButtont"
+import { tailwindMerge } from "@lib/tsMerge/tsMerge"
 CartItem.DeleteItem = function DeleteItem(){
     return(
         <DeleteLabelButton
@@ -111,7 +124,7 @@ CartItem.List = function List(){
                     <>
                         <CartItemProvider key={getKey()} cartItem={cartItem}>
                                 
-                            <CartItem.ItemUpdateCard/>
+                            <CartItem.ItemUpdateDetailedCard/>
                             {
                                 index +1 !== data.length ? <hr /> : null
                             }      
@@ -141,7 +154,7 @@ CartItem.ListReadOnly = function List(){
                     <>
                         <CartItemProvider key={getKey()} cartItem={cartItem}>
                                 
-                            <CartItem.ItemCard/>
+                            <CartItem.ItemDetailedCard/>
                             {
                                 index +1 !== data.length ? <hr /> : null
                             }      

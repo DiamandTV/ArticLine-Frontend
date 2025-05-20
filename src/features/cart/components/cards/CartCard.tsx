@@ -33,20 +33,17 @@ export function CartCard({readonly=false}:CardCardProps) {
     );
 }
 
-export function OnlyCartCard(){
+export function OnlyCartDetailCard(){
     const {cart} = useCartContext()
     if(!cart) return null
     return (
-        <Cart.Card className="w-full rounded-none">
-            <Cart.Header className="px-2 py-3 flex flex-row justify-between items-center ">
-              
-                <Cart.ItemsCount/>
-           
-            </Cart.Header>
+        <Cart.Card className="w-full ">        
             <Cart.Body className="flex flex-col gap-2 p-2 pb-0">
-              <CartItem.List/>
+              <CartItem.ListReadOnly/>
             </Cart.Body>
-
+            <Cart.Footer className="mt-0 p-2 flex flex-col gap-2">
+                <Cart.PriceDetails/>
+            </Cart.Footer>
         </Cart.Card>
     );
 }

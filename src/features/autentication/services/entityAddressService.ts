@@ -22,10 +22,16 @@ async function _delete(entityAddressId:number){
     return await apiBearToken.delete(`/entity/address/${entityAddressId}/delete/`)
 }
 
+async function setDefault(entityAddressId:number) {
+    return await apiBearToken.patch(`/entity/address/${entityAddressId}/set-default/`)
+}
+
 export const entityAddressService = {
     retrieve,
     create,
     list,
     update,
-    delete:_delete
+    delete:_delete,
+
+    setDefault
 }

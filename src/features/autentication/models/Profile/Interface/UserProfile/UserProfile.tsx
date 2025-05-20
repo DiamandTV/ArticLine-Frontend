@@ -1,5 +1,6 @@
 import { AddressRequestInterface } from "@features/autentication/models/Address/Interface/AddressInterface";
 import { AuthInterface, AuthSigninRequestInterface } from "@features/autentication/models/Auth/AuthInterface/AuthInterface";
+import { EntityAddressInterface } from "@features/autentication/models/EntityAddress/Interface/EntityAddressInterface";
 
 export interface UserProfileInterface{
     id:number,
@@ -10,6 +11,7 @@ export interface UserProfileInterface{
     date_of_birth:string,
     auth:AuthInterface,
     address:AddressRequestInterface,
+    entity_address:EntityAddressInterface,
 }
 
 export type UserProfileSigninRequestInterface = Omit<UserProfileInterface,'id'|'image'|'auth'|'address'> & {

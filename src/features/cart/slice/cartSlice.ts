@@ -18,6 +18,10 @@ const cartSlice = createSlice({
         },
         clearCarts:(state)=>{
             state.carts = []
+        },
+        removeCart:(state,action)=>{
+            const cartToRemove = action.payload as CartInterface
+            state.carts = [...state.carts.filter((cart)=>cart.id !== cartToRemove.id)]
         }
     }
 })

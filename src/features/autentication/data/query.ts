@@ -1,10 +1,15 @@
 import { HttpMethod } from "@models/Http/HttpMethods";
 
-export const entityAddressCacheKey:Record<HttpMethod,string> = {
+type EntityAddressCacheKeyInterface = HttpMethod | 'setDefault'
+
+
+export const entityAddressCacheKey:Record<EntityAddressCacheKeyInterface,string> = {
     retrieve:'retrieve-entity-address',
     create:'create-entity-address',
     list:'list-entity-address',
     update:'update-entity-address',
-    delete:'delete-entity-address'
+    delete:'delete-entity-address',
+
+    setDefault:'set-default-entity-address',
 }
 

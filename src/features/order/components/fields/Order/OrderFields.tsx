@@ -1,4 +1,3 @@
-import { AddressInput } from "@components/inputs/AddressInput";
 import { FieldsProvider } from "@features/autentication/context/FieldsProvider/FieldsProvider";
 import { FieldsProps } from "@features/autentication/models/Fields/FieldsProps";
 import { FieldsProviderProps } from "@features/autentication/models/Fields/FieldsProviderProps";
@@ -6,7 +5,6 @@ import { orderInfoFieldsSchema, OrderInfoFieldsType } from "@features/order/mode
 import { tailwindMerge } from "@lib/tsMerge/tsMerge";
 import { Col, FloatingLabel, Form, Row } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
-import { EntityAddressList } from "../../list/EntityAddressList.tsx";
 import { DeliveryInput } from "../../inputs/DeliveryInput/DeliveryInput.tsx";
 import { OrderAddressInput } from "../../inputs/OrderAddressInput/OrderAddressInput.tsx";
 

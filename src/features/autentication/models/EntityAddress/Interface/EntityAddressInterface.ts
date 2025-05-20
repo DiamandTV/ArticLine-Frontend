@@ -5,5 +5,6 @@ export interface EntityAddressInterface{
     address:AddressInterface,
     phone_number:string,
     extra_info:string,
-    denomination:string
+    denomination:string,
+    is_default:boolean
 }

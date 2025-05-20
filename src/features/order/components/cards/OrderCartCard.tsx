@@ -1,7 +1,11 @@
-import { OnlyCartCard } from "@features/cart/components/cards/CartCard";
+import { OnlyCartDetailCard } from "@features/cart/components/cards/CartCard";
+
 
 export function OrderCartCard(){
     return(
-        <OnlyCartCard/>
+        <div className="flex flex-col gap-2">
+            <h1 className="font-medium">CART</h1>
+            <OnlyCartDetailCard/>
+        </div>
     )
 }

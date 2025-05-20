@@ -2,12 +2,7 @@ import { tailwindMerge } from "@lib/tsMerge/tsMerge";
 import { Button, Card } from "react-bootstrap";
 import { useCartContext } from "@features/cart/context/CartContext/CartProvider";
 import { IoCart } from "react-icons/io5";
-import { BottomSheetModalProvider } from "@context/BottomSheetModal/BottomSheetModalProvider";
-import { BottomSheetModalProviderFn } from "@context/BottomSheetModal/BottomSheetModalProviderFn";
-import { OrderCheckoutPage } from "@features/order/pages/Order/OrderCheckoutPage";
-import { SimpleBottomSheetModal } from "@components/modal/BottomSheetModal/SimpleBottomSheetModal";
-import { PaddingView } from "@views/PaddingView";
-import { OrderForm } from "@features/order/components/forms/Order/OrderForm";
+import { useNavigate } from "react-router";
 
 export const Cart = () => null;
 
@@ -147,26 +142,15 @@ Cart.PriceDetails = function PriceDetails(){
 
 
 Cart.Checkout = function Checkout(){
+    const navigator = useNavigate()
     return(
-        <BottomSheetModalProviderFn>
-            {
-                ({setOpen})=>{
-                    return(
-                        <>
-                            <Button className="w-full" onClick={()=>setOpen(true)}>
-                                <h1 className="font-medium text-sm">CHECKOUT</h1>
-                            </Button>
-                               <SimpleBottomSheetModal detent="content-height">
-                                    <PaddingView>
-                                        <OrderForm.Create/>
-                                    </PaddingView>
-                                </SimpleBottomSheetModal>
-                        </>
-                    )
-                }
-            }
-         
-        </BottomSheetModalProviderFn>
+        <Button 
+            className="w-full" 
+            onClick={()=>{
+                navigator('checkout/')
+            }}>
+            <h1 className="font-medium text-sm">CHECKOUT</h1>
+        </Button>
     )
 }
 

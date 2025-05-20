@@ -10,12 +10,12 @@ import { storeBusinessProductServices } from "@features/store/services/storeBusi
 import { ProductFormProps } from "./ProductForm";
 import { productCacheKey } from "@features/store/data/query";
 export function Delete({...params}:ProductFormProps){
-    const {storeId,storeCategoryId,productId} = params
+    const {companyId,storeId,storeCategoryId,productId} = params
     const {product} = useContext(ProductContext)
     const {isOpen,setOpen} = useContext(ModalContext)
     const {mutateAsync} = useMutation({
         mutationKey:[productCacheKey.delete],
-        mutationFn:async()=>await storeBusinessProductServices.delete(storeId,storeCategoryId,productId!)
+        mutationFn:async()=>await storeBusinessProductServices.delete(companyId,storeId,storeCategoryId,productId!)
     })
     if(!product) return
     return(

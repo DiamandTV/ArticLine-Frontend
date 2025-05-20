@@ -118,5 +118,39 @@
   height:0px !important;
   margin-top:0px;
   padding:0px;
-  position:status !important
+  width:1000% !important;
+  position:status !important;
+  
+}
+
+.datetime-custom-articline  table {
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.datetime-custom-articline  table > thead,
+.datetime-custom-articline  table > tbody,
+.datetime-custom-articline  table > tfoot {
+  width: 100%;
+  display: flex;
+  flex-direction: column !important;
+}
+
+.datetime-custom-articline  table > thead > tr,
+.datetime-custom-articline  table > tbody > tr,
+.datetime-custom-articline  table > tfoot > tr {
+  width: 100% !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.datetime-custom-articline  table > thead > tr > th,
+.datetime-custom-articline  table > tbody > tr > td,
+.datetime-custom-articline  table > tfoot > tr > td {
+  width: 100% !important;
+  text-align: center;
 }

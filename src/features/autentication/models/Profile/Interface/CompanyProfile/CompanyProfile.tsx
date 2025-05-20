@@ -1,5 +1,6 @@
 import { AddressInterface, AddressRequestInterface } from "@features/autentication/models/Address/Interface/AddressInterface";
 import { AuthInterface, AuthSigninRequestInterface } from "@features/autentication/models/Auth/AuthInterface/AuthInterface";
+import { EntityAddressInterface } from "@features/autentication/models/EntityAddress/Interface/EntityAddressInterface";
 
 export interface CompanyProfileInterface{
     id:number,
@@ -10,6 +11,7 @@ export interface CompanyProfileInterface{
     date_of_foundation:string ,
     auth:AuthInterface,
     address:AddressInterface,
+    entity_address:EntityAddressInterface,
     is_certificated:boolean,
 }
 

@@ -50,6 +50,10 @@ const authSlice = createSlice({
         },
         clearProfile:(state)=>{
             state.profile = null
+        },
+        setEntityAddress:(state,action)=>{
+            const profile = {...state.profile,entity_address:action.payload}
+            state.profile = profile as ProfileInterface
         }
     },
 

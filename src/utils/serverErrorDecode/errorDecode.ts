@@ -24,9 +24,12 @@ export function setServerValidationErrors<T extends FieldValues>(axiosError:Axio
         if(errors && errors.length > 0){
             errors.forEach((error)=>{
                 const attr = error.attr as Path<T>
-                if(keys.includes(attr)){
+                console.log(error)
+                console.log(keys)
+                // todo : return the flat keys
+                //if(keys.includes(attr)){
                     setError(attr,{message:error.detail,type:"custom"})
-                }
+                //}
             })   
         }
     }

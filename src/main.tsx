@@ -5,6 +5,7 @@ import { router } from '@router/router'
 import { Provider } from "react-redux"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-toastify/dist/ReactToastify.css";
+import "leaflet/dist/leaflet.css";
 import './index.css'
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ToastContainer } from 'react-toastify';

@@ -42,8 +42,9 @@ export function DeliveryTimeInput({id,label}:DeliveryTimeInputProps){
                 <Datetime
                
                   {...field}
+                  
                   renderView={(mode,renderDefault)=>{
-                    console.log(renderDefault)
+                    console.log(errors)
                     return(
                       <div className="w-0 h-0 p-0 m-0 overflow-hidden">
                         <ModalContext.Consumer>
@@ -56,7 +57,7 @@ export function DeliveryTimeInput({id,label}:DeliveryTimeInputProps){
                                   container={ref} 
                                   centered
                                   >
-                                  <div className="w-full">
+                                  <div className="w-full datetime-custom-articline">
                                     {renderDefault()}
                                   </div>
                                 </Modal>
@@ -85,7 +86,7 @@ export function DeliveryTimeInput({id,label}:DeliveryTimeInputProps){
                                       }}  
                                     type="text" readOnly isInvalid={!!errorMessage}/>
                                     <Form.Control.Feedback type="invalid">
-                                        errorMessage
+                                        {errorMessage}
                                     </Form.Control.Feedback>
                                 </FloatingLabel>
                               )

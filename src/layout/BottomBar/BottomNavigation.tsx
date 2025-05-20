@@ -18,9 +18,6 @@ export function BottomNavigation(){
     const [state,setState] = useState(0)
     
     const profile = useSelector((state:RootState)=>state.authReducer.profile)
-
-    console.log(profile)
-
     const pathIndexMap = [
         '/',
         '/cart',
