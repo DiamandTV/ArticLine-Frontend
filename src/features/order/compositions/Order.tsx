@@ -219,7 +219,7 @@ Order.AcceptButton = function AcceptButton(){
                             </Button>
                             <SimpleBottomSheetModal detent="content-height">
                                 <PaddingView>
-                                    <OrderForm.UpdateDeliveryTime/>
+                                    <OrderForm.UpdateDeliveryTimeAndAccept/>
                                 </PaddingView>
                             </SimpleBottomSheetModal>
                         </>

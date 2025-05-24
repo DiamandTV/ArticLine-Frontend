@@ -6,6 +6,7 @@ import { useFormContext } from "react-hook-form";
 import { OrderDeliveryTimeFieldsType } from "@features/order/models/Order/Field/OrderField";
 import { orderBusinessCacheKey } from "@features/order/data/query";
 import { useOrderContext } from "@features/order/context/OrderContext/OrderProvider";
+import { AxiosError } from "axios";
 
 export function UpdateDeliveryTime(){
     return(
@@ -23,7 +24,15 @@ export function UpdateButton(){
     const {trigger,getValues} = useFormContext<OrderDeliveryTimeFieldsType>()
     const {mutateAsync,isLoading} = useMutation({
         mutationKey:[orderBusinessCacheKey.accept],
-        mutationFn:async(orderDeliveryTimeInfo:OrderDeliveryTimeFieldsType)=>await orderBusinessService.accept(order.id,orderDeliveryTimeInfo)
+        mutationFn:async(orderDeliveryTimeInfo:OrderDeliveryTimeFieldsType)=>await orderBusinessService.accept(order.id,orderDeliveryTimeInfo),
+        onSuccess:(data)=>{
+        
+        },
+        onError:(error)=>{
+            if(error instanceof AxiosError){
+                // todo: handle server side accept error
+            }
+        }
     })
 
     const onClick = async()=>{
