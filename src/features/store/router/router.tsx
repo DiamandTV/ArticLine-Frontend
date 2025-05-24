@@ -3,6 +3,7 @@ import { CreateStore } from "../page/CreateStore/CreateStore";
 import { BusinessStoreListPage } from "../page/BusinessStore/BusinessStoreListPage";
 import { StorePage } from "../page/BusinessStore/StorePage";
 import { StoreProductListPage } from "../page/BusinessStore/StoreProductListPage";
+import { StoreCartView } from "../view/StoreCartView";
 
 const _protected:RouteGroup = {
     routesWithLayout:[
@@ -11,12 +12,18 @@ const _protected:RouteGroup = {
             element:<BusinessStoreListPage/>
         },
         {
-            path:'company/:company-id/store/:store-id/',
-            element:<StorePage/>
-        },
-        {
-            path:'company/:company-id/store/:store-id/category/:store-category-id/',
-            element:<StoreProductListPage/>
+            
+            element:<StoreCartView/>,
+            children:[
+                {
+                    path:'company/:company-id/store/:store-id/',
+                    element:<StorePage/>
+                },
+                {
+                    path:'company/:company-id/store/:store-id/category/:store-category-id/',
+                    element:<StoreProductListPage/>
+                },
+            ]
         },
         {
             path:'company/:company-id/store/create/',

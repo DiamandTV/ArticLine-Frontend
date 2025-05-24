@@ -19,3 +19,9 @@ export const orderInfoFieldsSchema = z.object({
 })
 
 export type OrderInfoFieldsType = z.infer<typeof orderInfoFieldsSchema>
+
+export const orderDeliveryTimeFieldsSchema = z.object({
+    delivery_time:z.string().datetime({message:"A delivery datetime is required "}).optional(),
+})
+
+export type OrderDeliveryTimeFieldsType = z.infer<typeof orderDeliveryTimeFieldsSchema>

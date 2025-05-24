@@ -138,7 +138,6 @@ CartItem.List = function List(){
 }
 
 CartItem.ListReadOnly = function List(){
-    console.log("OK")
     const {cart} = useCartContext()
     const {data,isLoading,isSuccess,ref} = useGetCartItemListQuery({
         cartId:cart!.id

@@ -5,6 +5,7 @@ import { IoCart } from "react-icons/io5";
 import { useNavigate } from "react-router";
 import { StoreProvider } from "@features/store/context/StoreContext/StoreProvider";
 import { Store } from "@features/store/compositions/Store";
+import { Badge } from "@components/Badge/Badge";
 
 export const Cart = () => null;
 
@@ -120,28 +121,59 @@ Cart.Footer = function Footer({ className,children, ...attr }: CartProps) {
     );
 };
 
-Cart.PriceDetails = function PriceDetails(){
+Cart.SubTotalCost = function SubTotal(attr:React.HTMLAttributes<HTMLElement>){
     const {cart} = useCartContext()
     if(!cart) return null
-    const total = cart.subtotal_cost + cart.shipping_cost
+    const subtotal = cart.subtotal_cost.toFixed(2)
     return(
-        <div className="w-full flex flex-col gap-0.5 text-sm font-medium">
-            <div className="w-full flex flex-row items-center justify-between">
-                <span >Subtotal</span>
-                <span>{`€ ${cart.subtotal_cost}`}</span>
-            </div>
-            <div className="w-full flex flex-row items-center justify-between">
-                <span>Shipping</span>
-                <span>{`€ ${cart.shipping_cost}`}</span>
-            </div>
-            <div className="w-full flex flex-row items-center justify-between">
-                <span>Total(incl. taxes)</span>
-                <span>{`€ ${total}`}</span>
-            </div>
+        <div {...attr} className={tailwindMerge("w-full flex flex-row items-center justify-between",attr.className)}>
+            <span >Subtotal</span>
+            <span>{`€ ${subtotal}`}</span>
         </div>
     )
 }
 
+Cart.ShippingCost = function Shipping(attr:React.HTMLAttributes<HTMLElement>){
+    const {cart} = useCartContext()
+    if(!cart) return null
+    const shipping = cart.shipping_cost.toFixed(2)
+    return(
+        <div {...attr} className={tailwindMerge("w-full flex flex-row items-center justify-between",attr.className)}>
+            <span>Shipping</span>
+            <span>{`€ ${shipping}`}</span>
+        </div>
+    )
+}
+
+Cart.TotalCost = function Total(attr:React.HTMLAttributes<HTMLElement>){
+    const {cart} = useCartContext()
+    if(!cart) return null
+    const total = (cart.subtotal_cost + cart.shipping_cost).toFixed(2)
+    return(
+        <div {...attr} className={tailwindMerge("w-full flex flex-row items-center justify-between",attr.className)}>
+            <span>Total(incl. taxes)</span>
+            <span>{`€ ${total}`}</span>
+        </div>
+    )
+}
+
+Cart.PriceDetails = function PriceDetails(){
+    return(
+        <div className="w-full flex flex-col gap-0.5 text-sm font-medium">
+            <Cart.SubTotalCost/>
+            <Cart.ShippingCost/>
+            <Cart.TotalCost/>
+        </div>
+    )
+}
+
+Cart.Price = function Price(attr:React.HTMLAttributes<HTMLElement>){
+    const {cart} = useCartContext()
+    const total = cart!.subtotal_cost + cart!.shipping_cost
+    return(
+        <span {...attr} className={tailwindMerge("text-sm font-medium",attr.className)}>{`€ ${total}`}</span>
+    )
+}
 
 Cart.Checkout = function Checkout(){
     const navigator = useNavigate()
@@ -176,3 +208,16 @@ Cart.StoreTitle = function StoreTitle(){
     )
 }
 
+Cart.CartBadge = function CartBadge(attr:React.HTMLAttributes<HTMLElement>){
+    const {cart} = useCartContext()
+    if(!cart) return null
+    const cartItem = cart.cartItems_count
+    return(
+        <Badge
+            badgeContent={cartItem.toString()}
+            {...attr}
+        >
+            <IoCart/>
+        </Badge>
+    )
+}

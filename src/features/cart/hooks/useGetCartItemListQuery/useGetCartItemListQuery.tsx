@@ -9,11 +9,12 @@ interface useGetCartItemListQueryProps{
 }
 export function useGetCartItemListQuery({cartId}:useGetCartItemListQueryProps){
     const paginationResults = usePaginationInfiniteScroll({
-        queryKey:[cartItemCacheKey.list],
+        queryKey:[cartItemCacheKey.list,cartId],
         queryFn:async({pageParam})=>await cartItemServices.list(cartId,pageParam)
     })
 
     if(paginationResults.isSuccess){
+        console.log(paginationResults)
         return {...paginationResults,data:getDataFromPage<CartItemInterface>(paginationResults.data)}
     }
     return paginationResults

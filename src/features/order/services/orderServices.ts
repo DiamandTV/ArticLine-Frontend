@@ -5,8 +5,9 @@ async function create(orderInfo:OrderInfoFieldsType){
     return await apiBearToken.post('/order/create/',orderInfo)
 }
 
-async function list(page:number=1){
-    return await apiBearToken.get(`/order/list/?page=${page}`)
+async function list(page:number=1,searchParams:URLSearchParams){
+    const params = searchParams ? `&${searchParams.toString()}` : ''
+    return await apiBearToken.get(`/order/list/?page=${page}${params}`)
 }
 
 async function retrieve(orderId:number){

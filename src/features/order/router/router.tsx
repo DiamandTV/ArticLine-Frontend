@@ -1,6 +1,7 @@
 import { FeatureRoutes, RouteGroup } from "@models/routes/routes";
 import { OrderCheckoutPage } from "../pages/Order/OrderCheckoutPage";
-import { OrderListPage } from "../pages/Order/OrderListPage";
+import { OrderBusinessPage } from "../pages/OrderBusiness/OrderBusinessPage";
+import { OrderPage } from "../pages/Order/OrderPage";
 
 const _protected:RouteGroup = {
     routesWithLayout:[
@@ -10,8 +11,13 @@ const _protected:RouteGroup = {
         },
         {
             path:'order/',
-            element:<OrderListPage/>
+            element:<OrderPage/>
+        },
+        {
+            path:'company/:company-id/orders/',
+            element:<OrderBusinessPage/>
         }
+
     ],
     standaloneRoutes:[
 

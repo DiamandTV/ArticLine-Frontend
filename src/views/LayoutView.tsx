@@ -8,16 +8,17 @@ export function LayoutView(){
             <NavigationBar />
             
             {/* Contenuto che si espande tra le due barre */}
-            <div className="flex-1 overflow-auto ">
-                <div className="w-full h-full p-0 sm:p-4 md:p-6 lg:!p-10 rounded-xl ">
+            <div className="flex-1 overflow-auto bg-transparent">
+                <div className="w-full h-full bg-transparent p-0 sm:p-4 md:p-6 lg:!p-10 rounded-xl ">
                     <Outlet />
+                    <BottomNavigation />
                 </div>         
             </div>
-
+            
             {/* Spazio riservato per la barra fissa in basso */}
-            <div className="h-[64px]" /> {/* altezza uguale alla BusinessBottomNavigation */}
-
-            <BottomNavigation />
+            <div className="h-[64px] bg-transparent" > {/* altezza uguale alla BusinessBottomNavigation */}
+                
+            </div>
         </div>
     )
 }

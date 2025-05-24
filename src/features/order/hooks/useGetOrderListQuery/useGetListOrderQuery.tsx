@@ -3,11 +3,13 @@ import { OrderInterface } from "@features/order/models/Order/Interface/OrderInte
 import { orderServices } from "@features/order/services/orderServices";
 import { usePaginationInfiniteScroll } from "@hooks/PaginationInfiniteScroll/usePaginationInfiniteScroll";
 import { getDataFromPage } from "@utils/getDataFromPage/getDataFromPaginationResponse";
+import { useSearchParams } from "react-router";
 
 export function useGetOrderListQuery(){
+    const [searchParams,] = useSearchParams()
     const paginationResults = usePaginationInfiniteScroll({
-        queryKey:[orderCacheKey.list],
-        queryFn:async({pageParam})=>await orderServices.list(pageParam)
+        queryKey:[orderCacheKey.list,...searchParams],
+        queryFn:async({pageParam})=>await orderServices.list(pageParam,searchParams)
     })
 
     if(paginationResults.isSuccess){

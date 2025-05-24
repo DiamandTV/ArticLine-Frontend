@@ -1,14 +1,17 @@
 import { EntityAddressInterface } from "@features/autentication/models/EntityAddress/Interface/EntityAddressInterface";
 import { CartInterface } from "@features/cart/model/Cart/Interface/CartInterface";
 
-type OrderStatusType =
+export type OrderStatusType =
     'NOT ACCEPTED'  |
     'ACCEPTED'      |
     'WORKING ON'    |
     'READY'         |
     'SENDED'        |
     'DELIVERED'     |
-    'CANCELED'      
+    'CANCELED'      |
+    'REFUSED'
+
+export const COMPANY_ORDER_STATUS_STEPS:Array<OrderStatusType> = ['NOT ACCEPTED','ACCEPTED','WORKING ON','READY']
 
 export interface OrderInterface{
     id:number,
