@@ -29,9 +29,8 @@ export function DeliveryTimeInput({id,label}:DeliveryTimeInputProps){
         control,
         formState: { errors },
       } = useFormContext();
-    
       const errorMessage = errors?.[id]?.message as string | undefined;
-    
+      console.log(errors)
       return (
         <div ref={ref}>
           <Controller
@@ -40,11 +39,8 @@ export function DeliveryTimeInput({id,label}:DeliveryTimeInputProps){
             render={({ field }) => (
               <ModalProvider>
                 <Datetime
-               
                   {...field}
-                  
                   renderView={(mode,renderDefault)=>{
-                    console.log(errors)
                     return(
                       <div className="w-0 h-0 p-0 m-0 overflow-hidden">
                         <ModalContext.Consumer>
@@ -72,7 +68,6 @@ export function DeliveryTimeInput({id,label}:DeliveryTimeInputProps){
                 
                   className={classNames("", { "is-invalid": errorMessage })}
                   renderInput={(props)=>{
-                    console.log(props)
                       return(
                         <ModalContext.Consumer>
                           {

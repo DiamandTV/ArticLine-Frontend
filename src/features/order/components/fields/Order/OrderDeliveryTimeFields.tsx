@@ -1,7 +1,7 @@
 import { FieldsProvider } from "@features/autentication/context/FieldsProvider/FieldsProvider";
 import { FieldsProps } from "@features/autentication/models/Fields/FieldsProps";
 import { FieldsProviderProps } from "@features/autentication/models/Fields/FieldsProviderProps";
-import { OrderDeliveryTimeFieldsType, orderInfoFieldsSchema } from "@features/order/models/Order/Field/OrderField";
+import { orderDeliveryTimeFieldsSchema, OrderDeliveryTimeFieldsType } from "@features/order/models/Order/Field/OrderField";
 import { tailwindMerge } from "@lib/tsMerge/tsMerge";
 import { Col, Form, Row } from "react-bootstrap";
 import { DeliveryTimeInput } from "../../inputs/DeliveryInput/DeliveryTimeInput";
@@ -10,7 +10,7 @@ export function OrderDeliveryTimeInfoFieldsProvider(props:FieldsProviderProps<Or
     return(
         <FieldsProvider<OrderDeliveryTimeFieldsType>
             {...props}
-            schema={orderInfoFieldsSchema}
+            schema={orderDeliveryTimeFieldsSchema}
             >
                 {props.children}
         </FieldsProvider>

@@ -8,7 +8,7 @@ export const orderCacheKey:Record<HttpMethod,string> = {
     delete:'delete-order',
 }
 
-type OrderBusinessCacheKey = HttpMethod | 'cancel' | 'refuse' | 'nextStep' | 'accept'
+type OrderBusinessCacheKey = HttpMethod | 'cancel' | 'refuse' | 'nextStep' | 'accept' | 'updateDelayTime'
 export const orderBusinessCacheKey:Record<OrderBusinessCacheKey,string> = {
     retrieve:'retrieve-order-business',
     create:'create-order-business',
@@ -19,5 +19,7 @@ export const orderBusinessCacheKey:Record<OrderBusinessCacheKey,string> = {
     cancel:'cancel-order-business',
     refuse:'refuse-order-business',
     accept:'accept-order-business',
-    nextStep:'nextStep-order-business'
+    nextStep:'nextStep-order-business',
+    
+    updateDelayTime:'update-delay-time'
 }

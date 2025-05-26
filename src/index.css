@@ -114,6 +114,10 @@
   --text-surface-a50: #b6b6b6;
 }
 
+.rdp-picker {
+  width:100% !important
+}
+
 .rdtPicker{
   height:0px !important;
   margin-top:0px;

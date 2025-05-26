@@ -2,37 +2,46 @@ import { PaddingView } from "@views/PaddingView";
 import { Tab, Tabs } from "react-bootstrap";
 import { createSearchParams, useNavigate } from "react-router";
 import { OrderListPage } from "./OrderListPage";
+import { useEffect, useState } from "react";
 
+type OrderTabEventKeyType = 'PROGRESS' | 'FINISHED' 
 export function OrderPage(){
+    const [eventKey,setEventKey] = useState<OrderTabEventKeyType>('PROGRESS')
     const navigator = useNavigate()
+
+    useEffect(()=>{
+        switch(eventKey){
+            case 'PROGRESS':
+                navigator({
+                    pathname:'',
+                    search:createSearchParams({
+                        not_status__in:'DELIVERED,CANCELED'
+                    }).toString()
+                })
+                break
+            case 'FINISHED':
+                navigator({
+                    pathname:'',
+                    search:createSearchParams({
+                        status__in:'DELIVERED,CANCELED'
+                    }).toString()
+                })
+                break
+        }
+    },[eventKey])
+
     return(
         <PaddingView className="block px-0">
-            <Tabs fill>
+            <Tabs fill activeKey={eventKey} onSelect={(k)=>setEventKey(k as OrderTabEventKeyType)}>
                 <Tab 
-                    eventKey="progress"
+                    eventKey="PROGRESS"
                     title="In Progress"
-                    onEnter={()=>{
-                        navigator({
-                            pathname:'',
-                            search:createSearchParams({
-                                not_status__in:'DELIVERED,CANCELED'
-                            }).toString()
-                        })
-                    }}
                 >
                     <OrderListPage/>
                 </Tab>
                 <Tab 
-                    eventKey="finished"
+                    eventKey="FINISHED"
                     title="Finished"
-                    onEnter={()=>{
-                        navigator({
-                            pathname:'',
-                            search:createSearchParams({
-                                status__in:'DELIVERED,CANCELED'
-                            }).toString()
-                        })
-                    }}
                 >
                     <OrderListPage/>
                 </Tab>

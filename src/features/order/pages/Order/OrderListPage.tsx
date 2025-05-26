@@ -8,7 +8,7 @@ import { OrderDetailPage } from "./OrderDetailPage"
 import { getKey } from "@lib/kegGenerator/keyGenerator"
 
 export function OrderListPage(){
-    const {data,isLoading,isSuccess} = useGetOrderListQuery()
+    const {data,isLoading,isSuccess,ref} = useGetOrderListQuery()
     if(isLoading || !isSuccess) return null
     return(
         <PaddingView className="w-full">
@@ -36,6 +36,7 @@ export function OrderListPage(){
                     )
                 })
             }
+            <div className="py-0.5" ref={ref}/>
         </div>
         </PaddingView>
     )

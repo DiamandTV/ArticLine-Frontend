@@ -12,7 +12,7 @@ export type OrderStatusType =
     'REFUSED'
 
 export const COMPANY_ORDER_STATUS_STEPS:Array<OrderStatusType> = ['NOT ACCEPTED','ACCEPTED','WORKING ON','READY']
-
+export const ACTIVE_ORDER_STATUS_STEPS:Array<OrderStatusType> = ['NOT ACCEPTED','ACCEPTED','WORKING ON','READY','SENDED','DELIVERED']
 export interface OrderInterface{
     id:number,
     //order:number,

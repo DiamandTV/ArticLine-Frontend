@@ -1,5 +1,5 @@
 import { apiBearToken } from "@lib/axios/api";
-import { OrderDeliveryTimeFieldsType } from "../models/Order/Field/OrderField";
+import { OrderDelayTimeFieldsType, OrderDeliveryTimeFieldsType } from "../models/Order/Field/OrderField";
 
 async function list(page:number=1,searchParams:URLSearchParams){
     const params = searchParams ? `&${searchParams.toString()}` : ''
@@ -26,6 +26,10 @@ async function nextStep(orderId:number){
     return await apiBearToken.patch(`/order/business/${orderId}/next-step/`,{})
 }
 
+async function updateDelayTime(orderId:number,orderDelayTimeInfo:OrderDelayTimeFieldsType){
+    return await apiBearToken.patch(`/order/business/${orderId}/update/delay-time/`,orderDelayTimeInfo)
+}
+
 export const orderBusinessService = {
     list,
     retrieve,
@@ -33,5 +37,7 @@ export const orderBusinessService = {
     cancel,
     refuse,
     accept,
-    nextStep
+    nextStep,
+
+    updateDelayTime
 }

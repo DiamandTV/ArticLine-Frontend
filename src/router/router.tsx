@@ -7,6 +7,7 @@ import { LayoutView } from "@views/LayoutView";
 import { storeRoutes } from "@features/store/router/router";
 import { cartRoutes } from "@features/cart";
 import { orderRoutes } from "@features/order";
+import { orderDeliveryBatchRoutes } from "@features/orderDeliveryBatch";
 export const router = createBrowserRouter([
     {
         path:'/',
@@ -29,8 +30,10 @@ export const router = createBrowserRouter([
                                     ...homeFeatureRoutes.protected.routesWithLayout,
                                     ...storeRoutes.protected.routesWithLayout,
                                     ...cartRoutes.protected.routesWithLayout,
-                                    ...orderRoutes.protected.routesWithLayout
+                                    ...orderRoutes.protected.routesWithLayout,
+                                    ...orderDeliveryBatchRoutes.protected.routesWithLayout
                                     //...businessFeatureRoutes.protected.routesWithLayout
+                                
                                 ]
                             },
 
@@ -39,7 +42,8 @@ export const router = createBrowserRouter([
                             ...homeFeatureRoutes.protected.standaloneRoutes ,
                             ...storeRoutes.protected.standaloneRoutes,
                             ...cartRoutes.protected.standaloneRoutes,
-                            ...orderRoutes.protected.standaloneRoutes
+                            ...orderRoutes.protected.standaloneRoutes,
+                            ...orderDeliveryBatchRoutes.protected.standaloneRoutes,
                             //...businessFeatureRoutes.protected.standaloneRoutes
                             ]
                 },
@@ -57,7 +61,8 @@ export const router = createBrowserRouter([
                                 ...homeFeatureRoutes.public.routesWithLayout,
                                 ...storeRoutes.public.routesWithLayout,
                                 ...cartRoutes.public.routesWithLayout,
-                                ...orderRoutes.public.routesWithLayout
+                                ...orderRoutes.public.routesWithLayout,
+                                ...orderDeliveryBatchRoutes.public.routesWithLayout
                                 //...businessFeatureRoutes.public.routesWithLayout
                             ]
                         },
@@ -66,7 +71,8 @@ export const router = createBrowserRouter([
                         ...homeFeatureRoutes.public.standaloneRoutes,
                         ...storeRoutes.public.standaloneRoutes,
                         ...cartRoutes.public.standaloneRoutes,
-                        ...orderRoutes.public.standaloneRoutes
+                        ...orderRoutes.public.standaloneRoutes,
+                        ...orderDeliveryBatchRoutes.public.standaloneRoutes
                         //...businessFeatureRoutes.public.standaloneRoutes
                     ]
             }        
