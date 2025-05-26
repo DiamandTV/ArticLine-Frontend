@@ -5,8 +5,10 @@ import { OrderDeliveryBatchProvider } from "../context/OrderDeliveryBatchContext
 export function OrderDeliveryBatchListPage(){
     const {data,isLoading,isSuccess,ref} = useGetOrderDeliveryBatchListQuery()
     if (isLoading || !isSuccess) return null
+    
     return(
         <PaddingView>
+            
             {
                 data.map((orderDeliveryBatch)=>{
                     return(

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { Tab, Tabs } from "react-bootstrap"
 import { createSearchParams, useNavigate } from "react-router"
 import { OrderDeliveryBatchListPage } from "./OrderDeliveryBatchListPage"
+import { OrderDeliveryBatch } from "../compositions/OrderDeliveyBatch"
 
 type OrderDeliveryBatchTabEventKeyType = 'PROGRESS' | 'FINISHED'
 export function OrderDeliveryBatchPage(){
@@ -32,6 +33,7 @@ export function OrderDeliveryBatchPage(){
 
     return(
         <PaddingView className="block px-0">
+            <OrderDeliveryBatch.CreateButton/>
             <Tabs fill activeKey={eventKey} onSelect={(k)=>setEventKey(k as OrderDeliveryBatchTabEventKeyType)}>
                 <Tab
                     eventKey='PROGRESS'
