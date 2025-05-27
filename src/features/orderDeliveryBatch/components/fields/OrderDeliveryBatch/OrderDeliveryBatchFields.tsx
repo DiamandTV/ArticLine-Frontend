@@ -5,8 +5,7 @@ import { FieldsProps } from "@features/autentication/models/Fields/FieldsProps";
 import { FieldsProviderProps } from "@features/autentication/models/Fields/FieldsProviderProps";
 import { DeviceSelect } from "@features/device/components/select/DeviceSelect";
 import { OrderMultiSelect } from "@features/order/components/multiSelect/OrderMultiSelect";
-import { orderDelayTimeFieldsSchema } from "@features/order/models/Order/Field/OrderField";
-import { OrderDeliveryBatchFieldsType } from "@features/orderDeliveryBatch/models/OrderDeliveryBatch/Field/OrderDeliveryBatchField";
+import { orderDeliveryBatchFieldsSchema, OrderDeliveryBatchFieldsType } from "@features/orderDeliveryBatch/models/OrderDeliveryBatch/Field/OrderDeliveryBatchField";
 import { tailwindMerge } from "@lib/tsMerge/tsMerge";
 import { Col, FloatingLabel, Form, Row } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
@@ -15,7 +14,7 @@ export function OrderDeliveryBatchInfoFieldsProvider(props:FieldsProviderProps<O
     return(
         <FieldsProvider<OrderDeliveryBatchFieldsType> 
             {...props}
-            schema={orderDelayTimeFieldsSchema}
+            schema={orderDeliveryBatchFieldsSchema}
         >   
             {props.children}
         </FieldsProvider>

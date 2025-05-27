@@ -30,6 +30,11 @@ async function updateDelayTime(orderId:number,orderDelayTimeInfo:OrderDelayTimeF
     return await apiBearToken.patch(`/order/business/${orderId}/update/delay-time/`,orderDelayTimeInfo)
 }
 
+// order list not assigned to no order deliverry batch
+async function notAssignedList(page:number=1,searchParams:URLSearchParams){
+    const params = searchParams ? `&${searchParams.toString()}` : ''
+    return await apiBearToken.get(`/order/business/not-assigned/list/?page=${page}${params}`)
+}
 export const orderBusinessService = {
     list,
     retrieve,
@@ -39,5 +44,7 @@ export const orderBusinessService = {
     accept,
     nextStep,
 
-    updateDelayTime
+    updateDelayTime,
+
+    notAssignedList
 }

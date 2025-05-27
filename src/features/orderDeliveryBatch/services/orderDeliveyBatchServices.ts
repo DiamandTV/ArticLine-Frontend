@@ -20,10 +20,16 @@ async function _delete(orderDeliveryBatchId:number){
     return await apiBearToken.delete(`/order-delivery-batch/business/${orderDeliveryBatchId}/delete/`,{})
 }
 
+async function listOrders(page:number=1,orderDeliveryBatchId:number){
+    return await apiBearToken.get(`/order-delivery-batch/business/${orderDeliveryBatchId}/orders/list/?page=${page}`)
+}
+
 export const orderDeliveryBatchServices = {
     create,
     list,
     retrieve,
     update,
-    delete:_delete
+    delete:_delete,
+
+    listOrders
 }
