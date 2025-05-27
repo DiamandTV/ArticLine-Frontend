@@ -5,11 +5,11 @@ import { usePaginationInfiniteScroll } from "@hooks/PaginationInfiniteScroll/use
 import { getDataFromPage } from "@utils/getDataFromPage/getDataFromPaginationResponse";
 
 interface useGetDeviceListQueryProps{
-    params:URLSearchParams
+    params?:URLSearchParams
 }
 export function useGetDeviceListQuery({params}:useGetDeviceListQueryProps){
     const paginationResults = usePaginationInfiniteScroll({
-        queryKey:[deviceCacheKey.list, ...params],
+        queryKey:params ? [deviceCacheKey.list, ...params] : [deviceCacheKey.list] ,
         queryFn:async({pageParam})=>{
             return await deviceServices.list(pageParam,params)
         }

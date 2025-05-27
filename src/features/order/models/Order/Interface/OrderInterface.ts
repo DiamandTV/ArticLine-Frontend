@@ -1,5 +1,6 @@
 import { EntityAddressInterface } from "@features/autentication/models/EntityAddress/Interface/EntityAddressInterface";
 import { CartInterface } from "@features/cart/model/Cart/Interface/CartInterface";
+import { OrderDeliveryBatchInterface } from "@features/orderDeliveryBatch/models/OrderDeliveryBatch/Interface/OrderDeliveryBatchInterface";
 
 export type OrderStatusType =
     'NOT ACCEPTED'  |
@@ -19,16 +20,20 @@ export interface OrderInterface{
     status:OrderStatusType,
 
     request_earliest_delivery:boolean,
-    delivery_time:string,
-    delay_time:string,
+    delivery_time?:string,
+    delay_time?:string,
     
-    pickedup_time:string,
-    delivered_time:string,
+    pickedup_time?:string,
+    delivered_time?:string,
     
     cart:CartInterface,
     entity_address:EntityAddressInterface,
 
-    canceled_at:string,
+    canceled_at?:string,
     created_at:string,
     updated_at:string,
+}
+
+export interface OrderBusinessInterface extends OrderInterface{
+    order_delivey_batch?:OrderDeliveryBatchInterface
 }

@@ -27,7 +27,6 @@ export function usePaginationInfiniteScroll({queryFn,queryKey}:usePaginationInfi
         
         }
     })
-    
     useEffect(()=>{
         const observer = new IntersectionObserver(
             (entries)=>{

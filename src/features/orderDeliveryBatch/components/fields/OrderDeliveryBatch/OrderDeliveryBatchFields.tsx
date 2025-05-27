@@ -1,8 +1,10 @@
 import { DateTimeInput } from "@components/inputs/DateTimeInput";
+import { CourierSelect } from "@features/autentication/components/select/CourierSelect";
 import { FieldsProvider } from "@features/autentication/context/FieldsProvider/FieldsProvider";
 import { FieldsProps } from "@features/autentication/models/Fields/FieldsProps";
 import { FieldsProviderProps } from "@features/autentication/models/Fields/FieldsProviderProps";
 import { DeviceSelect } from "@features/device/components/select/DeviceSelect";
+import { OrderMultiSelect } from "@features/order/components/multiSelect/OrderMultiSelect";
 import { orderDelayTimeFieldsSchema } from "@features/order/models/Order/Field/OrderField";
 import { OrderDeliveryBatchFieldsType } from "@features/orderDeliveryBatch/models/OrderDeliveryBatch/Field/OrderDeliveryBatchField";
 import { tailwindMerge } from "@lib/tsMerge/tsMerge";
@@ -44,7 +46,22 @@ export function OrderDeliveryBatchInfoFields(props:FieldsProps){
                     {
                         // COURIER LIST
                     }
-                    
+                    <OrderMultiSelect
+                        id="orders"
+                        label="ORDERS"
+                    />
+                </Col>
+            </Row>
+
+            <Row className="w-full " >
+                <Col className="p-0 flex flex-col gap-2">
+                    {
+                        // COURIER LIST
+                    }
+                    <CourierSelect
+                        id="courier"
+                        label="COURIER"
+                    />
                 </Col>
             </Row>
 

@@ -1,5 +1,5 @@
 import { orderBusinessCacheKey } from "@features/order/data/query"
-import { OrderInterface } from "@features/order/models/Order/Interface/OrderInterface"
+import { OrderBusinessInterface } from "@features/order/models/Order/Interface/OrderInterface"
 import { orderBusinessService } from "@features/order/services/orderBusinessServices"
 import { usePaginationInfiniteScroll } from "@hooks/PaginationInfiniteScroll/usePaginationInfiniteScroll"
 import { getDataFromPage } from "@utils/getDataFromPage/getDataFromPaginationResponse"
@@ -12,7 +12,7 @@ export function useGetOrderBusinessListQuery(){
         queryFn:async({pageParam})=>await orderBusinessService.list(pageParam,searchParams)
     })
     if(paginationResults.isSuccess){
-        return {...paginationResults,data:getDataFromPage<OrderInterface>(paginationResults.data)}
+        return {...paginationResults,data:getDataFromPage<OrderBusinessInterface>(paginationResults.data)}
     }
     return paginationResults
 }

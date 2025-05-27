@@ -5,6 +5,7 @@ export const orderDeliveryBatchFieldsSchema = z.object({
     title:z.string().min(1),
     device:z.custom(),
     courier:z.custom(),
+    orders:z.array(z.coerce.number()),
     pickup_time:z.custom<Moment>((val)=> val,'Required').refine((data:Moment)=>data.toISOString(),'Wrong format'),
 })
 

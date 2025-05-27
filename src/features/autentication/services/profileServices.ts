@@ -13,8 +13,15 @@ async function _delete(){
     return await apiBearToken.delete('/profile/delete/')
 }
 
+async function companyCourierList(page:number=1,searchParams:URLSearchParams){
+    const params = searchParams ? `&${searchParams.toString()}` : ''
+    return await apiBearToken.get(`/company/courier/list/?page=${page}${params}`)
+}
+
 export const profileServices = {
     retrieve,
     update,
-    delete:_delete
+    delete:_delete,
+
+    companyCourierList
 }

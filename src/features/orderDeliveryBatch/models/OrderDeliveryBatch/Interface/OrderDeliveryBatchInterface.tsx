@@ -12,14 +12,14 @@ export interface OrderDeliveryBatchInterface{
     status:OrderDeliveryBatchStatusType,
     
     pickup_time:string,
-    pickedup_time:string,
-    finished_time:string,
+    pickedup_time?:string,
+    finished_time?:string,
     
     temperature_start_range:number,
     temperature_end_range:number
 
     company:CompanyProfileInterface,
     courier:CourierProfileInterface,
-    device:unknown,
+    device?:unknown,
     
 }

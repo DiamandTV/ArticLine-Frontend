@@ -114,7 +114,7 @@ export function  OrderBusinessNotAccepted(attr: OrderCardProps) {
                     <Order.DeliveryIcon />
                     <Order.DeliveryTime className="font-medium text-xs" />
                   </div>
-                  <Order.CreatedAt/>
+                  <Order.OrderNumber/>
                   <Order.Urgent/>
                 </div>
 
@@ -170,7 +170,7 @@ export function OrderBusinessInProgress(attr: React.HTMLAttributes<HTMLElement>)
                     <Order.DelayTimeDetails/>
                   </div>
                   <div className="w-full flex flex-row justify-between items-center">
-                    <Order.CreatedAt/>
+                    <Order.OrderNumber/>
                     <Cart.Price/>
                   </div>
                   {/* Prezzo */}

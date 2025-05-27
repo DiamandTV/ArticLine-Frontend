@@ -61,6 +61,7 @@ Order.DeliveryIcon = function DeliveryIcon(attr:React.HTMLAttributes<HTMLElement
 
 Order.DeliveryTime = function DeliveryTime(attr:React.HTMLAttributes<HTMLElement>) {
     const { order } = useOrderContext();
+    if(!order.delivery_time) return null
     const deliveryTime = new Date(order.delivery_time).toLocaleDateString() || 'NOT DECIDED';
     return (
         
@@ -131,6 +132,15 @@ Order.CreatedAt = function CreatedAt(attr:React.HTMLAttributes<HTMLElement>){
     return(
         <div {...attr} className={tailwindMerge("text-xs text-gray-500",attr.className)}>
             Ordine: {new Date(order.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+        </div>
+    )
+}
+
+Order.OrderNumber = function OrderNumber(attr:React.HTMLAttributes<HTMLElement>){
+    const {order} = useOrderContext()
+    return(
+         <div {...attr} className={tailwindMerge("text-xs text-gray-500",attr.className)}>
+            Order #{order.id}
         </div>
     )
 }

@@ -5,7 +5,7 @@ async function create(deviceInfo:DeviceInfoFieldsType){
     return await apiBearToken.post('/company/device/create/',deviceInfo)
 }
 
-async function list(page:number=1,searchParams:URLSearchParams){
+async function list(page:number=1,searchParams?:URLSearchParams){
     const params = searchParams ? `&${searchParams.toString()}` : ''
     return await apiBearToken.get(`/company/device/list/?page=${page}${params}`)
 }
