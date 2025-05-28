@@ -15,10 +15,12 @@ interface OrderMultiSelectProps{
 
 import { components } from 'react-select';
 import { useGetOrderDeliveryBatchOrderListQuery } from "@features/orderDeliveryBatch/hooks/useGetOrderDeliveryBatchOrderListQuery/useGetOrderDeliveryBatchOrderListQuery";
-import { useOrderDeliveryBatchContext } from "@features/orderDeliveryBatch/context/OrderDeliveryBatchContext/OrderDeliveryBatchProvider";
+import { ReactNode, useContext } from "react";
+import { OrderDeliveryBatchContext } from "@features/orderDeliveryBatch/context/OrderDeliveryBatchContext/OrderDeliveyBatchContext";
 const CustomValueContainer = ({ children, ...props }:ValueContainerProps<OrderBusinessInterface>) => {
+    const context = useContext(OrderDeliveryBatchContext)
     const value = props.getValue()
-    children = value.length > 0 ? [[...children[0],<ValueContainerServerFetchedItem/>],...children[1]] : [<ValueContainerServerFetchedItem/>,...children]
+    const childrenArray = Array.from(children as Iterable<ReactNode>);
     return (
     <components.ValueContainer {...props}>
       <div style={{
@@ -30,14 +32,9 @@ const CustomValueContainer = ({ children, ...props }:ValueContainerProps<OrderBu
         paddingBottom: 2,
       }}>
 
-        {
-            value.length > 0 ? 
-                <>
-                    children[1],
-                    <ValueContainerServerFetchedItem/>
-                </> 
-            : children
-        }
+       { value.length > 0 && childrenArray[0]}
+       {context && <ValueContainerServerFetchedItem/>}
+        {childrenArray[1]}
       </div>
 
     </components.ValueContainer>
@@ -51,13 +48,28 @@ function ValueContainerServerFetchedItem(){
     return(
         <>
             {
-                data.map((order)=>{
-                    <span>{order.id}</span>
-                })
+                data.map((order) => (
+                    <div
+                    key={order.id}
+                    style={{
+                        backgroundColor: '#e2e8f0',
+                        borderRadius: '2px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        padding: '2px 6px',
+                        fontSize: '0.875rem',
+                        marginRight: '4px',
+                    }}
+                    >
+                    {`${order.cart.store.title} #${order.id}`}
+                    </div>
+                ))             
             }
         </>
     )
 }
+
+
 
 export function OrderMultiSelect({id,label}:OrderMultiSelectProps){
     const {
@@ -102,6 +114,7 @@ export function OrderMultiSelect({id,label}:OrderMultiSelectProps){
                 {...field}
                 debounceTimeout={TIMEOUT_INPUT_QUERY}
                 inputId={id}
+                defaultOptions={true}
                 loadOptions={loadOptions}
                 getOptionValue={(option)=>option.id.toString()}
                 getOptionLabel={(option)=>`${option.cart.store.title} #${option.id}`}
