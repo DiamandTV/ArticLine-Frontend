@@ -8,19 +8,20 @@ const ordersMultiSelectFieldsSchema = z.array(
     z.custom<OrderBusinessInterface>()
 )
 
-const ordersFieldsSchema = ordersMultiSelectFieldsSchema.transform(
-    (orders)=>orders.map(
-        (order)=>{
-            return order.id
-    }
-))
+// const ordersFieldsSchema = ordersMultiSelectFieldsSchema.transform(
+//     (orders)=>orders.map(
+//         (order)=>{
+//             return order.id
+//     }
+// ))
+
 
 export const orderDeliveryBatchFieldsSchema = z.object({
     title:z.string().min(2),
     device:z.custom<DeviceInterface>(),
     courier:z.custom<CourierProfileInterface>(),
-    add_orders:ordersFieldsSchema,
-    remove_orders:ordersFieldsSchema,
+    add_orders:ordersMultiSelectFieldsSchema,
+    remove_orders:ordersMultiSelectFieldsSchema,
     pickup_time:z.custom<Moment>((val)=> val,'Required').refine((data:Moment)=>data.toISOString(),'Wrong format'),
 })
 
