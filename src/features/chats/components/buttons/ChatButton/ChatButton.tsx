@@ -10,7 +10,7 @@ export function ChatButton({newMsgNumbers,...props}:ChatButtonProps){
             badgeContent={newMsgNumbers?.toString()}
             
         >
-           <IoIosSend className="text-3xl md:text-4xl text-surface-a30"/>
+           <IoIosSend className="text-2xl md:text-4xl text-surface-a30"/>
         </Badge>
     )
 }

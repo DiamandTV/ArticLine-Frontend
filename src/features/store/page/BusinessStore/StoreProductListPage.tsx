@@ -1,6 +1,5 @@
 import { BackButton } from "@components/buttons/BackButton/BackButton";
 import { ProductList } from "@features/store/components/list/ProductList";
-import { PaddingView } from "@views/PaddingView";
 import { useNavigate, useParams } from "react-router";
 export function StoreProductListPage(){
     return <BusinessStoreProductListPage/>
@@ -9,10 +8,10 @@ export function BusinessStoreProductListPage(){
    
     return(
         <>
-        <PaddingView className="w-full flex flex-col gap-2">
-            <BackToStorePage/>
-            <ProductList/>
-        </PaddingView>
+            <div className="flex flex-col h-full gap-2 m-mb-df md:mx-df ">
+                <BackToStorePage/>
+                <ProductList/>
+            </div>
         </>
     )
 }
@@ -22,6 +21,7 @@ function BackToStorePage(){
     const navigator = useNavigate()
     return(
         <BackButton
+            className="w-max"
             onClick={()=>{
                 const storeId = params['store-id']
                 const companyId = params['company-id']

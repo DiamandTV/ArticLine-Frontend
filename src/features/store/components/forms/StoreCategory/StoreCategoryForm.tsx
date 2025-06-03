@@ -3,8 +3,10 @@ import {Create} from "./StoreCategoryFormCreate"
 import { Update } from "./StoreCategoryFormUpdate";
 import { useParams } from "react-router";
 import { Delete } from "./StoreCategoryFormDelete";
-import { useStoreCategoryContext } from "@features/store/context/StoreCategoryContext/StoreCategoryProvider";
+import { useContext } from "react";
+import { StoreCategoryContext } from "@features/store/context/StoreCategoryContext/StoreCategoryContext";
 export interface StoreCategoryFormProps extends React.HTMLAttributes<HTMLElement>{
+    companyId:number,
     storeId:number,
     storeCategoryId?:number
 }
@@ -13,21 +15,21 @@ function StoreCategoryParamsWrapper({operation,children}:FormOperationWrapperPro
     const params = useParams()
     const companyId = Number(params['company-id'])
     const storeId = Number(params['store-id'])
-    const storeCategoryId = useStoreCategoryContext().storeCategory.id
+    const storeCategoryId = useContext(StoreCategoryContext).storeCategory?.id
     switch(operation){
         case 'Create':
             if(companyId && storeId){
-                return children({storeId})
+                return children({companyId,storeId})
             }
             break
         case 'Update':
             if(companyId && storeId && storeCategoryId){
-                return children({storeId,storeCategoryId})
+                return children({companyId,storeId,storeCategoryId})
             }
             break
         case 'Delete':
             if(companyId && storeId && storeCategoryId){
-                return children({storeId,storeCategoryId})
+                return children({companyId,storeId,storeCategoryId})
             }
             break
     }
@@ -36,7 +38,9 @@ function StoreCategoryParamsWrapper({operation,children}:FormOperationWrapperPro
 
 export const StoreCategoryForm:FormOperationInterface<unknown> = {
     Create:()=>{
+    
         return (
+          
             <StoreCategoryParamsWrapper
                 operation="Create"
             >

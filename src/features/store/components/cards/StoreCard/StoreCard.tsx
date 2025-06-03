@@ -7,7 +7,7 @@ export function StoreBusinessCard({...attr}:StoreBusinessCardProps){
         <Store.Card {...attr}>
             <Store.Image/>
             <Store.Favourite/>
-            <Store.Body>
+            <Store.Body className="py-1 gap-1">
                 <Store.Title/>
                 <div className=" flex justify-between text-sm text-gray-600">
                     <Store.Rating />

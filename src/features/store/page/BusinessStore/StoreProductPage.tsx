@@ -4,14 +4,14 @@ import { PaddingView } from "@views/PaddingView";
 
 export function BusinessStoreProductPage() {
   return (
-    <PaddingView>
+    <PaddingView className="md:w-[400px]">
       {/* Immagine del prodotto */}
 
-    <Product.Image className="w-full h-64 rounded-lg overflow-hidden shadow "/>
+    <Product.Image className="w-full h-64 overflow-hidden rounded-lg shadow "/>
     
-      <div className="w-full flex flex-col gap-2 ">
-        <div className="w-full flex flex-col gap-1 py-2">
-          <div className="w-full flex flex-row justify-between items-center">
+      <div className="flex flex-col w-full gap-2 ">
+        <div className="flex flex-col w-full gap-1 py-2">
+          <div className="flex flex-row items-center justify-between w-full">
             <Product.Title className="text-3xl font-medium "/>
             <Product.Category/>
           </div>
@@ -20,14 +20,14 @@ export function BusinessStoreProductPage() {
             <Product.Description/>
           </div>
         </div>
-        <div className="w-full flex flex-row justify-end items-center gap-2 ">
+        <div className="flex flex-row items-center justify-end w-full gap-2 ">
           <Product.TemperatureRange/>
         </div>
     </div>
     <div>
         <h1></h1>
     </div>
-    <hr className="w-full px-4 mt-3 pt-3"/>
+    <hr className="w-full px-4 pt-3 mt-3"/>
     <Product.AddItem/>
     </PaddingView>
   );

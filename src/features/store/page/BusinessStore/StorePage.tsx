@@ -2,10 +2,15 @@ import { StoreCategory } from "@features/store/components/list/StoreCategoryList
 import { StoreBusinessHeader } from "@features/store/components/store/StoreHeader";
 import { StoreProvider } from "@features/store/context/StoreContext/StoreProvider";
 import { useGetBusinessStoreQuery } from "@features/store/hooks/useGetBusinessStoreQuery/useGetBusinessStoreQuery";
+
 import { useParams } from "react-router";
 
 export function StorePage(){
-    return <BusinessStorePage/>
+    return (
+        <BusinessStorePage/>
+    )
+    
+    
 }
 
 function BusinessStorePage(){
@@ -20,12 +25,17 @@ function BusinessStorePage(){
     
     if(isLoading || !isSuccess) return
     return(
-        <div className="w-full h-max flex flex-col gap-3 bg-surface-a0">
-            <StoreProvider store={data}>
-                <StoreBusinessHeader/>
-                <hr className="mx-2"/>
-                <StoreCategory.Grid/>
-            </StoreProvider>
+
+        <div className="flex flex-col w-full h-full gap-0 bg-surface-a0">
+                <StoreProvider store={data}>
+                    <StoreBusinessHeader/>
+                    <hr className="px-2 mt-3"/>
+                    <div className="h-full pt-3 bg-surface-a20">
+                        <StoreCategory.Grid/>
+                    </div>
+                </StoreProvider>
+            
         </div>
+     
     )
 }

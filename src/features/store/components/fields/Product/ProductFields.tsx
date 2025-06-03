@@ -35,18 +35,7 @@ export function ProductFields(props:FieldsProps){
                     </FloatingLabel>
                 </Col >
 
-                <Col  className="p-0" >
-                    <FloatingLabel label="DESCRIPTION">
-                        <Form.Control type="text" {...register('description')} isInvalid={!!errors.description}/>
-                        <Form.Control.Feedback type="invalid">
-                            {errors.description?.message}
-                        </Form.Control.Feedback>
-                    </FloatingLabel>
-                </Col>
-            </Row>
-
-            <Row className="w-full gap-2" >
-                <Col className="p-0" xs={12} md={6}>
+                <Col className="p-0" >
 
                     <InputGroup className="p-0">
                         <InputGroup.Text className="text-2xl font-semibold">€</InputGroup.Text>
@@ -63,6 +52,22 @@ export function ProductFields(props:FieldsProps){
                         </FloatingLabel>
                     </InputGroup>
                 </Col >
+            </Row>
+
+           <Row className="w-full">
+                <Col className="p-0" >
+                    <FloatingLabel label="DESCRIPTION">
+                        <Form.Control type="text" {...register('description')} isInvalid={!!errors.description}/>
+                        <Form.Control.Feedback type="invalid">
+                            {errors.description?.message}
+                        </Form.Control.Feedback>
+                    </FloatingLabel>
+                </Col>
+
+           </Row>
+
+            <Row className="w-full gap-2" >
+                
 
                 <div className="w-full p-0 grid grid-cols-2 gap-2 justify-between items-center" >
                         <InputGroup className="p-0">

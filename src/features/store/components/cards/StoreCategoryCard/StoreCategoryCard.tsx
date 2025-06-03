@@ -9,7 +9,7 @@ export function StoreCategoryCard(attr:StoreCategoryCardProps){
       <StoreCategory.Image/>
       <StoreCategory.Settings/>
       <div className="px-2 py-1 flex flex-col justify-center items-center">
-        <StoreCategory.Title/>
+        <StoreCategory.Title />
       </div>
     </StoreCategory.Card>
   )

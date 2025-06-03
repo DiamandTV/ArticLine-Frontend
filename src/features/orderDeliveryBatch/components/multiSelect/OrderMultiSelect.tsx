@@ -200,7 +200,8 @@ function ValueContainerServerFetchedItem(){
     )
 }
 
-function OrderMultiValueContainer({value}:{value:OrderBusinessInterface[]}){
+function OrderMultiValueContainer(){
+    const {watch} = useFormContext<OrderDeliveryBatchFieldsType>()
     const {orderDeliveryBatch} = useOrderDeliveryBatchContext()
     const getServerData = ()=>{
         try{
@@ -211,7 +212,7 @@ function OrderMultiValueContainer({value}:{value:OrderBusinessInterface[]}){
     }
     return(
         <div>
-            {value.map((order)=>{
+            {watch('orders')?.map((order)=>{
                 return <OrderMultiValue order={order}/>
             })}
             {getServerData()}
@@ -228,14 +229,14 @@ function OrderMultiValue({order}:{order:OrderBusinessInterface}){
 }   
 
 export function OrderMultiSelect({id,label}:OrderMultiSelectProps){
-    const [value,setValue] = useState<OrderBusinessInterface[]>([])
     const {
-        control,
         formState: { errors },
-        getValues
-      } = useFormContext();
+        getValues,
+        setValue,
+        watch
+      } = useFormContext<OrderDeliveryBatchFieldsType>();
     
-    const errorMessage = errors?.[id]?.message as string | undefined;
+    const errorMessage = errors?.['add_orders']?.message as string | undefined;
     
      const loadOptions = async (inputValue:string,
         loadedOptions:OptionsOrGroups<OrderBusinessInterface,GroupBase<OrderBusinessInterface>>,
@@ -262,44 +263,71 @@ export function OrderMultiSelect({id,label}:OrderMultiSelectProps){
         }
     }
     
+    const addItem = (newValue: MultiValue<OrderBusinessInterface>, actionMeta: ActionMeta<OrderBusinessInterface>)=>{
+        const oldValue = getValues('orders')
+        const add_orders = getValues('add_orders')
+        const remove_orders = getValues('remove_orders')
+
+        if(actionMeta.option ){
+            if(remove_orders.find((order:OrderBusinessInterface)=>order.id === actionMeta.option!.id)){
+                // remove this item from the remove orders list
+            } else {
+                // check if this item is unique in add orders list
+                if(!add_orders.find((order:OrderBusinessInterface)=>order.id === actionMeta.option!.id)){
+                    // add to the add orders list
+                    setValue('orders',[actionMeta.option,...oldValue])
+                    setValue('add_orders',[...getValues('add_orders'),actionMeta.option])
+                }
+                
+            }
+        }
+    }
+
+    const removeItem = (newValue: MultiValue<OrderBusinessInterface>, actionMeta: ActionMeta<OrderBusinessInterface>)=>{
+        const oldValue = getValues('orders')
+        // const add_orders = getValues('add_orders')
+        // const remove_orders = getValues('remove_orders')
+
+        if(actionMeta.removedValue){
+            setValue('orders',oldValue.filter((order)=>order.id !== actionMeta.removedValue!.id))
+        }
+    }
+
+    const clearItems = (newValue: MultiValue<OrderBusinessInterface>, actionMeta: ActionMeta<OrderBusinessInterface>)=>{
+        setValue('orders',[])
+    }
+
     const onChange = (newValue: MultiValue<OrderBusinessInterface>, actionMeta: ActionMeta<OrderBusinessInterface>)=>{
         switch(actionMeta.action){
-            case 'pop-value':
-                setValue((oldValue:OrderBusinessInterface[])=>{
-                    if(actionMeta.option){
-                        return [actionMeta.option,...oldValue]
-                    }
-                    return oldValue
-                })    
+            case 'select-option':
+                addItem(newValue,actionMeta)
+                break
+            case 'deselect-option':
+                removeItem(newValue,actionMeta)
+                break
+            case 'pop-value' :
+                addItem(newValue,actionMeta)
             break
             case 'remove-value':
-                setValue((oldValue:OrderBusinessInterface[])=>{
-                    if(actionMeta.removedValue){
-                        return oldValue.filter((order)=>order.id !== actionMeta.removedValue!.id)
-                    }
-                    return oldValue
-                })
+                removeItem(newValue,actionMeta)
                 break
             case 'clear':
-                setValue([])
+                clearItems(newValue,actionMeta)
                 break
             case 'create-option':
                 break
         }
     }
 
+    console.log(watch('orders'))
+
     return (
         <div className="form-floating">
-            <OrderMultiValueContainer value={value}/>
-            <Controller
-                control={control}
-                name={id}
-                render={({ field }) => (
+            <OrderMultiValueContainer />
                 <AsyncPaginate
-                    {...field}
                     debounceTimeout={TIMEOUT_INPUT_QUERY}
                     inputId={id}
-                    value={value}
+                    value={[]}
                     onChange={onChange}
                     defaultOptions={true}
                     loadOptions={loadOptions}
@@ -340,8 +368,7 @@ export function OrderMultiSelect({id,label}:OrderMultiSelectProps){
                     })
                     }}
                 />
-                )}
-            />
+               
             <label htmlFor={id} className="py-2 text-[13px] font-normal ">{label}</label>
             {errorMessage && (
                 <Form.Control.Feedback type="invalid" className="d-block">

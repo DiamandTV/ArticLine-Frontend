@@ -177,13 +177,15 @@ Cart.Price = function Price(attr:React.HTMLAttributes<HTMLElement>){
 
 Cart.Checkout = function Checkout(){
     const navigator = useNavigate()
+    const {cart} = useCartContext()
+    if(!cart) return
     return(
         <Button 
             className="w-full" 
             onClick={()=>{
-                navigator('checkout/')
+                navigator(`/company/${cart?.store.company_profile}/store/${cart?.store.id}/cart/${cart?.id}/checkout/`)
             }}>
-            <h1 className="font-medium text-sm">CHECKOUT</h1>
+            <h1 className="text-sm font-medium">CHECKOUT</h1>
         </Button>
     )
 }

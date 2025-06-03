@@ -10,7 +10,7 @@ const _protected:RouteGroup = {
             element:<OrderCheckoutPage/>
         },
         {
-            path:'order/',
+            path:'orders/',
             element:<OrderPage/>
         },
         {

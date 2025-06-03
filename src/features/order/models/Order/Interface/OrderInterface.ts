@@ -29,6 +29,9 @@ export interface OrderInterface{
     cart:CartInterface,
     entity_address:EntityAddressInterface,
 
+    temperature_start_range:number,
+    temperature_end_range:number,
+
     canceled_at?:string,
     created_at:string,
     updated_at:string,

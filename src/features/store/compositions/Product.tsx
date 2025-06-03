@@ -69,7 +69,7 @@ Product.Title = function Title(attr:React.HTMLAttributes<HTMLElement>) {
 
 Product.Description = function Description(/*attr:React.HTMLAttributes<HTMLElement>*/) {
   const { product } = useProductContext()
-  return <p className="w-full h-10 text-sm text-wrap text-gray-600 truncate ">{product.description}</p>;
+  return <p className="w-full h-10 text-sm text-gray-600 truncate text-wrap ">{product.description}</p>;
 };
 
 Product.Category = function Category(attr:React.HTMLAttributes<HTMLElement>) {
@@ -88,6 +88,7 @@ import { useParams } from "react-router";
 import { Can, CaslSubject } from "src/config/permissions/can";
 import { CartItemForm } from "@features/cart";
 import { CartItemQueryProvider } from "@features/cart/context/CartItemContext/CartItemProvider";
+import { BottomSheetModalSetter } from "@context/BottomSheetModal/BottomSheetModalSetter";
 
 Product.Price = function Price(attr:React.HTMLAttributes<HTMLElement>) {
   const { product } = useProductContext()
@@ -107,7 +108,7 @@ Product.TemperatureStart = function TemperatureStart(/*attr:React.HTMLAttributes
   if (!product?.temperature_start_range) return null;
 
   return (
-    <div className="flex items-center gap-2 px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium w-max">
+    <div className="flex items-center gap-2 px-2 py-1 text-sm font-medium text-blue-700 bg-blue-100 rounded-full w-max">
       <FaTemperatureLow size={16} />
       <span>Min: {product.temperature_start_range}°C</span>
     </div>
@@ -119,7 +120,7 @@ Product.TemperatureEnd = function TemperatureEnd(/*attr:React.HTMLAttributes<HTM
   if (!product.temperature_end_range) return null;
 
   return (
-    <div className="flex items-center gap-2 px-2 py-1 bg-red-100 text-red-700 rounded-full text-sm font-medium w-max">
+    <div className="flex items-center gap-2 px-2 py-1 text-sm font-medium text-red-700 bg-red-100 rounded-full w-max">
       <FaTemperatureHigh size={16} />
       <span>Max: {product.temperature_end_range}°C</span>
     </div>
@@ -134,7 +135,7 @@ Product.TemperatureRange = function TemperatureRange(/*attr:React.HTMLAttributes
   ) return null;
 
   return (
-    <div className="flex items-center gap-2 px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-sm font-medium w-max">
+    <div className="flex items-center gap-2 px-2 py-1 text-sm font-medium text-gray-800 bg-gray-100 rounded-full w-max">
       <FaTemperatureLow size={14} className="text-blue-500" />
       <span>{product.temperature_start_range}°C</span>
       <span>-</span>
@@ -165,9 +166,9 @@ Product.AddItem = function AddItem(){
 //   };
 
 //   return (
-//     <div className="w-full grid grid-cols-2 items-center justify-between gap-2">
+//     <div className="grid items-center justify-between w-full grid-cols-2 gap-2">
 //       {/* Selettore quantità */}
-//       <div className="h-full flex items-center border border-gray-300 rounded overflow-hidden">
+//       <div className="flex items-center h-full overflow-hidden border border-gray-300 rounded">
 //         <button onClick={decrease} className="px-3 py-1 text-gray-600 hover:bg-gray-100">
 //           <FaMinus />
 //         </button>
@@ -180,7 +181,7 @@ Product.AddItem = function AddItem(){
 //       {/* Pulsante aggiungi al carrello */}
 //       <button
 //         onClick={handleAddToCart}
-//         className="w-full flex items-center justify-center gap-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+//         className="flex items-center justify-center w-full gap-2 px-4 py-2 text-white transition bg-green-600 rounded hover:bg-green-700"
 //       >
 //         <FaShoppingCart />
 //         <span>Aggiungi</span>
@@ -218,13 +219,15 @@ Product.OnSettings = function OnSettings(){
       setClose={() => setOpen(false)}
       items={[
         {
-          action: <EditLabelButton text="EDIT" />,
+          action: <EditLabelButton text="EDIT" className="w-full md:w-[400px]"/>,
           render: (onClose) => (
-            <SimpleBottomSheetModal isOpen={true} setClose={onClose} detent="content-height">
-              <PaddingView>
-                <ProductForm.Update />
-              </PaddingView>
-            </SimpleBottomSheetModal>
+            <BottomSheetModalSetter isOpen={true} setOpen={onClose}>
+              <SimpleBottomSheetModal detent="content-height">
+                <PaddingView className="w-full md:w-[400px]">
+                  <ProductForm.Update />
+                </PaddingView>
+              </SimpleBottomSheetModal>
+            </BottomSheetModalSetter>
           ),
         },
         {
@@ -255,7 +258,7 @@ Product.Settings = function Settings(){
                       e.stopPropagation();
                       setOpen(true)
                     }}
-                    className="absolute top-0 left-0 p-1 m-2 rounded-full bg-black/50 hover:bg-black/70 transition"
+                    className="absolute top-0 left-0 p-1 m-2 transition rounded-full bg-black/50 hover:bg-black/70"
                   >
                     <FiSettings className="text-white" size={22} />
                   </button>

@@ -1,4 +1,4 @@
-import { Button, FormCheck, FormControl, Spinner, Tab, Tabs } from "react-bootstrap";
+import { Button, FormControl, Spinner, Tab, Tabs } from "react-bootstrap";
 import { IoAdd } from "react-icons/io5";
 import { BottomSheetModalProviderFn } from "@context/BottomSheetModal/BottomSheetModalProviderFn";
 import { SimpleBottomSheetModal } from "@components/modal/BottomSheetModal/SimpleBottomSheetModal";
@@ -20,11 +20,11 @@ import { authSliceActions } from "@features/autentication";
 import { OrderInfoFieldsType } from "@features/order/models/Order/Field/OrderField";
 
 export function OrderAddressInput(){
-    const {register,formState:{errors},getValues} = useFormContext<OrderInfoFieldsType>()
+    const {formState:{errors},getValues} = useFormContext<OrderInfoFieldsType>()
     console.log(getValues())
     const entityAddress = useSelector((state:RootState)=>state.authReducer.profile?.entity_address)
     return(
-        <div className="w-full flex flex-col gap-2 px-0">
+        <div className="flex flex-col w-full gap-2 px-0">
             <TabsProvider defaultKey={entityAddress ? 'home' : 'change'}>
                 <TabsContext.Consumer>
                     {
@@ -58,9 +58,9 @@ function EntityAddressDetailedCardTabView(){
     const entityAddress = useSelector((state:RootState)=>state.authReducer.profile?.entity_address)
     if(!entityAddress) return
     return(
-        <div className="w-full flex flex-col gap-2">
+        <div className="flex flex-col w-full gap-2">
             {
-                <div className="w-full flex flex-row justify-between items-center h-8">
+                <div className="flex flex-row items-center justify-between w-full h-8">
                     <h1 className="font-medium">DELIVERY ADDRESS</h1>
                     <Button className="text-sm font-medium" onClick={()=>setKey('change')}>
                         CHANGE
@@ -78,9 +78,9 @@ function EntityAddressDetailedCardTabView(){
 function EntityAddressListTabView(){
     const entityAddressId = useSelector((state:RootState)=>state.authReducer.profile?.entity_address)?.id
     return(
-        <div className="w-full flex flex-col gap-2">
+        <div className="flex flex-col w-full gap-2">
             {
-                <div className="w-full flex flex-row justify-between items-center h-8">
+                <div className="flex flex-row items-center justify-between w-full h-8">
                     <h1 className="font-medium">DELIVERY ADDRESS</h1>
                 </div>
             }
@@ -91,7 +91,7 @@ function EntityAddressListTabView(){
                 <EntityAddressChooseDefaultFields/>
                 {
                     entityAddressId ?
-                    <div className="w-full flex flex-row items-center justify-between gap-2">
+                    <div className="flex flex-row items-center justify-between w-full gap-2">
                         <CancelButton/>
                         <SetDefaultButton/>
                     </div> 
@@ -150,13 +150,13 @@ function AddButton(){
                         <>
                             <Button 
                             
-                                className="w-full flex flex-row justify-center items-center gap-2"
+                                className="flex flex-row items-center justify-center w-full gap-2"
                                 onClick={()=>setOpen(true)}>
                                 <IoAdd className="text-2xl"/>
-                                <span className="font-medium text-sm">ADD NEW LOCATION</span>
+                                <span className="text-sm font-medium">ADD NEW LOCATION</span>
                             </Button>
                             <SimpleBottomSheetModal detent="content-height">
-                                <PaddingView>
+                                <PaddingView className="md:w-[400px]">
                                     <EntityAddressForm.Create/>
                                 </PaddingView>
                             </SimpleBottomSheetModal>

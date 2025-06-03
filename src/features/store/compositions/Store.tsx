@@ -38,9 +38,9 @@ Store.Image = function Image(attr:Omit<StoreCardProps,'children'>){
     )
 }
 
-Store.Body = function Body({children}:{children:React.ReactNode}){
+Store.Body = function Body({children,...attr}:{children:React.ReactNode}&React.HTMLAttributes<HTMLElement>){
     return(
-        <Card.Body className="p-2 flex flex-col ">
+        <Card.Body {...attr} className={tailwindMerge("p-2 flex flex-col ",attr.className)}>
            {children}
         </Card.Body>
     )

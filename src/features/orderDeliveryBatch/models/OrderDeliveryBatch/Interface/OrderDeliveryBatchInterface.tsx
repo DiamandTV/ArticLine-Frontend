@@ -1,6 +1,6 @@
 import { CompanyProfileInterface } from "@features/autentication/models/Profile/Interface/CompanyProfile/CompanyProfile";
 import { CourierProfileInterface } from "@features/autentication/models/Profile/Interface/CourierProfile/CourierProfile";
-type OrderDeliveryBatchStatusType = 
+export type OrderDeliveryBatchStatusType = 
     'PENDING' | 
     'PICKED UP' | 
     'IN PROGRESS' |
@@ -17,6 +17,8 @@ export interface OrderDeliveryBatchInterface{
     
     temperature_start_range:number,
     temperature_end_range:number
+
+    orders_count:number,
 
     company:CompanyProfileInterface,
     courier:CourierProfileInterface,

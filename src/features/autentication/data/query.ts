@@ -13,3 +13,8 @@ export const entityAddressCacheKey:Record<EntityAddressCacheKeyInterface,string>
     setDefault:'set-default-entity-address',
 }
 
+export const profileCacheKey = {
+    retrieve:'retrieve-profile',
+    update:'update-profile',
+    delete:'delete-profile'
+}

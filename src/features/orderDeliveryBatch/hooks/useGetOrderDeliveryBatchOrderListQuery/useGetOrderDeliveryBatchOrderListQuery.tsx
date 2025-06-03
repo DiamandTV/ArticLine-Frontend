@@ -9,8 +9,8 @@ interface useGetOrderDeliveryBatchOrderListQueryProps{
 }
 export function useGetOrderDeliveryBatchOrderListQuery({orderDeliveryBatchId}:useGetOrderDeliveryBatchOrderListQueryProps){
     const paginationResults = usePaginationInfiniteScroll({
-        queryKey:[orderDeliveryBatchCacheKey.listOrders],
-        queryFn:async({pageParam})=>await orderDeliveryBatchServices.listOrders(pageParam,orderDeliveryBatchId)
+        queryKey:[orderDeliveryBatchCacheKey.listOrders,orderDeliveryBatchId],
+        queryFn:async({pageParam})=>await orderDeliveryBatchServices.listOrders(pageParam,orderDeliveryBatchId),
     })
 
     if(paginationResults.isSuccess){

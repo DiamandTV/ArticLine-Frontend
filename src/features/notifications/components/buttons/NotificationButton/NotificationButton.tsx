@@ -9,7 +9,7 @@ export function NotificationButton({newNotiNumber,...props}:NotificationButtonPr
             badgeContent={newNotiNumber?.toString()}
             {...props}
         >
-            <IoNotifications className="text-2xl md:text-4xl text-surface-a30"/>
+            <IoNotifications className="text-xl md:text-4xl text-surface-a30"/>
         </Badge>
     )
 }

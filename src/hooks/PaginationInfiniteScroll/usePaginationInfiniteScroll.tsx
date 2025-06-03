@@ -1,3 +1,4 @@
+import { CACHE_TIME, STATE_TIME } from "@data/query"
 import { PaginationInterface } from "@models/ApiResponse/PaginationResponse/PaginationInterface"
 import { AxiosResponse } from "axios"
 import { useEffect, useRef } from "react"
@@ -15,47 +16,44 @@ export function usePaginationInfiniteScroll({queryFn,queryKey}:usePaginationInfi
         queryKey:queryKey,
         queryFn,
         
-        refetchOnMount:false,
+        staleTime:STATE_TIME,
+        cacheTime:CACHE_TIME,
+
+    
+        refetchOnMount:true,
         refetchOnWindowFocus:false,
         //initialPageParam:1,
-            
         getNextPageParam:(lastPage:AxiosResponse)=>{
             const data = lastPage.data as PaginationInterface
+            
             if (!data) return 1
-            if(data.next) return data.current_page_number + 1
+            if(data.next) {
+                return data.current_page_number + 1
+            }
             return undefined
-        
+        },
+        onError:(error)=>{
+            console.log(error)
         }
     })
-    useEffect(()=>{
-        const observer = new IntersectionObserver(
-            (entries)=>{
-                entries.forEach((entry)=>{
-                    if(entry.isIntersecting){
-                        if(entry.target == ref.current){
-                            infinteResult.fetchNextPage()
-                        }
-                    }
-                })
-            },
-            {
-                //root:containerRef.current,
-                rootMargin:'0px',
-                threshold:0.001
+   useEffect(() => {
+        const observer = new IntersectionObserver(async (entries) => {
+            for (const entry of entries) {
+                if (entry.isIntersecting && entry.target === ref.current) { 
+                    await infinteResult.fetchNextPage();
+                }
             }
-        )
+        });
 
-        if(ref.current) {
-            observer.observe(ref.current)
+        if (ref.current) {
+            observer.observe(ref.current);
         }
 
-        return ()=>{
-            if(observer){
-                observer.disconnect()
-            }
-        }
-    
-    },[])
+        return () => {
+            observer.disconnect();
+        };
+    }, []);
+
     
     return {...infinteResult,ref}
 }

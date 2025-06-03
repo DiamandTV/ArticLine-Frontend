@@ -1,6 +1,6 @@
 import { HttpMethod } from "@models/Http/HttpMethods";
 
-type OrderDeliveryBatchCacheKeyType = HttpMethod | 'listOrders'
+type OrderDeliveryBatchCacheKeyType = HttpMethod | 'listOrders' | 'addOrder' | 'removeOrder'
 export const orderDeliveryBatchCacheKey:Record<OrderDeliveryBatchCacheKeyType,string> = {
     retrieve:'retrieve-order-delivery-batch',
     create:'create-order-delivery-batch',
@@ -9,7 +9,7 @@ export const orderDeliveryBatchCacheKey:Record<OrderDeliveryBatchCacheKeyType,st
     delete:'delete-order-delivery-batch',
     
     // list order delivery batch orders
-    listOrders:'list-order-delivery-batch-orders'
-
-
+    listOrders:'list-order-delivery-batch-orders',
+    addOrder:'add-order-order-delivery-batch',
+    removeOrder:'remove-order-order-delivery-batch'
 }

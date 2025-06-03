@@ -3,7 +3,6 @@ import { BottomSheetModalProviderFn } from "@context/BottomSheetModal/BottomShee
 import { OrderIntroCard } from "@features/order/components/cards/OrderCard"
 import { OrderProvider } from "@features/order/context/OrderContext/OrderProvider"
 import { useGetOrderListQuery } from "@features/order/hooks/useGetOrderListQuery/useGetListOrderQuery"
-import { PaddingView } from "@views/PaddingView"
 import { OrderDetailPage } from "./OrderDetailPage"
 import { getKey } from "@lib/kegGenerator/keyGenerator"
 
@@ -11,7 +10,7 @@ export function OrderListPage(){
     const {data,isLoading,isSuccess,ref} = useGetOrderListQuery()
     if(isLoading || !isSuccess) return null
     return(
-        <PaddingView className="w-full">
+        <div className="bg-surface-a0 mx-mb-df my-mb-df md:mx-df grid grid-cols-1 md:grid-cols-[repeat(auto-fill,minmax(450px,1fr))]">
             <div className="w-full">
             {
                 data.map((order)=>{
@@ -38,6 +37,6 @@ export function OrderListPage(){
             }
             <div className="py-0.5" ref={ref}/>
         </div>
-        </PaddingView>
+        </div>
     )
 }

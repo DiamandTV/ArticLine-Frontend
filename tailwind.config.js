@@ -12,6 +12,10 @@ export default {
       // 'store-button-box-shadow-left': '-1px -10px 0 red'
     },
     extend: {
+      spacing:{
+        'df':'1.5rem',
+        'mb-df':'0.5rem'
+      },
       fontFamily: {
         orbitron: ['Orbitron', 'sans-serif'],
         roboto: ['Roboto Condensed', 'sans-serif'],

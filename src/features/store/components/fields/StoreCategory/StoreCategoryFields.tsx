@@ -25,7 +25,7 @@ export function StoreCategoryFields(props:FieldsProps){
             className={className}
             >
                 <ImageInput id="image"/>
-                <Col className="p-0" xs={12} md={6}>
+                <Col className="p-0 w-full" xs={12} md={6}>
                     <FloatingLabel label="TITLE" className="bg-surface-a10">
                         <Form.Control type="text" {...register('name')} isInvalid={!!errors.name }/>
                         <Form.Control.Feedback type="invalid" >
@@ -33,8 +33,10 @@ export function StoreCategoryFields(props:FieldsProps){
                         </Form.Control.Feedback>
                     </FloatingLabel>
                 </Col >
+        
 
-                <Col  className="p-0" xs={12} md={6}>
+            
+                <Col  className="p-0 w-full" xs={12} md={6}>
                     <FloatingLabel label="DESCRIPTION">
                         <Form.Control type="text" {...register('description')} isInvalid={!!errors.description}/>
                         <Form.Control.Feedback type="invalid">

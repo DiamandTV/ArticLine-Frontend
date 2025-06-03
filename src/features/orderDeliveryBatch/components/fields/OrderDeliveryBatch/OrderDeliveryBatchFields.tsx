@@ -4,7 +4,6 @@ import { FieldsProvider } from "@features/autentication/context/FieldsProvider/F
 import { FieldsProps } from "@features/autentication/models/Fields/FieldsProps";
 import { FieldsProviderProps } from "@features/autentication/models/Fields/FieldsProviderProps";
 import { DeviceSelect } from "@features/device/components/select/DeviceSelect";
-import { OrderMultiSelect } from "@features/order/components/multiSelect/OrderMultiSelect";
 import { orderDeliveryBatchFieldsSchema, OrderDeliveryBatchFieldsType } from "@features/orderDeliveryBatch/models/OrderDeliveryBatch/Field/OrderDeliveryBatchField";
 import { tailwindMerge } from "@lib/tsMerge/tsMerge";
 import { Col, FloatingLabel, Form, Row } from "react-bootstrap";
@@ -40,18 +39,6 @@ export function OrderDeliveryBatchInfoFields(props:FieldsProps){
                 </Col>            
             </Row>
             
-            <Row className="w-full " >
-                <Col className="p-0 flex flex-col gap-2">
-                    {
-                        // COURIER LIST
-                    }
-                    <OrderMultiSelect
-                        id="orders"
-                        label="ORDERS"
-                    />
-                </Col>
-            </Row>
-
             <Row className="w-full " >
                 <Col className="p-0 flex flex-col gap-2">
                     {

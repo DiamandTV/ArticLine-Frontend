@@ -15,7 +15,7 @@ export function Update(params:ProductFormProps){
     const {product} = useContext(ProductContext)
     if(!product) return null
     return(
-        <div className="w-full flex flex-col gap-2 ">
+        <div className="flex flex-col w-full gap-2 ">
             <ProductInfoFieldsProvider>
                 <DefaultResetter<ProductInfoFieldsType> toFields={async()=>await productToFields(product)} />
                 <ProductFields/>
@@ -26,12 +26,12 @@ export function Update(params:ProductFormProps){
 }
 
 function UpdateButton(params:ProductFormProps){
-    const {storeId,storeCategoryId,productId} = params
+    const {companyId,storeId,storeCategoryId,productId} = params
     const {setOpen} = useContext(BottomSheetModalContext)
     const mutationResults = useMutation({
         mutationKey:[productCacheKey.update],
         mutationFn:async(productInfo:ProductInfoFieldsType)=>{
-            return await storeBusinessProductServices.update(Number(storeId),Number(storeCategoryId),productId!,productInfo)
+            return await storeBusinessProductServices.update(companyId,Number(storeId),Number(storeCategoryId),productId!,productInfo)
         },
         onError:()=>{
             

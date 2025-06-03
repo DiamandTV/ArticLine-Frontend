@@ -7,9 +7,12 @@ import { SimpleBottomSheetModal } from "@components/modal/BottomSheetModal/Simpl
 import { BusinessStoreProductPage } from "@features/store/page/BusinessStore/StoreProductPage"
 import { BottomSheetModalProvider } from "@context/BottomSheetModal/BottomSheetModalProvider"
 import { Product } from "../../compositions/Product"
+import { useRef } from "react"
+import { DivRefProvider } from "@context/DivRefContext/DivRefProvider"
 
 export function ProductList(){
     const params = useParams()
+    const divRef = useRef<HTMLDivElement|null>(null)
     const {data,isLoading,isSuccess} = 
         useGetStoreCategoryProductQuery({
             companyId:Number(params['company-id']),
@@ -18,35 +21,39 @@ export function ProductList(){
         })
     if(isLoading || !isSuccess) return null
     return(
-        <div className="w-full grid grid-cols-2 justify-center items-center gap-2">
-            <BottomSheetModalProvider>
+        <div className="flex flex-row w-full h-full flex-nowrap ">
+            <div className="w-full h-max grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-2">
                 <Product.BusinessAddButton/>
-                </BottomSheetModalProvider>
                 {
                     data.map((product)=>{
                         return(
-                            <BottomSheetModalProvider>
-                                <BottomSheetModalContext.Consumer >{({setOpen})=>{
-                                    return(
-                                        <ProductProvider product={product}>
-                                            <ProductCard 
-                                                onClick={()=>{
-                                                    
-                                                    setOpen(true)
-                                                }}
-                                            />
-                                            <SimpleBottomSheetModal detent="content-height" className="relative z-50">
-                                                <BusinessStoreProductPage/>
-                                            </SimpleBottomSheetModal>
-                                        </ProductProvider>
-                                        )
-                                    }}
-                                </BottomSheetModalContext.Consumer>
-                    </BottomSheetModalProvider>
+                            <DivRefProvider key={product.id} divRef={divRef}>
+                                <BottomSheetModalProvider>
+                                    <BottomSheetModalContext.Consumer >{({setOpen})=>{
+                                        return(
+                                            <ProductProvider product={product}>
+                                                <ProductCard
+                                                    className="h-full" 
+                                                    onClick={()=>{
+                                                        
+                                                        setOpen(true)
+                                                    }}
+                                                />
+                                                <SimpleBottomSheetModal detent="content-height" className="relative z-50">
+                                                    <BusinessStoreProductPage />
+                                                </SimpleBottomSheetModal>
+                                            </ProductProvider>
+                                            )
+                                        }}
+                                    </BottomSheetModalContext.Consumer>
+                                </BottomSheetModalProvider>
+                            </DivRefProvider>
                         
                     )
-                })
-            }
+                    })
+                }
+            </div>
+            <div ref={divRef} className="bg-transparent h-max scrollbar-hide"></div>
         </div>
     )
 }

@@ -24,6 +24,14 @@ async function listOrders(page:number=1,orderDeliveryBatchId:number){
     return await apiBearToken.get(`/order-delivery-batch/business/${orderDeliveryBatchId}/orders/list/?page=${page}`)
 }
 
+async function addOrder(orderDeliveryBatchId:number,orderId:number){
+    return await apiBearToken.get(`/order-delivery-batch/business/${orderDeliveryBatchId}/order/${orderId}/add/`)
+}
+
+async function removeOrder(orderDeliveryBatchId:number,orderId:number){
+    return await apiBearToken.get(`/order-delivery-batch/business/${orderDeliveryBatchId}/order/${orderId}/remove/`)
+}
+
 export const orderDeliveryBatchServices = {
     create,
     list,
@@ -31,5 +39,7 @@ export const orderDeliveryBatchServices = {
     update,
     delete:_delete,
 
-    listOrders
+    listOrders,
+    addOrder,
+    removeOrder
 }

@@ -15,6 +15,7 @@ import { ModalProvider } from "@context/Modal/ModalProvider";
 import { useStoreCategoryContext } from "@features/store/context/StoreCategoryContext/StoreCategoryProvider";
 import { Can, CaslSubject } from "src/config/permissions/can";
 import { useParams } from "react-router";
+import { BottomSheetModalSetter } from "@context/BottomSheetModal/BottomSheetModalSetter";
 
 interface StoreCategoryProps extends React.HTMLAttributes<HTMLElement>{
   children:React.ReactNode
@@ -25,7 +26,7 @@ export const StoreCategory = ()=>null
 
 StoreCategory.Card = function Card({children,...attr}:StoreCategoryProps) {
   return (
-    <div {...attr}  className="w-full relative shadow-xl sm:w-64 rounded-lg shadow hover:shadow-md transition-all duration-300 bg-white overflow-hidden cursor-pointer">
+    <div {...attr}  className="relative w-full overflow-hidden transition-all duration-300 bg-white rounded-lg shadow shadow-xl cursor-pointer hover:shadow-md">
       {children}
     </div>
   )
@@ -36,7 +37,7 @@ StoreCategory.Image = function Image(){
   const {image} = storeCategory
   return(
     <div
-      className="h-28 bg-cover bg-center"
+      className="w-full bg-center bg-cover h-28"
       style={{ backgroundImage: `url(${image})` }}
     />
   )
@@ -46,7 +47,7 @@ StoreCategory.Title = function Title(){
   const {storeCategory} = useStoreCategoryContext()
   const {name} = storeCategory
   return(
-    <h3 className="font-light text-base text-gray-800 truncate">{name}</h3>
+    <h3 className="text-base font-light text-gray-800 truncate">{name}</h3>
   )
 }
 
@@ -54,30 +55,35 @@ StoreCategory.OnSettings = function OnSettings() {
   const { isOpen, setOpen } = useContext(BottomSheetModalContext);
 
   return (
-    <ActionMenu
-      isOpen={isOpen}
-      setClose={() => setOpen(false)}
-      items={[
-        {
-          action: <EditLabelButton text="EDIT" />,
-          render: (onClose) => (
-            <SimpleBottomSheetModal isOpen={true} setClose={onClose} detent="content-height">
-              <PaddingView>
-                <StoreCategoryForm.Update />
-              </PaddingView>
-            </SimpleBottomSheetModal>
-          ),
-        },
-        {
-          action: <DeleteLabelButton text="DELETE" />,
-          render: (onClose) => (
-            <ModalProvider isOpen={true} setOpen={()=>onClose()}>
-              <StoreCategoryForm.Delete/>
-            </ModalProvider>
-          ),
-        },
-      ]}
-    />
+      <ActionMenu
+        isOpen={isOpen}
+        setClose={() => setOpen(false)}
+        items={[
+          {
+            action: <EditLabelButton text="EDIT" className="w-full md:w-[400px]" />,
+            render: (onClose) => {
+              return( 
+                <BottomSheetModalSetter isOpen setOpen={onClose}>
+                  <SimpleBottomSheetModal detent="content-height">
+                    <PaddingView className="w-full md:w-[400px] ">
+                      <StoreCategoryForm.Update />
+                    </PaddingView>
+                  </SimpleBottomSheetModal>
+                </BottomSheetModalSetter>
+            )  
+          },
+          },
+          {
+            action: <DeleteLabelButton text="DELETE" />,
+            render: (onClose) => (
+              <ModalProvider isOpen={true} setOpen={()=>onClose()}>
+                <StoreCategoryForm.Delete/>
+              </ModalProvider>
+            ),
+          },
+        ]}
+      />
+ 
   );
 };
 
@@ -97,7 +103,7 @@ StoreCategory.Settings = function Settings({ onClick }: { onClick?: () => void }
                       onClick?.();
                       setOpen(true)
                     }}
-                    className="absolute top-0 left-0 p-1 m-1 rounded-full bg-black/50 hover:bg-black/70 transition"
+                    className="absolute top-0 left-0 p-1 m-1 transition rounded-full bg-black/50 hover:bg-black/70"
                   >
                     <FiSettings className="text-white" size={22} />
                   </button>
@@ -125,7 +131,7 @@ StoreCategory.AddButton = function AddButton({...attr}:React.HTMLAttributes<HTML
           <FaPlus />
       </div>
       <SimpleBottomSheetModal detent="content-height">
-        <PaddingView>
+        <PaddingView className="md:w-[500px]">
           <StoreCategoryForm.Create/>
         </PaddingView>
       </SimpleBottomSheetModal>

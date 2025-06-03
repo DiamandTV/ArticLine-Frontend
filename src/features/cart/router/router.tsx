@@ -9,7 +9,7 @@ const _protected:RouteGroup = {
             element:<CartPage/>
         },
         {
-            path:'cart/',
+            path:'carts/',
             element:<CartListPage/>
         }
     ],

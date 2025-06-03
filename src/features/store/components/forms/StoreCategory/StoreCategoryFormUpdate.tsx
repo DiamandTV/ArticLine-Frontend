@@ -27,12 +27,12 @@ export function Update(params:StoreCategoryFormProps){
 
 
 function UpdateButton(params:StoreCategoryFormProps){
-    const {storeId,storeCategoryId} = params
+    const {companyId,storeId,storeCategoryId} = params
     const {setOpen} = useContext(BottomSheetModalContext) 
     const mutationResults = useMutation({
         mutationKey:[storeCategoryCacheKey.update],
         mutationFn:async(storeCategoryInfo:StoreCategoryInfoFieldsType)=>{
-            return await storeBusinessCategoryServices.update(storeId,storeCategoryId!,storeCategoryInfo)
+            return await storeBusinessCategoryServices.update(companyId,storeId,storeCategoryId!,storeCategoryInfo)
         },
         onSuccess:(data)=>{
             // todo: save this in the cache

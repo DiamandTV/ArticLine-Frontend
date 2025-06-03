@@ -17,6 +17,7 @@ import { ModalProvider } from "@context/Modal/ModalProvider";
 import { useContext } from "react";
 import { BottomSheetModalContext } from "@context/BottomSheetModal/BottomSheetModalContext";
 import { EntityAddressForm } from "../components/forms/EntityAddressForm/EntityAddressForm";
+import { BottomSheetModalSetter } from "@context/BottomSheetModal/BottomSheetModalSetter";
 
 
 export const EntityAddress = ()=>null
@@ -153,13 +154,15 @@ EntityAddress.OnSettings = function OnSettings(){
           setClose={() => setOpen(false)}
           items={[
             {
-              action: <EditLabelButton text="EDIT" />,
+              action: <EditLabelButton text="EDIT"  className="md:w-[400px]"/>,
               render: (onClose) => (
-                <SimpleBottomSheetModal isOpen={true} setClose={onClose} detent="content-height">
-                  <PaddingView>
-                    <EntityAddressForm.Update />
-                  </PaddingView>
-                </SimpleBottomSheetModal>
+                <BottomSheetModalSetter isOpen setOpen={()=>onClose()}>
+                    <SimpleBottomSheetModal detent="content-height">
+                    <PaddingView className="md:w-[400px]">
+                        <EntityAddressForm.Update />
+                    </PaddingView>
+                    </SimpleBottomSheetModal>
+                </BottomSheetModalSetter>
               ),
             },
             {

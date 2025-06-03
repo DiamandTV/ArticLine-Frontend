@@ -11,8 +11,10 @@ export function useGetOrderDeliveryBatchListQuery(){
         queryKey:[orderDeliveryBatchCacheKey.list,...searchParams],
         queryFn:async({pageParam})=>await orderDeliveryBatchServices.list(pageParam,searchParams)
     })
-    if(paginationResults.isSuccess){
+    
+    if(paginationResults.isFetched || paginationResults.isSuccess){
         return {...paginationResults,data:getDataFromPage<OrderDeliveryBatchInterface>(paginationResults.data)}
     }
+
     return paginationResults
 }

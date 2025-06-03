@@ -46,7 +46,7 @@ export function EntityAddressInfoFields(props:FieldsProps){
 
             <Row className="w-full gap-2" >
                 
-                <Col className="p-0" xs={12} md={6}>
+                <Col className="p-0" xs={12}>
                     <FloatingLabel label="DENOMINATION">
                         <Form.Control type="email" {...register('denomination')} isInvalid={!!errors.denomination}/>
                         <Form.Control.Feedback type="invalid">
@@ -55,7 +55,7 @@ export function EntityAddressInfoFields(props:FieldsProps){
                     </FloatingLabel>
                 </Col>
             
-                <Col  className="p-0" >
+                <Col  className="p-0" xs={12} >
                     <PhoneInput
                         inputElement={
                             <Form.Control className="pb-2 mb-0" type="text" {...register('phone_number')} isInvalid={!!errors.phone_number}/>

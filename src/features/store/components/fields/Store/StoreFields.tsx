@@ -18,7 +18,7 @@ export function StoreInfoFieldsProvider(props:FieldsProviderProps<StoreInfoField
 }
 
 export function StoreInfoFields(props:FieldsProps){
-    const className = tailwindMerge("w-full flex flex-col items-center justify-center gap-2 ",props.className)
+    const className = tailwindMerge("w-full h-full flex flex-col lg:flex-row items-center justify-center gap-2 ",props.className)
     const {register,formState:{errors}} = useFormContext<StoreInfoFieldsType>()
     console.log(errors)    
 
@@ -28,49 +28,53 @@ export function StoreInfoFields(props:FieldsProps){
             {...props}
             className={className}
             >
-            <ImageInput id="image"/>
-            <Row className="w-full gap-2" >
-                <Col className="p-0" xs={12} md={6}>
-                    <FloatingLabel label="TITLE" className="bg-surface-a10">
-                        <Form.Control type="text" {...register('title')} isInvalid={!!errors.title }/>
-                        <Form.Control.Feedback type="invalid" >
-                            {errors.title?.message}
-                        </Form.Control.Feedback>
-                    </FloatingLabel>
-                </Col >
-
-                <Col  className="p-0" >
-                    <FloatingLabel label="DESCRIPTION">
-                        <Form.Control type="text" {...register('description')} isInvalid={!!errors.description}/>
-                        <Form.Control.Feedback type="invalid">
-                            {errors.description?.message}
-                        </Form.Control.Feedback>
-                    </FloatingLabel>
-                </Col>
-            </Row>
-
-            <Row className="w-full">
-                <Col as={Col} className="p-0" >
-                    <CategoryMultiSelect id="categories" label="CATEGORY" />
-                </Col>            
-            </Row>
-
-            <Row className="w-full">
-                <Col as={Col} className="p-0" >
-                    <AddressInput
-                        label="ADDRESS"
-                        inputElement={
-                            <Form.Control type="text" {...register('address.full_address')} isInvalid={!!errors.address}/>
-                        }
-                        errorElement={
-                            <Form.Control.Feedback type="invalid">
-                                {errors.address?.full_address?.message }
+            <ImageInput id="image" className="lg:!gap-1"/>
+            <div className="flex flex-col items-center justify-between w-full h-full gap-2">
+                <Row className="w-full gap-2" >
+                    <Col className="p-0" xs={12} md={6}>
+                        <FloatingLabel label="TITLE" className="bg-surface-a10">
+                            <Form.Control type="text" {...register('title')} isInvalid={!!errors.title }/>
+                            <Form.Control.Feedback type="invalid" >
+                                {errors.title?.message}
                             </Form.Control.Feedback>
-                        }
-                    />
-    
-                </Col>            
-            </Row>
+                        </FloatingLabel>
+                    </Col >
+
+                    <Col  className="p-0" >
+                        <FloatingLabel label="DESCRIPTION">
+                            <Form.Control type="text" {...register('description')} isInvalid={!!errors.description}/>
+                            <Form.Control.Feedback type="invalid">
+                                {errors.description?.message}
+                            </Form.Control.Feedback>
+                        </FloatingLabel>
+                    </Col>
+                </Row>
+
+                <Row className="w-full">
+                    <Col as={Col} className="p-0" >
+                        <CategoryMultiSelect id="categories" label="CATEGORY" />
+                    </Col>            
+                </Row>
+
+                <Row className="w-full">
+                    <Col as={Col} className="p-0" >
+                        <AddressInput
+                            label="ADDRESS"
+                            inputElement={
+                                <Form.Control type="text" {...register('address.full_address')} isInvalid={!!errors.address}/>
+                            }
+                            errorElement={
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.address?.full_address?.message }
+                                </Form.Control.Feedback>
+                            }
+                        />
+        
+                    </Col>            
+                </Row>
+            </div>
         </Form>
     )
 }
+
+//<ImageInput id="image"/>

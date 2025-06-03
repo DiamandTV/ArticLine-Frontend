@@ -6,7 +6,7 @@ import { CategoryInterface } from "@features/home/model/Category/CategoryInterfa
 import { StoreContext } from "@features/store/context/StoreContext/StoreContext";
 import { tailwindMerge } from "@lib/tsMerge/tsMerge";
 import { PaddingView } from "@views/PaddingView";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Accordion, Card } from "react-bootstrap";
 import { AiFillHeart, AiFillStar, AiOutlineHeart } from "react-icons/ai";
 import { FiEye, FiSettings } from "react-icons/fi";
@@ -20,6 +20,8 @@ import { ModalProvider } from "@context/Modal/ModalProvider";
 import { useStoreContext } from "@features/store/context/StoreContext/StoreProvider";
 import { Can, CaslSubject } from "src/config/permissions/can";
 import { getKey } from "@lib/kegGenerator/keyGenerator";
+import { DivRefProvider } from "@context/DivRefContext/DivRefProvider";
+import { BottomSheetModalSetter } from "@context/BottomSheetModal/BottomSheetModalSetter";
 
 
 interface StoreHeaderProps extends React.HTMLAttributes<HTMLElement>{
@@ -50,14 +52,15 @@ StoreHeader.Footer = function Footer({children}:{children:React.ReactNode}){
     )
 }
 
-StoreHeader.Image = function Image(){
+StoreHeader.Image = function Image(attr:React.HTMLAttributes<HTMLElement>){
    
     const {store} = useContext(StoreContext)
     if(!store) return null
     return(
         <div
-            className="relative h-48 w-full bg-cover bg-center"
-            style={{ backgroundImage: `url(${store.image})` }}
+            {...attr}
+            className={tailwindMerge("relative min-h-48 h-full w-full bg-cover bg-center",attr.className)}
+            style={{ backgroundImage: `url(${store.image})` ,...attr.style}}
         />
     )
 }
@@ -73,7 +76,7 @@ StoreHeader.Favourite = function Favourite(){
     return (
         <button
         onClick={onLike}
-        className="absolute top-2 right-2 p-1 rounded-full bg-black/50 hover:bg-black/70 transition"
+        className="absolute p-1 transition rounded-full top-2 right-2 bg-black/50 hover:bg-black/70"
         >
         {liked ? (
             <AiFillHeart className="text-red-500" size={22} />
@@ -89,7 +92,7 @@ StoreHeader.Title = function Title(){
     if(!store) return null
     const title = store.title
     return(
-         <h1 className=" text-2xl font-normal font-sans truncate m-0 p-0">{title}</h1>
+         <h1 className="p-0 m-0 font-sans text-2xl font-normal truncate ">{title}</h1>
     )
 }
 
@@ -107,7 +110,7 @@ StoreHeader.Categories = function Categories(){
         <>
             {storeCategories.map((category)=>{
                 return(
-                    <div key={getKey()} className="bg-surface-a20 w-max h-max px-4 py-1 rounded-full font-sans font-light text-base">
+                    <div key={getKey()} className="px-4 py-1 font-sans text-base font-light rounded-full bg-surface-a20 w-max h-max">
                         {category.name}
                     </div>
                 )
@@ -127,7 +130,7 @@ StoreHeader.Info = function Info(){
                 <Accordion.Item eventKey="0" >
                     <Accordion.Header>
 
-                        <div className="w-full flex flex-row justify-start items-center gap-2" >
+                        <div className="flex flex-row items-center justify-start w-full gap-2" >
                             <IoMdInformationCircleOutline size={25} className="text-surface-a30"/>
                             <h1>INFORMATION</h1>
                         </div>
@@ -211,7 +214,7 @@ StoreHeader.Distance = function Distance() {
                 <GoLocation className="text-green-500" size={20} />
                 <span>{address.full_address}</span>
             </div>
-            <span className="text-sm text-gray-500 ml-6">Distanza: {distance}</span>
+            <span className="ml-6 text-sm text-gray-500">Distanza: {distance}</span>
         </div>
     );
 };
@@ -225,13 +228,15 @@ StoreHeader.OnSettings = function OnSettings(){
             setClose={() => setOpen(false)}
             items={[
             {
-                action: <EditLabelButton text="EDIT" />,
+                action: <EditLabelButton text="EDIT" className="w-full md:w-[350px] lg:w-[600px]"/>,
                 render: (onClose) => (
-                <SimpleBottomSheetModal isOpen={true} setClose={onClose} detent="content-height">
-                    <PaddingView>
-                    <StoreForm.Update />
-                    </PaddingView>
-                </SimpleBottomSheetModal>
+                    <BottomSheetModalSetter isOpen setOpen={onClose}>
+                        <SimpleBottomSheetModal detent="content-height">
+                            <PaddingView className="w-full md:w-[350px] lg:w-[600px]">
+                                <StoreForm.Update />
+                            </PaddingView>
+                        </SimpleBottomSheetModal>
+                    </BottomSheetModalSetter>
                 ),
             },
             {
@@ -262,7 +267,7 @@ StoreHeader.Settings = function Settings(){
                                             e.stopPropagation();
                                             setOpen(true)
                                         }}
-                                        className="absolute top-0 left-0 p-1 m-2 rounded-full bg-black/50 hover:bg-black/70 transition"
+                                        className="absolute top-0 left-0 p-1 m-2 transition rounded-full bg-black/50 hover:bg-black/70"
                                         >
                                         <FiSettings className="text-white" size={22} />
                                     </button>
@@ -280,25 +285,33 @@ StoreHeader.Settings = function Settings(){
 type StoreBusinessHeaderProps = React.HTMLAttributes<HTMLElement> 
 
 export function StoreBusinessHeader({...attr}:StoreBusinessHeaderProps){
+    const divRef = useRef<HTMLDivElement|null>(null)
     return(
-        <StoreHeader {...attr}>
-            <StoreHeader.Image/>
-            <StoreHeader.Settings/>
-            <StoreHeader.Favourite/>
-            <Card.Body className="w-full flex flex-col gap-2 pb-0">
-                <StoreHeader.Title/>
-                <div className="w-full flex flex-row justify-between">
-                    <div className="w-full flex flex-col gap-y-2">
-                        <StoreHeader.Rating/>
-                        <StoreHeader.Views/>
-                        <StoreHeader.Distance/>
-                        <StoreHeader.Reviews/>
-                    </div>
-                    <StoreHeader.Categories/>
+        <div className="flex flex-row w-full gap-2">
+            <StoreHeader {...attr} className={tailwindMerge("w-full flex flex-col gap-2 lg:grid lg:grid-cols-[35%_65%] lg:mx-df")}>
+                <div className="relative">
+                    <StoreHeader.Image className="h-[350px] rounded-none  md:rounded-md" />
+                    <DivRefProvider divRef={divRef}>
+                        <StoreHeader.Settings/>
+                    </DivRefProvider>
+                    <StoreHeader.Favourite/>
                 </div>
-                <StoreHeader.Info/>
-            </Card.Body>
-        </StoreHeader>
+                <Card.Body className="flex flex-col w-full gap-2 py-0">
+                    <StoreHeader.Title/>
+                    <div className="flex flex-row justify-between w-full">
+                        <div className="flex flex-col w-full gap-y-2">
+                            <StoreHeader.Rating/>
+                            <StoreHeader.Views/>
+                            <StoreHeader.Distance/>
+                            <StoreHeader.Reviews/>
+                        </div>
+                        <StoreHeader.Categories/>
+                    </div>
+                    <StoreHeader.Info/>
+                </Card.Body>
+            </StoreHeader>
+            <div ref={divRef} className="w-max scrollbar-hide"></div>
+        </div>
     )
 }
 

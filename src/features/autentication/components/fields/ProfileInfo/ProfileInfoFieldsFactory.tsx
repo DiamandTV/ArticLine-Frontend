@@ -2,18 +2,19 @@ import { UserProfileInfoFields } from "./UserProfileInfoFields/UserProfileInfoFi
 import { CourierProfileInfoFields } from "./CourierProfileInfoFields/CourierProfileInfoFields";
 import { CompanyProfileInfoFields } from "./CompanyProfileInfoFields/CompanyProfileInfoFields";
 import { ProfileType } from "@features/autentication/models/Profile/Interface/Type";
+import { FieldsProps } from "@features/autentication/models/Fields/FieldsProps";
 
 interface ProfileInfoFieldsFactoryProps{
     profileType:ProfileType
 }
-export function ProfileInfoFieldsFactory({profileType}:ProfileInfoFieldsFactoryProps){
+export function ProfileInfoFieldsFactory({profileType,...props}:ProfileInfoFieldsFactoryProps&FieldsProps){
     switch(profileType){
         case 'USER':
-            return <UserProfileInfoFields/>
+            return <UserProfileInfoFields {...props}/>
         case 'COURIER':
-            return <CourierProfileInfoFields/>
+            return <CourierProfileInfoFields {...props}/>
         case 'COMPANY':
-            return <CompanyProfileInfoFields/>
+            return <CompanyProfileInfoFields {...props}/>
     }
 }
 

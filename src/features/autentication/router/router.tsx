@@ -17,9 +17,21 @@ import { AuthVerificationResendStatusPage } from "../pages/authVerifiication/Aut
 import { passwordResetServices } from "../services/passwordResetServices"
 import { PasswordResetCheckResponseMapStatusType, PasswordResetCheckResponseStatus, PasswordResetCheckResponseType } from "../models/PasswordResetResponse/PasswordResetCheckResponse"
 import { decodeServerPayloadMsg } from "../../../utils/serverErrorDecode/errorDecode"
+import { AccountPage, InternAccountPage } from "../pages/account/AccountPage"
 
 const _protected:RouteGroup = {
-    routesWithLayout:[],
+    routesWithLayout:[
+        {
+            path:'/account/',
+            element:<AccountPage/>,
+            children:[
+                {
+                    path:':tab/',
+                    element:<InternAccountPage/>
+                }
+            ]
+        }
+    ],
     standaloneRoutes:[]
 }
 

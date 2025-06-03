@@ -8,7 +8,7 @@ interface AuthenticationViewProps{
 export function AuthenticationView(props:AuthenticationViewProps){
     return(
         <AlignCenter>
-            <Container className="p-2 sm:p-4 md:p-6 lg:!p-10 rounded-xl bg-surface-a0">
+            <Container className="max-w-[1000px] p-2 sm:p-4 md:p-6 lg:!p-10 rounded-xl bg-surface-a0">
                 {props.children}
             </Container>
         </AlignCenter>

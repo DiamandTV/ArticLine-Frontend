@@ -1,12 +1,25 @@
 import { apiBearToken } from "@lib/axios/api"
-import { ProfileInterface } from "../models/Profile/Interface/Type"
+import { ProfileInfoFieldsType } from "../models/Profile/Interface/Type"
+import { objToFormData } from "@utils/objToFormData/objToFormData"
+
+function getFormDataFromProfile(profileInfo:ProfileInfoFieldsType){
+    let formData = new FormData()
+    formData = objToFormData(formData,profileInfo,'')
+    return formData
+}
 
 async function retrieve(){
     return await apiBearToken.get('/profile/retrieve/')
 }
 
-async function update(profileInfo:ProfileInterface){
-    return await apiBearToken.patch('/profile/update/',profileInfo)
+async function update(profileInfo:ProfileInfoFieldsType){
+    const formData = getFormDataFromProfile(profileInfo)
+    console.log(Array.from(formData))
+    return await apiBearToken.patch('/profile/update/',formData,{
+        headers:{
+            'Content-Type':'multipart/form-data'
+        }
+    })
 }
 
 async function _delete(){

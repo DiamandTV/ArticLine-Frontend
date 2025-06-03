@@ -24,7 +24,7 @@ export function OrderInfoFieldsProvider(props:FieldsProviderProps<OrderInfoField
 }
 
 export function OrderInfoFields(props:FieldsProps){
-    const className = tailwindMerge("w-full flex flex-col items-center justify-center gap-2 ",props.className)
+    const className = tailwindMerge("w-full flex flex-col items-center justify-center gap-4 ",props.className)
     const {register,formState:{errors}} = useFormContext<OrderInfoFieldsType>()
     return(
         <Form
@@ -38,16 +38,15 @@ export function OrderInfoFields(props:FieldsProps){
             </Row>
             
             <Row className="w-full " >
-                <Col className="p-0 flex flex-col gap-2">
+                <Col className="flex flex-col gap-2 p-0">
                     <DeliveryInput/>
-                   
                 </Col>
             </Row>
 
-            <Row className="w-full">
-                <Col  className="p-0" >
+            <Row className="w-full h-full">
+                <Col  className="h-full p-0" >
                     <FloatingLabel label="DESCRIPTION">
-                        <Form.Control type="text" {...register('extra_details')} isInvalid={!!errors.extra_details}/>
+                        <Form.Control   {...register('extra_details')} as="textarea" rows={4}  isInvalid={!!errors.extra_details} style={{height:"100%"}}/>
                         <Form.Control.Feedback type="invalid">
                             {errors.extra_details?.message}
                         </Form.Control.Feedback>

@@ -13,7 +13,7 @@ interface ImageInputProps extends React.HTMLAttributes<HTMLElement>{
 }
 
 export function ImageInput({id,...attr}:ImageInputProps)  {
-    const className = tailwindMerge("max-w-[350px]  flex flex-col gap-4 ",attr.className)
+    const className = tailwindMerge("max-w-[350px] flex flex-col gap-4 ",attr.className)
     const {register,watch,setValue,formState:{errors}} = useFormContext()
     const fileImage = watch(id)
     const inputRef = useRef<HTMLInputElement|null>(null)
@@ -80,7 +80,7 @@ export function ImageInput({id,...attr}:ImageInputProps)  {
         <div 
             {...attr}
             className={className} >
-            <div  className="flex flex-col justify-content-center">
+            <div  className="flex flex-col justify-center">
                 <img  
                     ref={imageRef}
                     //src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
@@ -95,7 +95,7 @@ export function ImageInput({id,...attr}:ImageInputProps)  {
                 </FormControl.Feedback>
         
             </div>
-            <div className="flex flex-row justify-content-center relative gap-2">
+            <div className="relative flex flex-row gap-2 justify-content-center">
                 <Button variant="primary" className="w-full" onClick={onChooseClick}>
                     CHOOSE
                 </Button>
