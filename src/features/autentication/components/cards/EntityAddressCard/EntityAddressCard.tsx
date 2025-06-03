@@ -16,7 +16,7 @@ export function EntityAddressCard({...attr}:EntityAddressCardProps){
 
 interface EntityAddressDetailedCard extends React.HTMLAttributes<HTMLElement>{
     cardClassName?:string,
-    imageClassName:string,
+    imageClassName?:string,
 }
 export function EntityAddressDetailedCard({cardClassName,imageClassName,...attr}:EntityAddressDetailedCard){
     const listItemClassName = 'w-full flex flex-row justify-start gap-2'

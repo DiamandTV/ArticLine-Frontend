@@ -10,7 +10,7 @@ import { PaddingView } from "@views/PaddingView"
 import { EntityAddressForm } from "../components/forms/EntityAddressForm/EntityAddressForm"
 import { Button, Container } from "react-bootstrap"
 import { IoAdd } from "react-icons/io5"
-import { PasswordActualForm } from "../components/forms/PasswordChangeForm/PasswordActualForm"
+import { AuthPasswordCard } from "../components/cards/AuthPasswordCard/AuthPasswordCard"
 
 export const Profile = ()=>null
 
@@ -76,10 +76,10 @@ Profile.EntityAddressList = function List(attr:React.HTMLAttributes<HTMLElement>
     )
 }
 
-Profile.AuthPasswordChange = function AuthPasswordChange(){
+Profile.AuthPassword = function AuthPassword(){
     return(
         <Container className="rounded-lg bg-surface-a0 p-mb-df">
-            <PasswordActualForm/>
+            <AuthPasswordCard/>
         </Container>
     )
 }

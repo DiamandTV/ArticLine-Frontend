@@ -3,8 +3,8 @@ import { FieldsProps } from "@features/autentication/models/Fields/FieldsProps"
 import { FieldsProviderProps } from "@features/autentication/models/Fields/FieldsProviderProps"
 import { passwordActualFieldSchema, PasswordActualFieldType } from "@features/autentication/models/PasswordChange/PasswordChangeFields"
 import { tailwindMerge } from "@lib/tsMerge/tsMerge"
-import { Col, FloatingLabel, Form, Row } from "react-bootstrap"
-import { useFormContext } from "react-hook-form"
+import { Col, FloatingLabel, Form, Row } from "react-bootstrap";
+import { useFormContext } from "react-hook-form";
 
 export function PasswordActualFieldProvider(props:FieldsProviderProps<PasswordActualFieldType>){
     return(
@@ -26,8 +26,8 @@ export function PasswordActualField(props:FieldsProps){
             className={className}
         >
             <Row className="w-full gap-2">
-                <Col className="p-0" xs={12} md={6}>
-                    <FloatingLabel label="NEW PASSWORD">
+                <Col className="p-0" >
+                    <FloatingLabel label="ACTUAL PASSWORD">
                         <Form.Control type="password" {...register('actual_password')} isInvalid={!!errors.actual_password}/>
                         <Form.Control.Feedback type="invalid">
                             {errors.actual_password?.message}
