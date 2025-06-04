@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProfileInfoFieldsProviderFactory } from "../../fields/ProfileInfo/ProfileInfoFieldsProviderFactory";
 import { RootState } from "@store/store";
 import { ProfileInfoFieldsFactory } from "../../fields/ProfileInfo/ProfileInfoFieldsFactory";
-import { Button, Container } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { DefaultResetter } from "@components/forms/Resetter/DefaultResetter";
 import { UserProfileInfoFieldsType } from "@features/autentication/models/Profile/InfoFields/UserProfileInfoFields/UserProfileInfoFieldsType";
 import { CompanyProfileInfoFieldsType } from "@features/autentication/models/Profile/InfoFields/CompanyProfileInfoFields/CompanyProfileInfoFieldsType";
@@ -22,13 +22,13 @@ export function ProfileUpdateForm(){
     if(!profile) return
     const ProfileInfoFieldsProvider = getProfileInfoFieldsProviderFactory({profileType:profile.auth.type})
     return(
-        <Container className="w-full flex flex-col gap-2 max-w-[1000px] p-2  sm:p-4 md:p-6 lg:!p-10 rounded-lg bg-surface-a0 ">
+        <div className="w-full flex flex-col gap-2 max-w-[1000px] rounded-lg ">
             <ProfileInfoFieldsProvider>
                 <DefaultResetter<UserProfileInfoFieldsType | CourierProfileInfoFieldsType | CompanyProfileInfoFieldsType> toFields={async()=>await profileToFields(profile)}/>
                 <ProfileInfoFieldsFactory profileType={profile.auth.type} className="flex flex-col items-center justify-center"/>
                 <UpdateButton/>
             </ProfileInfoFieldsProvider>
-        </Container>
+        </div>
     )
 }
 

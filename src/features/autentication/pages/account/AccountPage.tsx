@@ -3,6 +3,7 @@ import { Outlet, useNavigate, useParams } from "react-router";
 import { ProfilePage } from "./ProfilePage";
 import { EntityAddressPage } from "./EntityAddressPage";
 import { AuthPage } from "./AuthPage";
+import { ProfileCard } from "@features/autentication/components/cards/ProfileCard/ProfileCard";
 
 type AccountTabParamType = 'profile' | 'address' | 'security'
 const accountTabParams:Array<AccountTabParamType> = ['profile','address','security']
@@ -23,7 +24,12 @@ export function AccountPage(){
   },[tab])
 
   return(
+    <div className="w-full flex flex-col gap-2">
+      <div className="w-full h-full flex-col justify-center items-center bg-primary-a50 bg-opacity-10 text-surface-tonal-a0 px-mb-df py-df">
+        <ProfileCard/>
+      </div>                    
       <Outlet/>
+    </div>
   )
 }
 
@@ -75,10 +81,11 @@ export function InternAccountPage(){
                 </button>
               ))}
             </div>
-            
-            {
-              AccountTabMapParamPage[tab as AccountTabParamType]
-            }           
+            <div className="flex flex-col gap-2 justify-center items-center">
+              {
+                AccountTabMapParamPage[tab as AccountTabParamType]
+              }    
+            </div>       
         </div>
     )
 }

@@ -1,8 +1,12 @@
-import { AuthPasswordCard } from "@features/autentication/components/cards/AuthPasswordCard/AuthPasswordCard";
+import { ProfileUpdateForm } from "@features/autentication/components/forms/ProfileForms/ProfileUpdateForm";
+
 export function ProfilePage(){
     return(
-        <div className="h-full">
-            <AuthPasswordCard/>
+        <div className="w-full flex flex-col max-w-[600px] p-mb-df rounded-lg bg-surface-a0 ">
+            <div className="w-full p-mb-df">
+                <h1 className="p-mb-df text-base font-medium">PROFILE DETAILS</h1>
+                <ProfileUpdateForm/>
+            </div>
         </div>
     )
 }

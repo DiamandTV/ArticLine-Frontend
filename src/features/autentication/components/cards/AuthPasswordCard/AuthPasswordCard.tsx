@@ -8,7 +8,7 @@ import { PasswordActualProvider } from "@features/autentication/context/Password
 export function AuthPasswordCard(){
     
     return(
-        <div className="p-2 rounded-lg bg-surface-a0">
+        <div className="w-full p-2 rounded-lg bg-surface-a0">
             <Container className="rounded-lg bg-surface-a0 p-mb-df">
                 <h1 className="pb-2 text-base font-medium">PASSWORD CHANGE</h1>
                 <PasswordActualProvider>

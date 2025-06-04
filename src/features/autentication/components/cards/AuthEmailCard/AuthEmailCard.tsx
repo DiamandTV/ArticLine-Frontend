@@ -7,7 +7,7 @@ export function AuthEmailCard(){
     if(!profile) return
     const email = profile.auth.email
     return(
-        <div className="p-2 rounded-lg bg-surface-a0">
+        <div className="w-full p-2 rounded-lg bg-surface-a0">
             <Container className="flex flex-col gap-2 rounded-lg bg-surface-a0 p-mb-df">
                 <h1 className="text-base font-medium">EMAIL</h1>
                 <FloatingLabel label="EMAIL">

@@ -8,11 +8,15 @@ import { BottomSheetModalProviderFn } from "@context/BottomSheetModal/BottomShee
 import { SimpleBottomSheetModal } from "@components/modal/BottomSheetModal/SimpleBottomSheetModal"
 import { PaddingView } from "@views/PaddingView"
 import { EntityAddressForm } from "../components/forms/EntityAddressForm/EntityAddressForm"
-import { Button, Container } from "react-bootstrap"
+import { Button } from "react-bootstrap"
 import { IoAdd } from "react-icons/io5"
 import { AuthPasswordCard } from "../components/cards/AuthPasswordCard/AuthPasswordCard"
 import { AuthEmailCard } from "../components/cards/AuthEmailCard/AuthEmailCard"
 import { AuthPhoneNumberCard } from "../components/cards/AuthPhoneNumberCard/AuthPhoneNumberCard"
+import { CompanyProfileInterface } from "../models/Profile/Interface/CompanyProfile/CompanyProfile"
+import { UserProfileInterface } from "../models/Profile/Interface/UserProfile/UserProfile"
+import { CourierProfileInterface } from "../models/Profile/Interface/CourierProfile/CourierProfile"
+import { GoLocation } from "react-icons/go"
 
 export const Profile = ()=>null
 
@@ -80,24 +84,65 @@ Profile.EntityAddressList = function List(attr:React.HTMLAttributes<HTMLElement>
 
 Profile.AuthPassword = function AuthPassword(){
     return(
-        <Container className="rounded-lg bg-surface-a0 p-mb-df">
-            <AuthPasswordCard/>
-        </Container>
+        <AuthPasswordCard/>
     )
 }
 
 Profile.AuthEmail = function AuthEmail(){
     return(
-        <Container className="rounded-lg bg-surface-a0 p-mb-df">
-            <AuthEmailCard/>
-        </Container>
+        <AuthEmailCard/>
     )
 }
 
 Profile.AuthPhoneNumber = function AuthPhoneNumber(){
     return(
-        <Container className="rounded-lg bg-surface-a0 p-mb-df">
-            <AuthPhoneNumberCard/>
-        </Container>
+        <AuthPhoneNumberCard/>
+    )
+}
+
+Profile.SecondName = function SecondName(attr:React.HTMLAttributes<HTMLElement>){
+    const profile = useSelector((state:RootState)=>state.authReducer.profile)
+    if(!profile) return
+    let secondName = ''
+    if(profile.auth.type === 'COMPANY'){
+        secondName = (profile as CompanyProfileInterface).first_name +  " " +(profile as CompanyProfileInterface).first_name
+    } else {
+        secondName = (profile as UserProfileInterface|CourierProfileInterface).username
+    }
+    return(
+        <h1 {...attr} className={tailwindMerge('',attr.className)}>{secondName}</h1>
+    )
+}
+
+Profile.Email = function Email(attr:React.HTMLAttributes<HTMLElement>){
+    const profile = useSelector((state:RootState)=>state.authReducer.profile)
+    if(!profile) return
+    return(
+        <span {...attr} className={tailwindMerge("",attr.className)}>{profile.auth.email}</span>
+    )
+}
+
+Profile.Name = function Name(attr:React.HTMLAttributes<HTMLElement>){
+    const profile = useSelector((state:RootState)=>state.authReducer.profile)
+    let name = ''
+    if(profile?.auth.type === 'COMPANY'){
+        name = (profile as CompanyProfileInterface).company_name
+    } else {
+        name = (profile as UserProfileInterface|CourierProfileInterface).first_name + " " + (profile as UserProfileInterface|CourierProfileInterface).last_name
+    }
+    return <h1 {...attr} className={tailwindMerge("",attr.className)}>{name}</h1>
+}
+
+Profile.Address = function Address(attr:React.HTMLAttributes<HTMLElement>){
+    const profile = useSelector((state:RootState)=>state.authReducer.profile)
+    if(!profile) return
+
+    return (
+        <div {...attr} className={tailwindMerge("w-full flex flex-row gap-2 justify-items-center text-sm font-thin",attr.className)}>
+            <div>
+                <GoLocation/>
+            </div>
+            <span className="text-wrap">{profile.address.full_address}</span>
+        </div>
     )
 }

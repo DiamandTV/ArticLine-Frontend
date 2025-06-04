@@ -44,6 +44,7 @@ export function PhoneNumberActualFields(props:FieldsProps){
             <Row className="w-full gap-2">
                 <Col className="p-0" >
                     <PhoneInput
+                        readonly
                         inputElement={
                             <Form.Control readOnly className="pb-2 mb-0" type="text" {...register('actual_phone_number')} isInvalid={!!errors.actual_phone_number}/>
                             
