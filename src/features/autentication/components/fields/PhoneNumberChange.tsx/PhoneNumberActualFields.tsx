@@ -1,16 +1,17 @@
+import { PhoneInput } from "@components/inputs/PhoneInput";
 import { FieldsProvider } from "@features/autentication/context/FieldsProvider/FieldsProvider";
 import { FieldsProps } from "@features/autentication/models/Fields/FieldsProps";
 import { FieldsProviderProps } from "@features/autentication/models/Fields/FieldsProviderProps";
-import { passwordChangeFieldsSchema, PasswordChangeFieldsType } from "@features/autentication/models/PasswordChange/PasswordChangeFields";
+import { phoneNumberActualFieldsSchema, PhoneNumberActualFieldsType } from "@features/autentication/models/PhoneNumberChange/PhoneNumberChange";
 import { tailwindMerge } from "@lib/tsMerge/tsMerge";
-import { Col, FloatingLabel, Form, Row } from "react-bootstrap";
+import { Col, Form, Row } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
 
-export function PasswordChangeFieldsProvider(props:FieldsProviderProps<PasswordChangeFieldsType>){
+export function PhoneNumberActualFieldsProvider(props:FieldsProviderProps<PhoneNumberActualFieldsType>){
     return(
-        <FieldsProvider<PasswordChangeFieldsType> 
-            schema={passwordChangeFieldsSchema}
+        <FieldsProvider<PhoneNumberActualFieldsType> 
             {...props}
+             schema={phoneNumberActualFieldsSchema}
         >
             {props.children}
         </FieldsProvider>
@@ -18,9 +19,9 @@ export function PasswordChangeFieldsProvider(props:FieldsProviderProps<PasswordC
 }
 
 
-export function PasswordChangeFields(props:FieldsProps){
+export function PhoneNumberActualFields(props:FieldsProps){
     const className = tailwindMerge("w-full flex flex-col items-center justify-center gap-2 ",props.className)
-    const {register,formState:{errors},getValues} = useFormContext<PasswordChangeFieldsType>()
+    const {register,formState:{errors},getValues} = useFormContext<PhoneNumberActualFieldsType>()
     console.log(getValues())
     return(
         <Form
@@ -41,22 +42,18 @@ export function PasswordChangeFields(props:FieldsProps){
             }
 
             <Row className="w-full gap-2">
-                <Col className="p-0" xs={12} md={6}>
-                    <FloatingLabel label="NEW PASSWORD">
-                        <Form.Control type="password" {...register('password')} isInvalid={!!errors.password}/>
-                        <Form.Control.Feedback type="invalid">
-                            {errors.password?.message}
-                        </Form.Control.Feedback>
-                    </FloatingLabel>
-                </Col>
-
                 <Col className="p-0" >
-                    <FloatingLabel label="CONFERM PASSWORD">
-                        <Form.Control type="password" {...register('conferm_password')} isInvalid={!!errors.conferm_password}/>
-                        <Form.Control.Feedback type="invalid">
-                            {errors.conferm_password?.message}
-                        </Form.Control.Feedback>
-                    </FloatingLabel>
+                    <PhoneInput
+                        inputElement={
+                            <Form.Control readOnly className="pb-2 mb-0" type="text" {...register('actual_phone_number')} isInvalid={!!errors.actual_phone_number}/>
+                            
+                        }
+                        errorElement={
+                            <Form.Control.Feedback type="invalid">
+                                {errors.actual_phone_number?.message}
+                            </Form.Control.Feedback>
+                        }
+                    />
                 </Col>
             </Row>
         </Form>

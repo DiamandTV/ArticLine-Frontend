@@ -14,6 +14,6 @@ export function PasswordActualProvider({children}:PasswordActualProviderProps){
     )
 }
 
-export function usePasswordActual(){
+export function usePasswordActualContext(){
     return useContext(PasswordActualContext)
 }

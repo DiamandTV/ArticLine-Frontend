@@ -10,7 +10,7 @@ export function AuthPasswordCard(){
     return(
         <div className="p-2 rounded-lg bg-surface-a0">
             <Container className="rounded-lg bg-surface-a0 p-mb-df">
-                <h1 className="font-medium text-base pb-2">PASSWORD CHANGE</h1>
+                <h1 className="pb-2 text-base font-medium">PASSWORD CHANGE</h1>
                 <PasswordActualProvider>
                     <TabsProvider defaultKey={'actual_password'}>
                         <TabsContext.Consumer>
@@ -19,8 +19,8 @@ export function AuthPasswordCard(){
                                     return(
                                         <Tabs className="hidden" activeKey={key}>
                                             <Tab eventKey="actual_password" title="ACTUAL PASSWORD">
-                                                <div className="w-full flex flex-col gap-2">
-                                                    <h3 className="text-sm font-normal">To change your password, please enter your current one to verify your identity. 🔐👤</h3>
+                                                <div className="flex flex-col w-full gap-2">
+                                                    <h3 className="text-sm font-light">To change your password, please enter your current one to verify your identity. 🔐👤</h3>
                                                     <PasswordActualForm/>
                                                 </div>
                                             </Tab>

@@ -7,15 +7,24 @@ import { passwordChangeService } from "@features/autentication/services/password
 import { AxiosError } from "axios";
 import { setServerValidationErrors } from "@utils/serverErrorDecode/errorDecode";
 import { useTabsContext } from "@context/Tabs/TabsProvider";
-import { usePasswordActual } from "@features/autentication/context/PasswordActualContext/PasswordActualProvider";
+import { usePasswordActualContext } from "@features/autentication/context/PasswordActualContext/PasswordActualProvider";
+import { toast } from "react-toastify";
+import { AlertCard } from "@components/cards/AlertCard/AlertCard";
 
 export function PasswordChangeForm(){
-    const {actual_password} = usePasswordActual()
+    const {actual_password} = usePasswordActualContext()
+    if (!actual_password) return null; // oppure uno spinner
+
     return(
         <div className="flex flex-col w-full gap-2">
             <PasswordChangeFieldsProvider
+                // defaultValues non è reattivo ai stati (legge il valore solo al primo render)
+                // Quindi il controllo viene o fatto prima o bisogna usare reset / setValue
                 defaultValues={{
-                    actual_password
+                    actual_password:actual_password,
+
+                    password:'',
+                    conferm_password:''
                 }}
                 >
                 <PasswordChangeFields/>
@@ -29,12 +38,28 @@ export function PasswordChangeForm(){
 }
 
 function UpdateButton(){
-    const {trigger,getValues,setError} = useFormContext<PasswordChangeFieldsType>()
+    const {setActualPassword} = usePasswordActualContext()
+    const {setKey} = useTabsContext()
+    const {trigger,getValues,setError,formState:{errors}} = useFormContext<PasswordChangeFieldsType>()
     const {mutateAsync,isLoading} = useMutation({
         mutationKey:['password-change'],
         mutationFn:async(passwordChangeInfo:PasswordChangeFieldsType)=>await passwordChangeService.changePassword(passwordChangeInfo),
         onSuccess:(data)=>{
             console.log(data)
+            setActualPassword('')
+            setKey('actual_password')
+            toast(
+                <AlertCard
+                    variant="success"
+                    title="✅ Password changed"
+                    message="Your new password has been saved successfully 🔐"
+                />,
+                {
+                    className: "w-full",
+                    hideProgressBar: true,
+                    position: 'top-center'
+                }
+            )
         },
         onError:(error)=>{
             if(error instanceof AxiosError){
@@ -43,6 +68,7 @@ function UpdateButton(){
             }
         }
     })
+    console.log(errors)
     const onClick = async()=>{
         const isNotErrors = await trigger()
         if(isNotErrors){

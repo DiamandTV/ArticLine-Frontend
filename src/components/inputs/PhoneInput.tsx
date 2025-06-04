@@ -1,4 +1,4 @@
-import { Dropdown, FloatingLabel, InputGroup } from "react-bootstrap";
+import { Dropdown, FloatingLabel, InputGroup, InputGroupProps } from "react-bootstrap";
 import phoneNumbers from '@assets/json/phoneNumber/phoneNumbers.json'
 import { cloneElement, FormEvent, isValidElement, useEffect, useRef, useState } from "react";
 import { mergeRefs } from "@utils/mergeRefs/mergeRefs";
@@ -9,13 +9,14 @@ interface PhoneNumberDetailInterface  {
     code: string;
 }
 
-interface PhoneInputProps extends React.HTMLAttributes<HTMLElement>{
+interface PhoneInputProps extends React.HTMLAttributes<HTMLElement> , InputGroupProps{
     inputElement:React.ReactNode,
-    errorElement:React.ReactNode
+    errorElement:React.ReactNode,
+    readonly?:boolean
 }
 
 // todo: create a react form hook input
-export function PhoneInput({inputElement,errorElement,...attributes}:PhoneInputProps){
+export function PhoneInput({inputElement,errorElement,readonly=false,...attributes}:PhoneInputProps){
     const inputRef = useRef<HTMLInputElement|null>(null)
     
     const [phoneNumberDetail,setPhoneNumberDetail] = useState<PhoneNumberDetailInterface>({
@@ -39,9 +40,11 @@ export function PhoneInput({inputElement,errorElement,...attributes}:PhoneInputP
                 }
                 
             }
-            inputRef.current!.value+= phoneNumberDetail.dial_code+" "
+            if(actualPhoneNumber?.replace(" ","").length === 0){
+                inputRef.current!.value+= phoneNumberDetail.dial_code+" "
+            }
         }   
-    },[])
+    },[phoneNumberDetail])
 
     const onChange = (event:FormEvent<HTMLInputElement>)=>{
         elementProps.onChange?.(event)
@@ -68,12 +71,12 @@ export function PhoneInput({inputElement,errorElement,...attributes}:PhoneInputP
     return(
         <InputGroup className="p-0" {...attributes}>
             <Dropdown >
-                <Dropdown.Toggle variant="secondary" id="dropdown-basic" className="flex flex-row justify-center items-center gap-0.5 md:gap-2">
+                <Dropdown.Toggle disabled={readonly} variant="secondary" id="dropdown-basic" className="flex flex-row justify-center items-center gap-0.5 md:gap-2">
                     <img src={image} width={"30"} />
                 </Dropdown.Toggle>
            
                 <Dropdown.Menu>
-                    <div className="max-h-60 overflow-y-scroll overflow-hidden">
+                    <div className="overflow-hidden overflow-y-scroll max-h-60">
                     {phoneNumbers.map((detail)=>{
                         return (
                             <PhoneNumberDetail 
@@ -109,7 +112,7 @@ function PhoneNumberDetail({phoneNumberDetail,...attributes}:PhoneNumberDetailPr
     const image = `https://flagpedia.net/data/flags/h80/${phoneNumberDetail.code.toLowerCase()}.png`
     return(
         <Dropdown.Item {...attributes}>
-            <div className="w-full flex flex-row items-center justify-between">
+            <div className="flex flex-row items-center justify-between w-full">
                 <span>{phoneNumberDetail.dial_code}</span>
                 <img src={image}  width={"60px"}/>
             </div>

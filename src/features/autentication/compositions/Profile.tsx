@@ -11,6 +11,8 @@ import { EntityAddressForm } from "../components/forms/EntityAddressForm/EntityA
 import { Button, Container } from "react-bootstrap"
 import { IoAdd } from "react-icons/io5"
 import { AuthPasswordCard } from "../components/cards/AuthPasswordCard/AuthPasswordCard"
+import { AuthEmailCard } from "../components/cards/AuthEmailCard/AuthEmailCard"
+import { AuthPhoneNumberCard } from "../components/cards/AuthPhoneNumberCard/AuthPhoneNumberCard"
 
 export const Profile = ()=>null
 
@@ -80,6 +82,22 @@ Profile.AuthPassword = function AuthPassword(){
     return(
         <Container className="rounded-lg bg-surface-a0 p-mb-df">
             <AuthPasswordCard/>
+        </Container>
+    )
+}
+
+Profile.AuthEmail = function AuthEmail(){
+    return(
+        <Container className="rounded-lg bg-surface-a0 p-mb-df">
+            <AuthEmailCard/>
+        </Container>
+    )
+}
+
+Profile.AuthPhoneNumber = function AuthPhoneNumber(){
+    return(
+        <Container className="rounded-lg bg-surface-a0 p-mb-df">
+            <AuthPhoneNumberCard/>
         </Container>
     )
 }

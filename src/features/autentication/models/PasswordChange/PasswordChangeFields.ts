@@ -14,7 +14,8 @@ export const passwordActualFieldSchema = z.object({
 export type PasswordActualFieldType = z.infer<typeof passwordActualFieldSchema>
 
 export const passwordChangeFieldsSchema = z.object({
-    ...passwordActualFieldSchema.shape,
+    //...passwordActualFieldSchema.shape,
+    actual_password:z.string().min(1),
     ...basePasswordResetFieldsSchema.shape
 }).refine((data) => data.password === data.conferm_password, {
     path: ['conferm_password'],

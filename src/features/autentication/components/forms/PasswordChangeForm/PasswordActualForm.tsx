@@ -7,7 +7,7 @@ import { password } from "@features/autentication/services/passwordServices";
 import { AxiosError } from "axios";
 import { setServerValidationErrors } from "@utils/serverErrorDecode/errorDecode";
 import { useTabsContext } from "@context/Tabs/TabsProvider";
-import { usePasswordActual } from "@features/autentication/context/PasswordActualContext/PasswordActualProvider";
+import { usePasswordActualContext } from "@features/autentication/context/PasswordActualContext/PasswordActualProvider";
 
 export function PasswordActualForm(){
     return(
@@ -22,7 +22,7 @@ export function PasswordActualForm(){
 
 function ChangeButton(){
     const {setKey} = useTabsContext()
-    const {setActualPassword} = usePasswordActual()
+    const {setActualPassword} = usePasswordActualContext()
     const {trigger,getValues,setError} = useFormContext <PasswordActualFieldType>()
     const {mutateAsync,isLoading} = useMutation({
         mutationKey:['password-verify'],
@@ -30,6 +30,7 @@ function ChangeButton(){
         onSuccess:(data)=>{
             console.log(data)
             const actual_password = getValues().actual_password
+            alert(actual_password)
             setKey('change_password')
             setActualPassword(actual_password)
         },
