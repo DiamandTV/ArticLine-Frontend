@@ -14,7 +14,7 @@ export function StoreBusinessList(){
     if(isLoading || !isSuccess) return null
     console.log(data)
     return(
-        <div>
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(350px,1fr))] ">
             {data.map((store)=>{
                 return(
                     <StoreProvider store={store}>

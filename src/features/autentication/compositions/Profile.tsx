@@ -1,6 +1,6 @@
 import { tailwindMerge } from "@lib/tsMerge/tsMerge"
 import { RootState } from "@store/store"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useGetEntityAddressSavedListQuery } from "../hooks/useGetEntityAddressSavedListQuery/useGetEntityAddressSavedListQuery"
 import { EntityAddressProvider } from "../context/EntityAddressContext/EntityAddressProvider"
 import { EntityAddressDetailedCard } from "../components/cards/EntityAddressCard/EntityAddressCard"
@@ -17,6 +17,9 @@ import { CompanyProfileInterface } from "../models/Profile/Interface/CompanyProf
 import { UserProfileInterface } from "../models/Profile/Interface/UserProfile/UserProfile"
 import { CourierProfileInterface } from "../models/Profile/Interface/CourierProfile/CourierProfile"
 import { GoLocation } from "react-icons/go"
+import { AuthTypeIcon } from "@components/Icons/AuthTypeIcon/AuthTypeIcon"
+import { useNavigate } from "react-router"
+import { authSliceActions } from "../slices/authSlice"
 
 export const Profile = ()=>null
 
@@ -144,5 +147,32 @@ Profile.Address = function Address(attr:React.HTMLAttributes<HTMLElement>){
             </div>
             <span className="text-wrap">{profile.address.full_address}</span>
         </div>
+    )
+}
+
+Profile.ProfileTypeIcon = function ProfileTypeIcon(attr:React.HTMLAttributes<HTMLElement>){
+    const profile = useSelector((state:RootState)=>state.authReducer.profile)
+    if(!profile) return
+    const type = profile.auth.type
+
+    return <AuthTypeIcon type={type} {...attr}className={tailwindMerge("absolute text-2xl -bottom-0 trans md:text-4xl translate-x-1/2 md:-bottom-2  right-[30%] md:right-[27.5%]",attr.className)}/>
+}
+
+Profile.Logout = function Logout(attr:React.HTMLAttributes<HTMLElement>){
+    const dispatch = useDispatch()
+    const navigator = useNavigate()
+    const onClick = (e:React.MouseEvent<HTMLElement>)=>{
+        dispatch(authSliceActions.clearSession())
+        dispatch(authSliceActions.clearProfile())
+        
+        navigator('/login/')
+        attr.onClick?.(e)
+    }
+    return(
+        <button {...attr} className={tailwindMerge("self-end px-4 py-1 text-sm font-medium rounded-full w-max bg-orange-red",attr.className)}
+            onClick={onClick}
+        >
+            LOGOUT
+        </button>
     )
 }

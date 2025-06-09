@@ -20,7 +20,7 @@ export function LayoutView(){
             <Outlet/>
             
             {/* Spazio riservato per la barra fissa in basso */}
-            <div className="h-[64px] bg-transparent" > {/* altezza uguale alla BusinessBottomNavigation */}
+            <div className="h-4 bg-transparent" > {/* altezza uguale alla BusinessBottomNavigation */}
                 
             </div>
         </div>

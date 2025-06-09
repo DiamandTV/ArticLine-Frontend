@@ -17,7 +17,7 @@ import { AuthVerificationResendAlert } from "../../alerts/AuthVerificationResend
 import { JWTInterface } from "@features/autentication/models/Jwt/JwtInterfaces";
 export function LoginForm(){
     return(
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex flex-col w-full gap-2">
             <LoginFieldsProvider>
                 <LoginFields/>          
                 <LoginFormButton/>
@@ -107,7 +107,7 @@ function LoginFormButton(){
     }
 
     return(
-        <Button onClick={onClick} variant="primary">
+        <Button onClick={onClick} variant="primary" className="text-base font-medium">
             {
                 isLoading ? 
                 <Spinner animation="border"/> : "LOGIN"

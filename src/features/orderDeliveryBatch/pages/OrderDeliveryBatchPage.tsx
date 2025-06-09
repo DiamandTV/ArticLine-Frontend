@@ -33,7 +33,7 @@ export function OrderDeliveryBatchPage(){
                 navigator({
                     pathname:'',
                     search:createSearchParams({
-                        not_status__in:'PICKED UP'
+                        status:'PICKED UP'
                     }).toString()
                 })
                 break
@@ -41,7 +41,7 @@ export function OrderDeliveryBatchPage(){
               navigator({
                     pathname:'',
                     search:createSearchParams({
-                        not_status__in:'COMPLETED'
+                        status:'IN PROGRESS'
                     }).toString()
                 })
                 break  

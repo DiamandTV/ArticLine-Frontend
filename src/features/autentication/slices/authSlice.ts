@@ -62,6 +62,7 @@ const authSlice = createSlice({
 export const initSession = createAsyncThunk.withTypes<StoreAsyncThunkConfig>()(
     "authSlice/initSession",
     async(_,{getState,dispatch})=>{
+
         const store = getState()
         const jwt = store.authReducer.jwt
         
@@ -75,6 +76,7 @@ export const initSession = createAsyncThunk.withTypes<StoreAsyncThunkConfig>()(
         }
     
         try{
+            if(store.authReducer.profile) return store.authReducer.profile
             // get the profile
             return await dispatch(retrieveProfile()).unwrap()
             
