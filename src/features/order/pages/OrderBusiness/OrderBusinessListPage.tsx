@@ -14,7 +14,7 @@ export function OrderBusinessListPage(){
     if(isLoading || !isSuccess) return null
     return(
         <div className="flex flex-row h-full flex-nowrap mx-mb-df my-mb-df md:mx-df">
-            <div className="w-full grid grid-cols-1 md:grid-cols-[repeat(auto-fill,minmax(450px,1fr))]">
+            <div className="w-full grid grid-cols-1 md:grid-cols-[repeat(auto-fill,minmax(450px,1fr))] gap-2">
                 {
                     data.map((orderBusiness)=>{
                         return(

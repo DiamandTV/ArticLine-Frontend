@@ -10,7 +10,7 @@ export function OrderDeliveryBatchListPage(){
     
     return(
         <div className="flex flex-row h-full flex-nowrap mx-mb-df my-mb-df md:mx-df">
-                <div className="w-full h-full grid grid-cols-1 md:grid-cols-[repeat(auto-fill,minmax(450px,1fr))]">            
+                <div className="w-full h-full grid grid-cols-1 md:grid-cols-[repeat(auto-fill,minmax(450px,1fr))] gap-2">            
                     <DivRefProvider divRef={divRef}>
                         {
                             (!isLoading && isSuccess) && data.map((orderDeliveryBatch)=>{

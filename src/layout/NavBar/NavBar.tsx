@@ -1,4 +1,5 @@
 import { LogoTitle } from "@components/images/Logo/LogoTitle";
+import { useNavigationBarContext } from "@context/NavigationBarContext/NavigationBarProvider";
 import { ChatButton } from "@features/chats";
 import { NotificationButton } from "@features/notifications";
 import { RootState } from "@store/store";
@@ -7,6 +8,7 @@ import {  Container, Dropdown, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Can } from "src/config/permissions/can";
+import { RxCross1 } from "react-icons/rx";
 
 function BusinessDropdown(){
   const navigator = useNavigate()
@@ -14,14 +16,19 @@ function BusinessDropdown(){
   const profile = useSelector((state:RootState)=>state.authReducer.profile)
   if(!profile) return
 
+  const onToggleBlur = ()=>{
+    setTimeout(()=>{
+      setShow(false)
+    },100)
+  }
   return( 
     <Can I="read" a="Business">
       <Dropdown  drop="down-centered" placement="right-start" autoClose show={show} onClick={()=>setShow(!show)}>
-        <Dropdown.Toggle className="p-0 text-2xl font-semibold md:text-sm md:font-medium bg-transparent border-none text-surface-a0 hover:bg-none hover:!text-surface-a0 focus:!text-surface-a0" >
+        <Dropdown.Toggle className="p-0 text-2xl  font-semibold md:text-sm md:font-medium bg-transparent border-none text-surface-a0 hover:bg-none hover:!text-surface-a0 focus:!text-surface-a0" onBlur={onToggleBlur}>
           BUSINESS
         </Dropdown.Toggle>
 
-          <Dropdown.Menu className={`transition-all duration-500  md:absolute border-none !relative !flex  flex-col md:!flex-row !justify-center !items-center  gap-4 md:!gap-8 !px-10 !py-2 !bg-surface-a0 top-0 right-0 md:-translate-x-1/2 md:!left-1/2 !bg-gray-200 backdrop-blur-3xl bg-opacity-5 md:border-t-0 !rounded-b-2xl !rounded-t-none my-2 ${show ? '' : '!hidden md:flex'}`}>
+          <Dropdown.Menu className={`transition-all duration-500 md:!absolute border-none md:border-solid !relative !flex flex-col md:!flex-row !justify-center !items-center gap-4 md:!gap-8 !px-10 !py-2 !bg-surface-a0 top-0 right-0 md:!-translate-x-1/2 md:!left-1/2 !bg-gray-200 backdrop-blur-3xl bg-opacity-5 md:!border-t-0  !rounded-b-2xl !rounded-t-none md:translate-y-6 my-2 !w-max ${show ? '' : '!hidden md:flex'}`}>
             <Dropdown.Item className=" md:p-0 px-2 m-0 !font-sans md:!text-sm !text-base !font-medium " onClick={()=>navigator(`/company/${profile.id}/store/`)} >
                 STORES
             </Dropdown.Item>
@@ -61,12 +68,13 @@ function SubNavigation({isCollapse}:{isCollapse:boolean}){
 }
 
 export function NavigationBar() {
+  const {show,setShow} = useNavigationBarContext()
   return (
     <Navbar expand={false} collapseOnSelect className="p-0 shadow-md bg-surface-a0 text-surface-a0 h-max " sticky="top">
       <Container fluid className="p-0 mx-mb-df md:mx-df">
         <div className="flex flex-row gap-2">
           {
-            <Navbar.Toggle className="px-1 border-none md:hidden"/>
+            <Navbar.Toggle onClick={()=>setShow(!show)} className="px-1 border-none md:hidden"/>
           }
           <Navbar.Brand>
             <LogoTitle />
@@ -83,10 +91,16 @@ export function NavigationBar() {
         </div>
       </Container>
       <Navbar.Offcanvas
-        show={false}
+        show={show}
+
       >
-        <Offcanvas.Header closeButton >
-          <LogoTitle firstLetterClassName="text-6xl" restLettersClassName="text-5xl"/>
+        <Offcanvas.Header >
+          <div className="flex flex-row items-center justify-between w-full ">
+            <LogoTitle firstLetterClassName="text-6xl" restLettersClassName="text-5xl"/>
+            <button className="p-2" onClick={()=>setShow(false)}>
+              <RxCross1 size={25}/>
+            </button>
+          </div>
         </Offcanvas.Header>
         <Offcanvas.Body className="flex flex-col justify-between ">
           <SubNavigation isCollapse/>

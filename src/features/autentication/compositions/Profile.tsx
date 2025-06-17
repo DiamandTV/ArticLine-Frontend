@@ -108,7 +108,7 @@ Profile.SecondName = function SecondName(attr:React.HTMLAttributes<HTMLElement>)
     if(!profile) return
     let secondName = ''
     if(profile.auth.type === 'COMPANY'){
-        secondName = (profile as CompanyProfileInterface).first_name +  " " +(profile as CompanyProfileInterface).first_name
+        secondName = (profile as CompanyProfileInterface).first_name +  " " +(profile as CompanyProfileInterface).last_name
     } else {
         secondName = (profile as UserProfileInterface|CourierProfileInterface).username
     }

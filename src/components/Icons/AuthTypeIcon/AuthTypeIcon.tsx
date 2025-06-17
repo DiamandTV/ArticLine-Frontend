@@ -14,13 +14,13 @@ export function AuthTypeIcon({type,...attr}:AuthTypeIconProps){
                     <FaUser />
                 </div>
             )
-        case 'COURIER':
+        case 'COMPANY':
             return (
                 <div {...attr} className={className}>
                     <FaBuilding/>
                 </div>
             )
-        case 'COMPANY':
+        case 'COURIER':
             return (
                 <div {...attr} className={className} >
                     <FaTruck/>

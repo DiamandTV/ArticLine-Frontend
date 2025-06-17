@@ -7,6 +7,7 @@ import { Col, FloatingLabel, Form, Row } from "react-bootstrap";
 import { FieldsProps } from "@features/autentication/models/Fields/FieldsProps";
 import { FieldsProvider } from "@features/autentication/context/FieldsProvider/FieldsProvider";
 import { FieldsProviderProps } from "@features/autentication/models/Fields/FieldsProviderProps";
+import { AddressInput } from "@components/inputs/AddressInput";
 
 export function CourierProfileInfoFieldsProvider(props:FieldsProviderProps<CourierProfileInfoFieldsType>){
     return(
@@ -22,7 +23,7 @@ export function CourierProfileInfoFieldsProvider(props:FieldsProviderProps<Couri
 
 export function CourierProfileInfoFields(props:FieldsProps){
     const className = tailwindMerge("w-full items-center justify-center gap-2 ",props.className)
-    const {register,watch,formState:{errors},getValues,resetField} = useFormContext<CourierProfileInfoFieldsType>()
+    const {register,formState:{errors},getValues} = useFormContext<CourierProfileInfoFieldsType>()
     console.log(errors)
     console.log(getValues('image'))
     return(
@@ -63,9 +64,9 @@ export function CourierProfileInfoFields(props:FieldsProps){
 
                 <Col className="p-0">
                     <FloatingLabel label="DATE OF BIRTH">
-                        <Form.Control type="date" {...register('birth_of_date')} isInvalid={!!errors.birth_of_date}/>
+                        <Form.Control type="date" {...register('date_of_birth')} isInvalid={!!errors.date_of_birth}/>
                         <Form.Control.Feedback type="invalid">
-                            {errors.birth_of_date?.message}
+                            {errors.date_of_birth?.message}
                         </Form.Control.Feedback>
                     </FloatingLabel>
                 </Col>
@@ -73,12 +74,17 @@ export function CourierProfileInfoFields(props:FieldsProps){
 
             <Row className="w-full">
                 <Col as={Col} className="p-0" >
-                    <FloatingLabel label="ADDRESS">
-                        <Form.Control type="text" {...register('address')} isInvalid={!!errors.address}/>
-                        <Form.Control.Feedback type="invalid">
-                            {errors.address?.message}
-                        </Form.Control.Feedback>
-                    </FloatingLabel>
+                    <AddressInput
+                        label="ADDRESS"
+                        inputElement={
+                            <Form.Control type="text" {...register('address.full_address')} isInvalid={!!errors.address}/>
+                        }
+                        errorElement={
+                            <Form.Control.Feedback type="invalid">
+                                {errors.address?.full_address?.message }
+                            </Form.Control.Feedback>
+                        }
+                    />
                 </Col>            
             </Row>
         </Form>

@@ -10,7 +10,7 @@ export function OrderListPage(){
     const {data,isLoading,isSuccess,ref} = useGetOrderListQuery()
     if(isLoading || !isSuccess) return null
     return(
-        <div className=" mx-mb-df my-mb-df md:mx-df grid grid-cols-1 md:grid-cols-[repeat(auto-fill,minmax(450px,1fr))]">
+        <div className=" mx-mb-df my-mb-df md:mx-df grid grid-cols-1 md:grid-cols-[repeat(auto-fill,minmax(450px,1fr))] gap-2">
             <div className="w-full">
             {
                 data.map((order)=>{

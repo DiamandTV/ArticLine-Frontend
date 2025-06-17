@@ -20,7 +20,7 @@ export const courierSigninFieldsSchema = z.object({
     authInfoFieldsSchema
 )
 
-export type CourierSigninFieldsType = z.infer<typeof courierProfileInfoFieldsSchema>
+export type CourierSigninFieldsType = z.infer<typeof courierSigninFieldsSchema>
 
 export const companySigninFieldsSchema = z.object({    
 }).merge(

@@ -7,6 +7,8 @@ import { authInfoFieldsSchema } from "@features/autentication/models/Auth/AuthIn
 import { AuthInfoFields } from "../../AuthInfo/AuthInfoFields";
 import { MultiFormStepperProvider } from "@context/MultiFormStepper/MultiFormStepperProvider";
 import { CourierProfileInfoFields } from "../../ProfileInfo/CourierProfileInfoFields/CourierProfileInfoFields";
+import { courierSigninService } from "@features/autentication/services/signinServices";
+import { courierProfileInfoFieldsSchema } from "@features/autentication/models/Profile/InfoFields/CourierProfileInfoFields/CourierProfileInfoFieldsType";
 
 export const CourierSigninFieldsProvider = FieldsProvider<CourierSigninFieldsType>
 
@@ -14,7 +16,7 @@ const getStepFormData = (step:number):GetStepFormDataReturnType=>{
     switch(step){
         case 0:
             return {
-                schema:courierSigninFieldsSchema,
+                schema:courierProfileInfoFieldsSchema,
                 children:<CourierProfileInfoFields/>
             }
         case 1:
@@ -37,7 +39,16 @@ export function CourierSigninFields(props:FieldsProps){
                 getStepFormData={getStepFormData}
                 mutationOptions={{
                     mutationKey:['courier'],
-                    mutationFn:async()=>{
+                    mutationFn:async(formData:CourierSigninFieldsType)=>{
+                        console.log(formData)
+                        const data = await courierSigninService(formData)
+                        console.log(data)
+                        return data
+                    },
+
+                    onSuccess:(data)=>{
+                        console.log(data)
+                        // todo : tell the courier to proceed from the mobile application
 
                     }
                 }}

@@ -14,8 +14,8 @@ export interface UserProfileInterface{
     entity_address:EntityAddressInterface,
 }
 
-export type UserProfileSigninRequestInterface = Omit<UserProfileInterface,'id'|'image'|'auth'|'address'> & {
-    image:FileList,
+export type UserProfileSigninRequestInterface = Omit<UserProfileInterface,'id'|'image'|'auth'|'address'|'entity_address'> & {
+    image:File,
     auth:AuthSigninRequestInterface,
     address:AddressRequestInterface
 } 
